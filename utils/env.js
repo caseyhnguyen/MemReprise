@@ -38,7 +38,7 @@ const ENV = {
       tokenEndpoint: "https://accounts.spotify.com/api/token",
     },
     // ***** TODO: Fill this in ***** //
-    TOP_TRACKS_API: "https://api.spotify.com/v1/me/top/tracks",
+    RECENT_TRACKS_API: "https://api.spotify.com/v1/me/player/recently-played",
     // ***** TODO: Or fill this in ***** //
     ALBUM_TRACK_API_GETTER: (albumId) =>
       "https://api.spotify.com/v1/albums/2nLOHgzXzwFEpl62zAgCEC/tracks?offset=0&limit=20&locale=en-US,en;q=0.9",

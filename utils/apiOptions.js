@@ -2,7 +2,7 @@ import axios from "axios";
 import getEnv from "./env";
 
 const {
-  SPOTIFY_API: { TOP_TRACKS_API, ALBUM_TRACK_API_GETTER },
+  SPOTIFY_API: { RECENT_TRACKS_API, ALBUM_TRACK_API_GETTER },
 } = getEnv();
 
 const ERROR_ALERT = new Error(
@@ -42,10 +42,10 @@ const fetcher = async (url, token) => {
 };
 
 /* Fetches your top tracks from the Spotify API.
- * Make sure that TOP_TRACKS_API is set correctly in env.js */
-export const getMyTopTracks = async (token) => {
+ * Make sure that RECENT_TRACKS_API is set correctly in env.js */
+export const getMyRecentTracks = async (token) => {
   try {
-    let res = await fetcher(TOP_TRACKS_API, token);
+    let res = await fetcher(RECENT_TRACKS_API, token);
     return formatter(res.data?.items);
   } catch (e) {
     console.error(e);

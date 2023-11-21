@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import getEnv from "./env";
-import { getMyTopTracks } from "./apiOptions";
+import { getMyRecentTracks } from "./apiOptions";
 
 const { ALBUM_ID } = getEnv();
 
@@ -16,7 +16,7 @@ const useSpotifyTracks = (token) => {
 
     setLoading(true);
     try {
-      const fetchedTracks = await getMyTopTracks(token, offset);
+      const fetchedTracks = await getMyRecentTracks(token, offset);
       if (fetchedTracks) {
         setTracks((prevTracks) => {
           const updatedTracks = [...prevTracks, ...fetchedTracks];
@@ -31,7 +31,7 @@ const useSpotifyTracks = (token) => {
         console.error("Unexpected response structure:", fetchedTracks);
       }
     } catch (error) {
-      console.error("Failed to fetch top tracks:", error);
+      console.error("Failed to fetch recent tracks:", error);
     }
     setLoading(false);
   };

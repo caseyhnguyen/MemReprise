@@ -176,7 +176,7 @@ export default function App() {
       <>
         <View style={styles.header}>
           <Image source={images.spotify} style={styles.logo} />
-          <Text style={styles.headerTitle}>My Top Tracks</Text>
+          <Text style={styles.headerTitle}>My Recent Tracks</Text>
         </View>
 
         <View style={styles.searchContainer}>

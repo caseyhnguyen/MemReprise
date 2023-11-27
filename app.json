@@ -29,6 +29,6 @@
       "bundler": "metro"
     },
     "plugins": ["expo-router"],
-    "scheme": "my-app-scheme"
+    "scheme": "your-app-scheme"
   }
 }

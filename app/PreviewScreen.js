@@ -1,4 +1,15 @@
-import { StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  Pressable,
+  Image,
+  FlatList,
+  View,
+  Dimensions,
+  TextInput,
+} from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { WebView } from "react-native-webview";
 import { colors } from "../assets/Themes/colors";

@@ -1,7 +1,13 @@
 import { Platform } from "react-native";
 
 // ***** TODO: Fill in your constants here ***** //
-const CLIENT_ID = "a1d5a9c50315440883c767baf8475912";
+// const express = require("express");
+// const fetch = require("node-fetch");
+// const app = express();
+// const PORT = 3000;
+
+const CLIENT_ID = "d80243faaa8e49278e824c2ce5971e8b";
+const CLIENT_SECRET = "dd8697a7f8314f15b542e4f14ad99424";
 const REDIRECT_URI = "exp://10.31.225.25:8083"; // TODO: Replace this with your own redirect URI
 const ALBUM_ID = "2nLOHgzXzwFEpl62zAgCEC?si=Vy8vkAwuT-GJ_nEKsoo2DA"; // By default, this is the Weeknd's album "DAWN FM"
 // ********************************************* //
@@ -38,7 +44,9 @@ const ENV = {
       tokenEndpoint: "https://accounts.spotify.com/api/token",
     },
     // ***** TODO: Fill this in ***** //
-    TOP_TRACKS_API: "https://api.spotify.com/v1/me/top/tracks",
+    RECENT_TRACKS_API:
+      "https://api.spotify.com/v1/me/player/recently-played?limit=3",
+    CURRENT_TRACK_API: "https://api.spotify.com/v1/me/player/currently-playing",
     // ***** TODO: Or fill this in ***** //
     ALBUM_TRACK_API_GETTER: (albumId) =>
       "https://api.spotify.com/v1/albums/2nLOHgzXzwFEpl62zAgCEC/tracks?offset=0&limit=20&locale=en-US,en;q=0.9",

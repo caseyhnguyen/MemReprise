@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   ActivityIndicator,
-  StyleSheet,
+  spotifyStylesheet,
   SafeAreaView,
   Text,
   Pressable,
@@ -16,6 +16,8 @@ import { colors } from "../assets/Themes/colors";
 import images from "../assets/Images/images";
 import Song from "./Song";
 import { StatusBar } from "expo-status-bar";
+import {spotifyStyles} from "../assets/Themes/spotify_style";
+import {styles} from "../assets/Themes/default_style";
 
 // Get the window width
 const windowWidth = Dimensions.get("window").width;
@@ -28,9 +30,9 @@ const TracksScreen = ({ navigation }) => {
     useSearch(token);
 
   const SpotifyAuthButton = () => (
-    <Pressable style={styles.button} onPress={getSpotifyAuth}>
-      <Image source={images.spotify} style={styles.spotifyIcon} />
-      <Text style={styles.buttonText}>CONNECT WITH SPOTIFY</Text>
+    <Pressable style={spotifyStyles.button} onPress={getSpotifyAuth}>
+      <Image source={images.spotify} style={spotifyStyles.spotifyIcon} />
+      <Text style={spotifyStyles.buttonText}>CONNECT WITH SPOTIFY</Text>
     </Pressable>
   );
 
@@ -49,8 +51,8 @@ const TracksScreen = ({ navigation }) => {
     });
 
     return (
-      <View style={styles.currentTrackContainer}>
-        <Text style={styles.currentTrackTitle}>Now Playing:</Text>
+      <View style={spotifyStyles.currentTrackContainer}>
+        <Text style={spotifyStyles.currentTrackTitle}>Now Playing:</Text>
         <Song
           title={currentTrack.songTitle}
           artists={currentTrack.songArtists}
@@ -106,32 +108,32 @@ const TracksScreen = ({ navigation }) => {
 
   // Clear Cache Button
   const ClearCacheButton = ({ onPress }) => (
-    <Pressable style={styles.clearButton} onPress={onPress}>
-      <Text style={styles.clearButtonText}>Refresh</Text>
+    <Pressable style={spotifyStyles.clearButton} onPress={onPress}>
+      <Text style={spotifyStyles.clearButtonText}>Refresh</Text>
     </Pressable>
   );
 
   return (
     <>
       <StatusBar style="light" />
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={spotifyStyles.container}>
         {token ? (
           <>
-            <View style={styles.header}>
-              <Image source={images.spotify} style={styles.logo} />
-              <Text style={styles.headerTitle}>My Recent Tracks</Text>
+            <View style={spotifyStyles.header}>
+              <Image source={images.spotify} style={spotifyStyles.logo} />
+              <Text style={spotifyStyles.headerTitle}>My Recent Tracks</Text>
             </View>
 
             {/* Render the currently playing track */}
-            <View style={styles.header}>
-              <Text style={styles.headerTitle}>Currently Playing</Text>
+            <View style={spotifyStyles.header}>
+              <Text style={spotifyStyles.headerTitle}>Currently Playing</Text>
             </View>
             {renderCurrentTrack()}
 
             {/* Search bar for authenticated users */}
-            <View style={styles.searchContainer}>
+            <View style={spotifyStyles.searchContainer}>
               <TextInput
-                style={styles.searchInput}
+                style={spotifyStyles.searchInput}
                 placeholder="Search"
                 value={search}
                 onChangeText={(text) => debouncedSearchSongs(text)}
@@ -142,8 +144,8 @@ const TracksScreen = ({ navigation }) => {
             <ClearCacheButton onPress={clearCacheAndRefetch} />
 
             {/* Recently Played Tracks */}
-            <View style={styles.header}>
-              <Text style={styles.headerTitle}>Recently Played</Text>
+            <View style={spotifyStyles.header}>
+              <Text style={spotifyStyles.headerTitle}>Recently Played</Text>
             </View>
             <FlatList
               data={search ? searchedSongs : tracks}
@@ -163,9 +165,9 @@ const TracksScreen = ({ navigation }) => {
         ) : (
           <>
             {/* Search bar for unauthenticated users */}
-            <View style={styles.searchContainer}>
+            <View style={spotifyStyles.searchContainer}>
               <TextInput
-                style={styles.searchInput}
+                style={spotifyStyles.searchInput}
                 placeholder="Search"
                 value={search}
                 onChangeText={(text) => debouncedSearchSongs(text)}
@@ -173,6 +175,12 @@ const TracksScreen = ({ navigation }) => {
             </View>
 
             <SpotifyAuthButton />
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("ThemeQScreen")} // Updated route name
+            >
+              <Text style={styles.buttonText}>Theme Questions</Text>
+            </Pressable>
           </>
         )}
       </SafeAreaView>
@@ -180,95 +188,5 @@ const TracksScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.background,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.background,
-  },
-  logo: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-  },
-  currentTrackContainer: {
-    margin: 10,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: colors.background, // example background color
-  },
-  currentTrackTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  headerTitle: {
-    fontSize: 24,
-    color: colors.white,
-    fontWeight: "bold",
-  },
-  contentContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-  button: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: colors.spotify,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 30,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "50%",
-    margin: 2,
-  },
-  spotifyIcon: {
-    marginRight: 10,
-    width: 24,
-    height: 24,
-  },
-  buttonText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-
-  clearButton: {
-    marginBottom: 10,
-  },
-  clearButtonText: {
-    color: colors.spotify,
-    textAlign: "center",
-    fontSize: 16,
-  },
-  searchContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginHorizontal: 20,
-    paddingVertical: 10,
-  },
-  searchInput: {
-    flex: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    backgroundColor: colors.white,
-    color: colors.black,
-    borderRadius: 5,
-  },
-});
 
 export default TracksScreen;

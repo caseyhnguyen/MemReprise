@@ -112,9 +112,6 @@ export const getMyCurrentTrack = async (token) => {
   try {
     let res = await fetcher(CURRENT_TRACK_API, token);
 
-    // Log the response
-    console.log("Response from getMyCurrentTrack:", res);
-
     // Process and format the response data
     return formatCurrentTrack(res.data);
   } catch (e) {

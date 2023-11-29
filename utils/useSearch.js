@@ -1,24 +1,49 @@
 import { useState, useEffect } from "react";
+import base64 from "react-native-base64";
+import getEnv from "./env";
 
 const SPOTIFY_SEARCH_ENDPOINT = "https://api.spotify.com/v1/search";
+const SPOTIFY_TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 
-const useSearch = (token) => {
+const useSearch = () => {
   const [search, setSearch] = useState("");
   const [searchedSongs, setSearchedSongs] = useState([]);
-  const [timeoutToClear, setTimeoutToClear] = useState();
+  const [token, setToken] = useState("");
+  const [timeoutToClear, setTimeoutToClear] = useState(null); // Initialize the timeoutToClear state
 
-  const fakeDelay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const { CLIENT_ID, CLIENT_SECRET } = getEnv(); // Destructuring to get CLIENT_ID and CLIENT_SECRET
 
   useEffect(() => {
-    return () => {
-      clearTimeout(timeoutToClear);
-    };
-  }, [timeoutToClear]);
+    getAccessToken();
+  }, []);
+
+  const getAccessToken = async () => {
+    try {
+      const credentials = base64.encode(`${CLIENT_ID}:${CLIENT_SECRET}`);
+      const response = await fetch(SPOTIFY_TOKEN_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Basic ${credentials}`,
+        },
+        body: "grant_type=client_credentials",
+      });
+
+      const data = await response.json();
+      setToken(data.access_token);
+    } catch (error) {
+      console.error("Error getting access token:", error);
+    }
+  };
+
+  const fakeDelay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const debounce = (callback, alwaysCall, ms) => {
     return (...args) => {
       alwaysCall(...args);
-      clearTimeout(timeoutToClear);
+      if (timeoutToClear) {
+        clearTimeout(timeoutToClear);
+      }
       setTimeoutToClear(setTimeout(() => callback(...args), ms));
     };
   };
@@ -77,7 +102,7 @@ const useSearch = (token) => {
         "US",
         20,
         0,
-        true
+        false
       );
       setSearchedSongs(response.tracks.items);
     } catch (error) {

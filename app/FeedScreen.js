@@ -11,7 +11,7 @@ import {
   TextInput,
 } from "react-native";
 
-import {styles} from "../assets/Themes/default_style";
+import { styles } from "../assets/Themes/default_style";
 // Get the window width
 const windowWidth = Dimensions.get("window").width;
 
@@ -22,7 +22,8 @@ const FeedScreen = ({ navigation }) => {
 
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("DiscoverScreen")}>
+        onPress={() => navigation.navigate("DiscoverScreen")}
+      >
         <Text style={styles.buttonText}>Discover</Text>
       </Pressable>
     </SafeAreaView>

@@ -1,9 +1,3 @@
-// import { Stack } from "expo-router";
-
-// export default function AppLayout() {
-//   return <Stack />;
-// }
-
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./HomeScreen";
@@ -19,15 +13,11 @@ export default function AppLayout() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen
-        name="TracksScreen"
-        component={TracksScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="ThemeQScreen" component={ThemeQScreen}/>
-      <Stack.Screen name="PostSummaryScreen" component={PostSummaryScreen}/>
-      <Stack.Screen name="FeedScreen" component={FeedScreen}/>
-      <Stack.Screen name="DiscoverScreen" component={DiscoverScreen}/>
+      <Stack.Screen name="TracksScreen" component={TracksScreen} />
+      <Stack.Screen name="ThemeQScreen" component={ThemeQScreen} />
+      <Stack.Screen name="PostSummaryScreen" component={PostSummaryScreen} />
+      <Stack.Screen name="FeedScreen" component={FeedScreen} />
+      <Stack.Screen name="DiscoverScreen" component={DiscoverScreen} />
     </Stack.Navigator>
   );
 }

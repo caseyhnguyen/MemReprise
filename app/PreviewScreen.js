@@ -17,7 +17,6 @@ import { StatusBar } from "expo-status-bar";
 
 export default function Page() {
   const params = useLocalSearchParams();
-  console.log("preview URL:", params.url);
 
   return (
     <>

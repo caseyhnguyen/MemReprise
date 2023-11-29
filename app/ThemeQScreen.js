@@ -13,7 +13,7 @@ import {
 
 // Get the window width
 const windowWidth = Dimensions.get("window").width;
-import {styles} from "../assets/Themes/default_style";
+import { styles } from "../assets/Themes/default_style";
 
 const ThemeQScreen = ({ navigation }) => {
   return (
@@ -22,7 +22,8 @@ const ThemeQScreen = ({ navigation }) => {
 
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("PostSummaryScreen")}>
+        onPress={() => navigation.navigate("PostSummaryScreen")}
+      >
         <Text style={styles.buttonText}>Post Summary</Text>
       </Pressable>
     </SafeAreaView>

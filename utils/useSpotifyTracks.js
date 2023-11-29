@@ -77,7 +77,7 @@ const useSpotifyTracks = (token) => {
       .catch((error) => console.error("Failed to load tracks:", error));
 
     // Set an interval to fetch the current track
-    intervalToClear.current = setInterval(fetchCurrentTrack, 10000); // Fetch every 10 seconds
+    intervalToClear.current = setInterval(fetchCurrentTrack, 5000); // Fetch every 5 seconds
 
     return () => {
       // Clear interval when component unmounts

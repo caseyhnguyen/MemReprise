@@ -1,6 +1,13 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
-import { Link } from "expo-router";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native"; // make sure to install this package
 
 import millisToMinuteSeconds from "../utils/millisToMinutesAndSeconds.js";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,7 +15,7 @@ import { colors } from "../assets/Themes/colors";
 
 const windowWidth = Dimensions.get("window").width;
 
-const Song = ({
+const CurrentSong = ({
   title,
   artists,
   albumName,
@@ -16,32 +23,27 @@ const Song = ({
   duration,
   previewUrl,
   externalUrl,
-}) => (
-  <View style={styles.container}>
-    <View style={styles.buttonContainer}>
-      <Link
-        href={{
-          pathname: "/PreviewScreen",
-          params: {
-            url: previewUrl,
-          },
-        }}
-      >
-        <Ionicons name="play-circle" size={32} style={styles.playButton} />
-      </Link>
-    </View>
+}) => {
+  const navigation = useNavigation(); // Hook to handle navigation
 
-    <Link
-      href={{
-        pathname: "/details",
-        params: {
-          url: externalUrl,
-        },
-      }}
-    >
+  // Function to handle press on the entire song row
+  const onSongPress = () => {
+    // Navigate to ThemeQScreen with parameters if needed
+    navigation.navigate("ThemeQScreen", { previewUrl, externalUrl });
+  };
+
+  return (
+    <TouchableOpacity style={styles.container} onPress={onSongPress}>
+      <View style={styles.buttonContainer}>
+        <Ionicons
+          name="play-circle"
+          size={32}
+          color={colors.spotify}
+          style={styles.playButton}
+        />
+      </View>
       <View style={styles.songInfo}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
-
         <View style={styles.titleAndArtist}>
           <Text style={styles.titleText} numberOfLines={1}>
             {title}
@@ -50,17 +52,13 @@ const Song = ({
             {artists.join(", ")}
           </Text>
         </View>
-
         <Text style={styles.albumName} numberOfLines={1}>
           {albumName}
         </Text>
-        <Text style={styles.durationText}>
-          {millisToMinuteSeconds(duration)}
-        </Text>
       </View>
-    </Link>
-  </View>
-);
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -79,7 +77,7 @@ const styles = StyleSheet.create({
   songInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "93%",
+    width: "88%",
     alignItems: "center",
   },
   titleAndArtist: {
@@ -106,11 +104,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: windowWidth * 0.15,
   },
-  durationText: {
-    color: colors.gray,
-    fontSize: 14,
-    paddingLeft: 5,
-  },
   artistText: {
     color: colors.gray,
     fontSize: 14,
@@ -123,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Song;
+export default CurrentSong;

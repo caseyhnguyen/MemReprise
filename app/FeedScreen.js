@@ -14,20 +14,15 @@ import {
 // Get the window width
 const windowWidth = Dimensions.get("window").width;
 
-const HomeScreen = ({ navigation }) => {
+const FeedScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.buttonText}>Feed</Text>
+
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("TracksScreen")} // Updated route name
-      >
-        <Text style={styles.buttonText}>Post</Text>
-      </Pressable>
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("FeedScreen")} //
-      >
-        <Text style={styles.buttonText}>Jump to Feed (Testing Purposes)</Text>
+        onPress={() => navigation.navigate("DiscoverScreen")}>
+        <Text style={styles.buttonText}>Discover</Text>
       </Pressable>
     </SafeAreaView>
   );
@@ -50,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default FeedScreen;

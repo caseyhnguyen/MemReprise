@@ -7,8 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // make sure to install this package
-
+import { useNavigation } from "@react-navigation/native";
 import millisToMinuteSeconds from "../utils/millisToMinutesAndSeconds.js";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../assets/Themes/colors";
@@ -24,12 +23,23 @@ const Song = ({
   previewUrl,
   externalUrl,
 }) => {
-  const navigation = useNavigation(); // Hook to handle navigation
+  const navigation = useNavigation();
 
-  // Function to handle press on the entire song row
+  // Check if artists is an array and convert it to a string
+  const artistNames = Array.isArray(artists) ? artists.join(", ") : artists;
+
   const onSongPress = () => {
-    // Navigate to ThemeQScreen with parameters if needed
-    navigation.navigate("ThemeQScreen", { previewUrl, externalUrl });
+    navigation.navigate("ThemeQScreen", {
+      songData: {
+        title,
+        artists,
+        albumName,
+        imageUrl,
+        duration,
+        previewUrl,
+        externalUrl,
+      },
+    });
   };
 
   return (
@@ -49,7 +59,7 @@ const Song = ({
             {title}
           </Text>
           <Text style={styles.artistText} numberOfLines={1}>
-            {artists.join(", ")}
+            {artistNames}
           </Text>
         </View>
         <Text style={styles.albumName} numberOfLines={1}>

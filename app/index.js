@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AppLayout from "./_layout";
 import * as SplashScreen from "expo-splash-screen";
 import { DarkModeContext } from "../assets/Themes/DarkModeContext";
+import { SongDataProvider } from "../utils/SongDataContext";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -22,9 +23,11 @@ const App = () => {
 
   return (
     <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
-      <NavigationContainer>
-        <AppLayout />
-      </NavigationContainer>
+      <SongDataProvider>
+        <NavigationContainer>
+          <AppLayout />
+        </NavigationContainer>
+      </SongDataProvider>
     </DarkModeContext.Provider>
   );
 };

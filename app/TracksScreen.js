@@ -131,18 +131,13 @@ const TracksScreen = ({ navigation }) => {
   };
 
   const renderSong = ({ item }) => {
-    // Use properties directly from the item, as they've been formatted already
     return (
       <Song
-        onPress={() => navigation.navigate("ThemeQScreen", { songData })}
+        onPress={() => navigation.navigate("ThemeQScreen", { songData: item })}
         title={item.songTitle || "Unknown Title"}
-        artists={
-          Array.isArray(item.songArtists)
-            ? item.songArtists.map((artist) => artist.name)
-            : ["Unknown Artist"]
-        }
+        artists={item.songArtists || ["Unknown Artist"]}
         albumName={item.albumName || "Unknown Album"}
-        imageUrl={item.imageUrl || "https://example.com/default-image.png"}
+        imageUrl={item.imageUrl || "Unknown Image"}
         duration={item.duration || 0}
         previewUrl={item.previewUrl || ""}
         externalUrl={item.externalUrl || ""}

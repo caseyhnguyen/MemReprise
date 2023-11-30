@@ -26,6 +26,12 @@ function HomeStackScreen() {
         name="PostSummaryScreen"
         component={PostSummaryScreen}
       />
+      <HomeStack.Screen
+        name="FeedScreen"
+        component={FeedScreen}
+        options={{ headerShown: false }} // Hides the header for this screen
+      />
+
       {/* Other screens related to Home can be added here */}
     </HomeStack.Navigator>
   );

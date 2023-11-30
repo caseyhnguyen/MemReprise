@@ -1,15 +1,16 @@
-import React, { createContext, useState, useContext } from "react";
+// import React, { useState, useEffect } from "react";
 
-const SongDataContext = createContext();
+// export const SongDataContext = React.createContext({
+//   songData: null, // Initial value
+//   setSongData: () => {}, // Placeholder function
+// });
 
-export const useSongData = () => useContext(SongDataContext);
+// export const SongDataProvider = ({ children }) => {
+//   const [songData, setSongData] = useState(null);
 
-export const SongDataProvider = ({ children }) => {
-  const [songData, setSongData] = useState(null);
-
-  return (
-    <SongDataContext.Provider value={{ songData, setSongData }}>
-      {children}
-    </SongDataContext.Provider>
-  );
-};
+//   return (
+//     <SongDataContext.Provider value={{ songData, setSongData }}>
+//       {children}
+//     </SongDataContext.Provider>
+//   );
+// };

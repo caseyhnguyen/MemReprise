@@ -17,7 +17,6 @@ import images from "../assets/Images/images";
 import Song from "../components/Song";
 import CurrentSong from "../components/CurrentSong";
 import { StatusBar } from "expo-status-bar";
-import ProgressBar from "react-native-progress/Bar";
 
 // Get the window width
 const windowWidth = Dimensions.get("window").width;
@@ -29,6 +28,7 @@ const TracksScreen = ({ navigation }) => {
   const { search, setSearch, searchedSongs, debouncedSearchSongs } =
     useSearch(token);
   const [progress, setProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     let interval;
@@ -53,16 +53,29 @@ const TracksScreen = ({ navigation }) => {
 
   // Function to handle button press
   const handleButtonPress = () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
     if (token) {
       clearCacheAndRefetch(); // Clear cache if user is authenticated
     } else {
       getSpotifyAuth(); // Authenticate if user is not authenticated
     }
+    setIsLoading(false);
   };
 
   const SpotifyAuthOrRefreshButton = () => (
-    <Pressable style={styles.button} onPress={handleButtonPress}>
-      <Image source={images.spotify} style={styles.spotifyIcon} />
+    <Pressable
+      style={[styles.button, isLoading && styles.disabledButton]}
+      onPress={handleButtonPress}
+      disabled={isLoading}
+    >
+      {!token && (
+        <Image
+          source={images.spotify}
+          style={[styles.spotifyIcon, isLoading && styles.disabledIcon]}
+        />
+      )}
       <Text style={styles.buttonText}>
         {token ? "REFRESH" : "GET RECENT SONGS FROM SPOTIFY"}
       </Text>
@@ -74,6 +87,7 @@ const TracksScreen = ({ navigation }) => {
     if (!currentTrack) return null;
 
     const {
+      index,
       songTitle,
       songArtists,
       albumName,
@@ -85,16 +99,13 @@ const TracksScreen = ({ navigation }) => {
     } = currentTrack;
 
     const progressFraction = progressMs / duration;
-    const progressBarWidth = windowWidth - 40; // Adjust padding as needed
-    const circleDiameter = 14;
-    const circleOffset =
-      progressFraction * progressBarWidth - circleDiameter / 2;
 
     return (
       <View style={styles.currentTrackContainer}>
-        <Text style={styles.currentTrackTitle}>Now Playing:</Text>
+        <Text style={styles.currentTrackTitle}>Now Playing</Text>
         <CurrentSong
-          onPress={() => navigation.navigate("ThemeQScreen", { songData })}
+          onPress={() => navigation.navigate("Theme Question", { songData })}
+          index={index}
           title={songTitle}
           artists={songArtists}
           albumName={albumName}
@@ -102,38 +113,20 @@ const TracksScreen = ({ navigation }) => {
           duration={duration}
           previewUrl={previewUrl}
           externalUrl={externalUrl}
+          progressFraction={progressFraction}
+          progressMs={progressMs}
         />
-        <View style={styles.progressWrapper}>
-          <ProgressBar
-            progress={progressFraction}
-            width={progressBarWidth}
-            height={7}
-            borderRadius={3.5}
-            color={colors.spotify}
-            unfilledColor="#D7D7D7"
-            borderWidth={0}
-            useNativeDriver={true}
-            style={styles.progressBar}
-          />
-          <View style={[styles.progressCircle, { left: circleOffset }]} />
-          <Text style={styles.progressTime}>{formatTime(progressMs)}</Text>
-          <Text style={styles.durationTime}>{formatTime(duration)}</Text>
-        </View>
       </View>
     );
   };
 
-  const formatTime = (milliseconds) => {
-    const totalSeconds = Math.floor(milliseconds / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  };
+  const limitedTracks = tracks.slice(0, 10);
 
-  const renderSong = ({ item }) => {
+  const renderSong = ({ item, index }) => {
+    // console.log(item);
     return (
       <Song
-        onPress={() => navigation.navigate("ThemeQScreen", { songData: item })}
+        index={index}
         title={item.songTitle || "Unknown Title"}
         artists={item.songArtists || ["Unknown Artist"]}
         albumName={item.albumName || "Unknown Album"}
@@ -145,10 +138,10 @@ const TracksScreen = ({ navigation }) => {
     );
   };
 
-  const renderSearchSong = ({ item }) => {
+  const renderSearchSong = ({ item, index }) => {
     return (
       <Song
-        onPress={() => navigation.navigate("ThemeQScreen")}
+        index={index}
         title={item.name || "Unknown Title"}
         artists={item.artists.map((artist) => artist.name)}
         albumName={item.album.name || "Unknown Album"}
@@ -175,24 +168,22 @@ const TracksScreen = ({ navigation }) => {
         />
       </View>
 
-      <SpotifyAuthOrRefreshButton />
-
       {token && (
         <>
           {renderCurrentTrack()}
           <View style={styles.header}>
-            <Image source={images.spotify} style={styles.logo} />
-            <Text style={styles.headerTitle}>My Recent Tracks</Text>
+            <Text style={styles.subheaderTitle}>My Recent Tracks</Text>
           </View>
         </>
       )}
 
+      <SpotifyAuthOrRefreshButton />
+
       <FlatList
-        data={search ? searchedSongs : tracks}
+        data={search ? searchedSongs : limitedTracks}
         renderItem={search ? renderSearchSong : renderSong}
         keyExtractor={(item, index) => item.id?.toString() || index.toString()}
-        onEndReached={fetchMore}
-        onEndReachedThreshold={0.5}
+        // Removed onEndReached and onEndReachedThreshold to remove infinite scroll
         ListFooterComponent={
           loading && <ActivityIndicator size="large" color={colors.white} />
         }
@@ -202,7 +193,7 @@ const TracksScreen = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <SafeAreaView style={styles.container}>{contentDisplayed}</SafeAreaView>
     </>
   );
@@ -210,7 +201,7 @@ const TracksScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.background,
+    // backgroundColor: colors.background,
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
@@ -219,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.background,
+    // backgroundColor: colors.background,
   },
   logo: {
     width: 24,
@@ -227,56 +218,31 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   currentTrackContainer: {
-    margin: 10,
-    padding: 10,
+    // marginTop: 0,
+    marginBottom: 5,
+    // padding: 5,
     borderRadius: 10,
     alignItems: "center",
-    backgroundColor: colors.background, // example background color
+    // backgroundColor: colors.background,
   },
   currentTrackTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     color: colors.white,
     marginBottom: 5,
-  },
-  progressWrapper: {
-    position: "relative",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  progressBar: {
-    // Style for your progress bar
-  },
-  progressCircle: {
-    position: "absolute",
-    top: -3.5, // Half of the circle's diameter to position it centered vertically
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    backgroundColor: colors.spotify,
-    borderColor: colors.white,
-    borderWidth: 2,
-  },
-  progressTime: {
-    position: "absolute",
-    bottom: -20, // Adjust as needed
-    left: 0,
-    fontSize: 14,
-    color: colors.gray,
-  },
-  durationTime: {
-    position: "absolute",
-    bottom: -20, // Adjust as needed
-    right: 0,
-    fontSize: 14,
-    color: colors.gray,
   },
   headerTitle: {
     fontSize: 24,
     color: colors.white,
     fontWeight: "bold",
-    paddingBottom: 10,
+    paddingTop: 20,
+    paddingBottom: 5,
+  },
+  subheaderTitle: {
+    fontSize: 20,
+    color: colors.white,
+    fontWeight: "bold",
+    // marginBottom: 0,
   },
   contentContainer: {
     justifyContent: "center",
@@ -288,9 +254,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.spotify,
+    height: windowWidth * 0.1,
+    width: windowWidth * 0.8,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 30,
+    borderRadius: 15,
+    marginTop: 5,
+    marginBottom: 10,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -309,20 +279,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  clearButton: {
-    marginBottom: 10,
-  },
-  clearButtonText: {
-    color: colors.spotify,
-    textAlign: "center",
-    fontSize: 16,
-  },
   searchContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: 20,
-    paddingVertical: 10,
+    width: windowWidth * 0.95,
+    marginBottom: 20,
   },
   searchInput: {
     flex: 1,
@@ -330,7 +292,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: colors.white,
     color: colors.black,
-    borderRadius: 5,
+    borderRadius: 10,
   },
 });
 

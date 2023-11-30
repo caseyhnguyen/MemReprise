@@ -36,7 +36,9 @@ const PostSummaryScreen = ({ route, navigation }) => {
 
       <Pressable
         style={defaultStyles.button}
-        onPress={() => navigation.navigate("Feed", { songData })}
+        onPress={() =>
+          navigation.navigate("Feed From Post Summary", { songData })
+        }
       >
         <Text style={defaultStyles.buttonText}>
           Jump to Feed (Testing Purposes)

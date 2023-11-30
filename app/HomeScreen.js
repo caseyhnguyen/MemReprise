@@ -21,14 +21,14 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("TracksScreen")} // Updated route name
+        onPress={() => navigation.navigate("Tracks")} // Updated route name
       >
         <Text style={styles.buttonText}>Post</Text>
       </Pressable>
 
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("FeedScreen")} // Jump to Feed Screen
+        onPress={() => navigation.navigate("Feed")} // Jump to Feed Screen
       >
         <Text style={styles.buttonText}>Jump to Feed (Testing Purposes)</Text>
       </Pressable>

@@ -1,3 +1,4 @@
+// Song.js
 import React from "react";
 import {
   View,
@@ -15,6 +16,7 @@ import { colors } from "../assets/Themes/colors";
 const windowWidth = Dimensions.get("window").width;
 
 const Song = ({
+  index,
   title,
   artists,
   albumName,
@@ -25,14 +27,11 @@ const Song = ({
 }) => {
   const navigation = useNavigation();
 
-  // Check if artists is an array and convert it to a string
-  const artistNames = Array.isArray(artists) ? artists.join(", ") : artists;
-
   const onSongPress = () => {
-    navigation.navigate("ThemeQScreen", {
+    navigation.navigate("Theme Question", {
       songData: {
         title,
-        artists,
+        artists: Array.isArray(artists) ? artists : [artists],
         albumName,
         imageUrl,
         duration,
@@ -43,92 +42,102 @@ const Song = ({
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onSongPress}>
-      <View style={styles.buttonContainer}>
-        <Ionicons
-          name="play-circle"
-          size={32}
-          color={colors.spotify}
-          style={styles.playButton}
-        />
-      </View>
-      <View style={styles.songInfo}>
-        <Image source={{ uri: imageUrl }} style={styles.image} />
-        <View style={styles.titleAndArtist}>
-          <Text style={styles.titleText} numberOfLines={1}>
-            {title}
-          </Text>
-          <Text style={styles.artistText} numberOfLines={1}>
-            {artistNames}
+    <View style={styles.outerContainer}>
+      <TouchableOpacity style={styles.container} onPress={onSongPress}>
+        <View style={styles.songInfo}>
+          <Text style={styles.index}>{index + 1}</Text>
+          <Image source={{ uri: imageUrl }} style={styles.image} />
+          <View style={styles.titleAndArtist}>
+            <Text style={styles.titleText} numberOfLines={1}>
+              {title}
+            </Text>
+            <Text style={styles.artistText} numberOfLines={1}>
+              {Array.isArray(artists) ? artists.join(", ") : artists}
+            </Text>
+          </View>
+          {/* <Text style={styles.albumName} numberOfLines={1}>
+            {albumName}
+          </Text> */}
+          <Text style={styles.durationText}>
+            {millisToMinuteSeconds(duration)}
           </Text>
         </View>
-        <Text style={styles.albumName} numberOfLines={1}>
-          {albumName}
-        </Text>
-        <Text style={styles.durationText}>
-          {millisToMinuteSeconds(duration)}
-        </Text>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    backgroundColor: "#F3F3F3",
+    // opacity: 0.75,
+    borderRadius: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    // marginHorizontal: 5,
+    marginBottom: 10, // Spacing between each song item
+    width: windowWidth * 0.95,
+    height: windowWidth * 0.2,
+  },
   container: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
-    minWidth: windowWidth * 0.95,
-    maxWidth: windowWidth * 0.95,
-    paddingBottom: 10,
+    width: windowWidth * 0.9,
   },
   buttonContainer: {
     width: windowWidth * 0.1,
     height: windowWidth * 0.1,
     marginRight: 5,
   },
+  index: {
+    color: colors.black,
+    fontSize: 14,
+    width: "8%",
+    textAlign: "center",
+  },
   songInfo: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    width: "88%",
+    justifyContent: "left",
+    width: "95%",
     alignItems: "center",
   },
   titleAndArtist: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
-    marginRight: 10,
-    width: "36%",
+    marginRight: 20,
+    width: "60%",
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 65,
+    height: 65,
     marginRight: 15,
   },
-  playButton: {
-    marginRight: 3,
-    color: colors.spotify,
-    alignItems: "center",
-  },
+  // playButton: {
+  //   marginRight: 3,
+  //   color: colors.spotify,
+  //   alignItems: "center",
+  // },
   albumName: {
-    color: "white",
+    color: colors.black,
     flex: 3,
     fontSize: 14,
     marginRight: 10,
     width: windowWidth * 0.15,
   },
   durationText: {
-    color: colors.gray,
+    color: colors.black,
     fontSize: 14,
     paddingLeft: 5,
   },
   artistText: {
-    color: colors.gray,
+    color: colors.black,
     fontSize: 14,
     marginTop: 2,
   },
   titleText: {
-    color: colors.white,
+    color: colors.black,
+    fontWeight: "bold",
     fontSize: 14,
     marginBottom: 2,
   },

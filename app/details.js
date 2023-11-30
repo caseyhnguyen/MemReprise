@@ -10,7 +10,7 @@ export default function Page() {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <Stack.Screen
         options={{
           headerStyle: { backgroundColor: colors.background },

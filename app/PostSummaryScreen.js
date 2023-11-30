@@ -13,9 +13,11 @@ import { styles as defaultStyles } from "../assets/Themes/default_style";
 const windowWidth = Dimensions.get("window").width;
 
 const PostSummaryScreen = ({ route, navigation }) => {
-  const { songData } = route.params || {};
+  const { songData } = route.params;
   const artistNames =
-    typeof songData.artists === "string" ? songData.artists : "Unknown Artist";
+    songData && songData.artists
+      ? songData.artists.join(", ")
+      : "Unknown Artist";
   return (
     <SafeAreaView style={defaultStyles.container}>
       {songData && (
@@ -34,7 +36,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
 
       <Pressable
         style={defaultStyles.button}
-        onPress={() => navigation.navigate("FeedScreen", { songData })}
+        onPress={() => navigation.navigate("Feed", { songData })}
       >
         <Text style={defaultStyles.buttonText}>
           Jump to Feed (Testing Purposes)

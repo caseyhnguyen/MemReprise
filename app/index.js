@@ -22,13 +22,13 @@ const App = () => {
   }, []);
 
   return (
-    <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
-      <SongDataProvider>
+    <SongDataProvider>
+      <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
         <NavigationContainer>
           <AppLayout />
         </NavigationContainer>
-      </SongDataProvider>
-    </DarkModeContext.Provider>
+      </DarkModeContext.Provider>
+    </SongDataProvider>
   );
 };
 

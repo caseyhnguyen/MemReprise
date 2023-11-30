@@ -9,48 +9,63 @@ import FeedScreen from "./FeedScreen";
 import DiscoverScreen from "./DiscoverScreen";
 import ThemeQScreen from "./ThemeQScreen";
 import PostSummaryScreen from "./PostSummaryScreen";
+import GradientBackground from "../assets/Themes/background"; // Import the GradientBackground component
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const FeedStack = createStackNavigator();
 const DiscoverStack = createStackNavigator();
 
-// Stack Navigators for each tab
+// Create a wrapper component to apply gradient background
+const GradientWrapper = ({ Component, navigation, route }) => (
+  <GradientBackground>
+    <Component navigation={navigation} route={route} />
+  </GradientBackground>
+);
+
+// HomeStack Navigator
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="HomeMain" component={HomeScreen} />
-      <HomeStack.Screen name="TracksScreen" component={TracksScreen} />
-      <HomeStack.Screen name="ThemeQScreen" component={ThemeQScreen} />
-      <HomeStack.Screen
-        name="PostSummaryScreen"
-        component={PostSummaryScreen}
-      />
-      <HomeStack.Screen
-        name="FeedScreen"
-        component={FeedScreen}
-        options={{ headerShown: false }} // Hides the header for this screen
-      />
-
-      {/* Other screens related to Home can be added here */}
+      <HomeStack.Screen name="Home">
+        {(props) => <GradientWrapper {...props} Component={HomeScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Tracks">
+        {(props) => <GradientWrapper {...props} Component={TracksScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Theme Question">
+        {(props) => <GradientWrapper {...props} Component={ThemeQScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Post Summary">
+        {(props) => (
+          <GradientWrapper {...props} Component={PostSummaryScreen} />
+        )}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Feed From Post Summary">
+        {(props) => <GradientWrapper {...props} Component={FeedStackScreen} />}
+      </HomeStack.Screen>
     </HomeStack.Navigator>
   );
 }
 
+// FeedStack Navigator
 function FeedStackScreen() {
   return (
     <FeedStack.Navigator>
-      <FeedStack.Screen name="FeedMain" component={FeedScreen} />
-      {/* Other screens related to Feed can be added here */}
+      <FeedStack.Screen name="Feed">
+        {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
+      </FeedStack.Screen>
     </FeedStack.Navigator>
   );
 }
 
+// DiscoverStack Navigator
 function DiscoverStackScreen() {
   return (
     <DiscoverStack.Navigator>
-      <DiscoverStack.Screen name="DiscoverMain" component={DiscoverScreen} />
-      {/* Other screens related to Discover can be added here */}
+      <DiscoverStack.Screen name="Discover">
+        {(props) => <GradientWrapper {...props} Component={DiscoverScreen} />}
+      </DiscoverStack.Screen>
     </DiscoverStack.Navigator>
   );
 }
@@ -59,7 +74,7 @@ const AppLayout = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: false, // This will hide the header for all screens in the tab navigator
+        headerShown: false,
         tabBarActiveTintColor: "red",
         tabBarInactiveTintColor: "black",
         tabBarLabelStyle: { fontSize: 18 },

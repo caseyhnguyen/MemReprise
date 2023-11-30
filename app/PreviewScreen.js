@@ -1,3 +1,4 @@
+// PreviewScreen.js
 import {
   ActivityIndicator,
   StyleSheet,
@@ -15,12 +16,13 @@ import { WebView } from "react-native-webview";
 import { colors } from "../assets/Themes/colors";
 import { StatusBar } from "expo-status-bar";
 
-export default function Page() {
-  const params = useLocalSearchParams();
+export default function PreviewScreen() {
+  const route = useRoute();
+  const { url } = route.params;
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <Stack.Screen
         options={{
           headerStyle: { backgroundColor: colors.background },
@@ -29,7 +31,7 @@ export default function Page() {
           headerTitleStyle: { color: colors.white, fontSize: 20 },
         }}
       />
-      <WebView source={{ uri: params.url }} style={styles.main} />
+      <WebView source={{ uri: url }} style={styles.main} />
     </>
   );
 }

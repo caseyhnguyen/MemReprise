@@ -14,15 +14,15 @@ const windowWidth = Dimensions.get("window").width;
 
 const FeedScreen = ({ route, navigation }) => {
   // Extract songData from route.params, it can be undefined
-  const { songData } = route.params || {};
+  const songData = route.params?.songData;
 
   // Optional: Function to render song details
   const renderSongDetails = () => {
     if (!songData) return null;
 
     const artistNames =
-      typeof songData.artists === "string"
-        ? songData.artists
+      songData && songData.artists
+        ? songData.artists.join(", ")
         : "Unknown Artist";
 
     return (
@@ -40,14 +40,14 @@ const FeedScreen = ({ route, navigation }) => {
       {renderSongDetails()}
       <Text>Feed</Text>
 
-      <Pressable
+      {/* <Pressable
         style={defaultStyles.button}
-        onPress={() => navigation.navigate("DiscoverScreen")}
+        onPress={() => navigation.navigate("Discover")}
       >
         <Text style={defaultStyles.buttonText}>
           Jump to Discover (Testing Purposes)
-        </Text>
-      </Pressable>
+        </Text> */}
+      {/* </Pressable> */}
     </SafeAreaView>
   );
 };

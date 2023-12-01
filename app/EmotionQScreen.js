@@ -46,6 +46,10 @@ const ThemeQScreen = ({ route, navigation }) => {
                   ? songData.artists.join(", ")
                   : songData.artists}
               </Text>
+              <Image
+                source={images.matchaLatte.pic}
+                style={styles.smallImage}
+              />
             </View>
             {/* other song details */}
           </View>
@@ -164,6 +168,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     alignContent: "center",
+  },
+  smallImage: {
+    marginTop: 5,
+    width: windowWidth * 0.1,
+    height: windowWidth * 0.1,
   },
 });
 export default ThemeQScreen;

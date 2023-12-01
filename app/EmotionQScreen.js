@@ -1,5 +1,5 @@
 import React from "react";
-import SingleThemeOption from "../components/SingleThemeOption";
+import SingleEmotionOption from "../components/SingleEmotionOption";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import {
@@ -52,37 +52,35 @@ const ThemeQScreen = ({ route, navigation }) => {
         )}
 
         <View style={styles.questionBox}>
-          <Text style={styles.boldText}>
-            What cafe drink would your song be?
-          </Text>
+          <Text style={styles.boldText}>How are you feeling?</Text>
         </View>
 
         {/* First selection Row */}
         <View style={styles.selectionGrid}>
           <View style={styles.selectionRow}>
-            <SingleThemeOption
+            <SingleEmotionOption
               songData={songData}
-              icon={images.lemonade.pic}
-              iconText={images.lemonade.label}
-            ></SingleThemeOption>
-            <SingleThemeOption
+              icon={images.superHappyEmoji.pic}
+              iconText={images.superHappyEmoji.label}
+            ></SingleEmotionOption>
+            <SingleEmotionOption
               songData={songData}
-              icon={images.matchaLatte.pic}
-              iconText={images.matchaLatte.label}
-            ></SingleThemeOption>
+              icon={images.happyEmoji.pic}
+              iconText={images.happyEmoji.label}
+            ></SingleEmotionOption>
           </View>
           {/* Second selection Row */}
           <View style={styles.selectionRow}>
-            <SingleThemeOption
+            <SingleEmotionOption
               songData={songData}
-              icon={images.hotChocolate.pic}
-              iconText={images.hotChocolate.label}
-            ></SingleThemeOption>
-            <SingleThemeOption
+              icon={images.superSadEmoji.pic}
+              iconText={images.superSadEmoji.label}
+            ></SingleEmotionOption>
+            <SingleEmotionOption
               songData={songData}
-              icon={images.expresso.pic}
-              iconText={images.expresso.label}
-            ></SingleThemeOption>
+              icon={images.sadEmoji.pic}
+              iconText={images.sadEmoji.label}
+            ></SingleEmotionOption>
           </View>
         </View>
 
@@ -168,5 +166,4 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
 });
-
 export default ThemeQScreen;

@@ -1,4 +1,16 @@
 import React from "react";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  Pressable,
+  Image,
+  FlatList,
+  View,
+  Dimensions,
+  TextInput,
+} from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -12,6 +24,8 @@ import PostSummaryScreen from "./PostSummaryScreen";
 import GradientBackground from "../assets/Themes/background"; // Import the GradientBackground component
 import EmotionQScreen from "./EmotionQScreen";
 import ActivityQScreen from "./ActivityQScreen";
+import images from "../assets/Images/images";
+import { colors } from "../assets/Themes/colors";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -28,8 +42,8 @@ const GradientWrapper = ({ Component, navigation, route }) => (
 // HomeStack Navigator
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home">
+    <HomeStack.Navigator screenOptions={{ headerShown: true }}>
+      <HomeStack.Screen name="Home" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={HomeScreen} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Tracks">
@@ -49,9 +63,10 @@ function HomeStackScreen() {
           <GradientWrapper {...props} Component={PostSummaryScreen} />
         )}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Feed From Post Summary">
-        {(props) => <GradientWrapper {...props} Component={FeedStackScreen} />}
-      </HomeStack.Screen>
+
+      {/* <HomeStack.Screen name="Feed" options={{ headerShown: false }}>
+        {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
+      </HomeStack.Screen> */}
     </HomeStack.Navigator>
   );
 }
@@ -59,7 +74,7 @@ function HomeStackScreen() {
 // FeedStack Navigator
 function FeedStackScreen() {
   return (
-    <FeedStack.Navigator>
+    <FeedStack.Navigator screenOptions={{ headerShown: false }}>
       <FeedStack.Screen name="Feed">
         {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
       </FeedStack.Screen>
@@ -70,7 +85,7 @@ function FeedStackScreen() {
 // DiscoverStack Navigator
 function DiscoverStackScreen() {
   return (
-    <DiscoverStack.Navigator>
+    <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
       <DiscoverStack.Screen name="Discover">
         {(props) => <GradientWrapper {...props} Component={DiscoverScreen} />}
       </DiscoverStack.Screen>
@@ -83,15 +98,55 @@ const AppLayout = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "red",
-        tabBarInactiveTintColor: "black",
-        tabBarLabelStyle: { fontSize: 18 },
-        tabBarStyle: [{ display: "flex" }, null],
+        tabBarActiveTintColor: colors.verdigrisGreen,
+        tabBarInactiveTintColor: colors.teal,
+        tabBarLabelStyle: { fontSize: 14, padding: 5 },
+        tabBarStyle: {
+          display: "flex",
+          paddingTop: 30,
+        },
+        tabBarIconStyle: { paddingBottom: 10 },
       }}
     >
-      <Tab.Screen name="HomeScreen" component={HomeStackScreen} />
-      <Tab.Screen name="FeedScreen" component={FeedStackScreen} />
-      <Tab.Screen name="DiscoverScreen" component={DiscoverStackScreen} />
+      <Tab.Screen
+        name="HomeScreen"
+        component={HomeStackScreen}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={images.homeIcon}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="FeedScreen"
+        component={FeedStackScreen}
+        options={{
+          tabBarLabel: "Feed",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={images.repriseIcon}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="DiscoverScreen"
+        component={HomeStackScreen}
+        options={{
+          tabBarLabel: "Discover",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={images.profileIcon}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };

@@ -13,7 +13,7 @@ import { styles as defaultStyles } from "../assets/Themes/default_style";
 const windowWidth = Dimensions.get("window").width;
 
 const PostSummaryScreen = ({ route, navigation }) => {
-  const { songData } = route.params;
+  const songData = route.params?.songData || {};
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
@@ -37,7 +37,10 @@ const PostSummaryScreen = ({ route, navigation }) => {
       <Pressable
         style={defaultStyles.button}
         onPress={() =>
-          navigation.navigate("Feed From Post Summary", { songData })
+          navigation.navigate("FeedScreen", {
+            screen: "Feed",
+            params: { songData },
+          })
         }
       >
         <Text style={defaultStyles.buttonText}>

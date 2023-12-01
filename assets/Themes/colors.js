@@ -5,6 +5,8 @@ export const colors = {
   white: "#FFFFFF",
   darkGray: "#4F4F4FFF",
   offWhite: "#F3F3F3FF",
+  offWhite50: "rgba(255, 255, 255, 0.5)", // 50% opacity
+  offWhite75: "rgba(255, 255, 255, 0.75)", // 50% opacity
   skyBlue: "#41A9F6FF",
   yellow: "#F5DF44FF",
   leafGreen: "#36BF57FF",

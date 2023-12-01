@@ -75,8 +75,8 @@ const CurrentSong = ({
           width={windowWidth - 40} // Adjust padding as needed
           height={7}
           borderRadius={3.5}
-          color={colors.spotify}
-          unfilledColor="#D7D7D7"
+          color={colors.verdigrisGreen}
+          unfilledColor={colors.gray}
           borderWidth={0}
           useNativeDriver={true}
           style={styles.progressBar}
@@ -90,13 +90,17 @@ const CurrentSong = ({
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: "#F3F3F3",
+    backgroundColor: colors.offWhite75,
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 15,
     marginBottom: 10,
     width: windowWidth * 0.95,
     height: windowWidth * 0.32, // Increased height
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   container: {
     flexDirection: "row",
@@ -128,12 +132,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   artistText: {
-    color: colors.black,
+    color: colors.darkGray,
     fontSize: 16, // Increased font size
     marginTop: 2,
   },
   titleText: {
-    color: colors.black,
     fontWeight: "bold",
     fontSize: 16, // Increased font size
     marginBottom: 2,
@@ -150,19 +153,19 @@ const styles = StyleSheet.create({
     height: 7,
     borderRadius: 3.5,
     color: colors.spotify,
-    unfilledColor: "#D7D7D7",
+    unfilledColor: colors.darkGray,
     borderWidth: 0,
   },
   progressTime: {
     fontSize: 14,
-    color: colors.black,
+    color: colors.darkGray,
     position: "absolute",
     left: 10, // Align with the left edge of progressWrapper
     bottom: -20, // Place below the progress bar
   },
   durationTime: {
     fontSize: 14,
-    color: colors.black,
+    color: colors.darkGray,
     position: "absolute",
     right: 10, // Align with the right edge of progressWrapper
     bottom: -20, // Place below the progress bar

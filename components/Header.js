@@ -19,15 +19,15 @@ const Header = ({ title }) => {
     <View style={styles.header}>
       <Text style={styles.title}>{title}</Text>
       <Image
-          source={images.plane.pic} 
-          style={styles.paperPlanIcon}
-          resizeMode="contain"
-        />
-    <Image
-        source={images.clouds.pic} 
+        source={images.plane.pic}
+        style={styles.paperPlanIcon}
+        resizeMode="contain"
+      />
+      <Image
+        source={images.clouds.pic}
         style={styles.cloudsIcon}
         resizeMode="contain"
-    />
+      />
     </View>
   );
 };
@@ -35,29 +35,30 @@ const Header = ({ title }) => {
 const styles = StyleSheet.create({
   header: {
     // padding: 15,
-    justifyContent: 'flex-start', 
-    marginTop: -190, 
+    justifyContent: "flex-start",
+    marginTop: -190,
     marginLeft: -20,
     // alignItems: 'center',
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'left', 
+    fontWeight: "bold",
+    textAlign: "left",
+    margin: 5,
   },
   paperPlanIcon: {
     width: 40,
-    height: 40 
+    height: 40,
   },
   cloudsIcon: {
-    width: 70, 
+    width: 70,
     height: 70,
     marginLeft: 50,
-    alignItems: 'center',
-  }
+    alignItems: "center",
+  },
 });
 
 export default Header;

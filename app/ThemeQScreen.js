@@ -12,6 +12,7 @@ import {
   Pressable,
 } from "react-native";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
+import PostProgressBar from "../components/PostProgressBar";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -26,7 +27,7 @@ const ThemeQScreen = ({ route, navigation }) => {
     songData && songData.artists
       ? songData.artists.join(", ")
       : "Unknown Artist";
-  console.log(songData);
+  // console.log(songData);
 
   return (
     <SafeAreaView style={defaultStyles.container}>
@@ -86,14 +87,7 @@ const ThemeQScreen = ({ route, navigation }) => {
           </View>
         </View>
 
-        <Pressable
-          style={defaultStyles.button}
-          onPress={() => navigation.navigate("Emotion Question", { songData })}
-        >
-          <Text style={defaultStyles.buttonText}>
-            USER SELECTS THEME ANSWER
-          </Text>
-        </Pressable>
+        <PostProgressBar progressFraction={1 / 3} label="1 / 3" />
       </View>
     </SafeAreaView>
   );

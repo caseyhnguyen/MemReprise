@@ -76,7 +76,7 @@ const CurrentSong = ({
           height={7}
           borderRadius={3.5}
           color={colors.verdigrisGreen}
-          unfilledColor={colors.gray}
+          unfilledColor={colors.offWhite75}
           borderWidth={0}
           useNativeDriver={true}
           style={styles.progressBar}
@@ -147,14 +147,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 10,
     marginTop: 10, // Add some space above the progress bar
-  },
-  progressBar: {
-    width: "100%", // Subtract the space for progressTime and durationTime
-    height: 7,
-    borderRadius: 3.5,
-    color: colors.spotify,
-    unfilledColor: colors.darkGray,
-    borderWidth: 0,
   },
   progressTime: {
     fontSize: 14,

@@ -123,19 +123,19 @@ const styles = StyleSheet.create({
   //   alignItems: "center",
   // },
   albumName: {
-    color: colors.black,
+    color: colors.darkGray,
     flex: 3,
     fontSize: 14,
     marginRight: 10,
     width: windowWidth * 0.15,
   },
   durationText: {
-    color: colors.black,
+    color: colors.darkGray,
     fontSize: 14,
     paddingLeft: 5,
   },
   artistText: {
-    color: colors.black,
+    color: colors.darkGray,
     fontSize: 14,
     marginTop: 2,
   },

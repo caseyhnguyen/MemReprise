@@ -48,6 +48,22 @@ const images = {
     pic: require("../exercise.png"),
     label: "Exercising",
   },
+  lock: {
+    pic: require("../lock.png"),
+    label: "Lock",
+  },
+  home: {
+    pic: require("../home-icon.png"),
+    label: "Home",
+  },
+  reprise: {
+    pic: require("../reprise-icon.png"),
+    label: "Reprise",
+  },
+  profile: {
+    pic: require("../profile-icon.png"),
+    label: "Profile",
+  },
 };
 
 export default images;

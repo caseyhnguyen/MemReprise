@@ -46,12 +46,9 @@ const ThemeQScreen = ({ route, navigation }) => {
                   ? songData.artists.join(", ")
                   : songData.artists}
               </Text>
-              <Image
-                source={images.matchaLatte.pic}
-                style={styles.smallImage}
-              />
             </View>
             {/* other song details */}
+            <Image source={images.matchaLatte.pic} style={styles.smallImage} />
           </View>
         )}
 

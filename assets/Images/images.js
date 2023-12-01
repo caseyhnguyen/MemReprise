@@ -12,6 +12,9 @@ const images = {
   commuting: require("../commute.png"),
   eating: require("../eating.png"),
   exercising: require("../exercise.png"),
+  homeIcon: require("../home-icon.png"),
+  profileIcon: require("../profile-icon.png"),
+  repriseIcon: require("../reprise-icon.png"),
 };
 
 export default images;

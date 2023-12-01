@@ -21,7 +21,9 @@ import FeedScreen from "./FeedScreen";
 import DiscoverScreen from "./DiscoverScreen";
 import ThemeQScreen from "./ThemeQScreen";
 import PostSummaryScreen from "./PostSummaryScreen";
-import GradientBackground from "../assets/Themes/background";
+import GradientBackground from "../assets/Themes/background"; // Import the GradientBackground component
+import EmotionQScreen from "./EmotionQScreen";
+import ActivityQScreen from "./ActivityQScreen";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 
@@ -49,6 +51,12 @@ function HomeStackScreen() {
       </HomeStack.Screen>
       <HomeStack.Screen name="Theme Question">
         {(props) => <GradientWrapper {...props} Component={ThemeQScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Emotion Question">
+        {(props) => <GradientWrapper {...props} Component={EmotionQScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Activity Question">
+        {(props) => <GradientWrapper {...props} Component={ActivityQScreen} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Post Summary">
         {(props) => (

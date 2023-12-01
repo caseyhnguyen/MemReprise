@@ -46,6 +46,16 @@ const ThemeQScreen = ({ route, navigation }) => {
                   ? songData.artists.join(", ")
                   : songData.artists}
               </Text>
+              <View style={styles.smallSelectionRow}>
+                <Image
+                  source={images.matchaLatte.pic}
+                  style={styles.smallImage}
+                />
+                <Image
+                  source={images.superHappyEmoji.pic}
+                  style={styles.smallImage}
+                />
+              </View>
             </View>
             {/* other song details */}
           </View>
@@ -163,6 +173,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     alignContent: "center",
+  },
+  smallImage: {
+    marginTop: 5,
+    width: windowWidth * 0.1,
+    height: windowWidth * 0.1,
+  },
+  smallSelectionRow: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 5,
   },
 });
 

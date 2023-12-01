@@ -1,5 +1,5 @@
 import React from "react";
-import SingleThemeOption from "../components/SingleThemeOption";
+import SingleActivityOption from "../components/SingleActivityOption";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import {
@@ -52,37 +52,34 @@ const ThemeQScreen = ({ route, navigation }) => {
         )}
 
         <View style={styles.questionBox}>
-          <Text style={styles.boldText}>
-            "What cafe drink would your song be?"
-          </Text>
+          <Text style={styles.boldText}>"What are you doing?"</Text>
         </View>
-
         {/* First selection Row */}
         <View style={styles.selectionGrid}>
           <View style={styles.selectionRow}>
-            <SingleThemeOption
+            <SingleActivityOption
               songData={songData}
-              icon={images.lemonade.pic}
-              iconText={images.lemonade.label}
-            ></SingleThemeOption>
-            <SingleThemeOption
+              icon={images.exercising.pic}
+              iconText={images.exercising.label}
+            ></SingleActivityOption>
+            <SingleActivityOption
               songData={songData}
-              icon={images.matchaLatte.pic}
-              iconText={images.matchaLatte.label}
-            ></SingleThemeOption>
+              icon={images.eating.pic}
+              iconText={images.eating.label}
+            ></SingleActivityOption>
           </View>
           {/* Second selection Row */}
           <View style={styles.selectionRow}>
-            <SingleThemeOption
+            <SingleActivityOption
               songData={songData}
-              icon={images.hotChocolate.pic}
-              iconText={images.hotChocolate.label}
-            ></SingleThemeOption>
-            <SingleThemeOption
+              icon={images.working.pic}
+              iconText={images.working.label}
+            ></SingleActivityOption>
+            <SingleActivityOption
               songData={songData}
-              icon={images.expresso.pic}
-              iconText={images.expresso.label}
-            ></SingleThemeOption>
+              icon={images.commuting.pic}
+              iconText={images.commuting.label}
+            ></SingleActivityOption>
           </View>
         </View>
 

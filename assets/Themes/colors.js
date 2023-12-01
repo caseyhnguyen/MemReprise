@@ -10,4 +10,5 @@ export const colors = {
   leafGreen: "#36BF57FF",
   teal: "#3B6C7BFF",
   verdigrisGreen: "#44AA99FF",
+  transparentWhite: "rgba(243, 243, 243, 0.75)",
 };

@@ -10,6 +10,8 @@ import DiscoverScreen from "./DiscoverScreen";
 import ThemeQScreen from "./ThemeQScreen";
 import PostSummaryScreen from "./PostSummaryScreen";
 import GradientBackground from "../assets/Themes/background"; // Import the GradientBackground component
+import EmotionQScreen from "./EmotionQScreen";
+import ActivityQScreen from "./ActivityQScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -35,6 +37,12 @@ function HomeStackScreen() {
       </HomeStack.Screen>
       <HomeStack.Screen name="Theme Question">
         {(props) => <GradientWrapper {...props} Component={ThemeQScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Emotion Question">
+        {(props) => <GradientWrapper {...props} Component={EmotionQScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Activity Question">
+        {(props) => <GradientWrapper {...props} Component={ActivityQScreen} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Post Summary">
         {(props) => (

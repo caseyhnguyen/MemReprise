@@ -64,6 +64,14 @@ const images = {
     pic: require("../profile-icon.png"),
     label: "Profile",
   },
+  plane: {
+    pic: require("../paper-plane.png"),
+    label: "plane",
+  },
+  clouds: {
+    pic: require("../clouds.png"),
+    label: "clouds",
+  },
 };
 
 export default images;

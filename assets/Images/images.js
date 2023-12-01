@@ -30,7 +30,7 @@ const images = {
   },
   lemonade: {
     pic: require("../lemonade.png"),
-    label: "lemonade",
+    label: "Lemonade",
   },
   working: {
     pic: require("../working.png"),

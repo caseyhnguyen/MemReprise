@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <Pressable
             style={styles.button}
-            onPress={() => console.log("Maybe Later Pressed")}
+            onPress={() => navigation.navigate("FeedScreen")}
           >
             <Text style={styles.maybeLaterText}>Maybe later</Text>
           </Pressable>
@@ -50,7 +50,7 @@ const HomeScreen = ({ navigation }) => {
           </Pressable>
         </View>
       </View>
-      <Text style={styles.oldPostsText}>Old posts</Text>
+      {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
     </SafeAreaView>
   );
 };

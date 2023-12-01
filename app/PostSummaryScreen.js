@@ -14,7 +14,7 @@ import {
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
-import DropdownMenu from "../components/DropdownMenu";
+// import DropdownMenu from "../components/DropdownMenu";
 import RNPickerSelect from "react-native-picker-select";
 
 const windowWidth = Dimensions.get("window").width;

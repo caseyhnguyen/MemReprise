@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "column",
-    backgroundColor: colors.offWhite75,
+    backgroundColor: colors.offWhite50,
     borderRadius: 10,
     width: rowWidth + 10,
     height: windowWidth * 1.1,

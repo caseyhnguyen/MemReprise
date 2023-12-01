@@ -17,7 +17,7 @@ const images = {
     label: "Super Sad",
   },
   matchaLatte: {
-    pic: require("../matcha-latte.png"),
+    pic: require("../matchaCup.png"),
     label: "Matcha Latte",
   },
   expresso: {

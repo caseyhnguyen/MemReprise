@@ -44,7 +44,7 @@ const SingleEmotionOption = ({ icon, iconText, songData }) => {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: colors.transparentWhite,
+    backgroundColor: colors.offWhite50,
     // opacity: 0.75,
     borderRadius: 10,
     paddingHorizontal: 5,

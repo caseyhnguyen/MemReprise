@@ -53,7 +53,7 @@ const ThemeQScreen = ({ route, navigation }) => {
 
         <View style={styles.questionBox}>
           <Text style={styles.boldText}>
-            "What cafe drink would your song be?"
+            What cafe drink would your song be?
           </Text>
         </View>
 
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
-    backgroundColor: colors.offWhite,
+    backgroundColor: colors.offWhite75,
     borderRadius: 10,
     width: rowWidth + 10,
     height: windowWidth * 0.3,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     gap: totalGapSize,
   },
   questionBox: {
-    backgroundColor: colors.offWhite,
+    backgroundColor: colors.offWhite75,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",

@@ -19,7 +19,7 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.postPrompt}>
         <Image
-          source={images.lock} // Assuming you have a lock icon image in your Images
+          source={images.lock.pic} // Assuming you have a lock icon image in your Images
           style={styles.lockIcon}
           resizeMode="contain"
         />

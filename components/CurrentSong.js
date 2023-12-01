@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   albumName: {
-    color: colors.black,
+    color: colors.darkGray,
     flex: 3,
     fontSize: 16, // Increased font size
     marginRight: 10,

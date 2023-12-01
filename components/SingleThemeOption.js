@@ -44,7 +44,7 @@ const SingleThemeOption = ({ icon, iconText, songData }) => {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: colors.transparentWhite,
+    backgroundColor: colors.offWhite50,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",

@@ -25,13 +25,6 @@ const HomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Post</Text>
       </Pressable>
-
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("Feed")} // Jump to Feed Screen
-      >
-        <Text style={styles.buttonText}>Jump to Feed (Testing Purposes)</Text>
-      </Pressable>
     </SafeAreaView>
   );
 };

@@ -26,8 +26,8 @@ const GradientWrapper = ({ Component, navigation, route }) => (
 // HomeStack Navigator
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home">
+    <HomeStack.Navigator screenOptions={{ headerShown: true }}>
+      <HomeStack.Screen name="Home" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={HomeScreen} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Tracks">
@@ -41,9 +41,10 @@ function HomeStackScreen() {
           <GradientWrapper {...props} Component={PostSummaryScreen} />
         )}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Feed From Post Summary">
-        {(props) => <GradientWrapper {...props} Component={FeedStackScreen} />}
-      </HomeStack.Screen>
+
+      {/* <HomeStack.Screen name="Feed" options={{ headerShown: false }}>
+        {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
+      </HomeStack.Screen> */}
     </HomeStack.Navigator>
   );
 }
@@ -51,7 +52,7 @@ function HomeStackScreen() {
 // FeedStack Navigator
 function FeedStackScreen() {
   return (
-    <FeedStack.Navigator>
+    <FeedStack.Navigator screenOptions={{ headerShown: false }}>
       <FeedStack.Screen name="Feed">
         {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
       </FeedStack.Screen>
@@ -62,7 +63,7 @@ function FeedStackScreen() {
 // DiscoverStack Navigator
 function DiscoverStackScreen() {
   return (
-    <DiscoverStack.Navigator>
+    <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
       <DiscoverStack.Screen name="Discover">
         {(props) => <GradientWrapper {...props} Component={DiscoverScreen} />}
       </DiscoverStack.Screen>

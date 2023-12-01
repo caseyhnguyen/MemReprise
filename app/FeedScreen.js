@@ -14,7 +14,7 @@ const windowWidth = Dimensions.get("window").width;
 
 const FeedScreen = ({ route, navigation }) => {
   // Extract songData from route.params, it can be undefined
-  const songData = route.params?.songData;
+  const songData = route.params?.songData || "Default value";
 
   // Optional: Function to render song details
   const renderSongDetails = () => {

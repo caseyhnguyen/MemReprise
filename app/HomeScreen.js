@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
+import Header from "../components/Header";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -17,6 +18,10 @@ const windowWidth = Dimensions.get("window").width;
 const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
+      <View>
+        <Header title="memreprise" />
+      </View>
+
       <View style={styles.postPrompt}>
         <Image
           source={images.lock} // Assuming you have a lock icon image in your Images

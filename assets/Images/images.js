@@ -16,6 +16,8 @@ const images = {
   profileIcon: require("../profile-icon.png"),
   repriseIcon: require("../reprise-icon.png"),
   lock: require("../lock.png"),
+  paperPlane: require("../paper-plane.png"),
+  clouds: require("../clouds.png")
 };
 
 export default images;

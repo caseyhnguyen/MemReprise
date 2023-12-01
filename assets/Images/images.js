@@ -1,5 +1,6 @@
 const images = {
   spotify: require("../spotify-logo.png"),
+
   happyEmoji: require("../happy.png"),
   superHappyEmoji: require("../superHappy.png"),
   sadEmoji: require("../sad.png"),

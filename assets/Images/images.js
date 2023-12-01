@@ -15,6 +15,7 @@ const images = {
   homeIcon: require("../home-icon.png"),
   profileIcon: require("../profile-icon.png"),
   repriseIcon: require("../reprise-icon.png"),
+  lock: require("../lock.png"),
 };
 
 export default images;

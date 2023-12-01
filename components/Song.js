@@ -69,7 +69,7 @@ const Song = ({
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: "#F3F3F3",
+    backgroundColor: colors.offWhite50,
     // opacity: 0.75,
     borderRadius: 5,
     paddingHorizontal: 5,
@@ -78,6 +78,10 @@ const styles = StyleSheet.create({
     marginBottom: 10, // Spacing between each song item
     width: windowWidth * 0.95,
     height: windowWidth * 0.2,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
   },
   container: {
     flexDirection: "row",
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   index: {
-    color: colors.black,
+    color: colors.darkGray,
     fontSize: 14,
     width: "8%",
     textAlign: "center",

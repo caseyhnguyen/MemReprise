@@ -1,69 +1,24 @@
 const images = {
   spotify: require("../spotify-logo.png"),
-  happyEmoji: {
-    pic: require("../happy.png"),
-    label: "Happy",
-  },
-  superHappyEmoji: {
-    pic: require("../superHappy.png"),
-    label: "Super Happy",
-  },
-  sadEmoji: {
-    pic: require("../sad.png"),
-    label: "Sad",
-  },
-  superSadEmoji: {
-    pic: require("../superSad.png"),
-    label: "Super Sad",
-  },
-  matchaLatte: {
-    pic: require("../matcha-latte.png"),
-    label: "Matcha Latte",
-  },
-  expresso: {
-    pic: require("../expresso.png"),
-    label: "Expresso",
-  },
-  hotChocolate: {
-    pic: require("../hot-chocolate.png"),
-    label: "Hot Chocolate",
-  },
-  lemonade: {
-    pic: require("../lemonade.png"),
-    label: "lemonade",
-  },
-  working: {
-    pic: require("../working.png"),
-    label: "Working",
-  },
-  commuting: {
-    pic: require("../commute.png"),
-    label: "Commuting",
-  },
-  eating: {
-    pic: require("../eating.png"),
-    label: "Eating",
-  },
-  exercising: {
-    pic: require("../exercise.png"),
-    label: "Exercising",
-  },
-  lock: {
-    pic: require("../lock.png"),
-    label: "Lock",
-  },
-  home: {
-    pic: require("../home-icon.png"),
-    label: "Home",
-  },
-  reprise: {
-    pic: require("../reprise-icon.png"),
-    label: "Reprise",
-  },
-  profile: {
-    pic: require("../profile-icon.png"),
-    label: "Profile",
-  },
+
+  happyEmoji: require("../happy.png"),
+  superHappyEmoji: require("../superHappy.png"),
+  sadEmoji: require("../sad.png"),
+  superSadEmoji: require("../superSad.png"),
+  matchaLatte: require("../matcha-latte.png"),
+  expresso: require("../expresso.png"),
+  hotChocolate: require("../hot-chocolate.png"),
+  lemonade: require("../lemonade.png"),
+  working: require("../working.png"),
+  commuting: require("../commute.png"),
+  eating: require("../eating.png"),
+  exercising: require("../exercise.png"),
+  homeIcon: require("../home-icon.png"),
+  profileIcon: require("../profile-icon.png"),
+  repriseIcon: require("../reprise-icon.png"),
+  lock: require("../lock.png"),
+  paperPlane: require("../paper-plane.png"),
+  clouds: require("../clouds.png")
 };
 
 export default images;

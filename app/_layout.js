@@ -26,6 +26,9 @@ import PostSummaryScreen from "./PostSummaryScreen";
 import GradientBackground from "../assets/Themes/background"; // Import the GradientBackground component
 import EmotionQScreen from "./EmotionQScreen";
 import ActivityQScreen from "./ActivityQScreen";
+import ActivityScreen from "./ActivityScreen";
+import FeelingScreen from "./FeelingScreen";
+import ThemeScreen from "./ThemeScreen";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 
@@ -33,6 +36,7 @@ const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 // const FeedStack = createStackNavigator();
 const FeedTabs = createMaterialTopTabNavigator();
+const DiscoverTabs = createMaterialTopTabNavigator();
 const ProfileStack = createStackNavigator();
 
 // Create a wrapper component to apply gradient background
@@ -41,6 +45,8 @@ const GradientWrapper = ({ Component, navigation, route }) => (
     <Component navigation={navigation} route={route} />
   </GradientBackground>
 );
+
+
 
 // HomeStack Navigator
 function HomeStackScreen() {
@@ -73,7 +79,22 @@ function HomeStackScreen() {
     </HomeStack.Navigator>
   );
 }
+function DiscoverTabsScreen() {
+  return (
+    <DiscoverTabs.Navigator screenOptions={{ headerShown: false }}>
+      <DiscoverTabs.Screen name="Activity">
+        {(props) => <GradientWrapper {...props} Component={ActivityScreen} />}
+      </DiscoverTabs.Screen>
+      <DiscoverTabs.Screen name="Theme">
+        {(props) => <GradientWrapper {...props} Component={ThemeScreen} />}
+      </DiscoverTabs.Screen>
 
+      <DiscoverTabs.Screen name="Feeling">
+        {(props) => <GradientWrapper {...props} Component={FeelingScreen} />}
+      </DiscoverTabs.Screen>
+    </DiscoverTabs.Navigator>
+  );
+}
 // FeedStack Navigator
 function FeedTabsScreen() {
   return (
@@ -81,9 +102,11 @@ function FeedTabsScreen() {
       <FeedTabs.Screen name="Feed">
         {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
       </FeedTabs.Screen>
+
       <FeedTabs.Screen name="Discover">
-        {(props) => <GradientWrapper {...props} Component={DiscoverScreen} />}
+        {(props) => <GradientWrapper {...props} Component={DiscoverTabsScreen} />}
       </FeedTabs.Screen>
+
     </FeedTabs.Navigator>
   );
 }

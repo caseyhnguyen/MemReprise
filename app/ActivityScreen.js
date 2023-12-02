@@ -26,7 +26,7 @@ const handleFilterPress = () => {
   // Pass songData and captionText to the next screen
 };
 
-const DiscoverScreen = ({ route, navigation }) => {
+const ActivityScreen = ({ route, navigation }) => {
   const caption = route.params?.caption || "";
 
   const songData = route.params?.songData || {};
@@ -37,7 +37,7 @@ const DiscoverScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={defaultStyles.container}>
-      <Text>Hello!</Text>
+      <Text>Activity!</Text>
       {/* <Pressable
         style={defaultStyles.button}
         onPress={handleFilterPress}
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
 //   },
 // });
 
-export default DiscoverScreen;
+export default ActivityScreen;

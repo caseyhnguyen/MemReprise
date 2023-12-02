@@ -184,6 +184,8 @@ const TracksScreen = ({ navigation }) => {
         renderItem={search ? renderSearchSong : renderSong}
         keyExtractor={(item, index) => item.id?.toString() || index.toString()}
         // Removed onEndReached and onEndReachedThreshold to remove infinite scroll
+        // onEndReached={fetchMore}
+        // onEndReachedThreshold={0.5}
         ListFooterComponent={
           loading && <ActivityIndicator size="large" color={colors.white} />
         }

@@ -43,12 +43,30 @@ const PostSummaryScreen = ({ route, navigation }) => {
 
     // Reset the navigation stack and navigate to FeedScreen with parameters
     navigation.reset({
-      index: 0,
+      index: 1, // This should be set to the index of the FeedScreen in the stack
       routes: [
-        { name: "FeedScreen", params: { songData, caption: captionText } },
+        { name: "HomeScreen" }, // The first route in your tab navigator
+        {
+          // The route to navigate to, with the proper structure for a stack within a tab
+          name: "FeedScreen",
+          state: {
+            routes: [
+              { name: "Feed", params: { songData, caption: captionText } },
+            ],
+          },
+        },
       ],
     });
   };
+
+  // const handlePostPress = () => {
+  //   setPostMade(true);
+  //   // Pass songData and captionText to the next screen
+  //   navigation.navigate("FeedScreen", {
+  //     screen: "Feed",
+  //     params: { songData, caption: captionText },
+  //   });
+  // };
 
   const songData = route.params?.songData || {};
   const artistNames =

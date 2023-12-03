@@ -9,9 +9,9 @@ import {
   Pressable,
   TextInput,
 } from "react-native";
-import images from "../assets/Images/images";
-import { colors } from "../assets/Themes/colors";
-import { styles as defaultStyles } from "../assets/Themes/default_style";
+import images from "../../assets/Images/images";
+import { colors } from "../../assets/Themes/colors";
+import { styles as defaultStyles } from "../../assets/Themes/default_style";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -20,13 +20,11 @@ const itemPerRow = 2;
 const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth * 0.8 + totalGapSize;
 
-const active = "theme"
-
 const handleFilterPress = () => {
   // Pass songData and captionText to the next screen
 };
 
-const FeelingScreen = ({ route, navigation }) => {
+const DiscoverScreen = ({ route, navigation }) => {
   const caption = route.params?.caption || "";
 
   const songData = route.params?.songData || {};
@@ -37,7 +35,7 @@ const FeelingScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={defaultStyles.container}>
-      <Text>Feeling!</Text>
+      <Text>Hello!</Text>
       {/* <Pressable
         style={defaultStyles.button}
         onPress={handleFilterPress}
@@ -165,4 +163,4 @@ const styles = StyleSheet.create({
 //   },
 // });
 
-export default FeelingScreen;
+export default DiscoverScreen;

@@ -31,6 +31,7 @@ import FeelingScreen from "./FeelingScreen";
 import ThemeScreen from "./ThemeScreen";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
+import { TabBarIndicator } from "react-native-tab-view";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -81,7 +82,11 @@ function HomeStackScreen() {
 }
 function DiscoverTabsScreen() {
   return (
-    <DiscoverTabs.Navigator screenOptions={{ headerShown: false }}>
+    <DiscoverTabs.Navigator screenOptions={{ headerShown: false, 
+      tabBarStyle: {backgroundColor:'transparent', margin: 10},
+      tabBarItemStyle: {borderRadius: 30, margin: 5, backgroundColor: 'rgba(256, 256, 256, 0.5)'},
+      tabBarIndicatorStyle: {height: null, top:0, borderRadius: 30},
+    }}>
       <DiscoverTabs.Screen name="Activity">
         {(props) => <GradientWrapper {...props} Component={ActivityScreen} />}
       </DiscoverTabs.Screen>

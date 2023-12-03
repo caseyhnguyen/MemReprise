@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -14,7 +14,7 @@ import {
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
-// import DropdownMenu from "../components/DropdownMenu";
+import { PostContext } from "../utils/PostContext";
 import RNPickerSelect from "react-native-picker-select";
 
 const windowWidth = Dimensions.get("window").width;
@@ -29,6 +29,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
   const [number, onChangeNumber] = React.useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
+  const { setPostMade } = useContext(PostContext);
   const options = [
     { label: "Public", value: "option1" },
     { label: "Friends", value: "option2" },
@@ -37,10 +38,15 @@ const PostSummaryScreen = ({ route, navigation }) => {
   ];
 
   const handlePostPress = () => {
-    // Pass songData and captionText to the next screen
-    navigation.navigate("FeedScreen", {
-      screen: "Feed",
-      params: { songData, caption: captionText },
+    // Update the state to true when the post is made
+    setPostMade(true);
+
+    // Reset the navigation stack and navigate to FeedScreen with parameters
+    navigation.reset({
+      index: 0,
+      routes: [
+        { name: "FeedScreen", params: { songData, caption: captionText } },
+      ],
     });
   };
 
@@ -272,30 +278,5 @@ const pickerSelectStyles = {
     // fontWeight: "bold",
   },
 };
-
-// const styles = StyleSheet.create({
-//   songContainer: {
-//     width: windowWidth,
-//     height: 200, // Adjust height as needed
-//     alignItems: "center",
-//     justifyContent: "center",
-//     marginBottom: 20,
-//   },
-//   albumCover: {
-//     width: 120, // Adjust size as needed
-//     height: 120, // Adjust size as needed
-//   },
-//   title: {
-//     fontSize: 18,
-//     fontWeight: "bold",
-//     color: "black", // Adjust color as needed
-//     marginTop: 10,
-//   },
-//   artist: {
-//     fontSize: 16,
-//     color: "grey", // Adjust color as needed
-//     marginTop: 5,
-//   },
-// });
 
 export default PostSummaryScreen;

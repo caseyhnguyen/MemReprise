@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -26,6 +26,7 @@ import EmotionQScreen from "./EmotionQScreen";
 import ActivityQScreen from "./ActivityQScreen";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
+import { PostContext } from "../utils/PostContext";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -94,6 +95,8 @@ function ProfileStackScreen() {
 }
 
 const AppLayout = () => {
+  const { postMade } = useContext(PostContext);
+  console.log("PostContext - postMade:", postMade);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -110,7 +113,7 @@ const AppLayout = () => {
     >
       <Tab.Screen
         name="HomeScreen"
-        component={HomeStackScreen}
+        component={postMade ? FeedStackScreen : HomeStackScreen}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (

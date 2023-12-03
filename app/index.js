@@ -4,6 +4,7 @@ import AppLayout from "./_layout";
 import * as SplashScreen from "expo-splash-screen";
 import { DarkModeContext } from "../assets/Themes/DarkModeContext";
 import { SongDataProvider } from "../utils/SongDataContext";
+import { PostProvider } from "../utils/PostContext";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -22,13 +23,15 @@ const App = () => {
   }, []);
 
   return (
-    <SongDataProvider>
-      <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
-        <NavigationContainer>
-          <AppLayout />
-        </NavigationContainer>
-      </DarkModeContext.Provider>
-    </SongDataProvider>
+    <PostProvider>
+      <SongDataProvider>
+        <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+          <NavigationContainer>
+            <AppLayout />
+          </NavigationContainer>
+        </DarkModeContext.Provider>
+      </SongDataProvider>
+    </PostProvider>
   );
 };
 

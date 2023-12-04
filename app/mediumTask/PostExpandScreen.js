@@ -9,13 +9,9 @@ import {
   Pressable,
   TextInput,
 } from "react-native";
-import images from "../assets/Images/images";
 
-import Post from "../components/Post";
-import { colors } from "../assets/Themes/colors";
-import { styles as defaultStyles } from "../assets/Themes/default_style";
 
-import { textStyles } from "../assets/Themes/Text";
+import { textStyles } from "../../assets/Themes/Text";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -24,7 +20,7 @@ const itemPerRow = 2;
 const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth * 0.8 + totalGapSize;
 
-const FeedScreen = ({ route, navigation }) => {
+const PostExpandScreen = ({ route, navigation }) => {
   const caption = route.params?.caption || "";
 
   const songData = route.params?.songData || {};
@@ -35,23 +31,12 @@ const FeedScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={defaultStyles.container}>
-      <Text style={textStyles.subHeader}>Posts</Text>
+      <Text style={textStyles.subHeader}>Expanded Post</Text>
 
-      <Post
-        dimensions={{
-          windowWidth: windowWidth,
-          gap: gap,
-          totalGapSize: totalGapSize,
-          itemPerRow: itemPerRow,
-          rowWidth: rowWidth,
-        }}
-        songData={songData}
-        // navigation = {navigation}
-      ></Post>
     </SafeAreaView>
   );
 };
 const layout = StyleSheet.create({})
 
 
-export default FeedScreen;
+export default PostExpandScreen;

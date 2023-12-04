@@ -15,6 +15,8 @@ export const postStyles = (dimensions) =>
 
     metaData: {
       margin: 10,
+      paddingTop: 10,
+      paddingLeft: 5,
       flexDirection: "row",
       alignItems: "center",
       gap: 10,

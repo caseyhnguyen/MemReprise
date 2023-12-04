@@ -33,6 +33,7 @@ import ActivityScreen from "./mediumTask/ActivityScreen";
 import ActivityPlaylistScreen from "./mediumTask/ActivityPlaylistScreen";
 import FeelingScreen from "./mediumTask/FeelingScreen";
 import ThemeScreen from "./mediumTask/ThemeScreen";
+import PostExpandScreen from "./mediumTask/PostExpandScreen";
 
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -40,6 +41,7 @@ import { TabBarIndicator } from "react-native-tab-view";
 import ThemePlaylistScreen from "./mediumTask/ThemePlaylistScreen";
 import FeelingPlaylistScreen from "./mediumTask/FeelingPlaylistScreen";
 import { PostContext } from "../utils/PostContext";
+
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -50,6 +52,7 @@ const ActivityStack = createStackNavigator();
 const ThemeStack = createStackNavigator();
 const FeelingStack = createStackNavigator();
 const FeedTabs = createMaterialTopTabNavigator();
+const FeedStack = createStackNavigator();
 const DiscoverTabs = createMaterialTopTabNavigator();
 
 // Create a wrapper component to apply gradient background
@@ -182,6 +185,25 @@ function DiscoverTabsScreen() {
     </DiscoverTabs.Navigator>
   );
 }
+
+// function FeedStackScreen() {
+//   return (
+//     <FeedStack.Navigator screenOptions={{ headerShown: false }}>
+//       <FeedStack.Screen name="FeedScreen">
+//         {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
+//       </FeedStack.Screen>
+
+//       <FeedStack.Screen name="PostExpandScreen">
+//         {(props) => (
+//           <GradientWrapper {...props} Component={PostExpandScreen} />
+//         )}
+//       </FeedStack.Screen>
+
+
+//     </FeedStack.Navigator>
+//   );
+// }
+
 // FeedStack Navigator
 function FeedTabsScreen() {
   return (
@@ -200,6 +222,8 @@ function FeedTabsScreen() {
     </SafeAreaView>
   );
 }
+
+
 
 // ProfileStack Navigator
 function ProfileStackScreen() {

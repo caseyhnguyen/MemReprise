@@ -37,9 +37,12 @@ const Post = ({ dimensions, songData, navigation }) => {
 
   const styles = styling(dimensions);
   
+  // const onPress = () => {
+  //   navigation.navigate("PostExpandScreen", {songData});
+  // }
 
   return (
-    <Pressable style={styles.outerContainer}>
+    <View style={styles.outerContainer}>
       {songData && songData.title && (
         <View>
           <View style={styles.metaData}>
@@ -96,7 +99,7 @@ const Post = ({ dimensions, songData, navigation }) => {
           </View>
         </View>
       )}
-    </Pressable>
+    </View>
   );
 };
 

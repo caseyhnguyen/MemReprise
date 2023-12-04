@@ -8,11 +8,14 @@ import {
   Dimensions,
   Pressable,
   TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
 import RNPickerSelect from "react-native-picker-select";
+import formatPlayedAt from "../utils/formatPlayedAt.js";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -48,90 +51,98 @@ const PostSummaryScreen = ({ route, navigation }) => {
       : "Unknown Artist";
 
   return (
-    <SafeAreaView style={defaultStyles.container}>
-      <Text style={styles.subHeader}>Your Post Draft</Text>
-      <View style={styles.outerContainer}>
-        {songData && songData.title && (
-          <View style={styles.songContainer}>
-            <Image
-              source={{ uri: songData.imageUrl }}
-              style={styles.albumCover}
-            />
-            <View style={styles.smallSelectionCol}>
-              {selectedThemeIcon && (
-                <Image source={selectedThemeIcon} style={styles.smallImage} />
-              )}
-              <Text style={styles.smallText}>{selectedThemeIconText}</Text>
-              {selectedEmotionIcon && (
-                <Image source={selectedEmotionIcon} style={styles.smallImage} />
-              )}
-              <Text style={styles.smallText}>{selectedEmotionIconText}</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={defaultStyles.container}>
+        <Text style={styles.subHeader}>Your Post Draft</Text>
+        <View style={styles.outerContainer}>
+          {songData && songData.title && (
+            <View style={styles.songContainer}>
+              <Image
+                source={{ uri: songData.imageUrl }}
+                style={styles.albumCover}
+              />
+              <View style={styles.smallSelectionCol}>
+                {selectedThemeIcon && (
+                  <Image source={selectedThemeIcon} style={styles.smallImage} />
+                )}
+                <Text style={styles.smallText}>{selectedThemeIconText}</Text>
+                {selectedEmotionIcon && (
+                  <Image
+                    source={selectedEmotionIcon}
+                    style={styles.smallImage}
+                  />
+                )}
+                <Text style={styles.smallText}>{selectedEmotionIconText}</Text>
 
-              {selectedActivityIcon && (
-                <Image
-                  source={selectedActivityIcon}
-                  style={styles.smallImage}
-                />
-              )}
-              <Text style={styles.smallText}>{selectedActivityIconText}</Text>
+                {selectedActivityIcon && (
+                  <Image
+                    source={selectedActivityIcon}
+                    style={styles.smallImage}
+                  />
+                )}
+                <Text style={styles.smallText}>{selectedActivityIconText}</Text>
+              </View>
+              {/* other song details */}
             </View>
-            {/* other song details */}
+          )}
+          <View style={styles.titleAndArtist}>
+            <Text style={styles.title} numberOfLines={2}>
+              {songData.title}
+            </Text>
+            <Text style={styles.artist} numberOfLines={1}>
+              {Array.isArray(songData.artists)
+                ? songData.artists.join(", ")
+                : songData.artists}
+            </Text>
+            <Text style={styles.playedAt} numberOfLines={1}>
+              {formatPlayedAt(songData.played_at)}
+            </Text>
           </View>
-        )}
-        <View style={styles.titleAndArtist}>
-          <Text style={styles.title} numberOfLines={2}>
-            {songData.title}
-          </Text>
-          <Text style={styles.artist} numberOfLines={1}>
-            {Array.isArray(songData.artists)
-              ? songData.artists.join(", ")
-              : songData.artists}
-          </Text>
-        </View>
-        <TextInput
-          style={styles.input}
-          multiline={true}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="Write a caption..."
-          keyboardType="ascii-capable"
-        ></TextInput>
+          <TextInput
+            style={styles.input}
+            multiline={true}
+            onChangeText={onChangeNumber}
+            value={number}
+            placeholder="Write a caption..."
+            keyboardType="ascii-capable"
+          ></TextInput>
 
-        <View style={styles.footer}>
-          <RNPickerSelect
-            onValueChange={(value) => setSelectedValue(value)}
-            items={[
-              { label: "Public", value: "public" },
-              { label: "Friends", value: "friends" },
-              { label: "Only Me", value: "onlyMe" },
-              // ... more options
-            ]}
-            style={pickerSelectStyles}
-            placeholder={{ label: "Select visibility...", value: null }}
-          />
-          <Pressable
-            style={styles.postButton}
-            onPress={() =>
-              navigation.navigate("FeedScreen", {
-                screen: "Feed",
-                params: {
-                  songData,
-                  selectedThemeIcon,
-                  selectedThemeIconText,
-                  selectedEmotionIcon,
-                  selectedEmotionIconText,
-                  selectedActivityIcon: selectedActivityIcon,
-                  selectedActivityIconText: selectedActivityIconText,
-                },
-              })
-            }
-          >
-            <Text style={styles.postButtonText}>Post</Text>
-          </Pressable>
+          <View style={styles.footer}>
+            <RNPickerSelect
+              onValueChange={(value) => setSelectedValue(value)}
+              items={[
+                { label: "Public", value: "public" },
+                { label: "Friends", value: "friends" },
+                { label: "Only Me", value: "onlyMe" },
+                // ... more options
+              ]}
+              style={pickerSelectStyles}
+              placeholder={{ label: "Select visibility...", value: null }}
+            />
+            <Pressable
+              style={styles.postButton}
+              onPress={() =>
+                navigation.navigate("FeedScreen", {
+                  screen: "Feed",
+                  params: {
+                    songData,
+                    selectedThemeIcon,
+                    selectedThemeIconText,
+                    selectedEmotionIcon,
+                    selectedEmotionIconText,
+                    selectedActivityIcon: selectedActivityIcon,
+                    selectedActivityIconText: selectedActivityIconText,
+                  },
+                })
+              }
+            >
+              <Text style={styles.postButtonText}>Post</Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
-      {/* </View> */}
-    </SafeAreaView>
+        {/* </View> */}
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 const styles = StyleSheet.create({
@@ -143,7 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offWhite50,
     borderRadius: 10,
     width: rowWidth + 10,
-    height: windowWidth * 1.1,
+    height: windowWidth * 1.25,
   },
   songContainer: {
     alignItems: "flex-start",
@@ -170,6 +181,11 @@ const styles = StyleSheet.create({
   artist: {
     fontSize: 12,
     color: "black", // Adjust color as needed
+    marginTop: 5,
+  },
+  playedAt: {
+    fontSize: 12,
+    color: colors.darkGray,
     marginTop: 5,
   },
   titleAndArtist: {
@@ -214,7 +230,7 @@ const styles = StyleSheet.create({
   //   paddingLeft: 20,
   // },
   subHeader: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
     color: colors.offWhite,
     paddingBottom: 5,
@@ -231,8 +247,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "%",
-    paddingTop: "10%",
+    padding: "5%",
+    paddingTop: "20%",
     // borderTopWidth: 1,
     // borderTopColor: colors.darkGray, // Or another color that fits your design
     // backgroundColor: colors.offWhite50, // Make sure this matches the container background

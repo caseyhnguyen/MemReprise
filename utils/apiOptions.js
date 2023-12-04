@@ -66,7 +66,7 @@ const formatter = (data) => {
         duration: track.duration_ms,
         externalUrl: track.external_urls.spotify,
         previewUrl: track.preview_url,
-        // Additional properties can be added as needed
+        played_at: item.played_at,
       };
     })
     .filter((item) => item !== null); // Filter out null values

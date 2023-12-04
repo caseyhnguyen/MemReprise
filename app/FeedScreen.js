@@ -12,6 +12,7 @@ import {
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
+import formatPlayedAt from "../utils/formatPlayedAt.js";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -77,6 +78,9 @@ const FeedScreen = ({ route, navigation }) => {
             {Array.isArray(songData.artists)
               ? songData.artists.join(", ")
               : songData.artists}
+          </Text>
+          <Text style={styles.playedAt} numberOfLines={1}>
+            {formatPlayedAt(songData.played_at)}
           </Text>
         </View>
         <Text style={styles.caption}>Wow this is so cool!</Text>

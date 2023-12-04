@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
 import PostProgressBar from "../components/PostProgressBar";
+import formatPlayedAt from "../utils/formatPlayedAt.js";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -52,6 +53,9 @@ const ActivityQScreen = ({ route, navigation }) => {
                 {Array.isArray(songData.artists)
                   ? songData.artists.join(", ")
                   : songData.artists}
+              </Text>
+              <Text style={styles.playedAt} numberOfLines={1}>
+                {formatPlayedAt(songData.played_at)}
               </Text>
               <View style={styles.smallSelectionRow}>
                 {selectedThemeIcon && (
@@ -156,6 +160,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
+    marginLeft: 5,
     marginRight: 20,
     width: "60%",
   },

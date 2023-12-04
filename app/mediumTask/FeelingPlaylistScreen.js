@@ -20,28 +20,32 @@ const itemPerRow = 2;
 const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth * 0.8 + totalGapSize;
 
+
+
 const FeelingPlaylistScreen = ({ route, navigation }) => {
 
-  const handlePress = () => {
-    navigation.goBack();
-  };
+  const selection = route.params?.selection;
   
-  const caption = route.params?.caption || "";
+  const handleButtonPress = () => {
 
-  const songData = route.params?.songData || {};
-  const artistNames =
-    songData && songData.artists
-      ? songData.artists.join(", ")
-      : "Unknown Artist";
+  }
+
 
   return (
     <SafeAreaView style={defaultStyles.container}>
-      <Text>Feeling Playlist</Text>
+      <Text>Feeling Playlist {selection}</Text>
       <Pressable
         style={styles.postButton}
-        onPress={handlePress}
+        onPress={navigation.goBack}
       >
       <Text style={styles.postButtonText}>Go Back</Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.postButton}
+        onPress={handleButtonPress}
+      >
+      <Text style={styles.postButtonText}>Export</Text>
       </Pressable>
     </SafeAreaView>
   );

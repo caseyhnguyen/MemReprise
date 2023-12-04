@@ -23,7 +23,15 @@ const rowWidth = windowWidth * 0.8 + totalGapSize;
 const FeedScreen = ({ route, navigation }) => {
   const caption = route.params?.caption || "";
 
-  const songData = route.params?.songData || {};
+  const {
+    songData,
+    selectedThemeIcon,
+    selectedThemeIconText,
+    selectedEmotionIcon,
+    selectedEmotionIconText,
+    selectedActivityIcon,
+    selectedActivityIconText,
+  } = route.params;
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
@@ -41,21 +49,22 @@ const FeedScreen = ({ route, navigation }) => {
             />
 
             <View style={styles.smallSelectionCol}>
-              <Image
-                source={images.matchaLatte.pic}
-                style={styles.smallImage}
-              />
-              <Text style={styles.smallText}>{images.matchaLatte.label}</Text>
-              <Image
-                source={images.superHappyEmoji.pic}
-                style={styles.smallImage}
-              />
-              <Text style={styles.smallText}>
-                {images.superHappyEmoji.label}
-              </Text>
+              {selectedThemeIcon && (
+                <Image source={selectedThemeIcon} style={styles.smallImage} />
+              )}
+              <Text style={styles.smallText}>{selectedThemeIconText}</Text>
+              {selectedEmotionIcon && (
+                <Image source={selectedEmotionIcon} style={styles.smallImage} />
+              )}
+              <Text style={styles.smallText}>{selectedEmotionIconText}</Text>
 
-              <Image source={images.working.pic} style={styles.smallImage} />
-              <Text style={styles.smallText}>{images.working.label}</Text>
+              {selectedActivityIcon && (
+                <Image
+                  source={selectedActivityIcon}
+                  style={styles.smallImage}
+                />
+              )}
+              <Text style={styles.smallText}>{selectedActivityIconText}</Text>
             </View>
             {/* other song details */}
           </View>

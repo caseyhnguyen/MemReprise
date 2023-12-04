@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -8,15 +8,11 @@ import {
   Dimensions,
   Pressable,
   TextInput,
-  Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
-import { PostContext } from "../utils/PostContext";
 import RNPickerSelect from "react-native-picker-select";
-import { useTheme } from "../utils/ThemeContext";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -26,11 +22,17 @@ const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth * 0.8 + totalGapSize;
 
 const PostSummaryScreen = ({ route, navigation }) => {
-  const [captionText, setCaptionText] = useState("");
+  const [text, onChangeText] = React.useState("Useless Text");
   const [number, onChangeNumber] = React.useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
-  const { setPostMade } = useContext(PostContext);
+  const options = [
+    { label: "Public", value: "option1" },
+    { label: "Friends", value: "option2" },
+    { label: "Only Me", value: "option3" },
+    // Add more options as needed
+  ];
+
   const {
     songData,
     selectedThemeIcon,
@@ -40,141 +42,96 @@ const PostSummaryScreen = ({ route, navigation }) => {
     selectedActivityIcon,
     selectedActivityIconText,
   } = route.params;
-
-  console.log(
-    selectedThemeIcon,
-    selectedThemeIconText,
-    selectedEmotionIcon,
-    selectedEmotionIconText
-  );
-
-  const handlePostPress = () => {
-    // Update the state to true when the post is made
-    setPostMade(true);
-
-    // Reset the navigation stack and navigate to FeedScreen with parameters
-    navigation.reset({
-      index: 1, // This should be set to the index of the FeedScreen in the stack
-      routes: [
-        { name: "HomeScreen" }, // The first route in your tab navigator
-        {
-          // The route to navigate to, with the proper structure for a stack within a tab
-          name: "FeedScreen",
-          state: {
-            routes: [
-              { name: "Feed", params: { songData, caption: captionText } },
-            ],
-          },
-        },
-      ],
-    });
-  };
-
-  // const handlePostPress = () => {
-  //   setPostMade(true);
-  //   // Pass songData and captionText to the next screen
-  //   navigation.navigate("FeedScreen", {
-  //     screen: "Feed",
-  //     params: { songData, caption: captionText },
-  //   });
-  // };
-
-  // const songData = route.params?.songData || {};
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
       : "Unknown Artist";
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <SafeAreaView style={defaultStyles.container}>
-        <Text style={styles.subHeader}>Your Post Draft</Text>
-        <View style={styles.outerContainer}>
-          {songData && songData.title && (
-            <View style={styles.songContainer}>
-              <Image
-                source={{ uri: songData.imageUrl }}
-                style={styles.albumCover}
-              />
-              <View style={styles.smallSelectionCol}>
-                {selectedThemeIcon && (
-                  <Image source={selectedThemeIcon} style={styles.smallImage} />
-                )}
-                {selectedThemeIconText && (
-                  <Text style={styles.smallText}>{selectedThemeIconText}</Text>
-                )}
-
-                {/* Displaying the selected Emotion and Activity Icons and Texts */}
-                {selectedActivityIcon && (
-                  <Image
-                    source={selectedEmotionIcon}
-                    style={styles.smallImage}
-                  />
-                )}
-                {selectedActivityIconText && (
-                  <Text style={styles.smallText}>
-                    {selectedEmotionIconText}
-                  </Text>
-                )}
-
-                {selectedActivityIcon && (
-                  <Image
-                    source={selectedActivityIcon}
-                    style={styles.smallImage}
-                  />
-                )}
-                {selectedActivityIconText && (
-                  <Text style={styles.smallText}>
-                    {selectedActivityIconText}
-                  </Text>
-                )}
-              </View>
-              {/* other song details */}
-            </View>
-          )}
-          <View style={styles.titleAndArtist}>
-            <Text style={styles.title} numberOfLines={2}>
-              {songData.title}
-            </Text>
-            <Text style={styles.artist} numberOfLines={1}>
-              {Array.isArray(songData.artists)
-                ? songData.artists.join(", ")
-                : songData.artists}
-            </Text>
-          </View>
-          <TextInput
-            style={styles.input}
-            multiline={true}
-            onChangeText={setCaptionText} // Set the state with the new text
-            value={captionText} // The value of the text input is the state
-            placeholder="Write a caption..."
-            keyboardType="ascii-capable"
-            returnKeyType="done" // Adds a "done" button to the keyboard
-            onSubmitEditing={Keyboard.dismiss} // Dismiss the keyboard when "done" is pressed
-          />
-          <View style={styles.footer}>
-            <RNPickerSelect
-              onValueChange={(value) => setSelectedValue(value)}
-              items={[
-                { label: "Public", value: "public" },
-                { label: "Friends", value: "friends" },
-                { label: "Only Me", value: "onlyMe" },
-                // ... more options
-              ]}
-              style={pickerSelectStyles}
-              placeholder={{ label: "Select Visbility", value: null }}
+    <SafeAreaView style={defaultStyles.container}>
+      <Text style={styles.subHeader}>Your Post Draft</Text>
+      <View style={styles.outerContainer}>
+        {songData && songData.title && (
+          <View style={styles.songContainer}>
+            <Image
+              source={{ uri: songData.imageUrl }}
+              style={styles.albumCover}
             />
-            <Pressable
-              style={styles.postButton}
-              onPress={handlePostPress} // Use the handler function on button press
-            >
-              <Text style={styles.postButtonText}>Post</Text>
-            </Pressable>
+            <View style={styles.smallSelectionCol}>
+              {selectedThemeIcon && (
+                <Image source={selectedThemeIcon} style={styles.smallImage} />
+              )}
+              <Text style={styles.smallText}>{selectedThemeIconText}</Text>
+              {selectedEmotionIcon && (
+                <Image source={selectedEmotionIcon} style={styles.smallImage} />
+              )}
+              <Text style={styles.smallText}>{selectedEmotionIconText}</Text>
+
+              {selectedActivityIcon && (
+                <Image
+                  source={selectedActivityIcon}
+                  style={styles.smallImage}
+                />
+              )}
+              <Text style={styles.smallText}>{selectedActivityIconText}</Text>
+            </View>
+            {/* other song details */}
           </View>
+        )}
+        <View style={styles.titleAndArtist}>
+          <Text style={styles.title} numberOfLines={2}>
+            {songData.title}
+          </Text>
+          <Text style={styles.artist} numberOfLines={1}>
+            {Array.isArray(songData.artists)
+              ? songData.artists.join(", ")
+              : songData.artists}
+          </Text>
         </View>
-        {/* </View> */}
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+        <TextInput
+          style={styles.input}
+          multiline={true}
+          onChangeText={onChangeNumber}
+          value={number}
+          placeholder="Write a caption..."
+          keyboardType="ascii-capable"
+        ></TextInput>
+
+        <View style={styles.footer}>
+          <RNPickerSelect
+            onValueChange={(value) => setSelectedValue(value)}
+            items={[
+              { label: "Public", value: "public" },
+              { label: "Friends", value: "friends" },
+              { label: "Only Me", value: "onlyMe" },
+              // ... more options
+            ]}
+            style={pickerSelectStyles}
+            placeholder={{ label: "Select visibility...", value: null }}
+          />
+          <Pressable
+            style={styles.postButton}
+            onPress={() =>
+              navigation.navigate("FeedScreen", {
+                screen: "Feed",
+                params: {
+                  songData,
+                  selectedThemeIcon,
+                  selectedThemeIconText,
+                  selectedEmotionIcon,
+                  selectedEmotionIconText,
+                  selectedActivityIcon: selectedActivityIcon,
+                  selectedActivityIconText: selectedActivityIconText,
+                },
+              })
+            }
+          >
+            <Text style={styles.postButtonText}>Post</Text>
+          </Pressable>
+        </View>
+      </View>
+      {/* </View> */}
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
@@ -257,7 +214,7 @@ const styles = StyleSheet.create({
   //   paddingLeft: 20,
   // },
   subHeader: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     color: colors.offWhite,
     paddingBottom: 5,
@@ -274,8 +231,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "2.5%",
-    paddingTop: "10.5%",
+    padding: "%",
+    paddingTop: "10%",
+    // borderTopWidth: 1,
+    // borderTopColor: colors.darkGray, // Or another color that fits your design
+    // backgroundColor: colors.offWhite50, // Make sure this matches the container background
   },
   postButton: {
     // Adjust the post button styles
@@ -303,7 +263,7 @@ const pickerSelectStyles = {
     borderWidth: 1,
     borderColor: colors.offWhite75,
     borderRadius: 4,
-    color: colors.darkGray,
+    color: "black",
     backgroundColor: colors.offWhite75, // Adjust background color as needed
     // Other styling as needed for iOS
   },
@@ -318,10 +278,32 @@ const pickerSelectStyles = {
     backgroundColor: "white", // Adjust background color as needed
     // Other styling as needed for Android
   },
-  placeholder: {
-    color: colors.darkGray,
-    // fontWeight: "bold",
-  },
+  // You can add placeholder style if needed
 };
+
+// const styles = StyleSheet.create({
+//   songContainer: {
+//     width: windowWidth,
+//     height: 200, // Adjust height as needed
+//     alignItems: "center",
+//     justifyContent: "center",
+//     marginBottom: 20,
+//   },
+//   albumCover: {
+//     width: 120, // Adjust size as needed
+//     height: 120, // Adjust size as needed
+//   },
+//   title: {
+//     fontSize: 18,
+//     fontWeight: "bold",
+//     color: "black", // Adjust color as needed
+//     marginTop: 10,
+//   },
+//   artist: {
+//     fontSize: 16,
+//     color: "grey", // Adjust color as needed
+//     marginTop: 5,
+//   },
+// });
 
 export default PostSummaryScreen;

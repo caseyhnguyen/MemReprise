@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
 import PostProgressBar from "../components/PostProgressBar";
+import formatPlayedAt from "../utils/formatPlayedAt.js";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -27,7 +28,6 @@ const ThemeQScreen = ({ route, navigation }) => {
     songData && songData.artists
       ? songData.artists.join(", ")
       : "Unknown Artist";
-  // console.log(songData);
 
   return (
     <SafeAreaView style={defaultStyles.container}>
@@ -47,6 +47,10 @@ const ThemeQScreen = ({ route, navigation }) => {
                   ? songData.artists.join(", ")
                   : songData.artists}
               </Text>
+              <Text style={styles.playedAt} numberOfLines={1}>
+                {formatPlayedAt(songData.played_at)}
+              </Text>
+              <Text style={styles.spacer}></Text>
             </View>
             {/* other song details */}
           </View>
@@ -126,6 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
+    marginLeft: 5,
     marginRight: 20,
     width: "60%",
   },
@@ -160,6 +165,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     alignContent: "center",
+  },
+  spacer: {
+    marginTop: 5,
+    width: windowWidth * 0.1,
+    height: windowWidth * 0.1,
   },
 });
 

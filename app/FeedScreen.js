@@ -71,30 +71,6 @@ const FeedScreen = ({ route, navigation }) => {
           </Text>
         </View>
         <Text style={styles.caption}>Wow this is so cool!</Text>
-        {/* Display the caption */}
-        {/* <TextInput
-          style={styles.input}
-          multiline={true}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="Write a caption..."
-          keyboardType="numeric"
-        ></TextInput> */}
-        {/* <View style={styles.buttonRow}>
-          <Text>drop</Text>
-
-          <Pressable
-            style={defaultStyles.button}
-            onPress={() =>
-              navigation.navigate("FeedScreen", {
-                screen: "Feed",
-                params: { songData },
-              })
-            }
-          >
-            <Text style={defaultStyles.buttonText}>Post</Text>
-          </Pressable>
-        </View> */}
       </View>
     </SafeAreaView>
   );
@@ -193,30 +169,5 @@ const styles = StyleSheet.create({
     width: "70%",
   },
 });
-
-// const styles = StyleSheet.create({
-//   songContainer: {
-//     width: windowWidth,
-//     height: 200, // Adjust height as needed
-//     alignItems: "center",
-//     justifyContent: "center",
-//     marginBottom: 20,
-//   },
-//   albumCover: {
-//     width: 120, // Adjust size as needed
-//     height: 120, // Adjust size as needed
-//   },
-//   title: {
-//     fontSize: 18,
-//     fontWeight: "bold",
-//     color: "black", // Adjust color as needed
-//     marginTop: 10,
-//   },
-//   artist: {
-//     fontSize: 16,
-//     color: "grey", // Adjust color as needed
-//     marginTop: 5,
-//   },
-// });
 
 export default FeedScreen;

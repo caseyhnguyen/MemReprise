@@ -11,23 +11,25 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../assets/Themes/colors";
 
-// songData: {
-//   title,
-//   artists: Array.isArray(artists) ? artists : [artists],
-//   albumName,
-//   imageUrl,
-//   duration,
-//   previewUrl,
-//   externalUrl,
-// },
-
 const windowWidth = Dimensions.get("window").width;
 
-const SingleEmotionOption = ({ icon, iconText, songData }) => {
+const SingleEmotionOption = ({
+  icon,
+  iconText,
+  songData,
+  selectedThemeIcon,
+  selectedThemeIconText,
+}) => {
   const navigation = useNavigation();
 
   const onSelection = () => {
-    navigation.navigate("Activity Question", { songData });
+    navigation.navigate("Activity Question", {
+      songData,
+      selectedThemeIcon: selectedThemeIcon,
+      selectedThemeIconText: selectedThemeIconText,
+      selectedEmotionIcon: icon,
+      selectedEmotionIconText: iconText,
+    });
   };
 
   return (

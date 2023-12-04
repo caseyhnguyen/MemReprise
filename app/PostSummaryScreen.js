@@ -16,6 +16,7 @@ import { colors } from "../assets/Themes/colors";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
 import { PostContext } from "../utils/PostContext";
 import RNPickerSelect from "react-native-picker-select";
+import { useTheme } from "../utils/ThemeContext";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -30,12 +31,22 @@ const PostSummaryScreen = ({ route, navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
   const { setPostMade } = useContext(PostContext);
-  const options = [
-    { label: "Public", value: "option1" },
-    { label: "Friends", value: "option2" },
-    { label: "Only Me", value: "option3" },
-    // Add more options as needed
-  ];
+  const {
+    songData,
+    selectedThemeIcon,
+    selectedThemeIconText,
+    selectedEmotionIcon,
+    selectedEmotionIconText,
+    selectedActivityIcon,
+    selectedActivityIconText,
+  } = route.params;
+
+  console.log(
+    selectedThemeIcon,
+    selectedThemeIconText,
+    selectedEmotionIcon,
+    selectedEmotionIconText
+  );
 
   const handlePostPress = () => {
     // Update the state to true when the post is made
@@ -68,7 +79,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
   //   });
   // };
 
-  const songData = route.params?.songData || {};
+  // const songData = route.params?.songData || {};
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
@@ -86,21 +97,37 @@ const PostSummaryScreen = ({ route, navigation }) => {
                 style={styles.albumCover}
               />
               <View style={styles.smallSelectionCol}>
-                <Image
-                  source={images.matchaLatte.pic}
-                  style={styles.smallImage}
-                />
-                <Text style={styles.smallText}>{images.matchaLatte.label}</Text>
-                <Image
-                  source={images.superHappyEmoji.pic}
-                  style={styles.smallImage}
-                />
-                <Text style={styles.smallText}>
-                  {images.superHappyEmoji.label}
-                </Text>
+                {selectedThemeIcon && (
+                  <Image source={selectedThemeIcon} style={styles.smallImage} />
+                )}
+                {selectedThemeIconText && (
+                  <Text style={styles.smallText}>{selectedThemeIconText}</Text>
+                )}
 
-                <Image source={images.working.pic} style={styles.smallImage} />
-                <Text style={styles.smallText}>{images.working.label}</Text>
+                {/* Displaying the selected Emotion and Activity Icons and Texts */}
+                {selectedActivityIcon && (
+                  <Image
+                    source={selectedEmotionIcon}
+                    style={styles.smallImage}
+                  />
+                )}
+                {selectedActivityIconText && (
+                  <Text style={styles.smallText}>
+                    {selectedEmotionIconText}
+                  </Text>
+                )}
+
+                {selectedActivityIcon && (
+                  <Image
+                    source={selectedActivityIcon}
+                    style={styles.smallImage}
+                  />
+                )}
+                {selectedActivityIconText && (
+                  <Text style={styles.smallText}>
+                    {selectedActivityIconText}
+                  </Text>
+                )}
               </View>
               {/* other song details */}
             </View>

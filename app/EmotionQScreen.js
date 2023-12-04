@@ -21,8 +21,8 @@ const itemPerRow = 2;
 const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth * 0.8 + totalGapSize;
 
-const ThemeQScreen = ({ route, navigation }) => {
-  const { songData } = route.params;
+const EmotionQScreen = ({ route, navigation }) => {
+  const { songData, selectedThemeIcon, selectedThemeIconText } = route.params;
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
@@ -47,10 +47,9 @@ const ThemeQScreen = ({ route, navigation }) => {
                   ? songData.artists.join(", ")
                   : songData.artists}
               </Text>
-              <Image
-                source={images.matchaLatte.pic}
-                style={styles.smallImage}
-              />
+              {selectedThemeIcon && (
+                <Image source={selectedThemeIcon} style={styles.smallImage} />
+              )}
             </View>
             {/* other song details */}
           </View>
@@ -65,11 +64,15 @@ const ThemeQScreen = ({ route, navigation }) => {
           <View style={styles.selectionRow}>
             <SingleEmotionOption
               songData={songData}
+              selectedThemeIcon={selectedThemeIcon}
+              selectedThemeIconText={selectedThemeIconText}
               icon={images.superHappyEmoji.pic}
               iconText={images.superHappyEmoji.label}
             ></SingleEmotionOption>
             <SingleEmotionOption
               songData={songData}
+              selectedThemeIcon={selectedThemeIcon}
+              selectedThemeIconText={selectedThemeIconText}
               icon={images.happyEmoji.pic}
               iconText={images.happyEmoji.label}
             ></SingleEmotionOption>
@@ -78,11 +81,15 @@ const ThemeQScreen = ({ route, navigation }) => {
           <View style={styles.selectionRow}>
             <SingleEmotionOption
               songData={songData}
+              selectedThemeIcon={selectedThemeIcon}
+              selectedThemeIconText={selectedThemeIconText}
               icon={images.superSadEmoji.pic}
               iconText={images.superSadEmoji.label}
             ></SingleEmotionOption>
             <SingleEmotionOption
               songData={songData}
+              selectedThemeIcon={selectedThemeIcon}
+              selectedThemeIconText={selectedThemeIconText}
               icon={images.sadEmoji.pic}
               iconText={images.sadEmoji.label}
             ></SingleEmotionOption>
@@ -169,4 +176,4 @@ const styles = StyleSheet.create({
     height: windowWidth * 0.1,
   },
 });
-export default ThemeQScreen;
+export default EmotionQScreen;

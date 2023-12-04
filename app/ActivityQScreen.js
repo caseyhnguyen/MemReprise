@@ -21,8 +21,14 @@ const itemPerRow = 2;
 const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth * 0.8 + totalGapSize;
 
-const ThemeQScreen = ({ route, navigation }) => {
-  const { songData } = route.params;
+const ActivityQScreen = ({ route, navigation }) => {
+  const {
+    songData,
+    selectedThemeIcon,
+    selectedThemeIconText,
+    selectedEmotionIcon,
+    selectedEmotionIconText,
+  } = route.params;
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
@@ -48,14 +54,15 @@ const ThemeQScreen = ({ route, navigation }) => {
                   : songData.artists}
               </Text>
               <View style={styles.smallSelectionRow}>
-                <Image
-                  source={images.matchaLatte.pic}
-                  style={styles.smallImage}
-                />
-                <Image
-                  source={images.superHappyEmoji.pic}
-                  style={styles.smallImage}
-                />
+                {selectedThemeIcon && (
+                  <Image source={selectedThemeIcon} style={styles.smallImage} />
+                )}
+                {selectedThemeIcon && (
+                  <Image
+                    source={selectedEmotionIcon}
+                    style={styles.smallImage}
+                  />
+                )}
               </View>
             </View>
             {/* other song details */}
@@ -70,11 +77,19 @@ const ThemeQScreen = ({ route, navigation }) => {
           <View style={styles.selectionRow}>
             <SingleActivityOption
               songData={songData}
+              selectedThemeIcon={selectedThemeIcon}
+              selectedThemeIconText={selectedThemeIconText}
+              selectedEmotionIcon={selectedEmotionIcon}
+              selectedEmotionIconText={selectedEmotionIconText}
               icon={images.exercising.pic}
               iconText={images.exercising.label}
             ></SingleActivityOption>
             <SingleActivityOption
               songData={songData}
+              selectedThemeIcon={selectedThemeIcon}
+              selectedThemeIconText={selectedThemeIconText}
+              selectedEmotionIcon={selectedEmotionIcon}
+              selectedEmotionIconText={selectedEmotionIconText}
               icon={images.eating.pic}
               iconText={images.eating.label}
             ></SingleActivityOption>
@@ -83,11 +98,19 @@ const ThemeQScreen = ({ route, navigation }) => {
           <View style={styles.selectionRow}>
             <SingleActivityOption
               songData={songData}
+              selectedThemeIcon={selectedThemeIcon}
+              selectedThemeIconText={selectedThemeIconText}
+              selectedEmotionIcon={selectedEmotionIcon}
+              selectedEmotionIconText={selectedEmotionIconText}
               icon={images.working.pic}
               iconText={images.working.label}
             ></SingleActivityOption>
             <SingleActivityOption
               songData={songData}
+              selectedThemeIcon={selectedThemeIcon}
+              selectedThemeIconText={selectedThemeIconText}
+              selectedEmotionIcon={selectedEmotionIcon}
+              selectedEmotionIconText={selectedEmotionIconText}
               icon={images.commuting.pic}
               iconText={images.commuting.label}
             ></SingleActivityOption>
@@ -181,4 +204,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ThemeQScreen;
+export default ActivityQScreen;

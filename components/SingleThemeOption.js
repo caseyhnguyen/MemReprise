@@ -10,16 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../assets/Themes/colors";
-
-// songData: {
-//   title,
-//   artists: Array.isArray(artists) ? artists : [artists],
-//   albumName,
-//   imageUrl,
-//   duration,
-//   previewUrl,
-//   externalUrl,
-// },
+import { useTheme } from "../utils/ThemeContext";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -27,7 +18,12 @@ const SingleThemeOption = ({ icon, iconText, songData }) => {
   const navigation = useNavigation();
 
   const onSelection = () => {
-    navigation.navigate("Emotion Question", { songData });
+    // Navigate to the next screen with the selected icon and icon text
+    navigation.navigate("Emotion Question", {
+      songData: songData,
+      selectedThemeIcon: icon,
+      selectedThemeIconText: iconText,
+    });
   };
 
   return (

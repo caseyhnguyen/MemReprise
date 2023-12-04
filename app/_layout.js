@@ -138,7 +138,6 @@ function FeelingStackScreen() {
   );
 }
 
-
 function DiscoverTabsScreen() {
   return (
     <DiscoverTabs.Navigator
@@ -156,7 +155,12 @@ function DiscoverTabsScreen() {
           margin: 5,
           backgroundColor: "rgba(256, 256, 256, 0.5)",
         },
-        tabBarIndicatorStyle: { height: null, top: 0, borderRadius: 30, backgroundColor:  "#FFD966CC" },
+        tabBarIndicatorStyle: {
+          height: null,
+          top: 0,
+          borderRadius: 30,
+          backgroundColor: "#FFD966CC",
+        },
       }}
     >
       <DiscoverTabs.Screen name="Activity">
@@ -170,7 +174,9 @@ function DiscoverTabsScreen() {
       </DiscoverTabs.Screen>
 
       <DiscoverTabs.Screen name="Feeling">
-        {(props) => <GradientWrapper {...props} Component={FeelingStackScreen} />}
+        {(props) => (
+          <GradientWrapper {...props} Component={FeelingStackScreen} />
+        )}
       </DiscoverTabs.Screen>
     </DiscoverTabs.Navigator>
   );
@@ -178,17 +184,19 @@ function DiscoverTabsScreen() {
 // FeedStack Navigator
 function FeedTabsScreen() {
   return (
-    <FeedTabs.Navigator screenOptions={{ headerShown: false }}>
-      <FeedTabs.Screen name="Feed">
-        {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
-      </FeedTabs.Screen>
+    <SafeAreaView style={{flex:1}}>
+      <FeedTabs.Navigator screenOptions={{ headerShown: false }}>
+        <FeedTabs.Screen name="Feed">
+          {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
+        </FeedTabs.Screen>
 
-      <FeedTabs.Screen name="Discover">
-        {(props) => (
-          <GradientWrapper {...props} Component={DiscoverTabsScreen} />
-        )}
-      </FeedTabs.Screen>
-    </FeedTabs.Navigator>
+        <FeedTabs.Screen name="Discover">
+          {(props) => (
+            <GradientWrapper {...props} Component={DiscoverTabsScreen} />
+          )}
+        </FeedTabs.Screen>
+      </FeedTabs.Navigator>
+    </SafeAreaView>
   );
 }
 
@@ -205,61 +213,59 @@ function ProfileStackScreen() {
 
 const AppLayout = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarActiveTintColor: colors.verdigrisGreen,
-          tabBarInactiveTintColor: colors.teal,
-          tabBarLabelStyle: { fontSize: 14, padding: 5 },
-          tabBarStyle: {
-            display: "flex",
-            paddingTop: 30,
-          },
-          tabBarIconStyle: { paddingBottom: 10 },
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: colors.verdigrisGreen,
+        tabBarInactiveTintColor: colors.teal,
+        tabBarLabelStyle: { fontSize: 14, padding: 5 },
+        tabBarStyle: {
+          display: "flex",
+          paddingTop: 30,
+        },
+        tabBarIconStyle: { paddingBottom: 10 },
+      }}
+    >
+      <Tab.Screen
+        name="HomeScreen"
+        component={HomeStackScreen}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={images.home.pic}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
         }}
-      >
-        <Tab.Screen
-          name="HomeScreen"
-          component={HomeStackScreen}
-          options={{
-            tabBarLabel: "Home",
-            tabBarIcon: ({ color, size }) => (
-              <Image
-                source={images.home.pic}
-                style={{ width: size, height: size, tintColor: color }}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="FeedScreen"
-          component={FeedTabsScreen}
-          options={{
-            tabBarLabel: "Feed",
-            tabBarIcon: ({ color, size }) => (
-              <Image
-                source={images.reprise.pic}
-                style={{ width: size, height: size, tintColor: color }}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="ProfileScreen"
-          component={HomeStackScreen}
-          options={{
-            tabBarLabel: "Profile",
-            tabBarIcon: ({ color, size }) => (
-              <Image
-                source={images.profile.pic}
-                style={{ width: size, height: size, tintColor: color }}
-              />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </SafeAreaView>
+      />
+      <Tab.Screen
+        name="FeedScreen"
+        component={FeedTabsScreen}
+        options={{
+          tabBarLabel: "Feed",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={images.reprise.pic}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ProfileScreen"
+        component={HomeStackScreen}
+        options={{
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={images.profile.pic}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 

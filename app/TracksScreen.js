@@ -134,6 +134,7 @@ const TracksScreen = ({ navigation }) => {
         duration={item.duration || 0}
         previewUrl={item.previewUrl || ""}
         externalUrl={item.externalUrl || ""}
+        played_at={item.played_at || ""}
       />
     );
   };

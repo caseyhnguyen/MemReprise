@@ -11,23 +11,29 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../assets/Themes/colors";
 
-// songData: {
-//   title,
-//   artists: Array.isArray(artists) ? artists : [artists],
-//   albumName,
-//   imageUrl,
-//   duration,
-//   previewUrl,
-//   externalUrl,
-// },
-
 const windowWidth = Dimensions.get("window").width;
 
-const SingleEmotionOption = ({ icon, iconText, songData }) => {
+const SingleActivityOption = ({
+  icon,
+  iconText,
+  songData,
+  selectedThemeIcon,
+  selectedThemeIconText,
+  selectedEmotionIcon,
+  selectedEmotionIconText,
+}) => {
   const navigation = useNavigation();
 
   const onSelection = () => {
-    navigation.navigate("Post Summary", { songData });
+    navigation.navigate("Post Summary", {
+      songData,
+      selectedThemeIcon,
+      selectedThemeIconText,
+      selectedEmotionIcon,
+      selectedEmotionIconText,
+      selectedActivityIcon: icon,
+      selectedActivityIconText: iconText,
+    });
   };
 
   return (
@@ -76,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SingleEmotionOption;
+export default SingleActivityOption;

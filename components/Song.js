@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import millisToMinuteSeconds from "../utils/millisToMinutesAndSeconds.js";
+import formatPlayedAt from "../utils/formatPlayedAt.js";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../assets/Themes/colors";
 
@@ -24,6 +25,7 @@ const Song = ({
   duration,
   previewUrl,
   externalUrl,
+  played_at,
 }) => {
   const navigation = useNavigation();
 
@@ -37,6 +39,7 @@ const Song = ({
         duration,
         previewUrl,
         externalUrl,
+        played_at,
       },
     });
   };
@@ -54,10 +57,12 @@ const Song = ({
             <Text style={styles.artistText} numberOfLines={1}>
               {Array.isArray(artists) ? artists.join(", ") : artists}
             </Text>
+            {/* Display the formatted date and time */}
+            <Text style={styles.playedAtText}>{formatPlayedAt(played_at)}</Text>
           </View>
           {/* <Text style={styles.albumName} numberOfLines={1}>
-            {albumName}
-          </Text> */}
+              {albumName}
+            </Text> */}
           <Text style={styles.durationText}>
             {millisToMinuteSeconds(duration)}
           </Text>
@@ -134,8 +139,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingLeft: 5,
   },
-  artistText: {
+  playedAtText: {
     color: colors.darkGray,
+    fontSize: 14,
+    // paddingLeft: 5,
+    // marginRight: 10,
+  },
+  artistText: {
+    color: colors.black,
     fontSize: 14,
     marginTop: 2,
   },

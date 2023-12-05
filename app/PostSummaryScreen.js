@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -14,8 +14,8 @@ import {
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
-import { PostContext } from "../utils/PostContext";
 import RNPickerSelect from "react-native-picker-select";
+import formatPlayedAt from "../utils/formatPlayedAt.js";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -25,11 +25,10 @@ const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth * 0.8 + totalGapSize;
 
 const PostSummaryScreen = ({ route, navigation }) => {
-  const [captionText, setCaptionText] = useState("");
+  const [text, onChangeText] = React.useState("Useless Text");
   const [number, onChangeNumber] = React.useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
-  const { setPostMade } = useContext(PostContext);
   const options = [
     { label: "Public", value: "option1" },
     { label: "Friends", value: "option2" },
@@ -37,38 +36,15 @@ const PostSummaryScreen = ({ route, navigation }) => {
     // Add more options as needed
   ];
 
-  const handlePostPress = () => {
-    // Update the state to true when the post is made
-    setPostMade(true);
-
-    // Reset the navigation stack and navigate to FeedScreen with parameters
-    navigation.reset({
-      index: 1, // This should be set to the index of the FeedScreen in the stack
-      routes: [
-        { name: "HomeScreen" }, // The first route in your tab navigator
-        {
-          // The route to navigate to, with the proper structure for a stack within a tab
-          name: "FeedScreen",
-          state: {
-            routes: [
-              { name: "Feed", params: { songData, caption: captionText } },
-            ],
-          },
-        },
-      ],
-    });
-  };
-
-  // const handlePostPress = () => {
-  //   setPostMade(true);
-  //   // Pass songData and captionText to the next screen
-  //   navigation.navigate("FeedScreen", {
-  //     screen: "Feed",
-  //     params: { songData, caption: captionText },
-  //   });
-  // };
-
-  const songData = route.params?.songData || {};
+  const {
+    songData,
+    selectedThemeIcon,
+    selectedThemeIconText,
+    selectedEmotionIcon,
+    selectedEmotionIconText,
+    selectedActivityIcon,
+    selectedActivityIconText,
+  } = route.params;
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
@@ -86,21 +62,25 @@ const PostSummaryScreen = ({ route, navigation }) => {
                 style={styles.albumCover}
               />
               <View style={styles.smallSelectionCol}>
-                <Image
-                  source={images.matchaLatte.pic}
-                  style={styles.smallImage}
-                />
-                <Text style={styles.smallText}>{images.matchaLatte.label}</Text>
-                <Image
-                  source={images.superHappyEmoji.pic}
-                  style={styles.smallImage}
-                />
-                <Text style={styles.smallText}>
-                  {images.superHappyEmoji.label}
-                </Text>
+                {selectedThemeIcon && (
+                  <Image source={selectedThemeIcon} style={styles.smallImage} />
+                )}
+                <Text style={styles.smallText}>{selectedThemeIconText}</Text>
+                {selectedEmotionIcon && (
+                  <Image
+                    source={selectedEmotionIcon}
+                    style={styles.smallImage}
+                  />
+                )}
+                <Text style={styles.smallText}>{selectedEmotionIconText}</Text>
 
-                <Image source={images.working.pic} style={styles.smallImage} />
-                <Text style={styles.smallText}>{images.working.label}</Text>
+                {selectedActivityIcon && (
+                  <Image
+                    source={selectedActivityIcon}
+                    style={styles.smallImage}
+                  />
+                )}
+                <Text style={styles.smallText}>{selectedActivityIconText}</Text>
               </View>
               {/* other song details */}
             </View>
@@ -114,17 +94,19 @@ const PostSummaryScreen = ({ route, navigation }) => {
                 ? songData.artists.join(", ")
                 : songData.artists}
             </Text>
+            <Text style={styles.playedAt} numberOfLines={1}>
+              {formatPlayedAt(songData.played_at)}
+            </Text>
           </View>
           <TextInput
             style={styles.input}
             multiline={true}
-            onChangeText={setCaptionText} // Set the state with the new text
-            value={captionText} // The value of the text input is the state
+            onChangeText={onChangeNumber}
+            value={number}
             placeholder="Write a caption..."
             keyboardType="ascii-capable"
-            returnKeyType="done" // Adds a "done" button to the keyboard
-            onSubmitEditing={Keyboard.dismiss} // Dismiss the keyboard when "done" is pressed
-          />
+          ></TextInput>
+
           <View style={styles.footer}>
             <RNPickerSelect
               onValueChange={(value) => setSelectedValue(value)}
@@ -135,11 +117,24 @@ const PostSummaryScreen = ({ route, navigation }) => {
                 // ... more options
               ]}
               style={pickerSelectStyles}
-              placeholder={{ label: "Select Visbility", value: null }}
+              placeholder={{ label: "Select visibility...", value: null }}
             />
             <Pressable
               style={styles.postButton}
-              onPress={handlePostPress} // Use the handler function on button press
+              onPress={() =>
+                navigation.navigate("FeedScreen", {
+                  screen: "Feed",
+                  params: {
+                    songData,
+                    selectedThemeIcon,
+                    selectedThemeIconText,
+                    selectedEmotionIcon,
+                    selectedEmotionIconText,
+                    selectedActivityIcon: selectedActivityIcon,
+                    selectedActivityIconText: selectedActivityIconText,
+                  },
+                })
+              }
             >
               <Text style={styles.postButtonText}>Post</Text>
             </Pressable>
@@ -159,7 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offWhite50,
     borderRadius: 10,
     width: rowWidth + 10,
-    height: windowWidth * 1.1,
+    height: windowWidth * 1.25,
   },
   songContainer: {
     alignItems: "flex-start",
@@ -186,6 +181,11 @@ const styles = StyleSheet.create({
   artist: {
     fontSize: 12,
     color: "black", // Adjust color as needed
+    marginTop: 5,
+  },
+  playedAt: {
+    fontSize: 12,
+    color: colors.darkGray,
     marginTop: 5,
   },
   titleAndArtist: {
@@ -247,8 +247,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "2.5%",
-    paddingTop: "10.5%",
+    padding: "5%",
+    paddingTop: "20%",
+    // borderTopWidth: 1,
+    // borderTopColor: colors.darkGray, // Or another color that fits your design
+    // backgroundColor: colors.offWhite50, // Make sure this matches the container background
   },
   postButton: {
     // Adjust the post button styles
@@ -276,7 +279,7 @@ const pickerSelectStyles = {
     borderWidth: 1,
     borderColor: colors.offWhite75,
     borderRadius: 4,
-    color: colors.darkGray,
+    color: "black",
     backgroundColor: colors.offWhite75, // Adjust background color as needed
     // Other styling as needed for iOS
   },
@@ -291,10 +294,32 @@ const pickerSelectStyles = {
     backgroundColor: "white", // Adjust background color as needed
     // Other styling as needed for Android
   },
-  placeholder: {
-    color: colors.darkGray,
-    // fontWeight: "bold",
-  },
+  // You can add placeholder style if needed
 };
+
+// const styles = StyleSheet.create({
+//   songContainer: {
+//     width: windowWidth,
+//     height: 200, // Adjust height as needed
+//     alignItems: "center",
+//     justifyContent: "center",
+//     marginBottom: 20,
+//   },
+//   albumCover: {
+//     width: 120, // Adjust size as needed
+//     height: 120, // Adjust size as needed
+//   },
+//   title: {
+//     fontSize: 18,
+//     fontWeight: "bold",
+//     color: "black", // Adjust color as needed
+//     marginTop: 10,
+//   },
+//   artist: {
+//     fontSize: 16,
+//     color: "grey", // Adjust color as needed
+//     marginTop: 5,
+//   },
+// });
 
 export default PostSummaryScreen;

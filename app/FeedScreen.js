@@ -51,7 +51,6 @@ const FeedScreen = ({ route, navigation }) => {
     </SafeAreaView>
   );
 };
-const layout = StyleSheet.create({})
-
+const layout = StyleSheet.create({});
 
 export default FeedScreen;

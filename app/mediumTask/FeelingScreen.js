@@ -25,27 +25,37 @@ const rowWidth = windowWidth * 0.8 + totalGapSize;
 const FeelingScreen = ({ route, navigation }) => {
   const caption = route.params?.caption || "";
 
-  const handlePress = () => {
-    // Pass songData and captionText to the next screen
-    navigation.navigate("FeelingPlaylist");
+  const handlePress = (selection) => {
+    navigation.navigate("FeelingPlaylist", {selection});
   
   };
 
-  const songData = route.params?.songData || {};
-  const artistNames =
-    songData && songData.artists
-      ? songData.artists.join(", ")
-      : "Unknown Artist";
+
 
   return (
     <SafeAreaView style={defaultStyles.container}>
       <Text>Feeling!</Text>
       <Pressable
         style={styles.postButton}
-        onPress={handlePress}
+        onPress={() => handlePress(1)}
         
       >
-        <Text style={styles.postButtonText}>Feeling Playlist</Text>
+        <Text style={styles.postButtonText}>#1 Response</Text>
+      </Pressable>
+      <Pressable
+        style={styles.postButton}
+        onPress={() => handlePress(2)}
+        
+      >
+        <Text style={styles.postButtonText}>#2 Response</Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.postButton}
+        onPress={() => handlePress(3)}
+        
+      >
+        <Text style={styles.postButtonText}>#3 Response</Text>
       </Pressable>
     </SafeAreaView>
   );

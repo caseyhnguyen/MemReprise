@@ -62,14 +62,21 @@ const SignUpScreen = ({ navigation }) => {
           >
             <Text style={styles.loginBtnTxt}>Sign Up</Text>
           </Pressable>
+
           <View style={styles.buttonSpacer} />
           
         </View>
+
         <View style={styles.spacer} />
 
         <View>
           <Text style={styles.signUpText}>
-            Already have an account? Log In
+            Already have an account? {' '}
+            <Pressable
+                onPress={() => navigation.navigate("Login")}
+            >
+                <Text style={styles.linkText}>Login</Text>
+            </Pressable>
           </Text>
         </View>
 
@@ -93,6 +100,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignItems: "flex-start",
     marginTop: -50,
+  },
+  linkText: {
+    textDecorationLine: 'underline',
+    color: '#44AA99',
   },
   descrText: {
     color: colors.white,
@@ -160,7 +171,7 @@ const styles = StyleSheet.create({
   loginBtnTxt: {
     textAlign: "center",
     fontWeight: "500",
-    fontSize: 14,
+    // fontSize: 14,
     letterSpacing: -0.41,
     color: colors.white,
   },

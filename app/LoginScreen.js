@@ -8,6 +8,8 @@ import {
   Pressable,
   StyleSheet,
   Dimensions,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -23,6 +25,10 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
       <View>
         <Header title="memreprise" />
       </View>
@@ -72,13 +78,19 @@ const LoginScreen = ({ navigation }) => {
 
         <View>
           <Text style={styles.signUpText}>
-            Don't have an account? Sign Up
+            Don't have an account?  
+            <Pressable
+                onPress={() => navigation.navigate("SignUp")}
+            >
+                <Text style={styles.linkText}> Sign Up</Text>
+            </Pressable>
           </Text>
         </View>
 
         
       </View>
       {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -122,6 +134,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: windowWidth - 100,
+  },
+  linkText: {
+    textDecorationLine: 'underline',
+    color: '#44AA99',
   },
   postPrompt: {
     borderRadius: 15,

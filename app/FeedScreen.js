@@ -28,6 +28,9 @@ const FeedScreen = ({ route, navigation }) => {
   const caption = route.params?.caption || "";
 
   const songData = route.params?.songData || {};
+
+  console.log("IN FEED");
+  console.log(songData);
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")

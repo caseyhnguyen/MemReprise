@@ -87,9 +87,9 @@ function HomeStackScreen() {
         )}
       </HomeStack.Screen>
 
-      {/* <HomeStack.Screen name="Feed" options={{ headerShown: false }}>
-        {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
-      </HomeStack.Screen> */}
+      <HomeStack.Screen name="FeedTabs" options={{ headerShown: false }}>
+        {(props) => <GradientWrapper {...props} Component={FeedTabsScreen} />}
+      </HomeStack.Screen>
     </HomeStack.Navigator>
   );
 }
@@ -209,7 +209,7 @@ function FeedTabsScreen() {
   return (
     <SafeAreaView style={{flex:1}}>
       <FeedTabs.Navigator screenOptions={{ headerShown: false }}>
-        <FeedTabs.Screen name="Feed">
+        <FeedTabs.Screen name="FeedStackScreen">
           {(props) => <GradientWrapper {...props} Component={FeedStackScreen} />}
         </FeedTabs.Screen>
 

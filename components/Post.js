@@ -39,6 +39,9 @@ const Post = ({ dimensions, songData}) => {
   const styles = styling(dimensions);
 
   const navigation = useNavigation();
+
+  console.log("In POST");
+  console.log(songData);
   
   const onPress = () => {
     navigation.navigate("PostExpandScreen", {songData});

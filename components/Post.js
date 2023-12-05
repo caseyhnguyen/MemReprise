@@ -9,8 +9,9 @@ import {
   Pressable,
   TextInput,
   Keyboard,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import images from "../assets/Images/images";
 import { postStyles as styling } from "../assets/Themes/postStyle";
 import { PostContext } from "../utils/PostContext";
@@ -22,7 +23,7 @@ import { PostContext } from "../utils/PostContext";
 // const totalGapSize = (itemPerRow - 1) * gap;
 // const rowWidth = windowWidth * 0.8 + totalGapSize;
 
-const Post = ({ dimensions, songData, navigation }) => {
+const Post = ({ dimensions, songData}) => {
   const [captionText, setCaptionText] = useState("");
   const [number, onChangeNumber] = React.useState("");
   const [selectedOption, setSelectedOption] = useState(null);
@@ -36,15 +37,17 @@ const Post = ({ dimensions, songData, navigation }) => {
   ];
 
   const styles = styling(dimensions);
+
+  const navigation = useNavigation();
   
-  // const onPress = () => {
-  //   navigation.navigate("PostExpandScreen", {songData});
-  // }
+  const onPress = () => {
+    navigation.navigate("PostExpandScreen", {songData});
+  }
 
   return (
     <View style={styles.outerContainer}>
       {songData && songData.title && (
-        <View>
+        <Pressable onPress={onPress}>
           <View style={styles.metaData}>
             <Image
               source={{ uri: songData.imageUrl }}
@@ -97,7 +100,7 @@ const Post = ({ dimensions, songData, navigation }) => {
               <Text style={styles.smallText}>{images.working.label}</Text>
             </View>
           </View>
-        </View>
+        </Pressable>
       )}
     </View>
   );

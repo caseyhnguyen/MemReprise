@@ -30,7 +30,7 @@ const PostExpandScreen = ({ route, navigation }) => {
       : "Unknown Artist";
 
   return (
-    <SafeAreaView style={defaultStyles.container}>
+    <SafeAreaView>
       <Text style={textStyles.subHeader}>Expanded Post</Text>
 
     </SafeAreaView>

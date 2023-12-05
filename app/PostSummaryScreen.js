@@ -122,8 +122,8 @@ const PostSummaryScreen = ({ route, navigation }) => {
             <Pressable
               style={styles.postButton}
               onPress={() =>
-                navigation.navigate("FeedScreen", {
-                  screen: "Feed",
+                navigation.navigate("Feed", {
+                  screen: "FeedInnerScreen",
                   params: {
                     songData,
                     selectedThemeIcon,

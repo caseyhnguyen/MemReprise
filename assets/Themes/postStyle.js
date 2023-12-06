@@ -18,11 +18,13 @@ export const postStyles = (dimensions) =>
       flexDirection: "column",
       backgroundColor: colors.offWhite50,
       borderRadius: 10,
-      width: "97.5%",
-      height: "95%",
+      width: "95%",
+      height: "92.5%",
     }, 
+
     captionContainer: {
-      paddingLeft: 5
+      width: "75%",
+      paddingLeft: 30,
     }, 
     metaData: {
       margin: 10,
@@ -44,9 +46,8 @@ export const postStyles = (dimensions) =>
       alignItems: "flex-start",
       justifyContent: "space-between",
       flexDirection: "row",
-      borderRadius: 10,
       width: "90%",
-      height: "90%",
+      // height: "90%",
       gap: 15,
     },
     albumCover: {
@@ -142,12 +143,16 @@ export const postStyles = (dimensions) =>
       justifyContent: "center",
       alignItems: "center",
       width: "20%", // Adjust the width as needed
-      paddingVertical: 12, // Adjust the padding as needed
+      // paddingVertical: 12, // Adjust the padding as needed
+      marginTop: 10,
+      marginBottom: 10
+
     },
     postButtonText: {
       // Adjust the post button text styles
       color: colors.darkGray,
       fontSize: 16,
       fontWeight: "bold",
+      padding: 5
     },
   });

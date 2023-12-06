@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import {
   SafeAreaView,
+  ScrollView,
   View,
   Text,
   Image,
@@ -44,11 +45,14 @@ const PostExpanded = ({ dimensions, songData }) => {
   console.log(songData);
 
   const onPress = () => {
-    navigation.navigate("PostExpandScreen", { songData });
+    navigation.goBack();
   };
 
   return (
     <View>
+        <Pressable style={styles.postButton} onPress={onPress}>
+          <Text style={styles.postButtonText}>back</Text>
+        </Pressable>
       {songData && songData.title && (
         <Pressable onPress={onPress} style={styles.expandedOuterContainer}>
           <View style={styles.metaData}>
@@ -68,8 +72,6 @@ const PostExpanded = ({ dimensions, songData }) => {
               </Text>
             </View>
           </View>
-
-          
 
           <View style={styles.postContainer}>
             <View style={styles.songInfo}>
@@ -107,13 +109,10 @@ const PostExpanded = ({ dimensions, songData }) => {
             </View>
           </View>
 
-
           {/* Why is this rendered outside the parent pressable? It's nested inside it? */}
-          <View> 
+          <View style={styles.captionContainer}>
             <Text style={styles.caption}>Caption</Text>
           </View>
-
-
         </Pressable>
       )}
     </View>

@@ -34,9 +34,9 @@ const LoginScreen = ({ navigation }) => {
       </View>
       <View style={styles.postPrompt}>
         
-        <View style={styles.spacer} />
+
         
-        <View>
+        <View style={styles.title}>
           <Text style={styles.loginText}>
             Log In
           </Text>
@@ -104,11 +104,17 @@ const styles = StyleSheet.create({
     // width: windowWidth,
     // height: windowWidth * 0.98,
   },
+  title: {
+    alignItems: "center",
+
+  },
   loginText: {
     fontWeight: "500",
     color: colors.white,
     fontSize: 30,
-    alignItems: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: -30,
   },
   descrText: {
     color: colors.white,

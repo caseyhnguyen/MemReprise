@@ -18,11 +18,8 @@ const windowWidth = Dimensions.get("window").width;
 const LoginSignUpScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.postPrompt}>
-        
         <View style={styles.spacer} />
-
         <View style={styles.titleContainer}>
           <Text style={styles.memrepriseTitle}>
             memreprise
@@ -31,9 +28,7 @@ const LoginSignUpScreen = ({ navigation }) => {
             Where Memories and Music Meet
           </Text>
         </View>
-
         <View style={styles.spacer} />
-
         <View style={styles.buttonContainer}>
           <Pressable
             style={styles.button}
@@ -41,9 +36,7 @@ const LoginSignUpScreen = ({ navigation }) => {
           >
             <Text style={styles.loginText}>Login</Text>
           </Pressable>
-
           <View style={styles.buttonSpacer} />
-         
          <Pressable
             style={styles.button}
             onPress={() => navigation.navigate("SignUp")}
@@ -51,10 +44,7 @@ const LoginSignUpScreen = ({ navigation }) => {
             <Text style={styles.signUpText}>Sign Up</Text>
           </Pressable>
         </View>
-
-
       </View>
-      {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
     </SafeAreaView>
   );
 };
@@ -64,24 +54,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    // padding: 10,
     width: windowWidth,
-    // height: windowWidth * 0.5,
   },
   postPrompt: {
     borderRadius: 15,
-    // padding: 50,
     alignItems: "center",
-    // justifyContent: "space-between",
-    // backgroundColor: colors.offWhite,
-    // width: windowWidth,
-    // height: windowWidth * 0.25,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    // backgroundColor: colors.offWhite50,
   },
   titleContainer: {
     alignItems: "center",
@@ -90,7 +72,6 @@ const styles = StyleSheet.create({
   memrepriseTitle: {
     color: colors.white,
     fontSize: 30
-
   },
   postASongText: {
     textAlign: "center",
@@ -103,14 +84,11 @@ const styles = StyleSheet.create({
     height: 16,
   },
   buttonContainer: {
-    // flexDirection: "col",
-    // flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    // width: "100%",
   },
   button: {
-    borderRadius: 15,
+    borderRadius: 50,
     padding: 20,
     alignItems: "center",
     justifyContent: "center",
@@ -123,17 +101,17 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: 150,
     height: 50
-    
   },
   loginText: {
     textAlign: "center",
+    marginVertical: -1,
     fontWeight: "500",
     fontSize: 10,
-    letterSpacing: -0.41,
     color: colors.white,
   },
   signUpText: {
     textAlign: "center",
+    marginVertical: -1,
     fontWeight: "500",
     fontSize: 10,
     letterSpacing: -0.41,
@@ -142,7 +120,6 @@ const styles = StyleSheet.create({
   buttonSpacer: {
     height: 10,
   },
-
 });
 
 export default LoginSignUpScreen;

@@ -17,64 +17,75 @@ import albums from "../../assets/Images/albums";
 import { colors } from "../../assets/Themes/colors";
 import Header from "../../components/Header";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import RNPickerSelect from "react-native-picker-select";
+
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
 //album images
 const data = [
-  { id: "1", source: albums.alb1 },
-  { id: "2", source: albums.alb2 }, 
-  { id: "3", source: albums.alb3 },
-  { id: "4", source: albums.alb1 },
-  { id: "5", source: albums.alb6 },
-  { id: "6", source: albums.alb10 },
-  { id: "7", source: albums.alb5 },
-  { id: "8", source: albums.alb7 },
-  { id: "9", source: albums.alb8 },
-  { id: "10", source: albums.alb1 },
-  { id: "11", source: albums.alb3 },
-  { id: "12", source: albums.alb6 },
-  { id: "13", source: albums.alb1 },
-  { id: "14", source: albums.alb6 },
-  { id: "15", source: albums.alb5 },
-  { id: "16", source: albums.alb3 },
-  { id: "17", source: albums.alb10 },
-  { id: "18", source: albums.alb8 }
+  { id: "1", source: albums.alb1, month: "NOV", date: "2" },
+  { id: "2", source: albums.alb2, month: "NOV", date: "3"  }, 
+  { id: "3", source: albums.alb3, month: "NOV", date: "5"  },
+  { id: "4", source: albums.alb1, month: "NOV", date: "6" },
+  { id: "5", source: albums.alb6, month: "NOV", date: "7" },
+  { id: "6", source: albums.alb10, month: "NOV", date: "8" },
+  { id: "7", source: albums.alb5, month: "NOV", date: "9" },
+  { id: "8", source: albums.alb7, month: "NOV", date: "11" },
+  { id: "9", source: albums.alb8, month: "NOV", date: "12" },
+  { id: "10", source: albums.alb1, month: "NOV", date: "14" },
+  { id: "11", source: albums.alb3, month: "NOV", date: "15" },
+  { id: "12", source: albums.alb6, month: "NOV", date: "16" },
+  { id: "13", source: albums.alb1, month: "NOV", date: "18" },
+  { id: "14", source: albums.alb6, month: "NOV", date: "19" },
+  { id: "15", source: albums.alb5, month: "NOV", date: "20" },
+  { id: "16", source: albums.alb3, month: "NOV", date: "21" },
+  { id: "17", source: albums.alb10, month: "NOV", date: "22" },
+  { id: "18", source: albums.alb8, month: "NOV", date: "23" }
   //going to add more for each album cover
 ];
 
 const renderItem = ({ item }) => (
   <View>
     <Image source={item.source} style={styles.image} />
+    <View style={styles.textBox}>
+      <Text style={styles.monthText}>{item.month}</Text>
+      <Text style={styles.dateText}>{item.date}</Text>
+    </View>
+
   </View>
 );
 
 const CalendarActivityScreen = ({ navigation }) => {
+  const [selectedValue, setSelectedValue] = useState(null);
+
   return (
     <SafeAreaView style={styles.container}>
       {/*Header needs to be changed as profile pic and name */}
-      <View style={styles.metaData}>
+      <View style={styles.header}>
         <Image source={images.caroline.pic} style={styles.profilePic} />
         <View>
           <Text style={styles.title}>Caroline Tran</Text>
           <Text style={styles.username}>@ctran</Text>
+        </View>
+        <View style={styles.dropDown}>
+          <RNPickerSelect
+                    onValueChange={(value) => setSelectedValue(value)}
+                    items={[
+                      { label: "Activity", value: "activity" },
+                      { label: "Theme", value: "theme" },
+                      { label: "Feeling", value: "feeling" },
+                    ]}
+                    style={pickerSelectStyles}
+                    placeholder={{ label: "Reprise", value: null, color: 'black' }}
+                  />
         </View>
       </View>
 
       <View>
           <Text style={styles.month}>NOVEMBER</Text>
         </View>
-
-      {/* Container for month title */}
-      {/* <View style={styles.postPrompt}>
-        <View>
-          <Text style={styles.month}>AUGUST</Text>
-        </View>
-        <View>
-          <Text>May</Text>
-        </View>
-      </View> */}
 
       
       <View style={styles.spacer} />
@@ -86,7 +97,6 @@ const CalendarActivityScreen = ({ navigation }) => {
           keyExtractor={(item) => item.id}
         />
       </View>
-      {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
     </SafeAreaView>
   );
 };
@@ -98,29 +108,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    // padding: 10,
   },
-  // textContainer: {
-  //   alignContent: "center",
-  //   marginLeft: -20,
-
-  // },
-  metaData: {
-    // margin: 10,
-    // paddingTop: 10,
-    // paddingLeft: 5,
-
+  header: {
     flexDirection: "row",
-    // alignItems: "center",
     gap: 10,
     width: "90%",
-
     position: "absolute",
     top: 100,
     left: 25,
     right: 0,
     bottom: 0,
-    justifyContent: "flex-start", // Align content to the top
+    justifyContent: "flex-start", 
     alignItems: "flex-start",
   },
   title: {
@@ -144,22 +142,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     position: "absolute",
-    // right: 0,
-    // flex: 1,
-    // position: 'absolute',
-    // top: -10,
-    // right: 100,
     marginTop: 170,
     marginLeft: -185,
 
-  },
-  postPrompt: {
-    // padding: 50,
-    // alignItems: "center",
-    // justifyContent: "space-between",
-    // width: windowWidth * 0.9,
-    // height: windowWidth * 0.70,
-    // elevation: 5,
   },
   containerCalendar: {
     flex: 1,
@@ -171,6 +156,51 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 15,
   },
+  textBox: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: colors.yellow, // Set the background color to yellow
+    padding: 5,
+    borderRadius: 5,
+  },
+  monthText: {
+    color: colors.black,
+    fontWeight: 'bold',
+  },
+  dateText: {
+    color: colors.black,
+  },
+  dropDown: {
+    paddingLeft: 30,
+  }
 });
+
+const pickerSelectStyles = {
+  // Adjust the dropdown styles
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: colors.offWhite75,
+    borderRadius: 4,
+    color: colors.black,
+    backgroundColor: colors.yellow, // Adjust background color as needed
+    // Other styling as needed for iOS
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 4,
+    color: "black",
+    backgroundColor: colors.yellow, // Adjust background color as needed
+    // Other styling as needed for Android
+  },
+  // You can add placeholder style if needed
+};
 
 export default CalendarActivityScreen;

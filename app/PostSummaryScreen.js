@@ -125,13 +125,16 @@ const PostSummaryScreen = ({ route, navigation }) => {
                 navigation.navigate("FeedTabs", {
                   screen: "FeedStackScreen",
                   params: {
+
+                    screen: "FeedInnerScreen",
+                    params: {
                     songData,
                     selectedThemeIcon,
                     selectedThemeIconText,
                     selectedEmotionIcon,
                     selectedEmotionIconText,
                     selectedActivityIcon: selectedActivityIcon,
-                    selectedActivityIconText: selectedActivityIconText,
+                    selectedActivityIconText: selectedActivityIconText}
                   },
                 })
               }

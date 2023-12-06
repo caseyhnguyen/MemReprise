@@ -49,7 +49,6 @@ const FeedScreen = ({ route, navigation }) => {
           rowWidth: rowWidth,
         }}
         songData={songData}
-        // navigation = {navigation}
       ></Post>
     </SafeAreaView>
   );

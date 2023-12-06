@@ -13,6 +13,17 @@ export const postStyles = (dimensions) =>
       height: dimensions.rowWidth * 1.25,
     },
 
+    expandedOuterContainer: {
+      justifyContent: "flex-start",
+      flexDirection: "column",
+      backgroundColor: colors.offWhite50,
+      borderRadius: 10,
+      width: "97.5%",
+      height: "95%",
+    }, 
+    captionContainer: {
+      paddingLeft: 5
+    }, 
     metaData: {
       margin: 10,
       paddingTop: 10,

@@ -209,7 +209,7 @@ function FeedTabsScreen() {
   return (
     <SafeAreaView style={{flex:1}}>
       <FeedTabs.Navigator screenOptions={{ headerShown: false }}>
-        <FeedTabs.Screen name="FeedStackScreen">
+        <FeedTabs.Screen name="FeedStackScreen" options={{tabBarLabel: "Feed"}}>
           {(props) => <GradientWrapper {...props} Component={FeedStackScreen} />}
         </FeedTabs.Screen>
 
@@ -228,7 +228,7 @@ function FeedTabsScreen() {
 // ProfileStack Navigator
 function ProfileStackScreen() {
   return (
-    <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+    <ProfileStack.Navigator screenOptions={{ headerShown: false }} >
       <ProfileStack.Screen name="Profile">
         {(props) => <GradientWrapper {...props} Component={ProfileScreen} />}
       </ProfileStack.Screen>

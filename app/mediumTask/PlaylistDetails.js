@@ -1,12 +1,21 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
+import { useRoute } from "@react-navigation/native";
 import { WebView } from "react-native-webview";
-import { colors } from "../assets/Themes/colors";
+import { colors } from "../../assets/Themes/colors";
 import { StatusBar } from "expo-status-bar";
 
-export default function Page() {
-  const params = useLocalSearchParams();
-  // console.log("details URL:", params.url);
+export default function PlaylistDetails() {
+  const route = useRoute();
+  const url = route.params.url;
+  console.log("Playlist URL:", url); // To debug
 
   return (
     <>
@@ -15,18 +24,16 @@ export default function Page() {
         options={{
           headerStyle: { backgroundColor: colors.background },
           headerTintColor: colors.white,
-          headerTitle: "Song Details",
+          headerTitle: "Playlist Details",
           headerTitleStyle: { color: colors.white, fontSize: 20 },
         }}
       />
-      <WebView source={{ uri: params.url }} style={styles.main} />
+      <WebView source={{ uri: url }} style={styles.main} />
     </>
   );
 }
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   main: {
     flex: 1,
   },

@@ -34,8 +34,11 @@ import FeedScreen from "./FeedScreen";
 import DiscoverScreen from "./mediumTask/DiscoverScreen";
 import ActivityScreen from "./mediumTask/ActivityScreen";
 import ActivityPlaylistScreen from "./mediumTask/ActivityPlaylistScreen";
+import PlaylistDetails from "./mediumTask/PlaylistDetails";
+
 import FeelingScreen from "./mediumTask/FeelingScreen";
 import ThemeScreen from "./mediumTask/ThemeScreen";
+import PostExpandScreen from "./mediumTask/PostExpandScreen";
 
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -53,6 +56,7 @@ const ActivityStack = createStackNavigator();
 const ThemeStack = createStackNavigator();
 const FeelingStack = createStackNavigator();
 const FeedTabs = createMaterialTopTabNavigator();
+const FeedStack = createStackNavigator();
 const DiscoverTabs = createMaterialTopTabNavigator();
 
 // Create a wrapper component to apply gradient background
@@ -114,6 +118,11 @@ function ActivityStackScreen() {
         {(props) => (
           <GradientWrapper {...props} Component={ActivityPlaylistScreen} />
         )}
+      </ActivityStack.Screen>
+
+      {/* Add this line for PlaylistDetails */}
+      <ActivityStack.Screen name="PlaylistDetails">
+        {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
       </ActivityStack.Screen>
     </ActivityStack.Navigator>
   );
@@ -194,10 +203,28 @@ function DiscoverTabsScreen() {
     </DiscoverTabs.Navigator>
   );
 }
+
+// function FeedStackScreen() {
+//   return (
+//     <FeedStack.Navigator screenOptions={{ headerShown: false }}>
+//       <FeedStack.Screen name="FeedScreen">
+//         {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
+//       </FeedStack.Screen>
+
+//       <FeedStack.Screen name="PostExpandScreen">
+//         {(props) => (
+//           <GradientWrapper {...props} Component={PostExpandScreen} />
+//         )}
+//       </FeedStack.Screen>
+
+//     </FeedStack.Navigator>
+//   );
+// }
+
 // FeedStack Navigator
 function FeedTabsScreen() {
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <FeedTabs.Navigator screenOptions={{ headerShown: false }}>
         <FeedTabs.Screen name="Feed">
           {(props) => <GradientWrapper {...props} Component={FeedScreen} />}

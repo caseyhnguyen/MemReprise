@@ -23,10 +23,24 @@ const windowWidth = Dimensions.get("window").width;
 
 //album images
 const data = [
-  { id: "1", source: "../../assets/album-1.png" },
-  { id: "2", source: albums.alb2 }, //wrong formatting, looking for string or number, when I change it to url path it can't find it
+  { id: "1", source: albums.alb1 },
+  { id: "2", source: albums.alb2 }, 
   { id: "3", source: albums.alb3 },
-  { id: "4", source: albums.alb4 },
+  { id: "4", source: albums.alb1 },
+  { id: "5", source: albums.alb6 },
+  { id: "6", source: albums.alb10 },
+  { id: "7", source: albums.alb5 },
+  { id: "8", source: albums.alb7 },
+  { id: "9", source: albums.alb8 },
+  { id: "10", source: albums.alb1 },
+  { id: "11", source: albums.alb3 },
+  { id: "12", source: albums.alb6 },
+  { id: "13", source: albums.alb1 },
+  { id: "14", source: albums.alb6 },
+  { id: "15", source: albums.alb5 },
+  { id: "16", source: albums.alb3 },
+  { id: "17", source: albums.alb10 },
+  { id: "18", source: albums.alb8 }
   //going to add more for each album cover
 ];
 
@@ -41,23 +55,29 @@ const CalendarActivityScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       {/*Header needs to be changed as profile pic and name */}
       <View style={styles.metaData}>
-        <Image source={images.profile.pic} style={styles.profilePic} />
+        <Image source={images.caroline.pic} style={styles.profilePic} />
         <View>
-          <Text style={styles.title}>Display Name</Text>
-          <Text style={styles.username}>Username</Text>
+          <Text style={styles.title}>Caroline Tran</Text>
+          <Text style={styles.username}>@ctran</Text>
         </View>
       </View>
 
+      <View>
+          <Text style={styles.month}>NOVEMBER</Text>
+        </View>
+
       {/* Container for month title */}
-      <View style={styles.postPrompt}>
+      {/* <View style={styles.postPrompt}>
         <View>
           <Text style={styles.month}>AUGUST</Text>
         </View>
         <View>
           <Text>May</Text>
         </View>
-      </View>
+      </View> */}
 
+      
+      <View style={styles.spacer} />
       <View style={styles.containerCalendar}>
         <FlatList
           data={data}
@@ -71,7 +91,7 @@ const CalendarActivityScreen = ({ navigation }) => {
   );
 };
 
-const imageSize = (windowWidth - 20) / 4; // Assuming 20 is the total horizontal padding
+const imageSize = (windowWidth - 50) / 4; // Assuming 20 is the total horizontal padding
 
 const styles = StyleSheet.create({
   container: {
@@ -108,6 +128,7 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   username: {
+    fontSize: 20,
     color: colors.white,
   },
   profilePic: {
@@ -115,18 +136,22 @@ const styles = StyleSheet.create({
     height: windowWidth * 0.15,
     borderRadius: (windowWidth * 0.15) / 2,
   },
+  spacer: {
+    height: 200,
+  },
   month: {
     color: colors.white,
     fontSize: 24,
     fontWeight: "bold",
-    // alignItems: "flex-start",
+    position: "absolute",
     // right: 0,
     // flex: 1,
     // position: 'absolute',
     // top: -10,
-    // left: 1,
-    right: 100,
-    marginTop: -200,
+    // right: 100,
+    marginTop: 170,
+    marginLeft: -185,
+
   },
   postPrompt: {
     // padding: 50,
@@ -138,12 +163,13 @@ const styles = StyleSheet.create({
   },
   containerCalendar: {
     flex: 1,
-    padding: 10,
+    padding: 5,
   },
   image: {
     width: imageSize,
     height: imageSize,
     margin: 5,
+    borderRadius: 15,
   },
 });
 

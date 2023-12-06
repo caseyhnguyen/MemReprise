@@ -78,7 +78,7 @@ const CalendarActivityScreen = ({ navigation }) => {
                       { label: "Feeling", value: "feeling" },
                     ]}
                     style={pickerSelectStyles}
-                    placeholder={{ label: "Reprise", value: null, color: 'black' }}
+                    placeholder={{ label: "Reprise", value: "reprise", color: 'black' }}
                   />
         </View>
       </View>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     backgroundColor: colors.yellow, // Set the background color to yellow
-    padding: 5,
+    padding: 2,
     borderRadius: 5,
   },
   monthText: {
@@ -170,6 +170,8 @@ const styles = StyleSheet.create({
   },
   dateText: {
     color: colors.black,
+    textAlign: "center",
+    
   },
   dropDown: {
     paddingLeft: 30,

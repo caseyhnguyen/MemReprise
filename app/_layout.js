@@ -37,6 +37,7 @@ import ActivityPlaylistScreen from "./mediumTask/ActivityPlaylistScreen";
 import FeelingScreen from "./mediumTask/FeelingScreen";
 import ThemeScreen from "./mediumTask/ThemeScreen";
 import PostExpandScreen from "./mediumTask/PostExpandScreen";
+import PlaylistDetails from "./mediumTask/PlaylistDetails";
 
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -117,6 +118,10 @@ function ActivityStackScreen() {
         {(props) => (
           <GradientWrapper {...props} Component={ActivityPlaylistScreen} />
         )}
+      </ActivityStack.Screen>
+
+      <ActivityStack.Screen name="PlaylistDetails">
+        {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
       </ActivityStack.Screen>
     </ActivityStack.Navigator>
   );

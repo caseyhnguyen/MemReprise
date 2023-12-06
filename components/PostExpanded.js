@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import {
   SafeAreaView,
+  ScrollView,
   View,
   Text,
   Image,
@@ -9,7 +10,7 @@ import {
   Pressable,
   TextInput,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import images from "../assets/Images/images";
@@ -23,7 +24,7 @@ import { PostContext } from "../utils/PostContext";
 // const totalGapSize = (itemPerRow - 1) * gap;
 // const rowWidth = windowWidth * 0.8 + totalGapSize;
 
-const Post = ({ dimensions, songData}) => {
+const PostExpanded = ({ dimensions, songData }) => {
   const [captionText, setCaptionText] = useState("");
   const [number, onChangeNumber] = React.useState("");
   const [selectedOption, setSelectedOption] = useState(null);
@@ -42,15 +43,18 @@ const Post = ({ dimensions, songData}) => {
 
   console.log("In POST");
   console.log(songData);
-  
+
   const onPress = () => {
-    navigation.navigate("PostExpandScreen", {songData});
-  }
+    navigation.goBack();
+  };
 
   return (
-    <View style={styles.outerContainer}>
+    <View>
+        <Pressable style={styles.postButton} onPress={onPress}>
+          <Text style={styles.postButtonText}>back</Text>
+        </Pressable>
       {songData && songData.title && (
-        <Pressable onPress={onPress}>
+        <Pressable onPress={onPress} style={styles.expandedOuterContainer}>
           <View style={styles.metaData}>
             <Image
               source={{ uri: songData.imageUrl }}
@@ -63,7 +67,9 @@ const Post = ({ dimensions, songData}) => {
             </View>
 
             <View style={styles.time}>
-            <Text name="time" style={styles.smallText}>10:21 AM • 12/01/23</Text>
+              <Text name="time" style={styles.smallText}>
+                10:21 AM • 12/01/23
+              </Text>
             </View>
           </View>
 
@@ -82,7 +88,6 @@ const Post = ({ dimensions, songData}) => {
                   ? songData.artists.join(", ")
                   : songData.artists}
               </Text>
-              <Text style={styles.caption}>Wow this is so cool!</Text>
             </View>
 
             <View style={styles.smallSelectionCol}>
@@ -103,10 +108,15 @@ const Post = ({ dimensions, songData}) => {
               <Text style={styles.smallText}>{images.working.label}</Text>
             </View>
           </View>
+
+          {/* Why is this rendered outside the parent pressable? It's nested inside it? */}
+          <View style={styles.captionContainer}>
+            <Text style={styles.caption}>Caption</Text>
+          </View>
         </Pressable>
       )}
     </View>
   );
 };
 
-export default Post;
+export default PostExpanded;

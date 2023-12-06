@@ -12,6 +12,8 @@ import {
 
 
 import { textStyles } from "../../assets/Themes/Text";
+import { styles as defaultStyles } from "../../assets/Themes/default_style";
+import PostExpanded from "../../components/PostExpanded";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -31,7 +33,17 @@ const PostExpandScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={defaultStyles.container}>
-      <Text style={textStyles.subHeader}>Expanded Post</Text>
+      {/* <Text style={textStyles.subHeader}>Expanded Post</Text> */}
+      <PostExpanded
+        dimensions={{
+          windowWidth: windowWidth,
+          gap: gap,
+          totalGapSize: totalGapSize,
+          itemPerRow: itemPerRow,
+          rowWidth: rowWidth,
+        }}
+        songData={songData}
+      ></PostExpanded>
 
     </SafeAreaView>
   );

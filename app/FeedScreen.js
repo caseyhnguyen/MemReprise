@@ -31,6 +31,9 @@ const FeedScreen = ({ route, navigation }) => {
   const caption = route.params?.caption || "";
 
   const songData = route.params?.songData || {};
+
+  console.log("IN FEED");
+  console.log(songData);
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
@@ -71,59 +74,57 @@ const FeedScreen = ({ route, navigation }) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <Header title="memreprise" /> */}
-      {postMade ? (
-        <View>
-          {/* Render the Post component if a post has been made */}
-          <Text style={textStyles.subHeader}>Posts</Text>
-          <Post
-            dimensions={{
-              windowWidth: windowWidth,
-              gap: 12,
-              totalGapSize: 12 * (2 - 1),
-              itemPerRow: 2,
-              rowWidth: windowWidth * 0.8 + 12 * (2 - 1),
-            }}
-            songData={songData}
-          />
-          <FlatList
-            data={posts}
-            renderItem={renderPost}
-            keyExtractor={(item, index) =>
-              item.id?.toString() || index.toString()
-            }
-            onEndReached={fetchMorePosts}
-            onEndReachedThreshold={0.5}
-            ListFooterComponent={
-              loading && <ActivityIndicator size="large" color={colors.white} />
-            }
-          />
-        </View>
-      ) : (
-        <>
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => navigation.navigate("Tracks")}
-            >
-              <Text style={styles.postText}>Post</Text>
-            </Pressable>
-          </View>
-          <Text style={textStyles.subHeader}>Posts</Text>
-          <Post
-            dimensions={{
-              windowWidth: windowWidth,
-              gap: gap,
-              totalGapSize: totalGapSize,
-              itemPerRow: itemPerRow,
-              rowWidth: rowWidth,
-            }}
-            songData={songData}
-          ></Post>
-        </>
-      )}
-    </SafeAreaView>
+<SafeAreaView style={defaultStyles.container}>
+  {postMade ? (
+    <View>
+      <Text style={textStyles.subHeader}>Posts</Text>
+      <Post
+        dimensions={{
+          windowWidth: windowWidth,
+          gap: gap,
+          totalGapSize: totalGapSize,
+          itemPerRow: itemPerRow,
+          rowWidth: rowWidth,
+        }}
+        songData={songData}
+      ></Post>
+      <FlatList
+        data={posts}
+        renderItem={renderPost}
+        keyExtractor={(item, index) =>
+          item.id?.toString() || index.toString()
+        }
+        onEndReached={fetchMorePosts}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          loading && <ActivityIndicator size="large" color={colors.white} />
+        }
+      />
+    </View>
+  ) : (
+    <>
+      <View style={styles.buttonContainer}>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Tracks")}
+        >
+          <Text style={styles.postText}>Post</Text>
+        </Pressable>
+      </View>
+      <Text style={textStyles.subHeader}>Posts</Text>
+      <Post
+        dimensions={{
+          windowWidth: windowWidth,
+          gap: gap,
+          totalGapSize: totalGapSize,
+          itemPerRow: itemPerRow,
+          rowWidth: rowWidth,
+        }}
+        songData={songData}
+      ></Post>
+    </>
+  )}
+</SafeAreaView>
   );
 };
 

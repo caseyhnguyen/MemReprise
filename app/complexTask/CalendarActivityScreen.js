@@ -19,15 +19,14 @@ import Header from "../../components/Header";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import RNPickerSelect from "react-native-picker-select";
 
-
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
 //album images
 const data = [
   { id: "1", source: albums.alb1, month: "NOV", date: "2" },
-  { id: "2", source: albums.alb2, month: "NOV", date: "3"  }, 
-  { id: "3", source: albums.alb3, month: "NOV", date: "5"  },
+  { id: "2", source: albums.alb2, month: "NOV", date: "3" },
+  { id: "3", source: albums.alb3, month: "NOV", date: "5" },
   { id: "4", source: albums.alb1, month: "NOV", date: "6" },
   { id: "5", source: albums.alb6, month: "NOV", date: "7" },
   { id: "6", source: albums.alb10, month: "NOV", date: "8" },
@@ -42,7 +41,7 @@ const data = [
   { id: "15", source: albums.alb5, month: "NOV", date: "20" },
   { id: "16", source: albums.alb3, month: "NOV", date: "21" },
   { id: "17", source: albums.alb10, month: "NOV", date: "22" },
-  { id: "18", source: albums.alb8, month: "NOV", date: "23" }
+  { id: "18", source: albums.alb8, month: "NOV", date: "23" },
   //going to add more for each album cover
 ];
 
@@ -53,7 +52,6 @@ const renderItem = ({ item }) => (
       <Text style={styles.monthText}>{item.month}</Text>
       <Text style={styles.dateText}>{item.date}</Text>
     </View>
-
   </View>
 );
 
@@ -71,23 +69,22 @@ const CalendarActivityScreen = ({ navigation }) => {
         </View>
         <View style={styles.dropDown}>
           <RNPickerSelect
-                    onValueChange={(value) => setSelectedValue(value)}
-                    items={[
-                      { label: "Activity", value: "activity" },
-                      { label: "Theme", value: "theme" },
-                      { label: "Feeling", value: "feeling" },
-                    ]}
-                    style={pickerSelectStyles}
-                    placeholder={{ label: "Reprise", value: "reprise", color: 'black' }}
-                  />
+            onValueChange={(value) => setSelectedValue(value)}
+            items={[
+              { label: "Activity", value: "activity" },
+              { label: "Theme", value: "theme" },
+              { label: "Feeling", value: "feeling" },
+            ]}
+            style={pickerSelectStyles}
+            placeholder={{ label: "Reprise", value: "reprise" }}
+          />
         </View>
       </View>
 
       <View>
-          <Text style={styles.month}>NOVEMBER</Text>
-        </View>
+        <Text style={styles.month}>NOVEMBER</Text>
+      </View>
 
-      
       <View style={styles.spacer} />
       <View style={styles.containerCalendar}>
         <FlatList
@@ -118,7 +115,7 @@ const styles = StyleSheet.create({
     left: 25,
     right: 0,
     bottom: 0,
-    justifyContent: "flex-start", 
+    justifyContent: "flex-start",
     alignItems: "flex-start",
   },
   title: {
@@ -144,7 +141,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     marginTop: 170,
     marginLeft: -185,
-
   },
   containerCalendar: {
     flex: 1,
@@ -157,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   textBox: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     right: 0,
     backgroundColor: colors.yellow, // Set the background color to yellow
@@ -166,16 +162,15 @@ const styles = StyleSheet.create({
   },
   monthText: {
     color: colors.black,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   dateText: {
     color: colors.black,
     textAlign: "center",
-    
   },
   dropDown: {
     paddingLeft: 30,
-  }
+  },
 });
 
 const pickerSelectStyles = {
@@ -188,8 +183,12 @@ const pickerSelectStyles = {
     borderColor: colors.offWhite75,
     borderRadius: 4,
     color: colors.black,
-    backgroundColor: colors.yellow, // Adjust background color as needed
+    backgroundColor: colors.offWhite75, // Adjust background color as needed
     // Other styling as needed for iOS
+  },
+  placeholder: {
+    color: colors.darkGray,
+    fontWeight: "bold",
   },
   inputAndroid: {
     fontSize: 16,
@@ -198,8 +197,8 @@ const pickerSelectStyles = {
     borderWidth: 1,
     borderColor: "gray",
     borderRadius: 4,
-    color: "black",
-    backgroundColor: colors.yellow, // Adjust background color as needed
+    color: colors.black,
+    backgroundColor: colors.offWhite75, // Adjust background color as needed
     // Other styling as needed for Android
   },
   // You can add placeholder style if needed

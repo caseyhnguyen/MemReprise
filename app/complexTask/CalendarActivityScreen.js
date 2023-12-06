@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -21,32 +21,27 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
-//album images 
+//album images
 const data = [
-  { id: '1', source: "../../assets/album-1.png" },
-  { id: '2', source: albums.alb2.pic }, //wrong formatting, looking for string or number, when I change it to url path it can't find it
-  { id: '3', source: albums.alb3.pic },
-  { id: '4', source: albums.alb4.pic },
+  { id: "1", source: "../../assets/album-1.png" },
+  { id: "2", source: albums.alb2 }, //wrong formatting, looking for string or number, when I change it to url path it can't find it
+  { id: "3", source: albums.alb3 },
+  { id: "4", source: albums.alb4 },
   //going to add more for each album cover
 ];
 
-
 const renderItem = ({ item }) => (
-  <Image source={{ uri: item.source }} style={styles.image} />
+  <View>
+    <Image source={item.source} style={styles.image} />
+  </View>
 );
 
-
 const CalendarActivityScreen = ({ navigation }) => {
-
-
   return (
     <SafeAreaView style={styles.container}>
       {/*Header needs to be changed as profile pic and name */}
       <View style={styles.metaData}>
-        <Image
-          source={images.profile.pic}
-          style={styles.profilePic}
-        />
+        <Image source={images.profile.pic} style={styles.profilePic} />
         <View>
           <Text style={styles.title}>Display Name</Text>
           <Text style={styles.username}>Username</Text>
@@ -55,14 +50,12 @@ const CalendarActivityScreen = ({ navigation }) => {
 
       {/* Container for month title */}
       <View style={styles.postPrompt}>
-
         <View>
           <Text style={styles.month}>AUGUST</Text>
         </View>
         <View>
           <Text>May</Text>
         </View>
-        
       </View>
 
       <View style={styles.containerCalendar}>
@@ -72,14 +65,13 @@ const CalendarActivityScreen = ({ navigation }) => {
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
-    </View>
+      </View>
       {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
     </SafeAreaView>
   );
 };
 
 const imageSize = (windowWidth - 20) / 4; // Assuming 20 is the total horizontal padding
-
 
 const styles = StyleSheet.create({
   container: {
@@ -97,24 +89,23 @@ const styles = StyleSheet.create({
     // margin: 10,
     // paddingTop: 10,
     // paddingLeft: 5,
-    
+
     flexDirection: "row",
     // alignItems: "center",
     gap: 10,
     width: "90%",
-   
-    position: 'absolute',
+
+    position: "absolute",
     top: 100,
     left: 25,
     right: 0,
     bottom: 0,
-    justifyContent: 'flex-start', // Align content to the top
-    alignItems: 'flex-start',
+    justifyContent: "flex-start", // Align content to the top
+    alignItems: "flex-start",
   },
   title: {
     fontSize: 25,
     color: colors.white,
-
   },
   username: {
     color: colors.white,
@@ -136,7 +127,6 @@ const styles = StyleSheet.create({
     // left: 1,
     right: 100,
     marginTop: -200,
-  
   },
   postPrompt: {
     // padding: 50,
@@ -144,7 +134,6 @@ const styles = StyleSheet.create({
     // justifyContent: "space-between",
     // width: windowWidth * 0.9,
     // height: windowWidth * 0.70,
-
     // elevation: 5,
   },
   containerCalendar: {
@@ -156,8 +145,6 @@ const styles = StyleSheet.create({
     height: imageSize,
     margin: 5,
   },
-  
-
 });
 
 export default CalendarActivityScreen;

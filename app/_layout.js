@@ -17,6 +17,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens
 // Simple Task
+import LoginSignUpScreen from "./LoginSignUpScreen";
+import LoginScreen from "./LoginScreen";
+import SignUpScreen from "./SignUpScreen";
 import HomeScreen from "./HomeScreen";
 import TracksScreen from "./TracksScreen";
 import ProfileScreen from "./ProfileScreen";
@@ -67,6 +70,15 @@ const GradientWrapper = ({ Component, navigation, route }) => (
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: true }}>
+      <HomeStack.Screen name="LoginSignUp" options={{ headerShown: false }}>
+        {(props) => <GradientWrapper {...props} Component={LoginSignUpScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Login" options={{ headerShown: false }}>
+        {(props) => <GradientWrapper {...props} Component={LoginScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="SignUp" options={{ headerShown: false }}>
+        {(props) => <GradientWrapper {...props} Component={SignUpScreen} />}
+      </HomeStack.Screen>
       <HomeStack.Screen name="Home" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={HomeScreen} />}
       </HomeStack.Screen>

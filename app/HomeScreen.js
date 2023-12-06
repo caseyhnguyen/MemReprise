@@ -50,7 +50,6 @@ const HomeScreen = ({ navigation }) => {
           </Pressable>
         </View>
       </View>
-      {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
     </SafeAreaView>
   );
 };
@@ -62,7 +61,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
     width: windowWidth,
-    // height: windowWidth * 0.5,
   },
   postPrompt: {
     borderRadius: 15,

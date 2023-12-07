@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -16,6 +16,7 @@ import { colors } from "../assets/Themes/colors";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
 import RNPickerSelect from "react-native-picker-select";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
+import { supabase } from '../utils/supabaseClient';
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -25,10 +26,9 @@ const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth * 0.8 + totalGapSize;
 
 const PostSummaryScreen = ({ route, navigation }) => {
-  const [text, onChangeText] = React.useState("Useless Text");
-  const [number, onChangeNumber] = React.useState("");
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [caption, setCaption] = React.useState("");
+  const [selectedValue, setSelectedValue] = useState(null); // Visibility
+
   const options = [
     { label: "Public", value: "option1" },
     { label: "Friends", value: "option2" },
@@ -45,10 +45,52 @@ const PostSummaryScreen = ({ route, navigation }) => {
     selectedActivityIcon,
     selectedActivityIconText,
   } = route.params;
+
+  const postData = {
+    song_data: JSON.stringify({
+      index: songData.index,
+      title: songData.title,
+      artists: Array.isArray(songData.artists) ? songData.artists : [songData.artists],
+      albumName: songData.albumName,
+      imageUrl: songData.imageUrl,
+      duration: songData.duration,
+      previewUrl: songData.previewUrl,
+      externalUrl: songData.externalUrl,
+      played_at: songData.played_at,
+      id: songData.id, // Include songId if available
+    }),
+    theme_icon_id: selectedThemeIcon,
+    theme_icon_text: selectedThemeIconText,
+    emotion_icon_id: selectedEmotionIcon,
+    emotion_icon_text: selectedEmotionIconText,
+    activity_icon_id: selectedActivityIcon,
+    activity_icon_text: selectedActivityIconText,
+    caption: caption, // Added caption
+    visibility: selectedValue, // Added visibility
+  };
+  
+  
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
       : "Unknown Artist";
+      
+  const savePostToSupabase = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('posts')  // Replace 'posts' with your actual table name
+      .insert([postData]);
+
+    if (error) {
+      console.error('Error saving post to database:', error);
+    } else {
+      console.log('Post saved successfully:', data);
+      // Optionally navigate to another screen or show a success message
+    }
+  } catch (err) {
+    console.error('Error saving post:', err);
+  }
+};
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -101,8 +143,8 @@ const PostSummaryScreen = ({ route, navigation }) => {
           <TextInput
             style={styles.input}
             multiline={true}
-            onChangeText={onChangeNumber}
-            value={number}
+            onChangeText={setCaption}
+            value={caption}
             placeholder="Write a caption..."
             keyboardType="ascii-capable"
           ></TextInput>
@@ -120,27 +162,34 @@ const PostSummaryScreen = ({ route, navigation }) => {
               placeholder={{ label: "Select visibility...", value: null }}
             />
             <Pressable
-              style={styles.postButton}
-              onPress={() =>
-                navigation.navigate("FeedTabs", {
-                  screen: "FeedStackScreen",
-                  params: {
+  style={styles.postButton}
+  onPress={async () => {  // Make sure the function is marked as async
+    try {
+      await savePostToSupabase(); // Use await inside the async function
+      navigation.navigate("FeedTabs", {
+        screen: "FeedStackScreen",
+        params: {
+          screen: "FeedInnerScreen",
+          params: {
+            songData,
+            selectedThemeIcon,
+            selectedThemeIconText,
+            selectedEmotionIcon,
+            selectedEmotionIconText,
+            selectedActivityIcon,
+            selectedActivityIconText
+          }
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      // Handle the error appropriately
+    }
+  }}
+>
+  <Text style={styles.postButtonText}>Post</Text>
+</Pressable>
 
-                    screen: "FeedInnerScreen",
-                    params: {
-                    songData,
-                    selectedThemeIcon,
-                    selectedThemeIconText,
-                    selectedEmotionIcon,
-                    selectedEmotionIconText,
-                    selectedActivityIcon: selectedActivityIcon,
-                    selectedActivityIconText: selectedActivityIconText}
-                  },
-                })
-              }
-            >
-              <Text style={styles.postButtonText}>Post</Text>
-            </Pressable>
           </View>
         </View>
         {/* </View> */}

@@ -49,7 +49,7 @@ const FeedScreen = ({ navigation }) => {
   // Mapping function for activity icons
   const getActivityIconSource = (iconId) => {
     const activityIconMap = {
-      12: images.working.pic
+      12: images.working.pic,
       13: images.commuting.pic,
       14: images.eating.pic,
       15: images.exercising.pic,

@@ -30,6 +30,7 @@ const PostExpanded = ({ dimensions, songData }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
   const { setPostMade } = useContext(PostContext);
+
   const options = [
     { label: "Public", value: "option1" },
     { label: "Friends", value: "option2" },
@@ -49,10 +50,10 @@ const PostExpanded = ({ dimensions, songData }) => {
   };
 
   return (
-    <View>
-        <Pressable style={styles.postButton} onPress={onPress}>
-          <Text style={styles.postButtonText}>back</Text>
-        </Pressable>
+    <View style={{ flex: 1 }}>
+      <Pressable style={styles.postButton} onPress={onPress}>
+        <Text style={styles.postButtonText}>back</Text>
+      </Pressable>
       {songData && songData.title && (
         <Pressable onPress={onPress} style={styles.expandedOuterContainer}>
           <View style={styles.metaData}>
@@ -109,10 +110,32 @@ const PostExpanded = ({ dimensions, songData }) => {
             </View>
           </View>
 
-          {/* Why is this rendered outside the parent pressable? It's nested inside it? */}
-          <View style={styles.captionContainer}>
-            <Text style={styles.caption}>Caption</Text>
-          </View>
+          <ScrollView>
+            <View style={styles.captionContainer}>
+              <Text style={styles.caption}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+                sollicitudin arcu velit, id venenatis leo cursus id. Phasellus
+                tristique dui eget elit vestibulum lobortis. Donec eu erat nisi.
+                Donec vitae elit sit amet purus placerat ornare venenatis nec
+                ligula. Duis et arcu a magna pulvinar vulputate id nec velit.
+                Donec ornare a velit quis tristique. In lobortis iaculis ornare.
+                Donec quam sapien, blandit id urna a, pulvinar vehicula mi. Sed
+                non massa mattis, rhoncus nibh at, condimentum enim. Donec
+                gravida metus felis, at placerat ligula interdum eu. Proin
+                hendrerit est sit amet dignissim ultricies `Lorem ipsum dolor
+                sit amet, consectetur adipiscing elit. Fusce sollicitudin arcu
+                velit, id venenatis leo cursus id. Phasellus tristique dui eget
+                elit vestibulum lobortis. Donec eu erat nisi. Donec vitae elit
+                sit amet purus placerat ornare venenatis nec ligula. Duis et
+                arcu a magna pulvinar vulputate id nec velit. Donec ornare a
+                velit quis tristique. In lobortis iaculis ornare. Donec quam
+                sapien, blandit id urna a, pulvinar vehicula mi. Sed non massa
+                mattis, rhoncus nibh at, condimentum enim. Donec gravida metus
+                felis, at placerat ligula interdum eu. Proin hendrerit est sit
+                amet dignissim ultricies
+              </Text>
+            </View>
+          </ScrollView>
         </Pressable>
       )}
     </View>

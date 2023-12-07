@@ -23,8 +23,9 @@ export const postStyles = (dimensions) =>
     }, 
 
     captionContainer: {
-      width: "75%",
+      // width: "%",
       paddingLeft: 30,
+      paddingBottom: 50
     }, 
     metaData: {
       margin: 10,
@@ -69,9 +70,14 @@ export const postStyles = (dimensions) =>
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "flex-start",
-      marginTop: 10,
-      marginBottom: 10,
-      width: "75%",
+      paddingTop: 20,
+      paddingRight: 30,
+      paddingBottom: 30
+      // marginTop: 20,
+      // marginRight: 30,
+
+      // marginBottom: 20,
+      // width: "75%",
     },
 
     songInfo: {

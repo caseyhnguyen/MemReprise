@@ -72,6 +72,54 @@ const images = {
     pic: require("../clouds.png"),
     label: "clouds",
   },
+  honestypinksweats: {
+    pic: require("../honesty-pinksweats.png"),
+    label: "clouds",
+  },
+  industrybaby: {
+    pic: require("../industrybaby-lilnasx.png"),
+    label: "clouds",
+  },
+  makebajain: {
+    pic: require("../makeba-jain.png"),
+    label: "clouds",
+  },
+  onlyleehi: {
+    pic: require("../only-leehi.png"),
+    label: "clouds",
+  },
+  wordszara: {
+    pic: require("../wordszara.png"),
+    label: "clouds",
+  },
+  weekendsjonas: {
+    pic: require("../weekendsjonasblue.png"),
+    label: "clouds",
+  },
+  yourpowerbillie: {
+    pic: require("../yourpowerbillie.png"),
+    label: "clouds",
+  },
+  bruisescapaldi: {
+    pic: require("../bruisescapaldi.png"),
+    label: "clouds",
+  },
+  tribulation: {
+    pic: require("../tribulation.png"),
+    label: "clouds",
+  },
+  pinkwhite: {
+    pic: require("../pinkwhite.png"),
+    label: "clouds",
+  },
+  fromthestart: {
+    pic: require("../fromthestart.png"),
+    label: "clouds",
+  },
+  badhabit: {
+    pic: require("../badhabit.png"),
+    label: "clouds",
+  },
   caroline: {
     pic: require("../caroline.png"),
     label: "caroline",

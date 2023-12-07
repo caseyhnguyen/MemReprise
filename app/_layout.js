@@ -46,8 +46,8 @@ import ThemePlaylistScreen from "./mediumTask/ThemePlaylistScreen";
 import FeelingPlaylistScreen from "./mediumTask/FeelingPlaylistScreen";
 import { PostContext } from "../utils/PostContext";
 
-// Complex Task 
-import CalendarActivityScreen from "./complexTask/CalendarActivityScreen"; 
+// Complex Task
+import CalendarActivityScreen from "./complexTask/CalendarActivityScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -268,8 +268,10 @@ function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
       <ProfileStack.Screen name="Calendar">
-        {(props) => <GradientWrapper {...props} Component={CalendarActivityScreen} />}
-    <ProfileStack.Navigator screenOptions={{ headerShown: false }} >
+        {(props) => (
+          <GradientWrapper {...props} Component={CalendarActivityScreen} />
+        )}
+      </ProfileStack.Screen>
       <ProfileStack.Screen name="Profile">
         {(props) => <GradientWrapper {...props} Component={ProfileScreen} />}
       </ProfileStack.Screen>

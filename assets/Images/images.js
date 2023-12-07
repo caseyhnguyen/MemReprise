@@ -120,7 +120,10 @@ const images = {
     pic: require("../badhabit.png"),
     label: "clouds",
   },
-
+  caroline: {
+    pic: require("../caroline.png"),
+    label: "caroline",
+  },
 };
 
 export default images;

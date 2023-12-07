@@ -24,6 +24,7 @@ const rowWidth = windowWidth * 0.8 + totalGapSize;
 
 const ThemeQScreen = ({ route, navigation }) => {
   const { songData } = route.params;
+  console.log("Received songData in ThemeQScreen:", songData);
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")

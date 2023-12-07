@@ -47,6 +47,10 @@ import FeelingPlaylistScreen from "./mediumTask/FeelingPlaylistScreen";
 import { PostContext } from "../utils/PostContext";
 
 
+// Complex Task 
+import CalendarActivityScreen from "./complexTask/CalendarActivityScreen"; 
+
+
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -245,6 +249,9 @@ function FeedTabsScreen() {
 // ProfileStack Navigator
 function ProfileStackScreen() {
   return (
+    <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+      <ProfileStack.Screen name="Calendar">
+        {(props) => <GradientWrapper {...props} Component={CalendarActivityScreen} />}
     <ProfileStack.Navigator screenOptions={{ headerShown: false }} >
       <ProfileStack.Screen name="Profile">
         {(props) => <GradientWrapper {...props} Component={ProfileScreen} />}
@@ -298,7 +305,7 @@ const AppLayout = () => {
       />
       <Tab.Screen
         name="ProfileScreen"
-        component={HomeStackScreen}
+        component={ProfileStackScreen}
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (

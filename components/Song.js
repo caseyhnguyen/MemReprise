@@ -13,6 +13,7 @@ import millisToMinuteSeconds from "../utils/millisToMinutesAndSeconds.js";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../assets/Themes/colors";
+import { supabase } from '../utils/supabaseClient';
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -26,23 +27,92 @@ const Song = ({
   previewUrl,
   externalUrl,
   played_at,
+  id, 
 }) => {
   const navigation = useNavigation();
 
-  const onSongPress = () => {
+  const onSongPress = async () => {
+    // Define songData for Supabase including the songId
+    const songData = {
+      index,
+      title,
+      artists: Array.isArray(artists) ? artists : [artists],
+      albumName,
+      imageUrl,
+      duration,
+      previewUrl,
+      externalUrl,
+      played_at,
+    };
+  
+    // Log the songData to be inserted
+    console.log("Inserting songData to Supabase:", songData);
+  
+    try {
+      // Save to Supabase
+      const { data, error } = await supabase
+        .from('songs') // Replace 'songs' with your table name
+        .insert([songData]);
+  
+      if (error) {
+        console.error('Error saving song to database:', error);
+        return; // Stop execution if there's an error
+      } else {
+        console.log('Song saved successfully:', data);
+      }
+    } catch (err) {
+      console.error('Supabase operation failed:', err);
+      return; // Stop execution if there's an error
+    }
+  
+    // Navigate to "Theme Question" with songData including the songId
+    console.log("Navigating to Theme Question with songData:", songData);
     navigation.navigate("Theme Question", {
-      songData: {
-        title,
-        artists: Array.isArray(artists) ? artists : [artists],
-        albumName,
-        imageUrl,
-        duration,
-        previewUrl,
-        externalUrl,
-        played_at,
-      },
+      songData,
     });
   };
+  
+  // const onSongPress = () => {
+  //   navigation.navigate("Theme Question", {
+  //     songData: {
+  //       title,
+  //       artists: Array.isArray(artists) ? artists : [artists],
+  //       albumName,
+  //       imageUrl,
+  //       duration,
+  //       previewUrl,
+  //       externalUrl,
+  //     },
+  //   });
+  // };
+  // const onSongPress = async () => {
+  //   // Define songData for Supabase
+  //   const songData = {
+  //     title,
+  //     artists: Array.isArray(artists) ? artists.join(", ") : artists,
+  //     albumName,
+  //     imageUrl,
+  //     duration,
+  //     previewUrl,
+  //     externalUrl,
+  //     played_at,
+  //   };
+  
+  //   // Save to Supabase
+  //   const { data, error } = await supabase
+  //     .from('songs') // Replace 'songs' with your table name
+  //     .insert([songData]);
+  
+  //   if (error) {
+  //     console.error('Error saving song to database', error);
+  //   } else {
+  //     console.log('Song saved successfully', data);
+  //   }
+  
+  //   navigation.navigate("Theme Question", {
+  //     songData,
+  //   });
+  // };
 
   return (
     <View style={styles.outerContainer}>

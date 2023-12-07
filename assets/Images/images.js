@@ -72,6 +72,10 @@ const images = {
     pic: require("../clouds.png"),
     label: "clouds",
   },
+  caroline: {
+    pic: require("../caroline.png"),
+    label: "caroline",
+  },
 };
 
 export default images;

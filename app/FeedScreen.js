@@ -39,6 +39,7 @@ const FeedScreen = ({ navigation }) => {
       4: images.happyEmoji.pic,
       5: images.superHappyEmoji.pic,
       6: images.sadEmoji.pic,
+      7: images.superSadEmoji.pic,
       // ... add other emotion mappings as needed
     };
 
@@ -48,6 +49,7 @@ const FeedScreen = ({ navigation }) => {
   // Mapping function for activity icons
   const getActivityIconSource = (iconId) => {
     const activityIconMap = {
+      12: images.working.pic
       13: images.commuting.pic,
       14: images.eating.pic,
       15: images.exercising.pic,
@@ -62,6 +64,7 @@ const FeedScreen = ({ navigation }) => {
     const themeIconMap = {
       8: images.matchaLatte.pic,
       9: images.expresso.pic,
+      10: images.hotChocolate.pic,
       11: images.lemonade.pic,
       // ... add other theme mappings as needed
     };

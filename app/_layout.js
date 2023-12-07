@@ -143,6 +143,10 @@ function ThemeStackScreen() {
           <GradientWrapper {...props} Component={ThemePlaylistScreen} />
         )}
       </ThemeStack.Screen>
+
+      <ThemeStack.Screen name="PlaylistDetails">
+        {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
+      </ThemeStack.Screen>
     </ThemeStack.Navigator>
   );
 }
@@ -158,6 +162,10 @@ function FeelingStackScreen() {
         {(props) => (
           <GradientWrapper {...props} Component={FeelingPlaylistScreen} />
         )}
+      </FeelingStack.Screen>
+
+      <FeelingStack.Screen name="PlaylistDetails">
+        {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
       </FeelingStack.Screen>
     </FeelingStack.Navigator>
   );
@@ -225,7 +233,17 @@ function FeedStackScreen() {
 function FeedTabsScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <FeedTabs.Navigator screenOptions={{ headerShown: false }}>
+      <FeedTabs.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: "#05BCF3",
+          },
+          tabBarIndicatorStyle: {
+            backgroundColor: "#FFD966CC"
+          },
+        }}
+      >
         <FeedTabs.Screen
           name="FeedStackScreen"
           options={{ tabBarLabel: "Feed" }}

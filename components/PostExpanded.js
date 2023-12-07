@@ -40,6 +40,7 @@ const PostExpanded = ({
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
   const { setPostMade } = useContext(PostContext);
+
   const options = [
     { label: "Public", value: "option1" },
     { label: "Friends", value: "option2" },
@@ -56,7 +57,7 @@ const PostExpanded = ({
   };
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Pressable style={styles.postButton} onPress={onPress}>
         <Text style={styles.postButtonText}>back</Text>
       </Pressable>

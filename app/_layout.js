@@ -46,7 +46,6 @@ import ThemePlaylistScreen from "./mediumTask/ThemePlaylistScreen";
 import FeelingPlaylistScreen from "./mediumTask/FeelingPlaylistScreen";
 import { PostContext } from "../utils/PostContext";
 
-
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -71,7 +70,9 @@ function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: true }}>
       <HomeStack.Screen name="LoginSignUp" options={{ headerShown: false }}>
-        {(props) => <GradientWrapper {...props} Component={LoginSignUpScreen} />}
+        {(props) => (
+          <GradientWrapper {...props} Component={LoginSignUpScreen} />
+        )}
       </HomeStack.Screen>
       <HomeStack.Screen name="Login" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={LoginScreen} />}
@@ -139,6 +140,10 @@ function ThemeStackScreen() {
           <GradientWrapper {...props} Component={ThemePlaylistScreen} />
         )}
       </ThemeStack.Screen>
+
+      <ThemeStack.Screen name="PlaylistDetails">
+        {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
+      </ThemeStack.Screen>
     </ThemeStack.Navigator>
   );
 }
@@ -154,6 +159,10 @@ function FeelingStackScreen() {
         {(props) => (
           <GradientWrapper {...props} Component={FeelingPlaylistScreen} />
         )}
+      </FeelingStack.Screen>
+
+      <FeelingStack.Screen name="PlaylistDetails">
+        {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
       </FeelingStack.Screen>
     </FeelingStack.Navigator>
   );
@@ -205,18 +214,14 @@ function DiscoverTabsScreen() {
 
 function FeedStackScreen() {
   return (
-    <FeedStack.Navigator screenOptions={{ headerShown: false}}>
+    <FeedStack.Navigator screenOptions={{ headerShown: false }}>
       <FeedStack.Screen name="FeedInnerScreen">
         {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
       </FeedStack.Screen>
 
       <FeedStack.Screen name="PostExpandScreen">
-        {(props) => (
-          <GradientWrapper {...props} Component={PostExpandScreen} />
-        )}
+        {(props) => <GradientWrapper {...props} Component={PostExpandScreen} />}
       </FeedStack.Screen>
-
-
     </FeedStack.Navigator>
   );
 }
@@ -224,10 +229,25 @@ function FeedStackScreen() {
 // FeedStack Navigator
 function FeedTabsScreen() {
   return (
-    <SafeAreaView style={{flex:1}}>
-      <FeedTabs.Navigator screenOptions={{ headerShown: false }}>
-        <FeedTabs.Screen name="FeedStackScreen" options={{tabBarLabel: "Feed"}}>
-          {(props) => <GradientWrapper {...props} Component={FeedStackScreen} />}
+    <SafeAreaView style={{ flex: 1 }}>
+      <FeedTabs.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: "#05BCF3",
+          },
+          tabBarIndicatorStyle: {
+            backgroundColor: "#FFD966CC"
+          },
+        }}
+      >
+        <FeedTabs.Screen
+          name="FeedStackScreen"
+          options={{ tabBarLabel: "Feed" }}
+        >
+          {(props) => (
+            <GradientWrapper {...props} Component={FeedStackScreen} />
+          )}
         </FeedTabs.Screen>
 
         <FeedTabs.Screen name="Discover">
@@ -240,12 +260,10 @@ function FeedTabsScreen() {
   );
 }
 
-
-
 // ProfileStack Navigator
 function ProfileStackScreen() {
   return (
-    <ProfileStack.Navigator screenOptions={{ headerShown: false }} >
+    <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
       <ProfileStack.Screen name="Profile">
         {(props) => <GradientWrapper {...props} Component={ProfileScreen} />}
       </ProfileStack.Screen>

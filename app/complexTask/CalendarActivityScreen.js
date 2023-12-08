@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 // import images from "../../assets/Images/images";
 import images from "../../assets/Images/images";
@@ -18,6 +19,7 @@ import { colors } from "../../assets/Themes/colors";
 import Header from "../../components/Header";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import RNPickerSelect from "react-native-picker-select";
+import { supabase } from "../../utils/supabaseClient";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;

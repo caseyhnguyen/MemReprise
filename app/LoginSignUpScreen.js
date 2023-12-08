@@ -26,7 +26,7 @@ const LoginSignUpScreen = ({ navigation }) => {
           <View style={styles.titleContainer}>
             <Text style={styles.memrepriseTitle}>memreprise</Text>
             <Text style={styles.postASongText}>
-              Where Memories and Music Meet
+              Where Music and Memories Meet
             </Text>
           </View>
           <View style={styles.spacer} />

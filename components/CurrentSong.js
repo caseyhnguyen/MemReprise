@@ -27,6 +27,7 @@ const CurrentSong = ({
   externalUrl,
   progressFraction,
   progressMs,
+  userName,
 }) => {
   const navigation = useNavigation();
 
@@ -40,6 +41,7 @@ const CurrentSong = ({
         duration,
         previewUrl,
         externalUrl,
+        userName,
       },
     });
   };

@@ -17,13 +17,6 @@ import images from "../assets/Images/images";
 import { postStyles as styling } from "../assets/Themes/postStyle";
 import { PostContext } from "../utils/PostContext";
 
-// const windowWidth = Dimensions.get("window").width;
-// // dimensions for selectionGrid styling
-// const gap = 12;
-// const itemPerRow = 2;
-// const totalGapSize = (itemPerRow - 1) * gap;
-// const rowWidth = windowWidth * 0.8 + totalGapSize;
-
 const PostExpanded = ({
   dimensions,
   songData,
@@ -34,19 +27,14 @@ const PostExpanded = ({
   themeIconLabel,
   emotionIconLabel,
   activityIconLabel,
+  userName,
+  formattedTimestamp,
 }) => {
   const [captionText, setCaptionText] = useState("");
   const [number, onChangeNumber] = React.useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
   const { setPostMade } = useContext(PostContext);
-
-  const options = [
-    { label: "Public", value: "option1" },
-    { label: "Friends", value: "option2" },
-    { label: "Only Me", value: "option3" },
-    // Add more options as needed
-  ];
 
   const styles = styling(dimensions);
 
@@ -70,13 +58,13 @@ const PostExpanded = ({
             />
 
             <View name="userTag">
-              <Text style={styles.title}>Display Name</Text>
+              <Text style={styles.title}>{userName}</Text>
               <Text style={styles.artist}>Username</Text>
             </View>
 
             <View style={styles.time}>
               <Text name="time" style={styles.smallText}>
-                10:21 AM • 12/01/23
+                {formattedTimestamp}
               </Text>
             </View>
           </View>

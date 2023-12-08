@@ -24,11 +24,13 @@ const rowWidth = windowWidth * 0.8 + totalGapSize;
 
 const EmotionQScreen = ({ route, navigation }) => {
   const { songData, selectedThemeIcon, selectedThemeIconText } = route.params;
+  const userName = route.params?.userName;
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
       : "Unknown Artist";
-  console.log(songData);
+  // console.log(songData);
+  console.log("Username in EmotionQScreen:", { userName });
 
   return (
     <SafeAreaView style={defaultStyles.container}>
@@ -72,6 +74,7 @@ const EmotionQScreen = ({ route, navigation }) => {
               selectedThemeIconText={selectedThemeIconText}
               icon={images.superHappyEmoji.pic}
               iconText={images.superHappyEmoji.label}
+              userName={userName}
             ></SingleEmotionOption>
             <SingleEmotionOption
               songData={songData}
@@ -79,6 +82,7 @@ const EmotionQScreen = ({ route, navigation }) => {
               selectedThemeIconText={selectedThemeIconText}
               icon={images.happyEmoji.pic}
               iconText={images.happyEmoji.label}
+              userName={userName}
             ></SingleEmotionOption>
           </View>
           {/* Second selection Row */}
@@ -89,6 +93,7 @@ const EmotionQScreen = ({ route, navigation }) => {
               selectedThemeIconText={selectedThemeIconText}
               icon={images.superSadEmoji.pic}
               iconText={images.superSadEmoji.label}
+              userName={userName}
             ></SingleEmotionOption>
             <SingleEmotionOption
               songData={songData}
@@ -96,6 +101,7 @@ const EmotionQScreen = ({ route, navigation }) => {
               selectedThemeIconText={selectedThemeIconText}
               icon={images.sadEmoji.pic}
               iconText={images.sadEmoji.label}
+              userName={userName}
             ></SingleEmotionOption>
           </View>
         </View>

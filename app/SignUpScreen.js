@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -19,31 +19,28 @@ import { supabase } from "../utils/supabaseClient";
 const windowWidth = Dimensions.get("window").width;
 
 const SignUpScreen = ({ navigation }) => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('user@example.com'); 
-  const [password, setPassword] = useState('password123'); 
-  const [confirmPassword, setConfirmPassword] = useState('password123');
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("user@example.com");
+  const [password, setPassword] = useState("password123");
+  const [confirmPassword, setConfirmPassword] = useState("password123");
 
   const handleSignUp = async () => {
     if (!fullName) {
-      alert('Please enter your full name.');
+      alert("Please enter your full name.");
       return;
     }
 
     try {
       const { error } = await supabase
-        .from('users') 
-        .insert([
-          { user: fullName },
-        ]);
+        .from("users")
+        .insert([{ user: fullName }]);
 
       if (error) {
         throw error;
       }
 
-      // Optionally navigate to home or other screen on successful sign-up
       alert('Sign up successful!');
-      navigation.navigate("Tutorial");
+      navigation.navigate("Tutorial, { userName: fullName }");
     } catch (error) {
       alert(error.message);
     }
@@ -62,32 +59,32 @@ const SignUpScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.containerInput}>
-        <TextInput
-        placeholder="Full Name"
-        value={fullName}
-        onChangeText={setFullName}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Confirm Password"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        style={styles.input}
-      />
+          <TextInput
+            placeholder="Full Name"
+            value={fullName}
+            onChangeText={setFullName}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Confirm Password"
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            style={styles.input}
+          />
         </View>
 
         <View style={styles.buttonContainer}>
@@ -129,8 +126,8 @@ const styles = StyleSheet.create({
     marginTop: -50,
   },
   linkText: {
-    textDecorationLine: 'underline',
-    color: '#44AA99',
+    textDecorationLine: "underline",
+    color: "#44AA99",
   },
   descrText: {
     color: colors.white,
@@ -144,7 +141,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderRadius: 15,
     marginBottom: 20,
     padding: 10,
@@ -162,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     // width: windowWidth * 0.9,
-    height: windowWidth * 0.70,
+    height: windowWidth * 0.7,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,
@@ -193,7 +190,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 5,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   loginBtnTxt: {
     textAlign: "center",
@@ -206,7 +203,7 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 14,
     color: colors.white,
-  }
+  },
 });
 
 export default SignUpScreen;

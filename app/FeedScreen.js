@@ -70,17 +70,48 @@ const FeedScreen = ({ navigation }) => {
   };
 
   const parsePosts = (fetchedPosts) => {
-    return fetchedPosts.map((post) => ({
-      ...post,
-      emotionIconSrc: getEmotionIconSource(post.emotion_icon_id),
-      activityIconSrc: getActivityIconSource(post.activity_icon_id),
-      themeIconSrc: getThemeIconSource(post.theme_icon_id),
-      songData: post.song_data ? JSON.parse(post.song_data) : null,
-      caption: post.caption,
-      themeIconLabel: post.theme_icon_text,
-      emotionIconLabel: post.emotion_icon_text,
-      activityIconLabel: post.activity_icon_text,
-    }));
+    return fetchedPosts.map((post) => {
+      let formattedTimestamp = "Unknown Time";
+
+      if (post.created_at) {
+        const createdAt = new Date(post.created_at);
+        const timeOptions = {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        };
+        const dateOptions = {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        };
+
+        const formattedTime = new Intl.DateTimeFormat(
+          "en-US",
+          timeOptions
+        ).format(createdAt);
+        const formattedDate = new Intl.DateTimeFormat(
+          "en-US",
+          dateOptions
+        ).format(createdAt);
+
+        formattedTimestamp = `${formattedTime} • ${formattedDate}`;
+      }
+
+      return {
+        ...post,
+        userName: post.userName || "Unknown User",
+        emotionIconSrc: getEmotionIconSource(post.emotion_icon_id),
+        activityIconSrc: getActivityIconSource(post.activity_icon_id),
+        themeIconSrc: getThemeIconSource(post.theme_icon_id),
+        songData: post.song_data ? JSON.parse(post.song_data) : null,
+        caption: post.caption || "",
+        themeIconLabel: post.theme_icon_text || "",
+        emotionIconLabel: post.emotion_icon_text || "",
+        activityIconLabel: post.activity_icon_text || "",
+        formattedTimestamp,
+      };
+    });
   };
 
   useEffect(() => {
@@ -90,93 +121,81 @@ const FeedScreen = ({ navigation }) => {
   const fetchInitialPosts = async () => {
     setLoading(true);
     try {
-      // First, fetch the latest user
-      const { data: latestUser, error: userError } = await supabase
+      // Fetch the most recent user's name
+      let { data: users, error: userError } = await supabase
         .from("users")
-        .select("user") // select only the full name column
+        .select("user")
         .order("created_at", { ascending: false })
-        .limit(1); // we only want the latest one
-  
+        .limit(1);
+
       if (userError) {
         throw userError;
       }
-  
-      // Extract the full name from the latest user
-      const fullName = latestUser?.[0]?.user;
-  
-      // Then, fetch the posts
+
+      const mostRecentUserName = users?.[0]?.user || "Unknown User";
+
+      // Now fetch the posts
       let { data: fetchedPosts, error: postsError } = await supabase
         .from("posts")
-        .select("*")
+        .select(
+          `
+          *,
+          users:user_id (id, user)
+        `
+        )
         .order("created_at", { ascending: false });
-  
+
       if (postsError) {
         throw postsError;
       }
-  
+
       if (fetchedPosts) {
-        const parsedPosts = parsePosts(fetchedPosts);
-        // Set posts state with an additional property for the user's full name
-        setPosts(parsedPosts.map(post => ({ ...post, fullName })));
+        console.log(fetchedPosts);
+        // Apply the most recent username to the most recent post
+        if (fetchedPosts.length > 0) {
+          fetchedPosts[0].user = { user: mostRecentUserName };
+        }
+        const parsedPosts = parsePosts(fetchedPosts, mostRecentUserName);
+        setPosts(parsedPosts);
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching posts and users:", error);
     } finally {
       setLoading(false);
     }
   };
-  
-  // const fetchInitialPosts = async () => {
-  //   setLoading(true);
-  //   try {
-  //     let { data: fetchedPosts, error } = await supabase
-  //       .from("posts")
-  //       .select("*")
-  //       .order("created_at", { ascending: false });
-
-  //     if (error) {
-  //       throw error;
-  //     }
-
-  //     if (fetchedPosts) {
-  //       const parsedPosts = parsePosts(fetchedPosts);
-  //       setPosts(parsedPosts);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching posts:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const fetchMorePosts = async () => {
     if (loading) return;
     setLoading(true);
 
     try {
-      // Determine the ID of the last post currently loaded
       const lastPostId = posts.length > 0 ? posts[posts.length - 1].id : null;
 
       if (lastPostId) {
         let { data: additionalPosts, error } = await supabase
           .from("posts")
-          .select("*")
-          // Fetch posts with an ID less than the last post's ID
+          .select(
+            `
+            *,
+            users:user_id (id, user)
+          `
+          )
           .lt("id", lastPostId)
           .order("id", { ascending: false })
-          .limit(10); // Limit the number of posts fetched in each call
+          .limit(10);
 
         if (error) {
           throw error;
         }
 
         if (additionalPosts) {
-          setPosts((prevPosts) => [...prevPosts, ...additionalPosts]);
+          const parsedPosts = parsePosts(additionalPosts);
+          setPosts((prevPosts) => [...prevPosts, ...parsedPosts]);
         }
       }
     } catch (error) {
       console.error("Error fetching more posts:", error);
-      // Optionally, handle the error in your UI
     } finally {
       setLoading(false);
     }
@@ -184,6 +203,8 @@ const FeedScreen = ({ navigation }) => {
 
   const renderPost = ({ item }) => (
     <Post
+      userName={item.userName}
+      formattedTimestamp={item.formattedTimestamp}
       songData={item.songData}
       caption={item.caption}
       emotionIconSrc={item.emotionIconSrc}

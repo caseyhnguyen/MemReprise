@@ -22,32 +22,32 @@ const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth;
 
 const PostExpandScreen = ({ route, navigation }) => {
-  const caption = route.params?.caption || "";
+  // Destructure with default values
+  const {
+    caption = "",
+    songData = {},
+    themeIconSrc = "",
+    emotionIconSrc = "",
+    activityIconSrc = "",
+    themeIconLabel = "",
+    emotionIconLabel = "",
+    activityIconLabel = "",
+    userName = "",
+    formattedTimestamp = "",
+  } = route.params || {};
 
-  const songData = route.params?.songData || {};
-  const artistNames =
-    songData && songData.artists
-      ? songData.artists.join(", ")
-      : "Unknown Artist";
-
-  // Access other props from route.params
-  const themeIconSrc = route.params?.themeIconSrc || "";
-  const emotionIconSrc = route.params?.emotionIconSrc || "";
-  const activityIconSrc = route.params?.activityIconSrc || "";
-  const themeIconLabel = route.params?.themeIconLabel || "";
-  const emotionIconLabel = route.params?.emotionIconLabel || "";
-  const activityIconLabel = route.params?.activityIconLabel || "";
+  // Combine the artist names if available
+  const artistNames = songData.artists?.join(", ") || "Unknown Artist";
 
   return (
     <SafeAreaView style={defaultStyles.container}>
-      {/* <Text style={textStyles.subHeader}>Expanded Post</Text> */}
       <PostExpanded
         dimensions={{
-          windowWidth: windowWidth,
-          gap: gap,
-          totalGapSize: totalGapSize,
-          itemPerRow: itemPerRow,
-          rowWidth: rowWidth,
+          windowWidth,
+          gap,
+          totalGapSize,
+          itemPerRow,
+          rowWidth,
         }}
         songData={songData}
         caption={caption}
@@ -57,10 +57,13 @@ const PostExpandScreen = ({ route, navigation }) => {
         themeIconLabel={themeIconLabel}
         emotionIconLabel={emotionIconLabel}
         activityIconLabel={activityIconLabel}
+        userName={userName}
+        formattedTimestamp={formattedTimestamp}
       />
     </SafeAreaView>
   );
 };
+
 const layout = StyleSheet.create({});
 
 export default PostExpandScreen;

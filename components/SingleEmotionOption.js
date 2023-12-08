@@ -19,6 +19,7 @@ const SingleEmotionOption = ({
   songData,
   selectedThemeIcon,
   selectedThemeIconText,
+  userName,
 }) => {
   const navigation = useNavigation();
 
@@ -29,6 +30,7 @@ const SingleEmotionOption = ({
       selectedThemeIconText: selectedThemeIconText,
       selectedEmotionIcon: icon,
       selectedEmotionIconText: iconText,
+      userName,
     });
   };
 

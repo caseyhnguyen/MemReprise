@@ -14,15 +14,16 @@ import { useTheme } from "../utils/ThemeContext";
 
 const windowWidth = Dimensions.get("window").width;
 
-const SingleThemeOption = ({ icon, iconText, songData }) => {
+const SingleThemeOption = ({ icon, iconText, songData, userName }) => {
   const navigation = useNavigation();
 
   const onSelection = () => {
     // Navigate to the next screen with the selected icon and icon text
     navigation.navigate("Emotion Question", {
-      songData: songData,
+      songData,
       selectedThemeIcon: icon,
       selectedThemeIconText: iconText,
+      userName,
     });
   };
 

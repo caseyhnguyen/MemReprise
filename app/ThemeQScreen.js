@@ -24,7 +24,8 @@ const rowWidth = windowWidth * 0.8 + totalGapSize;
 
 const ThemeQScreen = ({ route, navigation }) => {
   const { songData } = route.params;
-  console.log("Received songData in ThemeQScreen:", songData);
+  const userName = route.params?.userName;
+  console.log("Username in ThemeQScreen:", { userName });
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
@@ -70,11 +71,13 @@ const ThemeQScreen = ({ route, navigation }) => {
               songData={songData}
               icon={images.lemonade.pic}
               iconText={images.lemonade.label}
+              userName={userName}
             ></SingleThemeOption>
             <SingleThemeOption
               songData={songData}
               icon={images.matchaLatte.pic}
               iconText={images.matchaLatte.label}
+              userName={userName}
             ></SingleThemeOption>
           </View>
           {/* Second selection Row */}
@@ -83,11 +86,13 @@ const ThemeQScreen = ({ route, navigation }) => {
               songData={songData}
               icon={images.hotChocolate.pic}
               iconText={images.hotChocolate.label}
+              userName={userName}
             ></SingleThemeOption>
             <SingleThemeOption
               songData={songData}
               icon={images.espresso.pic}
               iconText={images.espresso.label}
+              userName={userName}
             ></SingleThemeOption>
           </View>
         </View>

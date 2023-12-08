@@ -86,8 +86,8 @@ const ThemeQScreen = ({ route, navigation }) => {
             ></SingleThemeOption>
             <SingleThemeOption
               songData={songData}
-              icon={images.expresso.pic}
-              iconText={images.expresso.label}
+              icon={images.espresso.pic}
+              iconText={images.espresso.label}
             ></SingleThemeOption>
           </View>
         </View>

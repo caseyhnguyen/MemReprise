@@ -20,8 +20,6 @@ export const postStyles = (dimensions) =>
       borderRadius: 10,
       width: "95%",
       height: "90%",
-    }, 
-      height: "92.5%",
     },
 
     captionContainer: {
@@ -78,7 +76,7 @@ export const postStyles = (dimensions) =>
       alignItems: "flex-start",
       paddingTop: "5%",
       paddingRight: "5%",
-      paddingBottom: "5%"
+      paddingBottom: "5%",
       // marginTop: 20,
       // marginRight: 30,
 

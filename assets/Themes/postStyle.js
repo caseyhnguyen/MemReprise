@@ -19,6 +19,8 @@ export const postStyles = (dimensions) =>
       backgroundColor: colors.offWhite50,
       borderRadius: 10,
       width: "95%",
+      height: "90%",
+    }, 
       height: "92.5%",
     },
 
@@ -49,7 +51,7 @@ export const postStyles = (dimensions) =>
       flexDirection: "row",
       width: "90%",
       // height: "90%",
-      gap: 15,
+      gap: "5%",
       shadowColor: colors.darkGray,
       shadowOffset: { width: 4, height: 4 },
       shadowOpacity: 0.25,
@@ -74,9 +76,9 @@ export const postStyles = (dimensions) =>
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "flex-start",
-      paddingTop: 20,
-      paddingRight: 30,
-      paddingBottom: 30,
+      paddingTop: "5%",
+      paddingRight: "5%",
+      paddingBottom: "5%"
       // marginTop: 20,
       // marginRight: 30,
 
@@ -88,8 +90,8 @@ export const postStyles = (dimensions) =>
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "flex-start",
-      paddingLeft: 30,
-      paddingTop: 20,
+      paddingLeft: "7.5%",
+      paddingTop: "5%",
       width: "75%",
     },
     selectionGrid: {
@@ -129,7 +131,7 @@ export const postStyles = (dimensions) =>
       fontSize: 20,
       fontWeight: "bold",
       color: colors.offWhite,
-      paddingBottom: 5,
+      paddingBottom: "2.5%",
     },
     input: {
       height: 40,

@@ -12,6 +12,7 @@ import {
 import images from "../../assets/Images/images"; // Make sure the paths match your project structure
 import { colors } from "../../assets/Themes/colors"; // Make sure the paths match your project structure
 import { useSpotifyAuth } from "../../utils";
+import { discoverStyles as styles } from "../../assets/Themes/discover";
 
 const windowWidth = Dimensions.get("window").width;
 

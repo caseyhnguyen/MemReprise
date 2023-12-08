@@ -12,6 +12,7 @@ import {
 import images from "../../assets/Images/images"; // Make sure the paths match your project structure
 import { colors } from "../../assets/Themes/colors"; // Make sure the paths match your project structure
 import { useSpotifyAuth } from "../../utils";
+import { discoverStyles as styles} from "../../assets/Themes/discover";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -119,96 +120,5 @@ const ActivityScreen = ({ route, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    top: 75,
-    // backgroundColor: colors.offWhite50,
-  },
-  scrollView: {
-    width: "100%",
-  },
-  headerContainer: {
-    backgroundColor: colors.offWhite50,
-    borderRadius: 16,
-    margin: 16,
-    padding: 16,
-    alignItems: "center",
-  },
-  headerText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  activitiesContainer: {
-    paddingBottom: 20,
-    paddingHorizontal: 16,
-  },
-  activityCard: {
-    backgroundColor: colors.offWhite50,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 16,
-  },
-  activityHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  activityNumber: {
-    fontSize: 50,
-    fontWeight: "bold",
-    color: colors.primary, // Adjust with your primary color
-    marginRight: 10,
-  },
-  activityIcon: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-  },
-  activityTitle: {
-    fontSize: 25,
-    fontWeight: "bold",
-    flex: 1,
-  },
-  songsCount: {
-    fontSize: 16,
-  },
-  songsContainer: {
-    backgroundColor: colors.offWhite50,
-    borderRadius: 16,
-    padding: 16,
-  },
-  songRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 15,
-    paddingVertical: 10,
-  },
-  songTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  songArtist: {
-    fontSize: 18,
-    color: colors.mediumGray,
-  },
-  songInfo: {
-    flexDirection: "column",
-    marginRight: "auto",
-  },
-
-  album: {
-    width: 100,
-    height: 100,
-  },
-
-  seeMore: {
-    fontSize: 18,
-    color: colors.primary, // Adjust with your primary color
-    marginTop: 10,
-    alignSelf: "flex-end",
-  },
-  // ... other styles you may need
-});
 
 export default ActivityScreen;

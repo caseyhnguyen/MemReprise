@@ -24,50 +24,28 @@ import { supabase } from "../../utils/supabaseClient";
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
-//album images
-// const data = [
-//   { id: "1", source: albums.alb1, month: "NOV", date: "2" },
-//   { id: "2", source: albums.alb2, month: "NOV", date: "3" },
-//   { id: "3", source: albums.alb3, month: "NOV", date: "5" },
-//   { id: "4", source: albums.alb1, month: "NOV", date: "6" },
-//   { id: "5", source: albums.alb6, month: "NOV", date: "7" },
-//   { id: "6", source: albums.alb10, month: "NOV", date: "8" },
-//   { id: "7", source: albums.alb5, month: "NOV", date: "9" },
-//   { id: "8", source: albums.alb7, month: "NOV", date: "11" },
-//   { id: "9", source: albums.alb8, month: "NOV", date: "12" },
-//   { id: "10", source: albums.alb1, month: "NOV", date: "14" },
-//   { id: "11", source: albums.alb3, month: "NOV", date: "15" },
-//   { id: "12", source: albums.alb6, month: "NOV", date: "16" },
-//   { id: "13", source: albums.alb1, month: "NOV", date: "18" },
-//   { id: "14", source: albums.alb6, month: "NOV", date: "19" },
-//   { id: "15", source: albums.alb5, month: "NOV", date: "20" },
-//   { id: "16", source: albums.alb3, month: "NOV", date: "21" },
-//   { id: "17", source: albums.alb10, month: "NOV", date: "22" },
-//   { id: "18", source: albums.alb8, month: "NOV", date: "23" },
-//going to add more for each album cover
-// ];
-
-const data = {
-  reprise: [
-    { id: "1", source: albums.alb1, month: "NOV", date: "2" },
-    { id: "2", source: albums.alb2, month: "NOV", date: "3" },
-    { id: "3", source: albums.alb3, month: "NOV", date: "5" },
-    { id: "4", source: albums.alb1, month: "NOV", date: "6" },
-    { id: "5", source: albums.alb6, month: "NOV", date: "7" },
-    { id: "6", source: albums.alb10, month: "NOV", date: "8" },
-    { id: "7", source: albums.alb5, month: "NOV", date: "9" },
-    { id: "8", source: albums.alb7, month: "NOV", date: "11" },
-    { id: "9", source: albums.alb8, month: "NOV", date: "12" },
-    { id: "10", source: albums.alb1, month: "NOV", date: "14" },
-    { id: "11", source: albums.alb3, month: "NOV", date: "15" },
-    { id: "12", source: albums.alb6, month: "NOV", date: "16" },
-    { id: "13", source: albums.alb1, month: "NOV", date: "18" },
-    { id: "14", source: albums.alb6, month: "NOV", date: "19" },
-    { id: "15", source: albums.alb5, month: "NOV", date: "20" },
-    { id: "16", source: albums.alb3, month: "NOV", date: "21" },
-    { id: "17", source: albums.alb10, month: "NOV", date: "22" },
-    { id: "18", source: albums.alb8, month: "NOV", date: "23" },
-  ],
+const allData = [
+  { id: "1", source: albums.alb1, month: "NOV", date: "2" },
+  { id: "2", source: albums.alb2, month: "NOV", date: "3" },
+  { id: "3", source: albums.alb3, month: "NOV", date: "5" },
+  { id: "4", source: albums.alb1, month: "NOV", date: "6" },
+  { id: "5", source: albums.alb6, month: "NOV", date: "7" },
+  { id: "6", source: albums.alb10, month: "NOV", date: "8" },
+  { id: "7", source: albums.alb5, month: "NOV", date: "9" },
+  { id: "8", source: albums.alb7, month: "NOV", date: "11" },
+  { id: "9", source: albums.alb8, month: "NOV", date: "12" },
+  { id: "10", source: albums.alb1, month: "NOV", date: "14" },
+  { id: "11", source: albums.alb3, month: "NOV", date: "15" },
+  { id: "12", source: albums.alb6, month: "NOV", date: "16" },
+  { id: "13", source: albums.alb1, month: "NOV", date: "18" },
+  { id: "14", source: albums.alb6, month: "NOV", date: "19" },
+  { id: "15", source: albums.alb5, month: "NOV", date: "20" },
+  { id: "16", source: albums.alb3, month: "NOV", date: "21" },
+  { id: "17", source: albums.alb10, month: "NOV", date: "22" },
+  { id: "18", source: albums.alb8, month: "NOV", date: "23" },
+];
+const staticData = {
+  reprise: allData,
   activity: [
     { id: "1", source: albums.alb1, month: "NOV", date: "2" },
     { id: "2", source: albums.alb2, month: "NOV", date: "3" },
@@ -94,27 +72,74 @@ const data = {
     { id: "18", source: albums.alb8, month: "NOV", date: "23" },
   ],
 };
-
 const CalendarActivityScreen = ({ navigation }) => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedValue, setSelectedValue] = useState(null);
 
-  const renderItem = ({ item }) => (
-    <View>
-      <Image source={item.source} style={styles.image} />
-      <View style={styles.textBox}>
-        <Text style={styles.monthText}>{item.month}</Text>
-        <Text style={styles.dateText}>{item.date}</Text>
-      </View>
-    </View>
-  );
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from("posts")
+          .select("song_data")
+          .order("created_at", { ascending: false })
+          .limit(Object.keys(staticData.reprise).length);
 
-  // Combine all data arrays when no specific category is selected
-  const allData = Object.values(data).flat();
-  const dataSource = selectedValue ? data[selectedValue] : allData;
+        if (error) {
+          throw error;
+        }
+
+        // Extract image URLs and map them to the static data structure
+        const imageUrls = data.map(
+          (post) => JSON.parse(post.song_data).imageUrl
+        );
+
+        // Merge image URLs into staticData
+        const mergedData = Object.keys(staticData).reduce((acc, key) => {
+          acc[key] = staticData[key].map((item, index) => ({
+            ...item,
+            source: imageUrls[index], // Directly assign the fetched image URL
+          }));
+          return acc;
+        }, {});
+
+        setPosts(mergedData);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  const renderItem = ({ item }) => {
+    console.log("Item in renderItem:", item);
+    const imageSource =
+      typeof item.source === "string" ? { uri: item.source } : item.source;
+
+    console.log("imageSource in renderItem:", { imageSource });
+
+    return (
+      <View>
+        <Image source={imageSource} style={styles.image} />
+        <View style={styles.textBox}>
+          <Text style={styles.monthText}>{item.month}</Text>
+          <Text style={styles.dateText}>{item.date}</Text>
+        </View>
+      </View>
+    );
+  };
+
+  const dataSource = selectedValue ? posts[selectedValue] : posts["reprise"];
+
+  console.log("DataSource for FlatList:", dataSource);
 
   return (
     <SafeAreaView style={styles.container}>
-      {/*Header needs to be changed as profile pic and name */}
       <View style={styles.header}>
         <Image source={images.caroline.pic} style={styles.profilePic} />
         <View>
@@ -145,14 +170,14 @@ const CalendarActivityScreen = ({ navigation }) => {
           data={dataSource}
           numColumns={4}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
         />
       </View>
     </SafeAreaView>
   );
 };
 
-const imageSize = (windowWidth - 50) / 4; // Assuming 20 is the total horizontal padding
+const imageSize = (windowWidth - 50) / 4;
 
 const styles = StyleSheet.create({
   container: {
@@ -199,7 +224,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginHorizontal: "10%",
     paddingBottom: "5%",
-    zIndex: 1, // Ensure it's above other elements
+    zIndex: 1,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,

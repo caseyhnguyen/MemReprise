@@ -42,7 +42,7 @@ const windowWidth = Dimensions.get("window").width;
 //   { id: "16", source: albums.alb3, month: "NOV", date: "21" },
 //   { id: "17", source: albums.alb10, month: "NOV", date: "22" },
 //   { id: "18", source: albums.alb8, month: "NOV", date: "23" },
-//   //going to add more for each album cover
+//going to add more for each album cover
 // ];
 
 const data = {
@@ -93,7 +93,6 @@ const data = {
   ],
 };
 
-
 const CalendarActivityScreen = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -107,8 +106,9 @@ const CalendarActivityScreen = ({ navigation }) => {
     </View>
   );
 
-  const dataSource = selectedValue ? data[selectedValue] : [];
-
+  // Combine all data arrays when no specific category is selected
+  const allData = Object.values(data).flat();
+  const dataSource = selectedValue ? data[selectedValue] : allData;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -132,8 +132,6 @@ const CalendarActivityScreen = ({ navigation }) => {
           />
         </View>
       </View>
-
-      
 
       <View>
         <Text style={styles.month}>NOVEMBER</Text>
@@ -210,7 +208,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: 0,
-    backgroundColor: colors.yellow, 
+    backgroundColor: colors.yellow,
     padding: 2,
     borderRadius: 5,
   },

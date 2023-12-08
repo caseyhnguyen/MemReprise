@@ -133,7 +133,7 @@ const CalendarActivityScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <View>
+      <View style={styles.monthContainer}>
         <Text style={styles.month}>NOVEMBER</Text>
       </View>
 
@@ -186,13 +186,19 @@ const styles = StyleSheet.create({
   spacer: {
     height: 200,
   },
+  monthContainer: {
+    position: "absolute",
+    top: "29%",
+    width: "100%",
+    alignItems: "flex-start",
+    marginHorizontal: "10%",
+    paddingBottom: "5%",
+    zIndex: 1, // Ensure it's above other elements
+  },
   month: {
     color: colors.white,
     fontSize: 24,
     fontWeight: "bold",
-    position: "absolute",
-    marginTop: 170,
-    marginLeft: -185,
   },
   containerCalendar: {
     flex: 1,

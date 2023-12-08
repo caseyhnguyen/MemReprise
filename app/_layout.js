@@ -31,9 +31,7 @@ import ActivityQScreen from "./ActivityQScreen";
 
 // Medium Task
 import FeedScreen from "./FeedScreen";
-import DiscoverScreen from "./mediumTask/DiscoverScreen";
 import ActivityScreen from "./mediumTask/ActivityScreen";
-import ActivityPlaylistScreen from "./mediumTask/ActivityPlaylistScreen";
 import FeelingScreen from "./mediumTask/FeelingScreen";
 import ThemeScreen from "./mediumTask/ThemeScreen";
 import PostExpandScreen from "./mediumTask/PostExpandScreen";
@@ -42,8 +40,6 @@ import PlaylistDetails from "./mediumTask/PlaylistDetails";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import { TabBarIndicator } from "react-native-tab-view";
-import ThemePlaylistScreen from "./mediumTask/ThemePlaylistScreen";
-import FeelingPlaylistScreen from "./mediumTask/FeelingPlaylistScreen";
 import { PostContext } from "../utils/PostContext";
 
 // Complex Task
@@ -122,11 +118,11 @@ function ActivityStackScreen() {
         {(props) => <GradientWrapper {...props} Component={ActivityScreen} />}
       </ActivityStack.Screen>
 
-      <ActivityStack.Screen name="ActivityPlaylist">
+      {/* <ActivityStack.Screen name="ActivityPlaylist">
         {(props) => (
           <GradientWrapper {...props} Component={ActivityPlaylistScreen} />
         )}
-      </ActivityStack.Screen>
+      </ActivityStack.Screen> */}
 
       <ActivityStack.Screen name="PlaylistDetails">
         {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
@@ -142,12 +138,6 @@ function ThemeStackScreen() {
         {(props) => <GradientWrapper {...props} Component={ThemeScreen} />}
       </ThemeStack.Screen>
 
-      <ThemeStack.Screen name="ThemePlaylist">
-        {(props) => (
-          <GradientWrapper {...props} Component={ThemePlaylistScreen} />
-        )}
-      </ThemeStack.Screen>
-
       <ThemeStack.Screen name="PlaylistDetails">
         {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
       </ThemeStack.Screen>
@@ -161,13 +151,6 @@ function FeelingStackScreen() {
       <FeelingStack.Screen name="FeelingScreen">
         {(props) => <GradientWrapper {...props} Component={FeelingScreen} />}
       </FeelingStack.Screen>
-
-      <FeelingStack.Screen name="FeelingPlaylist">
-        {(props) => (
-          <GradientWrapper {...props} Component={FeelingPlaylistScreen} />
-        )}
-      </FeelingStack.Screen>
-
       <FeelingStack.Screen name="PlaylistDetails">
         {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
       </FeelingStack.Screen>

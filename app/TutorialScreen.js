@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+
+import {ViewPropTypes} from 'deprecated-react-native-prop-types'; 
+
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import images from '../assets/Images/images';

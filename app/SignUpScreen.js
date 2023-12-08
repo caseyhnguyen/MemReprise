@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
 
   signUpText: {
-    fontsize: 14,
+    fontSize: 14,
     color: colors.white,
   }
 });

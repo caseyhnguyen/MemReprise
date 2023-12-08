@@ -221,11 +221,10 @@ const styles = StyleSheet.create({
 
   seeMore: {
     fontSize: 18,
-    color: colors.primary, // Adjust with your primary color
+    color: colors.primary,
     marginTop: 10,
     alignSelf: "flex-end",
   },
-  // ... other styles you may need
 });
 
 export default ActivityScreen;

@@ -39,8 +39,8 @@ const SignUpScreen = ({ navigation }) => {
         throw error;
       }
 
-      // Navigate to home screen with fullName in route params
-      navigation.navigate("Home", { userName: fullName });
+      alert('Sign up successful!');
+      navigation.navigate("Tutorial, { userName: fullName }");
     } catch (error) {
       alert(error.message);
     }
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   },
 
   signUpText: {
-    fontsize: 14,
+    fontSize: 14,
     color: colors.white,
   },
 });

@@ -21,9 +21,11 @@ const SingleActivityOption = ({
   selectedThemeIconText,
   selectedEmotionIcon,
   selectedEmotionIconText,
+  userName,
 }) => {
   const navigation = useNavigation();
 
+  console.log("Username in Activity Component:", { userName });
   const onSelection = () => {
     navigation.navigate("Post Summary", {
       songData,
@@ -33,6 +35,7 @@ const SingleActivityOption = ({
       selectedEmotionIconText,
       selectedActivityIcon: icon,
       selectedActivityIconText: iconText,
+      userName,
     });
   };
 

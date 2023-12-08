@@ -30,11 +30,13 @@ const ActivityQScreen = ({ route, navigation }) => {
     selectedEmotionIcon,
     selectedEmotionIconText,
   } = route.params;
+  const userName = route.params?.userName;
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
       : "Unknown Artist";
   // console.log(songData);
+  console.log("Username in ActivityQScreen:", { userName });
 
   return (
     <SafeAreaView style={defaultStyles.container}>
@@ -87,6 +89,7 @@ const ActivityQScreen = ({ route, navigation }) => {
               selectedEmotionIconText={selectedEmotionIconText}
               icon={images.exercising.pic}
               iconText={images.exercising.label}
+              userName={userName}
             ></SingleActivityOption>
             <SingleActivityOption
               songData={songData}
@@ -96,6 +99,7 @@ const ActivityQScreen = ({ route, navigation }) => {
               selectedEmotionIconText={selectedEmotionIconText}
               icon={images.eating.pic}
               iconText={images.eating.label}
+              userName={userName}
             ></SingleActivityOption>
           </View>
           {/* Second selection Row */}
@@ -108,6 +112,7 @@ const ActivityQScreen = ({ route, navigation }) => {
               selectedEmotionIconText={selectedEmotionIconText}
               icon={images.working.pic}
               iconText={images.working.label}
+              userName={userName}
             ></SingleActivityOption>
             <SingleActivityOption
               songData={songData}
@@ -117,6 +122,7 @@ const ActivityQScreen = ({ route, navigation }) => {
               selectedEmotionIconText={selectedEmotionIconText}
               icon={images.commuting.pic}
               iconText={images.commuting.label}
+              userName={userName}
             ></SingleActivityOption>
           </View>
         </View>

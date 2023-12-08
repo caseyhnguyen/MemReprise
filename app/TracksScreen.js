@@ -21,7 +21,9 @@ import { StatusBar } from "expo-status-bar";
 // Get the window width
 const windowWidth = Dimensions.get("window").width;
 
-const TracksScreen = ({ navigation }) => {
+const TracksScreen = ({ route, navigation }) => {
+  const userName = route.params?.userName;
+  console.log("Username in TracksScreen:", { userName });
   const { token, getSpotifyAuth } = useSpotifyAuth();
   const { tracks, currentTrack, loading, fetchMore, clearCacheAndRefetch } =
     useSpotifyTracks(token);
@@ -99,12 +101,14 @@ const TracksScreen = ({ navigation }) => {
     } = currentTrack;
 
     const progressFraction = progressMs / duration;
-
+    navigation.navigate("Theme Question", { songData, userName });
     return (
       <View style={styles.currentTrackContainer}>
         <Text style={styles.currentTrackTitle}>Now Playing</Text>
         <CurrentSong
-          onPress={() => navigation.navigate("Theme Question", { songData })}
+          onPress={() =>
+            navigation.navigate("Theme Question", { songData, userName })
+          }
           index={index}
           title={songTitle}
           artists={songArtists}
@@ -115,6 +119,7 @@ const TracksScreen = ({ navigation }) => {
           externalUrl={externalUrl}
           progressFraction={progressFraction}
           progressMs={progressMs}
+          userName={userName}
         />
       </View>
     );
@@ -123,7 +128,6 @@ const TracksScreen = ({ navigation }) => {
   const limitedTracks = tracks.slice(0, 10);
 
   const renderSong = ({ item, index }) => {
-    // console.log(item);
     return (
       <Song
         index={index}
@@ -135,6 +139,7 @@ const TracksScreen = ({ navigation }) => {
         previewUrl={item.previewUrl || ""}
         externalUrl={item.externalUrl || ""}
         played_at={item.played_at || ""}
+        userName={userName}
       />
     );
   };

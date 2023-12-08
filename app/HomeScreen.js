@@ -15,12 +15,16 @@ import Header from "../components/Header";
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ route, navigation }) => {
+  const userName = route.params?.userName;
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Header title="memreprise" />
       </View>
+      <Text style={styles.greetingText}>
+        {userName ? `Hi, ${userName}` : "Welcome to memreprise!"}
+      </Text>
       <View style={styles.postPrompt}>
         <Image
           source={images.lock.pic} // Assuming you have a lock icon image in your Images
@@ -44,7 +48,9 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.buttonSpacer} />
           <Pressable
             style={styles.button}
-            onPress={() => navigation.navigate("Tracks")}
+            onPress={() =>
+              navigation.navigate("Tracks", { userName: userName })
+            }
           >
             <Text style={styles.postText}>Post</Text>
           </Pressable>
@@ -136,6 +142,15 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     color: "#595959",
+  },
+  greetingText: {
+    textAlign: "center",
+    fontWeight: "500",
+    fontSize: 26,
+    letterSpacing: -0.41,
+    color: colors.offWhite,
+    marginTop: "5%",
+    marginBottom: "5%",
   },
 });
 

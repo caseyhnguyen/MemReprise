@@ -13,7 +13,7 @@ import millisToMinuteSeconds from "../utils/millisToMinutesAndSeconds.js";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../assets/Themes/colors";
-import { supabase } from '../utils/supabaseClient';
+import { supabase } from "../utils/supabaseClient";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -27,7 +27,7 @@ const Song = ({
   previewUrl,
   externalUrl,
   played_at,
-  id, 
+  userName,
 }) => {
   const navigation = useNavigation();
 
@@ -43,35 +43,38 @@ const Song = ({
       previewUrl,
       externalUrl,
       played_at,
+      userName,
     };
-  
+
     // Log the songData to be inserted
-    console.log("Inserting songData to Supabase:", songData);
-  
+    // console.log("Inserting songData to Supabase:", songData);
+    console.log("Username in Song Component:", { userName });
+
     try {
       // Save to Supabase
       const { data, error } = await supabase
-        .from('songs') // Replace 'songs' with your table name
+        .from("songs") // Replace 'songs' with your table name
         .insert([songData]);
-  
+
       if (error) {
-        console.error('Error saving song to database:', error);
+        console.error("Error saving song to database:", error);
         return; // Stop execution if there's an error
       } else {
-        console.log('Song saved successfully:', data);
+        console.log("Song saved successfully:", data);
       }
     } catch (err) {
-      console.error('Supabase operation failed:', err);
+      console.error("Supabase operation failed:", err);
       return; // Stop execution if there's an error
     }
-  
-    // Navigate to "Theme Question" with songData including the songId
+
+    // Navigate to "Theme Question" with songData
     console.log("Navigating to Theme Question with songData:", songData);
     navigation.navigate("Theme Question", {
       songData,
+      userName,
     });
   };
-  
+
   // const onSongPress = () => {
   //   navigation.navigate("Theme Question", {
   //     songData: {
@@ -97,18 +100,18 @@ const Song = ({
   //     externalUrl,
   //     played_at,
   //   };
-  
+
   //   // Save to Supabase
   //   const { data, error } = await supabase
   //     .from('songs') // Replace 'songs' with your table name
   //     .insert([songData]);
-  
+
   //   if (error) {
   //     console.error('Error saving song to database', error);
   //   } else {
   //     console.log('Song saved successfully', data);
   //   }
-  
+
   //   navigation.navigate("Theme Question", {
   //     songData,
   //   });

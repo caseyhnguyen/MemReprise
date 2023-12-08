@@ -29,13 +29,6 @@ const PostSummaryScreen = ({ route, navigation }) => {
   const [caption, setCaption] = React.useState("");
   const [selectedValue, setSelectedValue] = useState(null); // Visibility
 
-  const options = [
-    { label: "Public", value: "option1" },
-    { label: "Friends", value: "option2" },
-    { label: "Only Me", value: "option3" },
-    // Add more options as needed
-  ];
-
   const {
     songData,
     selectedThemeIcon,
@@ -46,6 +39,11 @@ const PostSummaryScreen = ({ route, navigation }) => {
     selectedActivityIconText,
   } = route.params;
 
+  const userName = route.params?.userName;
+
+  console.log("Username in PostSummaryScreen:", { userName });
+
+  console.log(userName);
   const postData = {
     song_data: JSON.stringify({
       index: songData.index,
@@ -69,6 +67,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
     activity_icon_text: selectedActivityIconText,
     caption: caption, // Added caption
     visibility: selectedValue, // Added visibility
+    userName,
   };
 
   const artistNames =
@@ -78,15 +77,12 @@ const PostSummaryScreen = ({ route, navigation }) => {
 
   const savePostToSupabase = async () => {
     try {
-      const { data, error } = await supabase
-        .from("posts") // Replace 'posts' with your actual table name
-        .insert([postData]);
+      const { data, error } = await supabase.from("posts").insert([postData]);
 
       if (error) {
         console.error("Error saving post to database:", error);
       } else {
         console.log("Post saved successfully:", data);
-        // Optionally navigate to another screen or show a success message
       }
     } catch (err) {
       console.error("Error saving post:", err);
@@ -180,6 +176,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
                         selectedEmotionIconText,
                         selectedActivityIcon,
                         selectedActivityIconText,
+                        userName,
                       },
                     },
                   });

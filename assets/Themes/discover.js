@@ -49,6 +49,10 @@ export const discoverStyles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.primary, // Adjust with your primary color
     marginRight: "3%",
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   activityIcon: {
     width: "15%",
@@ -77,6 +81,10 @@ export const discoverStyles = StyleSheet.create({
     alignItems: "center",
     gap: "15%",
     paddingVertical: "5%",
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   songTitle: {
     fontSize: 20,

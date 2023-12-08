@@ -171,6 +171,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   title: {
     fontSize: 25,
@@ -196,6 +200,10 @@ const styles = StyleSheet.create({
     marginHorizontal: "10%",
     paddingBottom: "5%",
     zIndex: 1, // Ensure it's above other elements
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   month: {
     color: colors.white,

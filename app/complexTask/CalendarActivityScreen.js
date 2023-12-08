@@ -76,7 +76,7 @@ const data = {
     { id: "6", source: albums.alb10, month: "NOV", date: "8" },
     { id: "7", source: albums.alb5, month: "NOV", date: "9" },
   ],
-  theme: [
+  time: [
     { id: "8", source: albums.alb7, month: "NOV", date: "11" },
     { id: "9", source: albums.alb8, month: "NOV", date: "12" },
     { id: "10", source: albums.alb1, month: "NOV", date: "14" },
@@ -125,8 +125,8 @@ const CalendarActivityScreen = ({ navigation }) => {
           <RNPickerSelect
             onValueChange={(value) => setSelectedValue(value)}
             items={[
+              { label: "Time", value: "time" },
               { label: "Activity", value: "activity" },
-              { label: "Theme", value: "theme" },
               { label: "Feeling", value: "feeling" },
             ]}
             style={pickerSelectStyles}

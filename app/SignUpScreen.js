@@ -25,38 +25,28 @@ const SignUpScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('password123');
 
   const handleSignUp = async () => {
-    // Basic form validation (you can expand upon this)
-    if (!email || !password || password !== confirmPassword) {
-      console.error('Invalid input');
+    if (!fullName) {
+      alert('Please enter your full name.');
       return;
     }
 
-    // Supabase sign-up
-    const { user, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    try {
+      const { error } = await supabase
+        .from('users') 
+        .insert([
+          { user: fullName },
+        ]);
 
-    // Check for errors
-    if (error) {
-      console.error('Error signing up:', error);
-      return;
+      if (error) {
+        throw error;
+      }
+
+      // Optionally navigate to home or other screen on successful sign-up
+      alert('Sign up successful!');
+      navigation.navigate("Home");
+    } catch (error) {
+      alert(error.message);
     }
-
-    // Save additional user data to your users table
-    const { data, insertError } = await supabase
-      .from('users') // Replace 'users' with your actual user data table name
-      .insert([
-        { id: user.id, fullName },
-      ]);
-
-    if (insertError) {
-      console.error('Error saving user data:', insertError);
-      return;
-    }
-
-    // Navigate to home or other screen on successful sign-up
-    navigation.navigate("Home");
   };
 
   return (
@@ -101,11 +91,8 @@ const SignUpScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("Home")}
-          >
-            <Text style={styles.loginBtnTxt} onPress={handleSignUp}>Sign Up</Text>
+          <Pressable style={styles.button} onPress={handleSignUp}>
+            <Text style={styles.loginBtnTxt}>Sign Up</Text>
           </Pressable>
 
           <View style={styles.buttonSpacer} />

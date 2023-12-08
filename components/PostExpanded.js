@@ -24,7 +24,17 @@ import { PostContext } from "../utils/PostContext";
 // const totalGapSize = (itemPerRow - 1) * gap;
 // const rowWidth = windowWidth * 0.8 + totalGapSize;
 
-const PostExpanded = ({ dimensions, songData }) => {
+const PostExpanded = ({
+  dimensions,
+  songData,
+  caption,
+  themeIconSrc,
+  emotionIconSrc,
+  activityIconSrc,
+  themeIconLabel,
+  emotionIconLabel,
+  activityIconLabel,
+}) => {
   const [captionText, setCaptionText] = useState("");
   const [number, onChangeNumber] = React.useState("");
   const [selectedOption, setSelectedOption] = useState(null);
@@ -41,9 +51,6 @@ const PostExpanded = ({ dimensions, songData }) => {
   const styles = styling(dimensions);
 
   const navigation = useNavigation();
-
-  console.log("In POST");
-  console.log(songData);
 
   const onPress = () => {
     navigation.goBack();
@@ -92,50 +99,18 @@ const PostExpanded = ({ dimensions, songData }) => {
             </View>
 
             <View style={styles.smallSelectionCol}>
-              <Image
-                source={images.matchaLatte.pic}
-                style={styles.smallImage}
-              />
-              <Text style={styles.smallText}>{images.matchaLatte.label}</Text>
-              <Image
-                source={images.superHappyEmoji.pic}
-                style={styles.smallImage}
-              />
-              <Text style={styles.smallText}>
-                {images.superHappyEmoji.label}
-              </Text>
-
-              <Image source={images.working.pic} style={styles.smallImage} />
-              <Text style={styles.smallText}>{images.working.label}</Text>
+              <Image source={themeIconSrc} style={styles.smallImage} />
+              <Text style={styles.smallText}>{themeIconLabel}</Text>
+              <Image source={emotionIconSrc} style={styles.smallImage} />
+              <Text style={styles.smallText}>{emotionIconLabel}</Text>
+              <Image source={activityIconSrc} style={styles.smallImage} />
+              <Text style={styles.smallText}>{activityIconLabel}</Text>
             </View>
           </View>
 
-          <ScrollView>
-            <View style={styles.captionContainer}>
-              <Text style={styles.caption}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                sollicitudin arcu velit, id venenatis leo cursus id. Phasellus
-                tristique dui eget elit vestibulum lobortis. Donec eu erat nisi.
-                Donec vitae elit sit amet purus placerat ornare venenatis nec
-                ligula. Duis et arcu a magna pulvinar vulputate id nec velit.
-                Donec ornare a velit quis tristique. In lobortis iaculis ornare.
-                Donec quam sapien, blandit id urna a, pulvinar vehicula mi. Sed
-                non massa mattis, rhoncus nibh at, condimentum enim. Donec
-                gravida metus felis, at placerat ligula interdum eu. Proin
-                hendrerit est sit amet dignissim ultricies `Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Fusce sollicitudin arcu
-                velit, id venenatis leo cursus id. Phasellus tristique dui eget
-                elit vestibulum lobortis. Donec eu erat nisi. Donec vitae elit
-                sit amet purus placerat ornare venenatis nec ligula. Duis et
-                arcu a magna pulvinar vulputate id nec velit. Donec ornare a
-                velit quis tristique. In lobortis iaculis ornare. Donec quam
-                sapien, blandit id urna a, pulvinar vehicula mi. Sed non massa
-                mattis, rhoncus nibh at, condimentum enim. Donec gravida metus
-                felis, at placerat ligula interdum eu. Proin hendrerit est sit
-                amet dignissim ultricies
-              </Text>
-            </View>
-          </ScrollView>
+          <View style={styles.captionContainer}>
+            <Text style={styles.caption}>{caption}</Text>
+          </View>
         </Pressable>
       )}
     </View>

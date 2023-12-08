@@ -16,7 +16,7 @@ import { colors } from "../assets/Themes/colors";
 import { styles as defaultStyles } from "../assets/Themes/default_style";
 import RNPickerSelect from "react-native-picker-select";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
-import { supabase } from '../utils/supabaseClient';
+import { supabase } from "../utils/supabaseClient";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -50,7 +50,9 @@ const PostSummaryScreen = ({ route, navigation }) => {
     song_data: JSON.stringify({
       index: songData.index,
       title: songData.title,
-      artists: Array.isArray(songData.artists) ? songData.artists : [songData.artists],
+      artists: Array.isArray(songData.artists)
+        ? songData.artists
+        : [songData.artists],
       albumName: songData.albumName,
       imageUrl: songData.imageUrl,
       duration: songData.duration,
@@ -68,29 +70,28 @@ const PostSummaryScreen = ({ route, navigation }) => {
     caption: caption, // Added caption
     visibility: selectedValue, // Added visibility
   };
-  
-  
+
   const artistNames =
     songData && songData.artists
       ? songData.artists.join(", ")
       : "Unknown Artist";
-      
-  const savePostToSupabase = async () => {
-  try {
-    const { data, error } = await supabase
-      .from('posts')  // Replace 'posts' with your actual table name
-      .insert([postData]);
 
-    if (error) {
-      console.error('Error saving post to database:', error);
-    } else {
-      console.log('Post saved successfully:', data);
-      // Optionally navigate to another screen or show a success message
+  const savePostToSupabase = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("posts") // Replace 'posts' with your actual table name
+        .insert([postData]);
+
+      if (error) {
+        console.error("Error saving post to database:", error);
+      } else {
+        console.log("Post saved successfully:", data);
+        // Optionally navigate to another screen or show a success message
+      }
+    } catch (err) {
+      console.error("Error saving post:", err);
     }
-  } catch (err) {
-    console.error('Error saving post:', err);
-  }
-};
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -162,34 +163,33 @@ const PostSummaryScreen = ({ route, navigation }) => {
               placeholder={{ label: "Select visibility...", value: null }}
             />
             <Pressable
-  style={styles.postButton}
-  onPress={async () => {  // Make sure the function is marked as async
-    try {
-      await savePostToSupabase(); // Use await inside the async function
-      navigation.navigate("FeedTabs", {
-        screen: "FeedStackScreen",
-        params: {
-          screen: "FeedInnerScreen",
-          params: {
-            songData,
-            selectedThemeIcon,
-            selectedThemeIconText,
-            selectedEmotionIcon,
-            selectedEmotionIconText,
-            selectedActivityIcon,
-            selectedActivityIconText
-          }
-        }
-      });
-    } catch (error) {
-      console.error(error);
-      // Handle the error appropriately
-    }
-  }}
->
-  <Text style={styles.postButtonText}>Post</Text>
-</Pressable>
-
+              style={styles.postButton}
+              onPress={async () => {
+                // Make sure the function is marked as async
+                try {
+                  await savePostToSupabase(); // Use await inside the async function
+                  navigation.navigate("FeedTabs", {
+                    screen: "FeedStackScreen",
+                    params: {
+                      screen: "FeedInnerScreen",
+                      params: {
+                        songData,
+                        selectedThemeIcon,
+                        selectedThemeIconText,
+                        selectedEmotionIcon,
+                        selectedEmotionIconText,
+                        selectedActivityIcon,
+                        selectedActivityIconText,
+                      },
+                    },
+                  });
+                } catch (error) {
+                  console.error(error);
+                }
+              }}
+            >
+              <Text style={styles.postButtonText}>Post</Text>
+            </Pressable>
           </View>
         </View>
         {/* </View> */}

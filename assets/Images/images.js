@@ -20,9 +20,9 @@ const images = {
     pic: require("../matchaCup.png"),
     label: "Matcha Latte",
   },
-  expresso: {
-    pic: require("../expresso.png"),
-    label: "Expresso",
+  espresso: {
+    pic: require("../espresso.png"),
+    label: "Espresso",
   },
   hotChocolate: {
     pic: require("../hot-chocolate.png"),

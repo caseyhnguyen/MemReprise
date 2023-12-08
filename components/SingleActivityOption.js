@@ -67,6 +67,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: windowWidth * 0.9,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   buttonContainer: {
     width: windowWidth * 0.1,

@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import images from "../assets/Images/images";
 import { postStyles as styling } from "../assets/Themes/postStyle";
 import { PostContext } from "../utils/PostContext";
+import { colors } from "../assets/Themes/colors";
 
 const windowWidth = Dimensions.get("window").width;
 const gap = 12;
@@ -110,5 +111,30 @@ const Post = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  outerContainer: {
+    backgroundColor: colors.offWhite75,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    marginBottom: 10,
+    width: windowWidth * 0.95,
+    height: windowWidth * 0.32,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  postContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+});
 
 export default Post;

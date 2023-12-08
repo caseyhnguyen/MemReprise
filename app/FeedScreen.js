@@ -281,9 +281,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.offWhite75,
     shadowColor: colors.darkGray,
-    shadowOffset: { width: 2, height: 2 },
+    shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,
-    shadowRadius: 2,
+    shadowRadius: 4,
     elevation: 5,
   },
   postText: {

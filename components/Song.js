@@ -50,19 +50,17 @@ const Song = ({
 
     try {
       // Save to Supabase
-      const { data, error } = await supabase
-        .from("songs") // Replace 'songs' with your table name
-        .insert([songData]);
+      const { data, error } = await supabase.from("songs").insert([songData]);
 
       if (error) {
         console.error("Error saving song to database:", error);
-        return; // Stop execution if there's an error
+        return;
       } else {
         console.log("Song saved successfully:", data);
       }
     } catch (err) {
       console.error("Supabase operation failed:", err);
-      return; // Stop execution if there's an error
+      return;
     }
 
     // Navigate to "Theme Question" with songData
@@ -109,13 +107,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 10,
     // marginHorizontal: 5,
-    marginBottom: 10, // Spacing between each song item
+    marginBottom: 10,
     width: windowWidth * 0.95,
     height: windowWidth * 0.2,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
+    // shadowColor: colors.darkGray,
+    // shadowOffset: { width: 4, height: 4 },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
   },
   container: {
     flexDirection: "row",

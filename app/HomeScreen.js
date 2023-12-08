@@ -27,7 +27,7 @@ const HomeScreen = ({ route, navigation }) => {
       </Text>
       <View style={styles.postPrompt}>
         <Image
-          source={images.lock.pic} // Assuming you have a lock icon image in your Images
+          source={images.lock.pic}
           style={styles.lockIcon}
           resizeMode="contain"
         />
@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.offWhite75,
     shadowColor: colors.darkGray,
-    shadowOffset: { width: 2, height: 2 },
+    shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,
-    shadowRadius: 2,
+    shadowRadius: 4,
     elevation: 5,
   },
   maybeLaterText: {
@@ -126,14 +126,14 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 14,
     letterSpacing: -0.41,
-    color: "#4f4f4f",
+    color: colors.darkGray,
   },
   postText: {
     textAlign: "center",
     fontWeight: "500",
     fontSize: 14,
     letterSpacing: -0.41,
-    color: "#595959",
+    color: colors.darkGray,
   },
   buttonSpacer: {
     width: 24,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   oldPostsText: {
     marginTop: 16,
     fontSize: 16,
-    color: "#595959",
+    color: colors.offWhite,
   },
   greetingText: {
     textAlign: "center",

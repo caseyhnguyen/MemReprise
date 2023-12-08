@@ -145,6 +145,10 @@ const styles = StyleSheet.create({
     height: windowWidth * 0.3,
     gap: 5,
     paddingLeft: 10,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   albumCover: {
     width: windowWidth * 0.25, // Adjust size as needed
@@ -187,6 +191,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     gap: totalGapSize,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   questionBox: {
     backgroundColor: colors.offWhite75,
@@ -195,6 +203,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: rowWidth + 10,
     height: windowWidth * 0.15,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   postInProgress: {},
   boldText: {

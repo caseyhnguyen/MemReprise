@@ -268,6 +268,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 5,
     marginBottom: 10,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -292,6 +296,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: windowWidth * 0.95,
     marginBottom: 20,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   searchInput: {
     flex: 1,

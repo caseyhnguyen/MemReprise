@@ -204,6 +204,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: rowWidth + 10,
     height: windowWidth * 1.25,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   songContainer: {
     alignItems: "flex-start",
@@ -306,18 +310,20 @@ const styles = StyleSheet.create({
     // borderTopWidth: 1,
     // borderTopColor: colors.darkGray, // Or another color that fits your design
     // backgroundColor: colors.offWhite50, // Make sure this matches the container background
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   postButton: {
-    // Adjust the post button styles
-    backgroundColor: colors.offWhite75, // Replace with your button color
+    backgroundColor: colors.offWhite75,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
-    width: "20%", // Adjust the width as needed
-    paddingVertical: 12, // Adjust the padding as needed
+    width: "20%",
+    paddingVertical: 12,
   },
   postButtonText: {
-    // Adjust the post button text styles
     color: colors.darkGray,
     fontSize: 16,
     fontWeight: "bold",
@@ -325,7 +331,6 @@ const styles = StyleSheet.create({
 });
 
 const pickerSelectStyles = {
-  // Adjust the dropdown styles
   inputIOS: {
     fontSize: 16,
     paddingVertical: 10,
@@ -334,46 +339,18 @@ const pickerSelectStyles = {
     borderColor: colors.offWhite75,
     borderRadius: 4,
     color: "black",
-    backgroundColor: colors.offWhite75, // Adjust background color as needed
-    // Other styling as needed for iOS
+    backgroundColor: colors.offWhite75,
   },
   inputAndroid: {
     fontSize: 16,
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: colors.offWhite75,
     borderRadius: 4,
     color: "black",
-    backgroundColor: "white", // Adjust background color as needed
-    // Other styling as needed for Android
+    backgroundColor: colors.offWhite75,
   },
-  // You can add placeholder style if needed
 };
-
-// const styles = StyleSheet.create({
-//   songContainer: {
-//     width: windowWidth,
-//     height: 200, // Adjust height as needed
-//     alignItems: "center",
-//     justifyContent: "center",
-//     marginBottom: 20,
-//   },
-//   albumCover: {
-//     width: 120, // Adjust size as needed
-//     height: 120, // Adjust size as needed
-//   },
-//   title: {
-//     fontSize: 18,
-//     fontWeight: "bold",
-//     color: "black", // Adjust color as needed
-//     marginTop: 10,
-//   },
-//   artist: {
-//     fontSize: 16,
-//     color: "grey", // Adjust color as needed
-//     marginTop: 5,
-//   },
-// });
 
 export default PostSummaryScreen;

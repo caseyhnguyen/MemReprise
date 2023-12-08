@@ -197,6 +197,10 @@ const styles = StyleSheet.create({
   containerCalendar: {
     flex: 1,
     padding: 5,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   image: {
     width: imageSize,
@@ -226,7 +230,6 @@ const styles = StyleSheet.create({
 });
 
 const pickerSelectStyles = {
-  // Adjust the dropdown styles
   inputIOS: {
     fontSize: 16,
     paddingVertical: 10,
@@ -235,25 +238,26 @@ const pickerSelectStyles = {
     borderColor: colors.offWhite75,
     borderRadius: 4,
     color: colors.black,
-    backgroundColor: colors.offWhite75, // Adjust background color as needed
-    // Other styling as needed for iOS
+    backgroundColor: colors.offWhite75,
   },
   placeholder: {
     color: colors.darkGray,
     fontWeight: "bold",
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   inputAndroid: {
     fontSize: 16,
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: colors.offWhite75,
     borderRadius: 4,
     color: colors.black,
-    backgroundColor: colors.offWhite75, // Adjust background color as needed
-    // Other styling as needed for Android
+    backgroundColor: colors.offWhite75,
   },
-  // You can add placeholder style if needed
 };
 
 export default CalendarActivityScreen;

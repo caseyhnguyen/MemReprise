@@ -20,13 +20,13 @@ export const postStyles = (dimensions) =>
       borderRadius: 10,
       width: "95%",
       height: "92.5%",
-    }, 
+    },
 
     captionContainer: {
       // width: "%",
       paddingLeft: 30,
-      paddingBottom: 50
-    }, 
+      paddingBottom: 50,
+    },
     metaData: {
       margin: 10,
       paddingTop: 10,
@@ -34,7 +34,7 @@ export const postStyles = (dimensions) =>
       flexDirection: "row",
       alignItems: "center",
       gap: 10,
-      width: "90%"
+      width: "90%",
     },
     time: { marginLeft: "auto" },
 
@@ -50,6 +50,10 @@ export const postStyles = (dimensions) =>
       width: "90%",
       // height: "90%",
       gap: 15,
+      shadowColor: colors.darkGray,
+      shadowOffset: { width: 4, height: 4 },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
     },
     albumCover: {
       width: dimensions.windowWidth * 0.5, // Adjust size as needed
@@ -72,7 +76,7 @@ export const postStyles = (dimensions) =>
       alignItems: "flex-start",
       paddingTop: 20,
       paddingRight: 30,
-      paddingBottom: 30
+      paddingBottom: 30,
       // marginTop: 20,
       // marginRight: 30,
 
@@ -151,14 +155,13 @@ export const postStyles = (dimensions) =>
       width: "20%", // Adjust the width as needed
       // paddingVertical: 12, // Adjust the padding as needed
       marginTop: 10,
-      marginBottom: 10
-
+      marginBottom: 10,
     },
     postButtonText: {
       // Adjust the post button text styles
       color: colors.darkGray,
       fontSize: 16,
       fontWeight: "bold",
-      padding: 5
+      padding: 5,
     },
   });

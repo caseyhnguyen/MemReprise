@@ -133,11 +133,15 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   headerContainer: {
-    backgroundColor: colors.offWhite50,
+    backgroundColor: colors.offWhite75,
     borderRadius: 16,
     margin: 16,
     padding: 16,
     alignItems: "center",
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   headerText: {
     fontSize: 18,
@@ -146,12 +150,20 @@ const styles = StyleSheet.create({
   activitiesContainer: {
     paddingBottom: 20,
     paddingHorizontal: 16,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   activityCard: {
     backgroundColor: colors.offWhite50,
     borderRadius: 16,
     padding: 16,
     marginBottom: 16,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   activityHeader: {
     flexDirection: "row",
@@ -181,6 +193,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offWhite50,
     borderRadius: 16,
     padding: 16,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   songRow: {
     flexDirection: "row",

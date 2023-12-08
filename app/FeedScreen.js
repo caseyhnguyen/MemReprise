@@ -40,7 +40,6 @@ const FeedScreen = ({ navigation }) => {
       5: images.superHappyEmoji.pic,
       6: images.sadEmoji.pic,
       7: images.superSadEmoji.pic,
-      // ... add other emotion mappings as needed
     };
 
     return emotionIconMap[iconId] || null;
@@ -53,7 +52,6 @@ const FeedScreen = ({ navigation }) => {
       13: images.commuting.pic,
       14: images.eating.pic,
       15: images.exercising.pic,
-      // ... add other activity mappings as needed
     };
 
     return activityIconMap[iconId] || null;
@@ -66,7 +64,6 @@ const FeedScreen = ({ navigation }) => {
       9: images.espresso.pic,
       10: images.hotChocolate.pic,
       11: images.lemonade.pic,
-      // ... add other theme mappings as needed
     };
 
     return themeIconMap[iconId] || null;
@@ -93,25 +90,64 @@ const FeedScreen = ({ navigation }) => {
   const fetchInitialPosts = async () => {
     setLoading(true);
     try {
-      let { data: fetchedPosts, error } = await supabase
+      // First, fetch the latest user
+      const { data: latestUser, error: userError } = await supabase
+        .from("users")
+        .select("user") // select only the full name column
+        .order("created_at", { ascending: false })
+        .limit(1); // we only want the latest one
+  
+      if (userError) {
+        throw userError;
+      }
+  
+      // Extract the full name from the latest user
+      const fullName = latestUser?.[0]?.user;
+  
+      // Then, fetch the posts
+      let { data: fetchedPosts, error: postsError } = await supabase
         .from("posts")
         .select("*")
         .order("created_at", { ascending: false });
-
-      if (error) {
-        throw error;
+  
+      if (postsError) {
+        throw postsError;
       }
-
+  
       if (fetchedPosts) {
         const parsedPosts = parsePosts(fetchedPosts);
-        setPosts(parsedPosts);
+        // Set posts state with an additional property for the user's full name
+        setPosts(parsedPosts.map(post => ({ ...post, fullName })));
       }
     } catch (error) {
-      console.error("Error fetching posts:", error);
+      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
   };
+  
+  // const fetchInitialPosts = async () => {
+  //   setLoading(true);
+  //   try {
+  //     let { data: fetchedPosts, error } = await supabase
+  //       .from("posts")
+  //       .select("*")
+  //       .order("created_at", { ascending: false });
+
+  //     if (error) {
+  //       throw error;
+  //     }
+
+  //     if (fetchedPosts) {
+  //       const parsedPosts = parsePosts(fetchedPosts);
+  //       setPosts(parsedPosts);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching posts:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const fetchMorePosts = async () => {
     if (loading) return;
@@ -166,31 +202,6 @@ const FeedScreen = ({ navigation }) => {
     />
   );
 
-  // const renderPost = ({ item }) => (
-  //   <Post
-  //     songData={item.songData}
-  //     caption={item.caption}
-  //     artistNames={item.songData.artists.join(", ")} // Assuming artists is an array
-  //     imageUrl={item.songData.imageUrl}
-  //     playedAt={item.songData.played_at}
-  //     themeIconId={item.theme_icon_id}
-  //     themeIconText={item.theme_icon_text}
-  //     emotionIconId={item.emotion_icon_id}
-  //     emotionIconText={item.emotion_icon_text}
-  //     activityIconId={item.activity_icon_id}
-  //     activityIconText={item.activity_icon_text}
-  //     visibility={item.visibility}
-  //     dimensions={{
-  //       windowWidth,
-  //       gap: 12,
-  //       totalGapSize: 12 * (2 - 1),
-  //       itemPerRow: 2,
-  //       rowWidth: windowWidth * 0.8 + 12 * (2 - 1),
-  //     }}
-  //     // ... other props as needed
-  //   />
-  // );
-
   return (
     <SafeAreaView style={defaultStyles.container}>
       {!postMade && (
@@ -223,107 +234,6 @@ const FeedScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-// const FeedScreen = ({ route, navigation }) => {
-//   const caption = route.params?.caption || "";
-
-//   const songData = route.params?.songData || {};
-
-//   console.log("IN FEED");
-//   console.log(songData);
-//   const artistNames =
-//     songData && songData.artists
-//       ? songData.artists.join(", ")
-//       : "Unknown Artist";
-//   const { postMade } = useContext(PostContext);
-//   const [posts, setPosts] = useState([]); // State to hold posts
-//   const [loading, setLoading] = useState(false); // State to manage loading more posts
-
-//   useEffect(() => {
-//     if (postMade) {
-//       fetchInitialPosts();
-//     }
-//   }, [postMade]);
-
-//   const fetchInitialPosts = async () => {
-//     // TODO: Fetch initial posts logic here
-//   };
-
-//   const fetchMorePosts = async () => {
-//     if (loading) return;
-//     setLoading(true);
-//     // TODO: Fetch more posts logic here
-//     setLoading(false);
-//   };
-
-//   const renderPost = ({ item }) => (
-//     <Post
-//       // Pass the necessary props to the Post component
-//       songData={item}
-//       dimensions={{
-//         windowWidth: windowWidth,
-//         gap: 12,
-//         totalGapSize: 12 * (2 - 1),
-//         itemPerRow: 2,
-//         rowWidth: windowWidth * 0.8 + 12 * (2 - 1),
-//       }}
-//     />
-//   );
-
-//   return (
-//     <SafeAreaView style={defaultStyles.container}>
-//       {postMade ? (
-//         <View>
-//           <Text style={textStyles.subHeader}>Posts</Text>
-//           <Post
-//             dimensions={{
-//               windowWidth: windowWidth,
-//               gap: gap,
-//               totalGapSize: totalGapSize,
-//               itemPerRow: itemPerRow,
-//               rowWidth: rowWidth,
-//             }}
-//             songData={songData}
-//           ></Post>
-//           <FlatList
-//             data={posts}
-//             renderItem={renderPost}
-//             keyExtractor={(item, index) =>
-//               item.id?.toString() || index.toString()
-//             }
-//             onEndReached={fetchMorePosts}
-//             onEndReachedThreshold={0.5}
-//             ListFooterComponent={
-//               loading && <ActivityIndicator size="large" color={colors.white} />
-//             }
-//           />
-//         </View>
-//       ) : (
-//         <>
-//           <View style={styles.buttonContainer}>
-//             <Pressable
-//               style={styles.button}
-//               onPress={() => navigation.navigate("Tracks")}
-//             >
-//               <Text style={styles.postText}>Post</Text>
-//             </Pressable>
-//           </View>
-//           <Text style={textStyles.subHeader}>Posts</Text>
-//           <Post
-//             dimensions={{
-//               windowWidth: windowWidth,
-//               gap: gap,
-//               totalGapSize: totalGapSize,
-//               itemPerRow: itemPerRow,
-//               rowWidth: rowWidth,
-//             }}
-//             songData={songData}
-//           ></Post>
-//         </>
-//       )}
-//     </SafeAreaView>
-//   );
-// };
 
 const styles = StyleSheet.create({
   container: {

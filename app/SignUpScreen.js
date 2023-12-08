@@ -8,6 +8,8 @@ import {
   Pressable,
   StyleSheet,
   Dimensions,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -39,75 +41,77 @@ const SignUpScreen = ({ navigation }) => {
         throw error;
       }
 
-      alert('Sign up successful!');
-      navigation.navigate("Tutorial, { userName: fullName }");
+      alert("Sign up successful!");
+      navigation.navigate("Tutorial", { userName: fullName });
     } catch (error) {
       alert(error.message);
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Header title="memreprise" />
-      </View>
-      <View style={styles.postPrompt}>
-        <View style={styles.spacer} />
-
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={styles.container}>
         <View>
-          <Text style={styles.loginText}>Create Account</Text>
+          <Header title="memreprise" />
         </View>
+        <View style={styles.postPrompt}>
+          <View style={styles.spacer} />
 
-        <View style={styles.containerInput}>
-          <TextInput
-            placeholder="Full Name"
-            value={fullName}
-            onChangeText={setFullName}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            secureTextEntry
-            value={password}
-            onChangeText={setPassword}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Confirm Password"
-            secureTextEntry
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            style={styles.input}
-          />
-        </View>
+          <View>
+            <Text style={styles.loginText}>Create Account</Text>
+          </View>
 
-        <View style={styles.buttonContainer}>
-          <Pressable style={styles.button} onPress={handleSignUp}>
-            <Text style={styles.loginBtnTxt}>Sign Up</Text>
-          </Pressable>
+          <View style={styles.containerInput}>
+            <TextInput
+              placeholder="Full Name"
+              value={fullName}
+              onChangeText={setFullName}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Password"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Confirm Password"
+              secureTextEntry
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              style={styles.input}
+            />
+          </View>
 
-          <View style={styles.buttonSpacer} />
-        </View>
-
-        <View style={styles.spacer} />
-
-        <View>
-          <Text style={styles.signUpText}>
-            Already have an account?{" "}
-            <Pressable onPress={() => navigation.navigate("Login")}>
-              <Text style={styles.linkText}>Login</Text>
+          <View style={styles.buttonContainer}>
+            <Pressable style={styles.button} onPress={handleSignUp}>
+              <Text style={styles.loginBtnTxt}>Sign Up</Text>
             </Pressable>
-          </Text>
+
+            <View style={styles.buttonSpacer} />
+          </View>
+
+          <View style={styles.spacer} />
+
+          <View>
+            <Text style={styles.signUpText}>
+              Already have an account?{" "}
+              <Pressable onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.linkText}>Login</Text>
+              </Pressable>
+            </Text>
+          </View>
         </View>
-      </View>
-      {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
-    </SafeAreaView>
+        {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 

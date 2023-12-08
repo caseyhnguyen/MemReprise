@@ -23,7 +23,7 @@ const HomeScreen = ({ route, navigation }) => {
         <Header title="memreprise" />
       </View>
       <Text style={styles.greetingText}>
-        {userName ? `Hi, ${userName}` : "Welcome to memreprise!"}
+        {userName ? `Hello, ${userName}!` : "Welcome to memreprise!"}
       </Text>
       <View style={styles.postPrompt}>
         <Image

@@ -1,4 +1,3 @@
-// CurrentSong.js
 import React from "react";
 import {
   View,
@@ -9,15 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import millisToMinuteSeconds from "../utils/millisToMinutesAndSeconds.js";
-import { Ionicons } from "@expo/vector-icons";
 import ProgressBar from "react-native-progress/Bar";
 import { colors } from "../assets/Themes/colors";
 
 const windowWidth = Dimensions.get("window").width;
 
 const CurrentSong = ({
-  index,
   title,
   artists,
   albumName,
@@ -41,8 +37,8 @@ const CurrentSong = ({
         duration,
         previewUrl,
         externalUrl,
-        userName,
       },
+      userName,
     });
   };
 
@@ -74,7 +70,7 @@ const CurrentSong = ({
       <View style={styles.progressWrapper}>
         <ProgressBar
           progress={progressFraction}
-          width={windowWidth - 40} // Adjust padding as needed
+          width={windowWidth - 40}
           height={7}
           borderRadius={3.5}
           color={colors.verdigrisGreen}
@@ -98,7 +94,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     marginBottom: 10,
     width: windowWidth * 0.95,
-    height: windowWidth * 0.32, // Increased height
+    height: windowWidth * 0.32,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,
@@ -123,24 +119,24 @@ const styles = StyleSheet.create({
     width: "75%",
   },
   image: {
-    width: 80, // Increased size
-    height: 80, // Increased size
+    width: 80,
+    height: 80,
     marginRight: 15,
   },
   albumName: {
     color: colors.darkGray,
     flex: 3,
-    fontSize: 16, // Increased font size
+    fontSize: 16,
     marginRight: 10,
   },
   artistText: {
     color: colors.darkGray,
-    fontSize: 16, // Increased font size
+    fontSize: 16,
     marginTop: 2,
   },
   titleText: {
     fontWeight: "bold",
-    fontSize: 16, // Increased font size
+    fontSize: 16,
     marginBottom: 2,
   },
   progressWrapper: {
@@ -148,21 +144,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
-    marginTop: 10, // Add some space above the progress bar
+    marginTop: 10,
   },
   progressTime: {
     fontSize: 14,
     color: colors.darkGray,
     position: "absolute",
-    left: 10, // Align with the left edge of progressWrapper
-    bottom: -20, // Place below the progress bar
+    left: 10,
+    bottom: -20,
   },
   durationTime: {
     fontSize: 14,
     color: colors.darkGray,
     position: "absolute",
-    right: 10, // Align with the right edge of progressWrapper
-    bottom: -20, // Place below the progress bar
+    right: 10,
+    bottom: -20,
   },
 });
 

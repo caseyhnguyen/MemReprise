@@ -94,10 +94,6 @@ export const getMyRecentTracks = async (token) => {
   try {
     let res = await fetcher(RECENT_TRACKS_API, token);
 
-    // Log the response
-    // console.log("Response from getMyRecentTracks:", res);
-
-    // Further processing or formatting if necessary
     return formatter(res.data?.items);
   } catch (e) {
     console.error(e);
@@ -138,7 +134,6 @@ export const getAlbumTracks = async (albumId, token) => {
   }
 };
 
-// Add this constant near your existing API endpoint constants
 const PLAYLIST_API_GETTER = (playlistId) =>
   `https://api.spotify.com/v1/playlists/${playlistId}`;
 
@@ -151,11 +146,10 @@ const formatPlaylistData = (data) => {
 
   const formattedTracks = data.tracks.items.map((item) => {
     const track = item.track;
-    // console.log("Track Details:", track); // Log each track's details
 
     return {
       addedAt: item.added_at,
-      addedBy: item.added_by.id, // or any other detail you need from added_by
+      addedBy: item.added_by.id,
       trackTitle: track.name,
       trackArtists: track.artists.map((artist) => artist.name).join(", "),
       albumName: track.album.name,
@@ -164,21 +158,8 @@ const formatPlaylistData = (data) => {
       duration: track.duration_ms,
       externalUrl: track.external_urls.spotify,
       previewUrl: track.preview_url,
-      // Add more track details as needed
     };
   });
-
-  // Log playlist-level details
-  // console.log("Formatted Playlist Details:", {
-  //   playlistName: data.name,
-  //   description: data.description,
-  //   externalUrl: data.external_urls.spotify,
-  //   imageUrl: data.images.length > 0 ? data.images[0].url : null,
-  //   owner: data.owner.display_name,
-  //   public: data.public,
-  //   totalTracks: data.tracks.total,
-  //   tracks: formattedTracks,
-  // });
 
   return {
     playlistName: data.name,
@@ -189,18 +170,15 @@ const formatPlaylistData = (data) => {
     public: data.public,
     totalTracks: data.tracks.total,
     tracks: formattedTracks,
-    // Add more playlist details as needed
   };
 };
 
-// Update the getPlaylist function to use this formatter
 export const getPlaylist = async (playlistId, token) => {
   try {
     const response = await fetch(PLAYLIST_API_GETTER(playlistId), {
       headers: { Authorization: `Bearer ${token}` },
     });
     const resData = await response.json();
-    // console.log("Response Data from Spotify API:", resData); // Log raw response data
 
     return formatPlaylistData(resData);
   } catch (e) {

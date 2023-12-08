@@ -1,4 +1,3 @@
-// Song.js
 import React from "react";
 import {
   View,
@@ -46,9 +45,8 @@ const Song = ({
       userName,
     };
 
-    // Log the songData to be inserted
     // console.log("Inserting songData to Supabase:", songData);
-    console.log("Username in Song Component:", { userName });
+    // console.log("Username in Song Component:", { userName });
 
     try {
       // Save to Supabase
@@ -74,48 +72,6 @@ const Song = ({
       userName,
     });
   };
-
-  // const onSongPress = () => {
-  //   navigation.navigate("Theme Question", {
-  //     songData: {
-  //       title,
-  //       artists: Array.isArray(artists) ? artists : [artists],
-  //       albumName,
-  //       imageUrl,
-  //       duration,
-  //       previewUrl,
-  //       externalUrl,
-  //     },
-  //   });
-  // };
-  // const onSongPress = async () => {
-  //   // Define songData for Supabase
-  //   const songData = {
-  //     title,
-  //     artists: Array.isArray(artists) ? artists.join(", ") : artists,
-  //     albumName,
-  //     imageUrl,
-  //     duration,
-  //     previewUrl,
-  //     externalUrl,
-  //     played_at,
-  //   };
-
-  //   // Save to Supabase
-  //   const { data, error } = await supabase
-  //     .from('songs') // Replace 'songs' with your table name
-  //     .insert([songData]);
-
-  //   if (error) {
-  //     console.error('Error saving song to database', error);
-  //   } else {
-  //     console.log('Song saved successfully', data);
-  //   }
-
-  //   navigation.navigate("Theme Question", {
-  //     songData,
-  //   });
-  // };
 
   return (
     <View style={styles.outerContainer}>

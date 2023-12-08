@@ -7,6 +7,8 @@ import {
   Pressable,
   StyleSheet,
   Dimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -17,35 +19,35 @@ const windowWidth = Dimensions.get("window").width;
 
 const LoginSignUpScreen = ({ navigation }) => {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.postPrompt}>
-        <View style={styles.spacer} />
-        <View style={styles.titleContainer}>
-          <Text style={styles.memrepriseTitle}>
-            memreprise
-          </Text>
-          <Text style={styles.postASongText}>
-            Where Memories and Music Meet
-          </Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.postPrompt}>
+          <View style={styles.spacer} />
+          <View style={styles.titleContainer}>
+            <Text style={styles.memrepriseTitle}>memreprise</Text>
+            <Text style={styles.postASongText}>
+              Where Memories and Music Meet
+            </Text>
+          </View>
+          <View style={styles.spacer} />
+          <View style={styles.buttonContainer}>
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("Login")}
+            >
+              <Text style={styles.loginText}>Login</Text>
+            </Pressable>
+            <View style={styles.buttonSpacer} />
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("SignUp")}
+            >
+              <Text style={styles.signUpText}>Sign Up</Text>
+            </Pressable>
+          </View>
         </View>
-        <View style={styles.spacer} />
-        <View style={styles.buttonContainer}>
-          <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("Login")}
-          >
-            <Text style={styles.loginText}>Login</Text>
-          </Pressable>
-          <View style={styles.buttonSpacer} />
-         <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("SignUp")}
-          >
-            <Text style={styles.signUpText}>Sign Up</Text>
-          </Pressable>
-        </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
   },
   memrepriseTitle: {
     color: colors.white,
-    fontSize: 30
+    fontSize: 30,
   },
   postASongText: {
     textAlign: "center",
@@ -93,14 +95,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#44AA99",
-    color: colors.white, 
+    color: colors.white,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 5,
     width: 150,
-    height: 50
+    height: 50,
   },
   loginText: {
     textAlign: "center",

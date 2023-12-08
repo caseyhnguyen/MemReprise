@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -10,6 +10,8 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -20,78 +22,68 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 const windowWidth = Dimensions.get("window").width;
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('user@example.com'); // Pre-filled email
-  const [password, setPassword] = useState('password123'); // Pre-filled password
+  const [email, setEmail] = useState("user@example.com"); // Pre-filled email
+  const [password, setPassword] = useState("password123"); // Pre-filled password
 
   return (
-    <SafeAreaView style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
-      <View>
-        <Header title="memreprise" />
-      </View>
-      <View style={styles.postPrompt}>
-        
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.container}
+        >
+          <View>
+            <Header title="memreprise" />
+          </View>
+          <View style={styles.postPrompt}>
+            <View style={styles.title}>
+              <Text style={styles.loginText}>Log In</Text>
+              <Text style={styles.descrText}>Please sign in to continue</Text>
+            </View>
 
-        
-        <View style={styles.title}>
-          <Text style={styles.loginText}>
-            Log In
-          </Text>
-          <Text style={styles.descrText}>
-            Please sign in to continue
-          </Text>
-        </View>
+            <View style={styles.containerInput}>
+              <Text style={styles.label}>Email</Text>
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                placeholder="Enter your email"
+              />
 
-        <View style={styles.containerInput}>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            placeholder="Enter your email"
-        />
+              <Text style={styles.label}>Password</Text>
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry
+                placeholder="Enter your password"
+              />
+            </View>
 
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry
-            placeholder="Enter your password"
-        />
-        </View>
+            <View style={styles.buttonContainer}>
+              <Pressable
+                style={styles.button}
+                onPress={() => navigation.navigate("Home")}
+              >
+                <Text style={styles.loginBtnTxt}>Login</Text>
+              </Pressable>
+              <View style={styles.buttonSpacer} />
+            </View>
+            <View style={styles.spacer} />
 
-        <View style={styles.buttonContainer}>
-          <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("Home")}
-          >
-            <Text style={styles.loginBtnTxt}>Login</Text>
-          </Pressable>
-          <View style={styles.buttonSpacer} />
-          
-        </View>
-        <View style={styles.spacer} />
-
-        <View>
-          <Text style={styles.signUpText}>
-            Don't have an account?  
-            <Pressable
-                onPress={() => navigation.navigate("SignUp")}
-            >
-                <Text style={styles.linkText}> Sign Up</Text>
-            </Pressable>
-          </Text>
-        </View>
-
-        
-      </View>
-      {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+            <View>
+              <Text style={styles.signUpText}>
+                Don't have an account?
+                <Pressable onPress={() => navigation.navigate("SignUp")}>
+                  <Text style={styles.linkText}> Sign Up</Text>
+                </Pressable>
+              </Text>
+            </View>
+          </View>
+          {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -106,7 +98,6 @@ const styles = StyleSheet.create({
   },
   title: {
     alignItems: "center",
-
   },
   loginText: {
     fontWeight: "500",
@@ -118,7 +109,6 @@ const styles = StyleSheet.create({
   },
   descrText: {
     color: colors.white,
-
   },
   containerInput: {
     padding: 20,
@@ -129,7 +119,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderRadius: 15,
     marginBottom: 20,
     padding: 10,
@@ -142,8 +132,8 @@ const styles = StyleSheet.create({
     width: windowWidth - 100,
   },
   linkText: {
-    textDecorationLine: 'underline',
-    color: '#44AA99',
+    textDecorationLine: "underline",
+    color: "#44AA99",
   },
   postPrompt: {
     borderRadius: 15,
@@ -198,7 +188,7 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 14,
     color: colors.white,
-  }
+  },
 });
 
 export default LoginScreen;

@@ -10,6 +10,8 @@ import {
   View,
   Dimensions,
   TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../utils";
 import { colors } from "../assets/Themes/colors";
@@ -23,7 +25,6 @@ const windowWidth = Dimensions.get("window").width;
 
 const TracksScreen = ({ route, navigation }) => {
   const userName = route.params?.userName;
-  console.log("Username in TracksScreen:", { userName });
   const { token, getSpotifyAuth } = useSpotifyAuth();
   const { tracks, currentTrack, loading, fetchMore, clearCacheAndRefetch } =
     useSpotifyTracks(token);
@@ -101,14 +102,12 @@ const TracksScreen = ({ route, navigation }) => {
     } = currentTrack;
 
     const progressFraction = progressMs / duration;
-    navigation.navigate("Theme Question", { songData, userName });
+
     return (
       <View style={styles.currentTrackContainer}>
         <Text style={styles.currentTrackTitle}>Now Playing</Text>
         <CurrentSong
-          onPress={() =>
-            navigation.navigate("Theme Question", { songData, userName })
-          }
+          onPress={() => navigation.navigate("Theme Question", { userName })}
           index={index}
           title={songTitle}
           artists={songArtists}
@@ -155,6 +154,7 @@ const TracksScreen = ({ route, navigation }) => {
         duration={item.duration_ms || 0}
         previewUrl={item.previewUrl || ""}
         externalUrl={item.externalUrl || ""}
+        userName={userName}
       />
     );
   };
@@ -189,9 +189,6 @@ const TracksScreen = ({ route, navigation }) => {
         data={search ? searchedSongs : limitedTracks}
         renderItem={search ? renderSearchSong : renderSong}
         keyExtractor={(item, index) => item.id?.toString() || index.toString()}
-        // Removed onEndReached and onEndReachedThreshold to remove infinite scroll
-        // onEndReached={fetchMore}
-        // onEndReachedThreshold={0.5}
         ListFooterComponent={
           loading && <ActivityIndicator size="large" color={colors.white} />
         }
@@ -202,7 +199,9 @@ const TracksScreen = ({ route, navigation }) => {
   return (
     <>
       <StatusBar style="dark" />
-      <SafeAreaView style={styles.container}>{contentDisplayed}</SafeAreaView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView style={styles.container}>{contentDisplayed}</SafeAreaView>
+      </TouchableWithoutFeedback>
     </>
   );
 };

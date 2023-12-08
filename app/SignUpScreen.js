@@ -13,13 +13,51 @@ import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import Header from "../components/Header";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { supabase } from "../utils/supabaseClient";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
 const SignUpScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('user@example.com'); // Pre-filled email
-  const [password, setPassword] = useState('password123'); // Pre-filled password
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('user@example.com'); 
+  const [password, setPassword] = useState('password123'); 
+  const [confirmPassword, setConfirmPassword] = useState('password123');
+
+  const handleSignUp = async () => {
+    // Basic form validation (you can expand upon this)
+    if (!email || !password || password !== confirmPassword) {
+      console.error('Invalid input');
+      return;
+    }
+
+    // Supabase sign-up
+    const { user, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    // Check for errors
+    if (error) {
+      console.error('Error signing up:', error);
+      return;
+    }
+
+    // Save additional user data to your users table
+    const { data, insertError } = await supabase
+      .from('users') // Replace 'users' with your actual user data table name
+      .insert([
+        { id: user.id, fullName },
+      ]);
+
+    if (insertError) {
+      console.error('Error saving user data:', insertError);
+      return;
+    }
+
+    // Navigate to home or other screen on successful sign-up
+    navigation.navigate("Home");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -27,32 +65,39 @@ const SignUpScreen = ({ navigation }) => {
         <Header title="memreprise" />
       </View>
       <View style={styles.postPrompt}>
-        
         <View style={styles.spacer} />
-        
+
         <View>
-          <Text style={styles.loginText}>
-            Create Account
-          </Text>
+          <Text style={styles.loginText}>Create Account</Text>
         </View>
 
         <View style={styles.containerInput}>
-            <Text style={styles.label}>Full Name</Text>
-            <TextInput
-                style={styles.input}
-            />
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-                style={styles.input}
-            />
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-                style={styles.input}
-            />
-            <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
-                style={styles.input}
-            />
+        <TextInput
+        placeholder="Full Name"
+        value={fullName}
+        onChangeText={setFullName}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Confirm Password"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        style={styles.input}
+      />
         </View>
 
         <View style={styles.buttonContainer}>
@@ -60,27 +105,22 @@ const SignUpScreen = ({ navigation }) => {
             style={styles.button}
             onPress={() => navigation.navigate("Home")}
           >
-            <Text style={styles.loginBtnTxt}>Sign Up</Text>
+            <Text style={styles.loginBtnTxt} onPress={handleSignUp}>Sign Up</Text>
           </Pressable>
 
           <View style={styles.buttonSpacer} />
-          
         </View>
 
         <View style={styles.spacer} />
 
         <View>
           <Text style={styles.signUpText}>
-            Already have an account? {' '}
-            <Pressable
-                onPress={() => navigation.navigate("Login")}
-            >
-                <Text style={styles.linkText}>Login</Text>
+            Already have an account?{" "}
+            <Pressable onPress={() => navigation.navigate("Login")}>
+              <Text style={styles.linkText}>Login</Text>
             </Pressable>
           </Text>
         </View>
-
-        
       </View>
       {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
     </SafeAreaView>

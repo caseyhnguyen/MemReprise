@@ -63,7 +63,7 @@ const FeedScreen = ({ navigation }) => {
   const getThemeIconSource = (iconId) => {
     const themeIconMap = {
       8: images.matchaLatte.pic,
-      9: images.expresso.pic,
+      9: images.espresso.pic,
       10: images.hotChocolate.pic,
       11: images.lemonade.pic,
       // ... add other theme mappings as needed

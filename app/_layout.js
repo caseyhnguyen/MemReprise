@@ -48,6 +48,7 @@ import { PostContext } from "../utils/PostContext";
 
 // Complex Task
 import CalendarActivityScreen from "./complexTask/CalendarActivityScreen";
+import TutorialScreen from "./TutorialScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -82,6 +83,9 @@ function HomeStackScreen() {
       </HomeStack.Screen>
       <HomeStack.Screen name="SignUp" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={SignUpScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Tutorial" options={{ headerShown: false }}>
+        {(props) => <GradientWrapper {...props} Component={TutorialScreen} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Home" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={HomeScreen} />}

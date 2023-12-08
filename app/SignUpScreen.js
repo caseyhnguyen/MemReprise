@@ -43,7 +43,7 @@ const SignUpScreen = ({ navigation }) => {
 
       // Optionally navigate to home or other screen on successful sign-up
       alert('Sign up successful!');
-      navigation.navigate("Home");
+      navigation.navigate("Tutorial");
     } catch (error) {
       alert(error.message);
     }
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
 
   signUpText: {
-    fontsize: 14,
+    fontSize: 14,
     color: colors.white,
   }
 });

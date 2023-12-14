@@ -36,6 +36,8 @@ const PostExpandScreen = ({ route, navigation }) => {
     formattedTimestamp = "",
   } = route.params || {};
 
+  console.log(route.params);
+
   // Combine the artist names if available
   const artistNames = songData.artists?.join(", ") || "Unknown Artist";
 

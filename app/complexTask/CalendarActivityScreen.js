@@ -23,6 +23,7 @@ import { supabase } from "../../utils/supabaseClient";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
+const imageSize = (windowWidth - 50) / 4;
 
 const allData = [
   { id: "1", source: albums.alb1, month: "NOV", date: "2" },
@@ -72,65 +73,177 @@ const staticData = {
     { id: "18", source: albums.alb8, month: "NOV", date: "23" },
   ],
 };
+
 const CalendarActivityScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedValue, setSelectedValue] = useState(null);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from("posts")
-          .select("song_data")
-          .order("created_at", { ascending: false })
-          .limit(Object.keys(staticData.reprise).length);
-
-        if (error) {
-          throw error;
-        }
-
-        // Extract image URLs and map them to the static data structure
-        const imageUrls = data.map(
-          (post) => JSON.parse(post.song_data).imageUrl
-        );
-
-        // Merge image URLs into staticData
-        const mergedData = Object.keys(staticData).reduce((acc, key) => {
-          acc[key] = staticData[key].map((item, index) => ({
-            ...item,
-            source: imageUrls[index], // Directly assign the fetched image URL
-          }));
-          return acc;
-        }, {});
-
-        setPosts(mergedData);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setLoading(false);
-      }
+  // Mapping function for emotion icons
+  const getEmotionIconSource = (iconId) => {
+    const emotionIconMap = {
+      4: images.happyEmoji.pic,
+      5: images.superHappyEmoji.pic,
+      6: images.sadEmoji.pic,
+      7: images.superSadEmoji.pic,
     };
 
+    return emotionIconMap[iconId] || null;
+  };
+
+  // Mapping function for activity icons
+  const getActivityIconSource = (iconId) => {
+    const activityIconMap = {
+      12: images.working.pic,
+      13: images.commuting.pic,
+      14: images.eating.pic,
+      15: images.exercising.pic,
+    };
+
+    return activityIconMap[iconId] || null;
+  };
+
+  // Mapping function for theme icons
+  const getThemeIconSource = (iconId) => {
+    const themeIconMap = {
+      8: images.matchaLatte.pic,
+      9: images.espresso.pic,
+      10: images.hotChocolate.pic,
+      11: images.lemonade.pic,
+    };
+
+    return themeIconMap[iconId] || null;
+  };
+
+  const parsePosts = (fetchedPosts) => {
+    return fetchedPosts.map((post) => {
+      let formattedTimestamp = "Unknown Time";
+
+      if (post.created_at) {
+        const createdAt = new Date(post.created_at);
+        const timeOptions = {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        };
+        const dateOptions = {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        };
+
+        const formattedTime = new Intl.DateTimeFormat(
+          "en-US",
+          timeOptions
+        ).format(createdAt);
+        const formattedDate = new Intl.DateTimeFormat(
+          "en-US",
+          dateOptions
+        ).format(createdAt);
+
+        formattedTimestamp = `${formattedTime} • ${formattedDate}`;
+      }
+
+      // Parsing song_data to extract necessary details
+      let songDataParsed = {};
+      if (post.song_data) {
+        try {
+          songDataParsed = JSON.parse(post.song_data);
+        } catch (error) {
+          console.error("Error parsing song_data:", error);
+        }
+      }
+
+      return {
+        ...post,
+        userName: post.userName || "Unknown User",
+        emotionIconSrc: getEmotionIconSource(post.emotion_icon_id),
+        activityIconSrc: getActivityIconSource(post.activity_icon_id),
+        themeIconSrc: getThemeIconSource(post.theme_icon_id),
+        songData: songDataParsed,
+        source: songDataParsed.imageUrl || "",
+        caption: post.caption || "",
+        themeIconLabel: post.theme_icon_text || "",
+        emotionIconLabel: post.emotion_icon_text || "",
+        activityIconLabel: post.activity_icon_text || "",
+        formattedTimestamp,
+      };
+    });
+  };
+
+  useEffect(() => {
     fetchPosts();
   }, []);
 
+  const fetchPosts = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("posts")
+        .select("*") // Select all fields from posts
+        .order("created_at", { ascending: false })
+        .limit(Object.keys(staticData.reprise).length);
+
+      if (error) {
+        throw error;
+      }
+
+      // Process each post using parsePosts function
+      const processedPosts = parsePosts(data);
+
+      // Merge image URLs into staticData
+      const mergedData = Object.keys(staticData).reduce((acc, key) => {
+        acc[key] = staticData[key].map((item, index) => {
+          const processedItem = processedPosts[index] || {};
+          return {
+            ...item,
+            ...processedItem,
+            source: processedItem.source || item.source, // Ensure image source is correctly assigned
+          };
+        });
+        return acc;
+      }, {});
+
+      // console.log("Merged Data:", mergedData);
+
+      setPosts(mergedData);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const renderItem = ({ item }) => {
+    const onPress = () => {
+      navigation.navigate("PostExpandScreen", {
+        userName: item.userName,
+        formattedTimestamp: item.formattedTimestamp,
+        songData: item.songData,
+        caption: item.caption,
+        themeIconSrc: item.themeIconSrc,
+        emotionIconSrc: item.emotionIconSrc,
+        activityIconSrc: item.activityIconSrc,
+        themeIconLabel: item.themeIconLabel,
+        emotionIconLabel: item.emotionIconLabel,
+        activityIconLabel: item.activityIconLabel,
+      });
+    };
+
     console.log("Item in renderItem:", item);
     const imageSource =
       typeof item.source === "string" ? { uri: item.source } : item.source;
 
-    console.log("imageSource in renderItem:", { imageSource });
+    // console.log("imageSource in renderItem:", { imageSource });
 
     return (
-      <View>
-        <Image source={imageSource} style={styles.image} />
+      <Pressable onPress={onPress} style={styles.itemContainer}>
+        <Image source={{ uri: item.source }} style={styles.image} />
         <View style={styles.textBox}>
           <Text style={styles.monthText}>{item.month}</Text>
           <Text style={styles.dateText}>{item.date}</Text>
         </View>
-      </View>
+      </Pressable>
     );
   };
 
@@ -176,8 +289,6 @@ const CalendarActivityScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-const imageSize = (windowWidth - 50) / 4;
 
 const styles = StyleSheet.create({
   container: {

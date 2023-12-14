@@ -227,7 +227,7 @@ function FeedTabsScreen() {
             backgroundColor: "#05BCF3",
           },
           tabBarIndicatorStyle: {
-            backgroundColor: "#FFD966CC"
+            backgroundColor: "#FFD966CC",
           },
         }}
       >
@@ -261,6 +261,9 @@ function ProfileStackScreen() {
       </ProfileStack.Screen>
       <ProfileStack.Screen name="Profile">
         {(props) => <GradientWrapper {...props} Component={ProfileScreen} />}
+      </ProfileStack.Screen>
+      <ProfileStack.Screen name="PostExpandScreen">
+        {(props) => <GradientWrapper {...props} Component={PostExpandScreen} />}
       </ProfileStack.Screen>
     </ProfileStack.Navigator>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -17,6 +17,7 @@ import { styles as defaultStyles } from "../assets/Themes/default_style";
 import RNPickerSelect from "react-native-picker-select";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
 import { supabase } from "../utils/supabaseClient";
+import { PostContext } from "../utils/PostContext";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -26,6 +27,7 @@ const totalGapSize = (itemPerRow - 1) * gap;
 const rowWidth = windowWidth * 0.8 + totalGapSize;
 
 const PostSummaryScreen = ({ route, navigation }) => {
+  const { postMade, setPostMade } = useContext(PostContext);
   const [caption, setCaption] = React.useState("");
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -41,9 +43,9 @@ const PostSummaryScreen = ({ route, navigation }) => {
 
   const userName = route.params?.userName;
 
-  console.log("Username in PostSummaryScreen:", { userName });
+  // console.log("Username in PostSummaryScreen:", { userName });
 
-  console.log(userName);
+  // console.log(userName);
   const postData = {
     song_data: JSON.stringify({
       index: songData.index,
@@ -74,6 +76,10 @@ const PostSummaryScreen = ({ route, navigation }) => {
     songData && songData.artists
       ? songData.artists.join(", ")
       : "Unknown Artist";
+
+  useEffect(() => {
+    // console.log(`Post made: ${postMade}`);
+  }, [postMade]); // runs when postMade changes
 
   const savePostToSupabase = async () => {
     try {
@@ -159,7 +165,8 @@ const PostSummaryScreen = ({ route, navigation }) => {
             <Pressable
               style={styles.postButton}
               onPress={async () => {
-                // Make sure the function is marked as async
+                setPostMade(true); // update postMade to true
+                // console.log("Post made in summary", { postMade });
                 try {
                   await savePostToSupabase(); // Use await inside the async function
                   navigation.navigate("FeedTabs", {

@@ -23,15 +23,15 @@ const App = () => {
   }, []);
 
   return (
-    <ThemeProvider>
-      <PostProvider>
+    <PostProvider>
+      <ThemeProvider>
         <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
           <NavigationContainer>
             <AppLayout />
           </NavigationContainer>
         </DarkModeContext.Provider>
-      </PostProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </PostProvider>
   );
 };
 

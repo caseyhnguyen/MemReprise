@@ -30,7 +30,7 @@ const EmotionQScreen = ({ route, navigation }) => {
       ? songData.artists.join(", ")
       : "Unknown Artist";
   // console.log(songData);
-  console.log("Username in EmotionQScreen:", { userName });
+  // console.log("Username in EmotionQScreen:", { userName });
 
   return (
     <SafeAreaView style={defaultStyles.container}>

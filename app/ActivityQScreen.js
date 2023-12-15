@@ -36,7 +36,7 @@ const ActivityQScreen = ({ route, navigation }) => {
       ? songData.artists.join(", ")
       : "Unknown Artist";
   // console.log(songData);
-  console.log("Username in ActivityQScreen:", { userName });
+  // console.log("Username in ActivityQScreen:", { userName });
 
   return (
     <SafeAreaView style={defaultStyles.container}>

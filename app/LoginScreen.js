@@ -67,16 +67,17 @@ const LoginScreen = ({ navigation }) => {
               >
                 <Text style={styles.loginBtnTxt}>Login</Text>
               </Pressable>
-              <View style={styles.buttonSpacer} />
+              {/* <View style={styles.buttonSpacer} /> */}
             </View>
-            <View style={styles.spacer} />
+            {/* <View style={styles.spacer} /> */}
 
-            <View>
-              <Text style={styles.signUpText}>
-                Don't have an account?
-                <Pressable onPress={() => navigation.navigate("SignUp")}>
-                  <Text style={styles.linkText}> Sign Up</Text>
-                </Pressable>
+            <View style={styles.bottomTextContainer}>
+              <Text style={styles.signUpText}>Don't have an account?</Text>
+              <Text
+                style={styles.linkText}
+                onPress={() => navigation.navigate("SignUp")}
+              >
+                Sign Up
               </Text>
             </View>
           </View>
@@ -106,9 +107,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: -30,
+    alignSelf: "center",
   },
   descrText: {
     color: colors.white,
+    marginTop: "2.5%",
+    alignSelf: "center",
   },
   containerInput: {
     padding: 20,
@@ -131,9 +135,15 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: windowWidth - 100,
   },
+  bottomTextContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   linkText: {
     textDecorationLine: "underline",
     color: "#44AA99",
+    marginLeft: 5,
   },
   postPrompt: {
     borderRadius: 15,
@@ -158,14 +168,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     width: "100%",
+    marginBottom: "5%",
   },
   button: {
     borderRadius: 15,
     padding: 7,
     flex: 1,
     alignItems: "center",
+    alignSelf: "center",
     justifyContent: "center",
     backgroundColor: "#44AA99",
     shadowColor: colors.darkGray,

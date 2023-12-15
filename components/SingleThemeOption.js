@@ -1,4 +1,3 @@
-// SelectionOption.js
 import React from "react";
 import {
   View,

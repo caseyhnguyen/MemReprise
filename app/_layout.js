@@ -279,9 +279,11 @@ const AppLayout = () => {
         tabBarActiveTintColor: colors.verdigrisGreen,
         tabBarInactiveTintColor: colors.teal,
         tabBarLabelStyle: { fontSize: 14, padding: 5 },
+        backgroundColor: colors.offWhite,
         tabBarStyle: {
           display: "flex",
-          paddingTop: 30,
+          paddingTop: "7%",
+          height: "8.5%",
         },
         tabBarIconStyle: { paddingBottom: 10 },
       }}

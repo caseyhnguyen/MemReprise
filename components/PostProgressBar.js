@@ -1,4 +1,3 @@
-// ProgressBar.js
 import React from "react";
 import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,7 +11,7 @@ const PostProgressBar = ({ progressFraction, label }) => {
     <View style={styles.progressWrapper}>
       <ProgressBar
         progress={progressFraction}
-        width={windowWidth - 40} // Adjust padding as needed
+        width={windowWidth - 40}
         height={7}
         borderRadius={3.5}
         color={colors.verdigrisGreen}
@@ -28,15 +27,15 @@ const PostProgressBar = ({ progressFraction, label }) => {
 
 const styles = StyleSheet.create({
   progressWrapper: {
-    paddingTop: 20, // Add padding to ensure it's not hidden by any other UI
-    width: windowWidth - 40, // Set the width based on the window width
+    paddingTop: 20,
+    width: windowWidth - 40,
     alignItems: "center",
   },
   label: {
-    marginTop: 4, // Space between the progress bar and text
-    color: colors.white, // Text color
+    marginTop: 4,
+    color: colors.white,
     fontWeight: "bold",
-    fontSize: 16, // Text size
+    fontSize: 16,
   },
 });
 

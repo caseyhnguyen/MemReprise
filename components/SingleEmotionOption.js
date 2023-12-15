@@ -1,4 +1,3 @@
-// SelectionOption.js
 import React from "react";
 import {
   View,
@@ -49,11 +48,9 @@ const SingleEmotionOption = ({
 const styles = StyleSheet.create({
   outerContainer: {
     backgroundColor: colors.offWhite50,
-    // opacity: 0.75,
     borderRadius: 10,
     paddingHorizontal: 5,
     paddingVertical: 10,
-    // marginHorizontal: 5,
     marginBottom: 10, // Spacing between each song item
     width: windowWidth * 0.4,
     height: windowWidth * 0.4,

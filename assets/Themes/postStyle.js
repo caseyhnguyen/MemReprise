@@ -4,7 +4,6 @@ import { colors } from "./colors";
 export const postStyles = (dimensions) =>
   StyleSheet.create({
     outerContainer: {
-      // alignItems: "center",
       justifyContent: "flex-start",
       flexDirection: "column",
       backgroundColor: colors.offWhite50,
@@ -21,9 +20,7 @@ export const postStyles = (dimensions) =>
       width: "95%",
       height: "90%",
     },
-
     captionContainer: {
-      // width: "%",
       paddingLeft: 30,
       paddingBottom: 50,
     },
@@ -48,7 +45,6 @@ export const postStyles = (dimensions) =>
       justifyContent: "space-between",
       flexDirection: "row",
       width: "90%",
-      // height: "90%",
       gap: "5%",
       shadowColor: colors.darkGray,
       shadowOffset: { width: 4, height: 4 },
@@ -56,18 +52,18 @@ export const postStyles = (dimensions) =>
       shadowRadius: 4,
     },
     albumCover: {
-      width: dimensions.windowWidth * 0.5, // Adjust size as needed
-      height: dimensions.windowWidth * 0.5, // Adjust size as needed
+      width: dimensions.windowWidth * 0.5,
+      height: dimensions.windowWidth * 0.5,
       marginBottom: 10,
     },
     title: {
       fontSize: 18,
       fontWeight: "bold",
-      color: "black", // Adjust color as needed
+      color: colors.black,
     },
     artist: {
       fontSize: 12,
-      color: "black", // Adjust color as needed
+      color: colors.black,
     },
 
     caption: {
@@ -77,11 +73,6 @@ export const postStyles = (dimensions) =>
       paddingTop: "5%",
       paddingRight: "5%",
       paddingBottom: "5%",
-      // marginTop: 20,
-      // marginRight: 30,
-
-      // marginBottom: 20,
-      // width: "75%",
     },
 
     songInfo: {
@@ -118,13 +109,6 @@ export const postStyles = (dimensions) =>
       alignItems: "center",
       flexDirection: "column",
     },
-    // buttonRow: {
-    //   alignItems: "center",
-    //   flexDirection: "row",
-    //   justifyContent: "space-between",
-    //   width: "96%",
-    //   paddingLeft: 20,
-    // },
     subHeader: {
       fontSize: 20,
       fontWeight: "bold",
@@ -147,18 +131,15 @@ export const postStyles = (dimensions) =>
       paddingTop: "10.5%",
     },
     postButton: {
-      // Adjust the post button styles
-      backgroundColor: colors.offWhite75, // Replace with your button color
+      backgroundColor: colors.offWhite75,
       borderRadius: 5,
       justifyContent: "center",
       alignItems: "center",
-      width: "20%", // Adjust the width as needed
-      // paddingVertical: 12, // Adjust the padding as needed
+      width: "20%",
       marginTop: 10,
       marginBottom: 10,
     },
     postButtonText: {
-      // Adjust the post button text styles
       color: colors.darkGray,
       fontSize: 16,
       fontWeight: "bold",

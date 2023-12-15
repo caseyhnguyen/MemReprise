@@ -80,7 +80,7 @@ const useSpotifyTracks = (token) => {
     fetchCurrentTrack();
 
     // Fetch recent tracks immediately
-    // debouncedFetchTracks(0);
+    debouncedFetchTracks(0);
 
     // Set an interval to fetch the current track after initial fetch
     intervalToClear.current = setInterval(fetchCurrentTrack, 5000); // Fetch every 5 seconds

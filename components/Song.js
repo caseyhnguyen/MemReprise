@@ -31,7 +31,7 @@ const Song = ({
   const navigation = useNavigation();
 
   const onSongPress = async () => {
-    // Define songData for Supabase including the songId
+    // Define songData for Supabase
     const songData = {
       index,
       title,
@@ -102,18 +102,12 @@ const Song = ({
 const styles = StyleSheet.create({
   outerContainer: {
     backgroundColor: colors.offWhite50,
-    // opacity: 0.75,
     borderRadius: 5,
     paddingHorizontal: 5,
     paddingVertical: 10,
-    // marginHorizontal: 5,
     marginBottom: 10,
     width: windowWidth * 0.95,
     height: windowWidth * 0.2,
-    // shadowColor: colors.darkGray,
-    // shadowOffset: { width: 4, height: 4 },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
   },
   container: {
     flexDirection: "row",
@@ -149,11 +143,6 @@ const styles = StyleSheet.create({
     height: 65,
     marginRight: 15,
   },
-  // playButton: {
-  //   marginRight: 3,
-  //   color: colors.spotify,
-  //   alignItems: "center",
-  // },
   albumName: {
     color: colors.darkGray,
     flex: 3,
@@ -169,8 +158,6 @@ const styles = StyleSheet.create({
   playedAtText: {
     color: colors.darkGray,
     fontSize: 14,
-    // paddingLeft: 5,
-    // marginRight: 10,
   },
   artistText: {
     color: colors.black,

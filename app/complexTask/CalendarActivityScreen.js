@@ -10,6 +10,8 @@ import {
   Dimensions,
   FlatList,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 // import images from "../../assets/Images/images";
 import images from "../../assets/Images/images";
@@ -243,7 +245,7 @@ const CalendarActivityScreen = ({ navigation }) => {
       });
     };
 
-    console.log("Item in renderItem:", item);
+    // console.log("Item in renderItem:", item);
     const imageSource =
       typeof item.source === "string" ? { uri: item.source } : item.source;
 
@@ -283,7 +285,7 @@ const CalendarActivityScreen = ({ navigation }) => {
   // Use the filtered posts as the data source for the FlatList
   const dataSource = posts;
 
-  console.log("DataSource for FlatList:", dataSource);
+  // console.log("DataSource for FlatList:", dataSource);
 
   // Conditional rendering based on the number of results
   const renderFlatList = () => {
@@ -301,62 +303,71 @@ const CalendarActivityScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Image source={images.caroline.pic} style={styles.profilePic} />
-        <View>
-          <Text style={styles.title}>Caroline Tran</Text>
-          <Text style={styles.username}>@cntran</Text>
-        </View>
-        <View style={styles.dropDown}>
-          <RNPickerSelect
-            onValueChange={onMainSelectionChange}
-            items={[
-              { label: "Time", value: "time" },
-              { label: "Activity", value: "activity" },
-              { label: "Feeling", value: "feeling" },
-            ]}
-            style={pickerSelectStyles}
-            placeholder={{ label: "Reprise", value: "reprise" }}
-          />
-          {/* Time Number Input and Unit Selection */}
-          {selectedValue === "time" && (
-            <>
-              <TextInput
-                style={styles.numberInput}
-                keyboardType="numeric"
-                onChangeText={setTimeNumber}
-                value={timeNumber}
-                placeholder="Enter number"
-              />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Image source={images.caroline.pic} style={styles.profilePic} />
+          <View>
+            <Text style={styles.title}>Caroline Tran</Text>
+            <Text style={styles.username}>@cntran</Text>
+          </View>
+          <View style={styles.dropDown}>
+            <RNPickerSelect
+              onValueChange={onMainSelectionChange}
+              items={[
+                { label: "Time", value: "time" },
+                { label: "Activity", value: "activity" },
+                { label: "Feeling", value: "feeling" },
+              ]}
+              style={pickerSelectStyles}
+              placeholder={{ label: "Reprise", value: "reprise" }}
+            />
+            {/* Time Number Input and Unit Selection */}
+            {selectedValue === "time" && (
+              <>
+                <TextInput
+                  style={styles.numberInput}
+                  keyboardType="numeric"
+                  onChangeText={setTimeNumber}
+                  value={timeNumber}
+                  placeholder="Enter number"
+                />
+                <RNPickerSelect
+                  onValueChange={(value) => setSelectedFilter(value)}
+                  items={filterOptions}
+                  style={pickerSelectStyles}
+                  placeholder={{ label: "Select unit", value: dataSource }}
+                />
+              </>
+            )}
+
+            {/* Secondary Dropdown for Activity or Feeling */}
+            {(selectedValue === "activity" || selectedValue === "feeling") && (
               <RNPickerSelect
                 onValueChange={(value) => setSelectedFilter(value)}
                 items={filterOptions}
                 style={pickerSelectStyles}
-                placeholder={{ label: "Select unit", value: dataSource }}
+                placeholder={{ label: "Select", value: "reprise" }}
               />
-            </>
-          )}
-
-          {/* Secondary Dropdown for Activity or Feeling */}
-          {(selectedValue === "activity" || selectedValue === "feeling") && (
-            <RNPickerSelect
-              onValueChange={(value) => setSelectedFilter(value)}
-              items={filterOptions}
-              style={pickerSelectStyles}
-              placeholder={{ label: "Select", value: "reprise" }}
-            />
-          )}
+            )}
+          </View>
         </View>
-      </View>
 
-      <View style={styles.monthContainer}>
+        {/* <View style={styles.monthContainer}>
         <Text style={styles.month}>DECEMBER</Text>
       </View>
 
       <View style={styles.spacer} />
       <View style={styles.containerCalendar}>{renderFlatList()}</View>
-    </SafeAreaView>
+    </SafeAreaView> */}
+
+        <View style={styles.monthContainer}>
+          <Text style={styles.month}>DECEMBER</Text>
+        </View>
+
+        <View style={styles.containerCalendar}>{renderFlatList()}</View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -398,13 +409,26 @@ const styles = StyleSheet.create({
   spacer: {
     height: 200,
   },
+  // monthContainer: {
+  //   position: "absolute",
+  //   top: "29%",
+  //   width: "100%",
+  //   alignItems: "flex-start",
+  //   marginHorizontal: "10%",
+  //   paddingBottom: "5%",
+  //   zIndex: 1,
+  //   shadowColor: colors.darkGray,
+  //   shadowOffset: { width: 4, height: 4 },
+  //   shadowOpacity: 0.25,
+  //   shadowRadius: 4,
+  // },
   monthContainer: {
-    position: "absolute",
-    top: "29%",
+    marginTop: "45%",
+    marginLeft: "15%",
     width: "100%",
     alignItems: "flex-start",
     marginHorizontal: "10%",
-    paddingBottom: "5%",
+    paddingBottom: "2.5%",
     zIndex: 1,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 4, height: 4 },

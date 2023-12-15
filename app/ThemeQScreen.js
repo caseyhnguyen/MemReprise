@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 20,
     width: "60%",
+    marginTop: "5%",
   },
   selectionRow: {
     justifyContent: "center",

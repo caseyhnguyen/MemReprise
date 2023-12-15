@@ -47,7 +47,7 @@ export const discoverStyles = StyleSheet.create({
   activityNumber: {
     fontSize: 50,
     fontWeight: "bold",
-    color: colors.primary, // Adjust with your primary color
+    color: colors.primary,
     marginRight: "3%",
     shadowColor: colors.darkGray,
     shadowOffset: { width: 4, height: 4 },

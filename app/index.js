@@ -10,14 +10,14 @@ import { ThemeProvider } from "../utils/ThemeContext";
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Prevent the splash screen from hiding before your app is ready
+  // Prevent the splash screen from hiding before app is ready
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
 
     // Simulate a loading scenario
     const timer = setTimeout(async () => {
       await SplashScreen.hideAsync();
-    }, 2000); // Adjust the timing as needed
+    }, 2000);
 
     // Clean up the timer when the effect is re-called or component is unmounted
     return () => clearTimeout(timer);

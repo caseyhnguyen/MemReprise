@@ -25,7 +25,7 @@ import TracksScreen from "./TracksScreen";
 import ProfileScreen from "./ProfileScreen";
 import ThemeQScreen from "./ThemeQScreen";
 import PostSummaryScreen from "./PostSummaryScreen";
-import GradientBackground from "../assets/Themes/background"; // Import the GradientBackground component
+import GradientBackground from "../assets/Themes/background";
 import EmotionQScreen from "./EmotionQScreen";
 import ActivityQScreen from "./ActivityQScreen";
 

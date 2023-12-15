@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   SafeAreaView,
   View,
@@ -20,64 +20,54 @@ import Header from "../../components/Header";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import RNPickerSelect from "react-native-picker-select";
 import { supabase } from "../../utils/supabaseClient";
+import { formatCurrentTrack } from "../../utils/apiOptions";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 const imageSize = (windowWidth - 50) / 4;
 
-const allData = [
-  { id: "1", source: albums.alb1, month: "NOV", date: "2" },
-  { id: "2", source: albums.alb2, month: "NOV", date: "3" },
-  { id: "3", source: albums.alb3, month: "NOV", date: "5" },
-  { id: "4", source: albums.alb1, month: "NOV", date: "6" },
-  { id: "5", source: albums.alb6, month: "NOV", date: "7" },
-  { id: "6", source: albums.alb10, month: "NOV", date: "8" },
-  { id: "7", source: albums.alb5, month: "NOV", date: "9" },
-  { id: "8", source: albums.alb7, month: "NOV", date: "11" },
-  { id: "9", source: albums.alb8, month: "NOV", date: "12" },
-  { id: "10", source: albums.alb1, month: "NOV", date: "14" },
-  { id: "11", source: albums.alb3, month: "NOV", date: "15" },
-  { id: "12", source: albums.alb6, month: "NOV", date: "16" },
-  { id: "13", source: albums.alb1, month: "NOV", date: "18" },
-  { id: "14", source: albums.alb6, month: "NOV", date: "19" },
-  { id: "15", source: albums.alb5, month: "NOV", date: "20" },
-  { id: "16", source: albums.alb3, month: "NOV", date: "21" },
-  { id: "17", source: albums.alb10, month: "NOV", date: "22" },
-  { id: "18", source: albums.alb8, month: "NOV", date: "23" },
-];
-const staticData = {
-  reprise: allData,
-  activity: [
-    { id: "1", source: albums.alb1, month: "NOV", date: "2" },
-    { id: "2", source: albums.alb2, month: "NOV", date: "3" },
-    { id: "4", source: albums.alb1, month: "NOV", date: "6" },
-    { id: "5", source: albums.alb6, month: "NOV", date: "7" },
-    { id: "6", source: albums.alb10, month: "NOV", date: "8" },
-    { id: "7", source: albums.alb5, month: "NOV", date: "9" },
-  ],
-  time: [
-    { id: "8", source: albums.alb7, month: "NOV", date: "11" },
-    { id: "9", source: albums.alb8, month: "NOV", date: "12" },
-    { id: "10", source: albums.alb1, month: "NOV", date: "14" },
-    { id: "11", source: albums.alb3, month: "NOV", date: "15" },
-    { id: "12", source: albums.alb6, month: "NOV", date: "16" },
-    { id: "13", source: albums.alb1, month: "NOV", date: "18" },
-    { id: "14", source: albums.alb6, month: "NOV", date: "19" },
-    { id: "15", source: albums.alb5, month: "NOV", date: "20" },
-    { id: "16", source: albums.alb3, month: "NOV", date: "21" },
-  ],
-  feeling: [
-    { id: "14", source: albums.alb6, month: "NOV", date: "19" },
-    { id: "16", source: albums.alb3, month: "NOV", date: "21" },
-    { id: "17", source: albums.alb10, month: "NOV", date: "22" },
-    { id: "18", source: albums.alb8, month: "NOV", date: "23" },
-  ],
-};
-
 const CalendarActivityScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedValue, setSelectedValue] = useState(null);
+  const [filterOptions, setFilterOptions] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [timeNumber, setTimeNumber] = useState("");
+
+  const onMainSelectionChange = (value) => {
+    setSelectedValue(value);
+    setSelectedFilter(null);
+
+    switch (value) {
+      case "time":
+        setFilterOptions([
+          { label: "Days", value: "days" },
+          { label: "Weeks", value: "weeks" },
+          { label: "Months", value: "months" },
+          { label: "Years", value: "years" },
+        ]);
+        break;
+      case "activity":
+        setFilterOptions([
+          { label: "Exercising", value: "exercising" },
+          { label: "Eating", value: "eating" },
+          { label: "Working", value: "working" },
+          { label: "Commuting", value: "commuting" },
+        ]);
+        break;
+      case "feeling":
+        setFilterOptions([
+          { label: "Super Happy", value: "super happy" },
+          { label: "Happy", value: "happy" },
+          { label: "Super Sad", value: "super sad" },
+          { label: "Sad", value: "sad" },
+        ]);
+        break;
+      default:
+        setFilterOptions([]);
+        setTimeNumber("");
+    }
+  };
 
   // Mapping function for emotion icons
   const getEmotionIconSource = (iconId) => {
@@ -172,47 +162,61 @@ const CalendarActivityScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    fetchPosts();
+    filterPosts();
   }, []);
 
-  const fetchPosts = async () => {
+  const filterPosts = useCallback(async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("posts")
-        .select("*") // Select all fields from posts
-        .order("created_at", { ascending: false })
-        .limit(Object.keys(staticData.reprise).length);
 
-      if (error) {
-        throw error;
+      let query = supabase
+        .from("posts")
+        .select("*")
+        .order("created_at", { ascending: false }); // Ensure default ordering is from most recent to oldest
+
+      // Apply filters only if both filters are selected
+      if (selectedValue && selectedFilter) {
+        query = query.order("created_at", { ascending: false });
+
+        // Time filtering logic
+        if (selectedValue === "time" && timeNumber) {
+          const unitToMs = {
+            days: 86400000,
+            weeks: 604800000,
+            months: 2629800000,
+            years: 31557600000,
+          };
+          const timeAgo = Date.now() - timeNumber * unitToMs[selectedFilter];
+          query = query.gte("created_at", new Date(timeAgo).toISOString());
+        }
+
+        // Activity and Feeling filtering logic
+        if (selectedValue === "activity" || selectedValue === "feeling") {
+          const filterColumn =
+            selectedValue === "activity"
+              ? "activity_icon_text"
+              : "emotion_icon_text";
+          query = query.ilike(filterColumn, `%${selectedFilter}%`);
+        }
       }
 
-      // Process each post using parsePosts function
-      const processedPosts = parsePosts(data);
+      const { data, error } = await query;
 
-      // Merge image URLs into staticData
-      const mergedData = Object.keys(staticData).reduce((acc, key) => {
-        acc[key] = staticData[key].map((item, index) => {
-          const processedItem = processedPosts[index] || {};
-          return {
-            ...item,
-            ...processedItem,
-            source: processedItem.source || item.source, // Ensure image source is correctly assigned
-          };
-        });
-        return acc;
-      }, {});
+      if (error) throw error;
 
-      // console.log("Merged Data:", mergedData);
+      let processedPosts = parsePosts(data || []).filter((post) => post.source);
 
-      setPosts(mergedData);
+      setPosts(processedPosts);
     } catch (error) {
-      console.error("Error fetching posts:", error);
+      console.error("Error filtering posts:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedValue, selectedFilter, timeNumber]);
+
+  useEffect(() => {
+    filterPosts();
+  }, [filterPosts]);
 
   const renderItem = ({ item }) => {
     const onPress = () => {
@@ -236,20 +240,56 @@ const CalendarActivityScreen = ({ navigation }) => {
 
     // console.log("imageSource in renderItem:", { imageSource });
 
+    // Extract and format the month and date
+    let month = "";
+    let date = "";
+    if (item.formattedTimestamp && item.formattedTimestamp !== "Unknown Time") {
+      // Split the timestamp into time and date parts
+      const parts = item.formattedTimestamp.split(" • ");
+      if (parts.length === 2) {
+        // Reformat the date from 'MM/DD/YY' to 'YYYY-MM-DD'
+        const dateParts = parts[1].split("/");
+        const reformattedDate = `20${dateParts[2]}-${dateParts[0]}-${dateParts[1]}`;
+
+        // Parse the reformatted date
+        const createdAt = new Date(reformattedDate);
+        month = createdAt
+          .toLocaleString("en-US", { month: "short" })
+          .toUpperCase();
+        date = createdAt.getDate().toString();
+      }
+    }
+
     return (
-      <Pressable onPress={onPress} style={styles.itemContainer}>
+      <Pressable onPress={onPress}>
         <Image source={{ uri: item.source }} style={styles.image} />
         <View style={styles.textBox}>
-          <Text style={styles.monthText}>{item.month}</Text>
-          <Text style={styles.dateText}>{item.date}</Text>
+          <Text style={styles.monthText}>{month}</Text>
+          <Text style={styles.dateText}>{date}</Text>
         </View>
       </Pressable>
     );
   };
 
-  const dataSource = selectedValue ? posts[selectedValue] : posts["reprise"];
+  // Use the filtered posts as the data source for the FlatList
+  const dataSource = posts;
 
   console.log("DataSource for FlatList:", dataSource);
+
+  // Conditional rendering based on the number of results
+  const renderFlatList = () => {
+    if (dataSource && dataSource.length > 0) {
+      return (
+        <FlatList
+          data={dataSource}
+          numColumns={4}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
+        />
+      );
+    }
+    return null; // Render nothing if there are no results
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -257,11 +297,11 @@ const CalendarActivityScreen = ({ navigation }) => {
         <Image source={images.caroline.pic} style={styles.profilePic} />
         <View>
           <Text style={styles.title}>Caroline Tran</Text>
-          <Text style={styles.username}>@ctran</Text>
+          <Text style={styles.username}>@cntran</Text>
         </View>
         <View style={styles.dropDown}>
           <RNPickerSelect
-            onValueChange={(value) => setSelectedValue(value)}
+            onValueChange={onMainSelectionChange}
             items={[
               { label: "Time", value: "time" },
               { label: "Activity", value: "activity" },
@@ -270,22 +310,43 @@ const CalendarActivityScreen = ({ navigation }) => {
             style={pickerSelectStyles}
             placeholder={{ label: "Reprise", value: "reprise" }}
           />
+          {/* Time Number Input and Unit Selection */}
+          {selectedValue === "time" && (
+            <>
+              <TextInput
+                style={styles.numberInput}
+                keyboardType="numeric"
+                onChangeText={setTimeNumber}
+                value={timeNumber}
+                placeholder="Enter number"
+              />
+              <RNPickerSelect
+                onValueChange={(value) => setSelectedFilter(value)}
+                items={filterOptions}
+                style={pickerSelectStyles}
+                placeholder={{ label: "Select unit", value: dataSource }}
+              />
+            </>
+          )}
+
+          {/* Secondary Dropdown for Activity or Feeling */}
+          {(selectedValue === "activity" || selectedValue === "feeling") && (
+            <RNPickerSelect
+              onValueChange={(value) => setSelectedFilter(value)}
+              items={filterOptions}
+              style={pickerSelectStyles}
+              placeholder={{ label: "Select", value: "reprise" }}
+            />
+          )}
         </View>
       </View>
 
       <View style={styles.monthContainer}>
-        <Text style={styles.month}>NOVEMBER</Text>
+        <Text style={styles.month}>DECEMBER</Text>
       </View>
 
       <View style={styles.spacer} />
-      <View style={styles.containerCalendar}>
-        <FlatList
-          data={dataSource}
-          numColumns={4}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-        />
-      </View>
+      <View style={styles.containerCalendar}>{renderFlatList()}</View>
     </SafeAreaView>
   );
 };
@@ -377,7 +438,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   dropDown: {
-    paddingLeft: 30,
+    // width: windowWidth * 0.3,
+    marginHorizontal: "5%",
+  },
+  numberInput: {
+    fontSize: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: colors.offWhite75,
+    borderRadius: 4,
+    color: colors.black,
+    backgroundColor: colors.offWhite75,
+    textAlign: "center",
+    margin: windowWidth * 0.005,
+    width: windowWidth * 0.3,
+    fontWeight: "bold",
+  },
+  timeFilterContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
@@ -391,14 +472,14 @@ const pickerSelectStyles = {
     borderRadius: 4,
     color: colors.black,
     backgroundColor: colors.offWhite75,
+    textAlign: "center",
+    margin: windowWidth * 0.005,
+    width: windowWidth * 0.3,
+    fontWeight: "bold",
   },
   placeholder: {
     color: colors.darkGray,
-    fontWeight: "bold",
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    // fontWeight: "bold",
   },
   inputAndroid: {
     fontSize: 16,
@@ -409,6 +490,10 @@ const pickerSelectStyles = {
     borderRadius: 4,
     color: colors.black,
     backgroundColor: colors.offWhite75,
+    textAlign: "center",
+    margin: windowWidth * 0.01,
+    width: windowWidth * 0.25,
+    fontWeight: "bold",
   },
 };
 

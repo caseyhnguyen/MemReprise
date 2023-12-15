@@ -18,8 +18,8 @@ const windowWidth = Dimensions.get("window").width;
 
 const FeelingScreen = ({ route, navigation }) => {
   const { token, getSpotifyAuth } = useSpotifyAuth();
-  // const navigation = useNavigation();
-  const handlePress = (activityTitle) => {
+
+  const handlePress = async (activityTitle) => {
     let url =
       "https://open.spotify.com/playlist/6mU2pFNqVKKU46tZpai50x?si=d76059e306a14255";
 
@@ -29,10 +29,14 @@ const FeelingScreen = ({ route, navigation }) => {
     }
 
     if (!token) {
-      getSpotifyAuth(); // Authenticate if user is not authenticated
+      try {
+        await getSpotifyAuth(); // Authenticate if user is not authenticated
+        navigation.navigate("PlaylistDetails", { url }); // Navigate after authentication
+      } catch (error) {
+        console.error("Authentication failed", error);
+      }
     } else {
-      // Navigate to the external URL upon successful authentication
-      navigation.navigate("PlaylistDetails", { url });
+      navigation.navigate("PlaylistDetails", { url }); // Navigate if already authenticated
     }
   };
 

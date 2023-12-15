@@ -1,4 +1,3 @@
-// SelectionOption.js
 import React from "react";
 import {
   View,
@@ -54,11 +53,9 @@ const SingleActivityOption = ({
 const styles = StyleSheet.create({
   outerContainer: {
     backgroundColor: colors.offWhite50,
-    // opacity: 0.75,
     borderRadius: 10,
     paddingHorizontal: 5,
     paddingVertical: 10,
-    // marginHorizontal: 5,
     marginBottom: 10, // Spacing between each song item
     width: windowWidth * 0.4,
     height: windowWidth * 0.4,
@@ -67,10 +64,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: windowWidth * 0.9,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   buttonContainer: {
     width: windowWidth * 0.1,

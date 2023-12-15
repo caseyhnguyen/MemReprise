@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import AppLayout from "./_layout";
 import * as SplashScreen from "expo-splash-screen";
 import { DarkModeContext } from "../assets/Themes/DarkModeContext";
-import { SongDataProvider } from "../utils/SongDataContext";
 import { PostProvider } from "../utils/PostContext";
 import { ThemeProvider } from "../utils/ThemeContext";
 
@@ -26,13 +25,11 @@ const App = () => {
   return (
     <ThemeProvider>
       <PostProvider>
-        <SongDataProvider>
-          <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
-            <NavigationContainer>
-              <AppLayout />
-            </NavigationContainer>
-          </DarkModeContext.Provider>
-        </SongDataProvider>
+        <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+          <NavigationContainer>
+            <AppLayout />
+          </NavigationContainer>
+        </DarkModeContext.Provider>
       </PostProvider>
     </ThemeProvider>
   );

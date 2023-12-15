@@ -34,11 +34,9 @@ const Header = ({ title }) => {
 
 const styles = StyleSheet.create({
   header: {
-    // padding: 15,
     justifyContent: "flex-start",
     marginTop: -190,
     marginLeft: -20,
-    // alignItems: 'center',
     flexDirection: "row",
     alignItems: "center",
   },

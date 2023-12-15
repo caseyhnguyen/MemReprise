@@ -22,14 +22,14 @@ const LoginSignUpScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
         <View style={styles.postPrompt}>
-          <View style={styles.spacer} />
+          {/* <View style={styles.spacer} /> */}
           <View style={styles.titleContainer}>
             <Text style={styles.memrepriseTitle}>memreprise</Text>
             <Text style={styles.postASongText}>
               Where Music and Memories Meet
             </Text>
           </View>
-          <View style={styles.spacer} />
+          {/* <View style={styles.spacer} /> */}
           <View style={styles.buttonContainer}>
             <Pressable
               style={styles.button}
@@ -37,7 +37,7 @@ const LoginSignUpScreen = ({ navigation }) => {
             >
               <Text style={styles.loginText}>Login</Text>
             </Pressable>
-            <View style={styles.buttonSpacer} />
+            {/* <View style={styles.buttonSpacer} /> */}
             <Pressable
               style={styles.button}
               onPress={() => navigation.navigate("SignUp")}
@@ -61,15 +61,20 @@ const styles = StyleSheet.create({
   postPrompt: {
     borderRadius: 15,
     alignItems: "center",
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    // justifyContent: "space-around",
+    // shadowColor: colors.darkGray,
+    // shadowOffset: { width: 4, height: 4 },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
     elevation: 5,
+    paddingVertical: 20, // Or use a percentage of the screen height if you prefer
+    paddingHorizontal: 10,
+    borderRadius: 15,
   },
   titleContainer: {
     alignItems: "center",
-    width: "50%",
+    width: "100%",
+    marginBottom: "5%",
   },
   memrepriseTitle: {
     color: colors.white,
@@ -81,13 +86,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     letterSpacing: -0.41,
     color: colors.white,
+    // marginTop: "2.5%",
   },
   spacer: {
     height: 16,
   },
   buttonContainer: {
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
   button: {
     borderRadius: 50,
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#44AA99",
-    color: colors.white,
+    color: colors.offWhite,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.25,
@@ -103,6 +109,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: 150,
     height: 50,
+    marginVertical: "2.5%",
   },
   loginText: {
     textAlign: "center",

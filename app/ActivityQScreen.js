@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 20,
     width: "60%",
+    marginTop: "5%",
   },
   selectionRow: {
     justifyContent: "center",
@@ -214,7 +215,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   smallImage: {
-    marginTop: 5,
+    // marginTop: 5,
+    marginBottom: "5%",
     width: windowWidth * 0.1,
     height: windowWidth * 0.1,
   },

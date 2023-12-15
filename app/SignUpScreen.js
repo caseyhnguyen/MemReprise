@@ -55,10 +55,13 @@ const SignUpScreen = ({ navigation }) => {
           <Header title="memreprise" />
         </View>
         <View style={styles.postPrompt}>
-          <View style={styles.spacer} />
+          {/* <View style={styles.spacer} /> */}
 
           <View>
             <Text style={styles.loginText}>Create Account</Text>
+            <Text style={styles.descrText}>
+              Please create an account to continue
+            </Text>
           </View>
 
           <View style={styles.containerInput}>
@@ -95,17 +98,18 @@ const SignUpScreen = ({ navigation }) => {
               <Text style={styles.loginBtnTxt}>Sign Up</Text>
             </Pressable>
 
-            <View style={styles.buttonSpacer} />
+            {/* <View style={styles.buttonSpacer} /> */}
           </View>
 
-          <View style={styles.spacer} />
+          {/* <View style={styles.spacer} /> */}
 
-          <View>
-            <Text style={styles.signUpText}>
-              Already have an account?{" "}
-              <Pressable onPress={() => navigation.navigate("Login")}>
-                <Text style={styles.linkText}>Login</Text>
-              </Pressable>
+          <View style={styles.bottomTextContainer}>
+            <Text style={styles.signUpText}>Already have an account?</Text>
+            <Text
+              style={styles.linkText}
+              onPress={() => navigation.navigate("Login")}
+            >
+              Login
             </Text>
           </View>
         </View>
@@ -126,15 +130,25 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: colors.white,
     fontSize: 30,
-    alignItems: "flex-start",
-    marginTop: -50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: -30,
+    alignSelf: "center",
+  },
+  bottomTextContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   linkText: {
     textDecorationLine: "underline",
     color: "#44AA99",
+    fontSize: 14,
+    marginLeft: 5,
   },
   descrText: {
     color: colors.white,
+    marginTop: "2.5%",
   },
   containerInput: {
     padding: 20,
@@ -162,6 +176,8 @@ const styles = StyleSheet.create({
     // padding: 50,
     alignItems: "center",
     justifyContent: "space-between",
+    paddingVertical: "10%", // Add padding at the top and bottom instead of using spacer Views
+    paddingHorizontal: "5%", // Add some horizontal padding
     // width: windowWidth * 0.9,
     height: windowWidth * 0.7,
     shadowColor: colors.darkGray,
@@ -195,6 +211,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     alignSelf: "center",
+    marginBottom: "5%",
   },
   loginBtnTxt: {
     textAlign: "center",
@@ -206,6 +223,7 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 14,
     color: colors.white,
+    textAlign: "center",
   },
 });
 

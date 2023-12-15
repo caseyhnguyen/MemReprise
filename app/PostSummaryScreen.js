@@ -201,11 +201,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offWhite50,
     borderRadius: 10,
     width: rowWidth + 10,
-    height: windowWidth * 1.25,
+    height: windowWidth * 1.3,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+    padding: "2.5%",
   },
   songContainer: {
     alignItems: "flex-start",
@@ -342,7 +343,7 @@ const pickerSelectStyles = {
   inputAndroid: {
     fontSize: 16,
     paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingVertical: 10,
     borderWidth: 1,
     borderColor: colors.offWhite75,
     borderRadius: 4,

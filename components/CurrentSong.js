@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     marginBottom: 10,
     width: windowWidth * 0.95,
-    height: windowWidth * 0.32,
+    height: windowWidth * 0.35,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,

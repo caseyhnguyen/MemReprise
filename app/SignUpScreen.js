@@ -203,7 +203,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.41,
     color: colors.white,
   },
-
   signUpText: {
     fontSize: 14,
     color: colors.white,

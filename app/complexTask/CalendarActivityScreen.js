@@ -34,6 +34,15 @@ const CalendarActivityScreen = ({ navigation }) => {
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [timeNumber, setTimeNumber] = useState("");
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      // Call the function to refetch posts from the database
+      filterPosts();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   const onMainSelectionChange = (value) => {
     setSelectedValue(value);
     setSelectedFilter(null);

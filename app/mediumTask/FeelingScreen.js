@@ -9,8 +9,8 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import images from "../../assets/Images/images"; // Make sure the paths match your project structure
-import { colors } from "../../assets/Themes/colors"; // Make sure the paths match your project structure
+import images from "../../assets/Images/images";
+import { colors } from "../../assets/Themes/colors";
 import { useSpotifyAuth } from "../../utils";
 import { discoverStyles as styles } from "../../assets/Themes/discover";
 
@@ -35,13 +35,13 @@ const FeelingScreen = ({ route, navigation }) => {
       navigation.navigate("PlaylistDetails", { url });
     }
   };
-  // Dummy data for activities
+
   const activities = [
     {
       id: 1,
       title: "Happy",
       songsCount: 149,
-      icon: images.happyEmoji.pic, // Ensure 'working' is correctly referenced in your images object
+      icon: images.happyEmoji.pic,
       songs: [
         { title: "Words", artist: "Zara Larsson", pic: images.wordszara.pic },
         {
@@ -55,7 +55,7 @@ const FeelingScreen = ({ route, navigation }) => {
       id: 2,
       title: "Sad",
       songsCount: 134,
-      icon: images.sadEmoji.pic, // Ensure 'eating' is correctly referenced in your images object
+      icon: images.sadEmoji.pic,
       songs: [
         {
           title: "Your Power",

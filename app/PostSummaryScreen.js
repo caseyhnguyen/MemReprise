@@ -27,7 +27,7 @@ const rowWidth = windowWidth * 0.8 + totalGapSize;
 
 const PostSummaryScreen = ({ route, navigation }) => {
   const [caption, setCaption] = React.useState("");
-  const [selectedValue, setSelectedValue] = useState(null); // Visibility
+  const [selectedValue, setSelectedValue] = useState(null);
 
   const {
     songData,
@@ -57,7 +57,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
       previewUrl: songData.previewUrl,
       externalUrl: songData.externalUrl,
       played_at: songData.played_at,
-      id: songData.id, // Include songId if available
+      id: songData.id,
     }),
     theme_icon_id: selectedThemeIcon,
     theme_icon_text: selectedThemeIconText,
@@ -65,8 +65,8 @@ const PostSummaryScreen = ({ route, navigation }) => {
     emotion_icon_text: selectedEmotionIconText,
     activity_icon_id: selectedActivityIcon,
     activity_icon_text: selectedActivityIconText,
-    caption: caption, // Added caption
-    visibility: selectedValue, // Added visibility
+    caption: caption,
+    visibility: selectedValue,
     userName,
   };
 
@@ -121,7 +121,6 @@ const PostSummaryScreen = ({ route, navigation }) => {
                 )}
                 <Text style={styles.smallText}>{selectedActivityIconText}</Text>
               </View>
-              {/* other song details */}
             </View>
           )}
           <View style={styles.titleAndArtist}>
@@ -153,7 +152,6 @@ const PostSummaryScreen = ({ route, navigation }) => {
                 { label: "Public", value: "public" },
                 { label: "Friends", value: "friends" },
                 { label: "Only Me", value: "onlyMe" },
-                // ... more options
               ]}
               style={pickerSelectStyles}
               placeholder={{ label: "Select visibility...", value: null }}
@@ -221,19 +219,19 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   albumCover: {
-    width: windowWidth * 0.5, // Adjust size as needed
-    height: windowWidth * 0.5, // Adjust size as needed
+    width: windowWidth * 0.5,
+    height: windowWidth * 0.5,
     // borderRadius: 10,
   },
   title: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "black", // Adjust color as needed
+    color: "black",
     marginTop: 10,
   },
   artist: {
     fontSize: 12,
-    color: "black", // Adjust color as needed
+    color: "black",
     marginTop: 5,
   },
   playedAt: {
@@ -308,8 +306,8 @@ const styles = StyleSheet.create({
     paddingBottom: "5%",
     // paddingTop: "5%",
     // borderTopWidth: 1,
-    // borderTopColor: colors.darkGray, // Or another color that fits your design
-    // backgroundColor: colors.offWhite50, // Make sure this matches the container background
+    // borderTopColor: colors.darkGray,
+    // backgroundColor: colors.offWhite50,
     shadowColor: colors.darkGray,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,

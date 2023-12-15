@@ -130,19 +130,19 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   albumCover: {
-    width: windowWidth * 0.25, // Adjust size as needed
-    height: windowWidth * 0.25, // Adjust size as needed
+    width: windowWidth * 0.25,
+    height: windowWidth * 0.25,
     borderRadius: 10,
   },
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "black", // Adjust color as needed
+    color: colors.black,
     marginTop: 10,
   },
   artist: {
     fontSize: 14,
-    color: "black", // Adjust color as needed
+    color: colors.black,
     marginTop: 5,
   },
   titleAndArtist: {

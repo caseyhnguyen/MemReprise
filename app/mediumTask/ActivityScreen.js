@@ -9,8 +9,8 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import images from "../../assets/Images/images"; // Make sure the paths match your project structure
-import { colors } from "../../assets/Themes/colors"; // Make sure the paths match your project structure
+import images from "../../assets/Images/images";
+import { colors } from "../../assets/Themes/colors";
 import { useSpotifyAuth } from "../../utils";
 import { discoverStyles as styles } from "../../assets/Themes/discover";
 

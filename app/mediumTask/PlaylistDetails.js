@@ -13,13 +13,13 @@ import { WebView } from "react-native-webview";
 import { colors } from "../../assets/Themes/colors";
 import { StatusBar } from "expo-status-bar";
 
-import { LogBox } from 'react-native';
-LogBox.ignoreAllLogs();//Ignore all log notifications
+import { LogBox } from "react-native";
+LogBox.ignoreAllLogs(); // Ignore all log notifications
 
 export default function PlaylistDetails() {
   const route = useRoute();
   const url = route.params.url;
-  console.log("Playlist URL:", url); // To debug
+  // console.log("Playlist URL:", url);
 
   return (
     <>
@@ -33,7 +33,17 @@ export default function PlaylistDetails() {
         }}
       />
 
-      <View style={{marginTop: "22.5%", flex:1, borderRadius: 15, alignSelf: "center", width: "95%", height: "80%", overflow: "hidden"}}>
+      <View
+        style={{
+          marginTop: "22.5%",
+          flex: 1,
+          borderRadius: 15,
+          alignSelf: "center",
+          width: "95%",
+          height: "80%",
+          overflow: "hidden",
+        }}
+      >
         <WebView source={{ uri: url }} style={styles.main} />
       </View>
     </>

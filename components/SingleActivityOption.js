@@ -24,7 +24,7 @@ const SingleActivityOption = ({
 }) => {
   const navigation = useNavigation();
 
-  console.log("Username in Activity Component:", { userName });
+  // console.log("Username in Activity Component:", { userName });
   const onSelection = () => {
     navigation.navigate("Post Summary", {
       songData,

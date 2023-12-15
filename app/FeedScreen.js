@@ -115,6 +115,7 @@ const FeedScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    // console.log(`postMade: ${postMade}`);
     fetchInitialPosts();
   }, [postMade]);
 
@@ -150,7 +151,7 @@ const FeedScreen = ({ navigation }) => {
       }
 
       if (fetchedPosts) {
-        console.log(fetchedPosts);
+        // console.log(fetchedPosts);
         // Apply the most recent username to the most recent post
         if (fetchedPosts.length > 0) {
           fetchedPosts[0].user = { user: mostRecentUserName };
@@ -235,7 +236,11 @@ const FeedScreen = ({ navigation }) => {
           </Pressable>
         </View>
       )}
-      <Text style={textStyles.subHeader}>Posts</Text>
+      <Text style={textStyles.subHeader}>
+        {/* {postMade ? "Posts" : "Old Posts"} */}
+        Posts
+      </Text>
+
       {loading ? (
         <ActivityIndicator size="large" color={colors.white} />
       ) : (

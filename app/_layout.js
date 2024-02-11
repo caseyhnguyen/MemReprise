@@ -46,6 +46,8 @@ import { PostContext } from "../utils/PostContext";
 import CalendarActivityScreen from "./complexTask/CalendarActivityScreen";
 import TutorialScreen from "./TutorialScreen";
 
+import MapScreen from "./MapScreen";
+
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -306,6 +308,19 @@ const AppLayout = () => {
         component={FeedTabsScreen}
         options={{
           tabBarLabel: "Feed",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={images.reprise.pic}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="MapScreen"
+        component={MapScreen}
+        options={{
+          tabBarLabel: "Map",
           tabBarIcon: ({ color, size }) => (
             <Image
               source={images.reprise.pic}

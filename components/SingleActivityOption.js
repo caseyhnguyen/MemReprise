@@ -43,7 +43,7 @@ const SingleActivityOption = ({
       <TouchableOpacity onPress={onSelection}>
         <View style={styles.iconInfo}>
           <Image source={icon} style={styles.image} />
-          <Text>{iconText}</Text>
+          <Text style={{color: colors.white}}>{iconText}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -52,7 +52,7 @@ const SingleActivityOption = ({
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: colors.offWhite50,
+    backgroundColor: colors.darkGray,
     borderRadius: 10,
     paddingHorizontal: 5,
     paddingVertical: 10,

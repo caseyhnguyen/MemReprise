@@ -174,22 +174,25 @@ function DiscoverTabsScreen() {
           margin: 10,
           position: "absolute",
           left: 5,
+          color: colors.white,
           right: 5,
         },
         tabBarItemStyle: {
           borderRadius: 15,
+          color: colors.white,
           margin: 5,
-          backgroundColor: "rgba(256, 256, 256, 0.5)",
+          backgroundColor: colors.darkGray,
         },
         tabBarIndicatorStyle: {
           height: null,
           top: 0,
-          borderRadius: 15,
-          backgroundColor: colors.blue,
+          // borderRadius: 15,
+          color: colors.white,
+          backgroundColor: colors.black,
         },
       }}
     >
-      <DiscoverTabs.Screen name="Activity">
+      <DiscoverTabs.Screen name="Music boxes near me" style={{color: colors.white}}>
         {(props) => (
           <GradientWrapper {...props} Component={ActivityStackScreen} />
         )}
@@ -237,7 +240,8 @@ function FeedTabsScreen() {
           },
           tabBarIndicatorStyle: {
             // backgroundColor: "#FFD966CC",
-            backgroundColor: colors.orange,
+            backgroundColor: colors.blue,
+            color: colors.white,
           },
         }}
       >
@@ -251,7 +255,7 @@ function FeedTabsScreen() {
           )}
         </FeedTabs.Screen>
 
-        <FeedTabs.Screen name="Discover">
+        <FeedTabs.Screen name="Discover" style={{ color: colors.white }}>
           {(props) => (
             <GradientWrapper {...props} Component={DiscoverTabsScreen} />
           )}
@@ -287,6 +291,8 @@ const AppLayout = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        color: colors.white,
+
         tabBarActiveTintColor: colors.pink,
         tabBarInactiveTintColor: colors.orange,
         tabBarLabelStyle: { fontSize: 14, padding: 5, textTransform: "uppercase" },

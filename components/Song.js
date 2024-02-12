@@ -85,7 +85,7 @@ const Song = ({
               {Array.isArray(artists) ? artists.join(", ") : artists}
             </Text>
             {/* Display the formatted date and time */}
-            <Text style={styles.playedAtText}>{formatPlayedAt(played_at)}</Text>
+            {/* <Text style={styles.playedAtText}>{formatPlayedAt(played_at)}</Text> */}
           </View>
           {/* <Text style={styles.albumName} numberOfLines={1}>
               {albumName}
@@ -101,26 +101,29 @@ const Song = ({
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: colors.offWhite50,
+    backgroundColor: colors.darkGray,
     borderRadius: 5,
     paddingHorizontal: 5,
     paddingVertical: 10,
     marginBottom: 10,
     width: windowWidth * 0.95,
-    height: windowWidth * 0.2,
+    color: colors.white,
+    
   },
   container: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     width: windowWidth * 0.9,
+    // paddingVertical: 10,
+    // backgroundColor: colors.white
   },
   buttonContainer: {
     width: windowWidth * 0.1,
-    height: windowWidth * 0.1,
+    // height: windowWidth * 0.1,
     marginRight: 5,
   },
   index: {
-    color: colors.darkGray,
+    color: colors.white,
     fontSize: 14,
     width: "8%",
     textAlign: "center",
@@ -130,6 +133,9 @@ const styles = StyleSheet.create({
     justifyContent: "left",
     width: "95%",
     alignItems: "center",
+    color: colors.white,
+    // paddingBottom: 10,
+
   },
   titleAndArtist: {
     flexDirection: "column",
@@ -137,6 +143,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginRight: 20,
     width: "60%",
+    color: colors.white,
+
   },
   image: {
     width: 65,
@@ -146,7 +154,7 @@ const styles = StyleSheet.create({
 
   },
   albumName: {
-    color: colors.darkGray,
+    color: colors.white,
     flex: 3,
     fontSize: 14,
     marginRight: 10,
@@ -162,12 +170,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   artistText: {
-    color: colors.black,
+    color: colors.white,
     fontSize: 14,
-    marginTop: 2,
+    // marginTop: 2,
   },
   titleText: {
-    color: colors.black,
+    color: colors.white,
     fontWeight: "bold",
     fontSize: 14,
     marginBottom: 2,

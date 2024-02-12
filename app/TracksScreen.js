@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
+    color: colors.white,
   },
   header: {
     flexDirection: "row",

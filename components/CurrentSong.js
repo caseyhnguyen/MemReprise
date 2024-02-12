@@ -88,13 +88,15 @@ const CurrentSong = ({
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: colors.offWhite75,
+    backgroundColor: colors.darkGray,
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 15,
     marginBottom: 10,
     width: windowWidth * 0.95,
     height: windowWidth * 0.35,
+    color: colors.white,
+
   },
   container: {
     flexDirection: "row",
@@ -113,6 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginRight: 10,
     width: "75%",
+    color: colors.white,
   },
   image: {
     width: 75,
@@ -122,13 +125,13 @@ const styles = StyleSheet.create({
 
   },
   albumName: {
-    color: colors.darkGray,
+    color: colors.white,
     flex: 3,
     fontSize: 16,
     marginRight: 10,
   },
   artistText: {
-    color: colors.darkGray,
+    color: colors.white,
     fontSize: 16,
     marginTop: 2,
   },
@@ -136,6 +139,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
     marginBottom: 2,
+    color: colors.white,
   },
   progressWrapper: {
     width: "100%",
@@ -146,7 +150,7 @@ const styles = StyleSheet.create({
   },
   progressTime: {
     fontSize: 14,
-    color: colors.darkGray,
+    color: colors.white,
     position: "absolute",
     left: 10,
     bottom: -20,

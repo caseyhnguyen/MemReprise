@@ -111,7 +111,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
-    backgroundColor: colors.offWhite75,
+    backgroundColor: colors.darkGray,
+    color: colors.white,
     borderRadius: 10,
     width: rowWidth + 10,
     height: windowWidth * 0.3,
@@ -126,12 +127,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    color: colors.black,
+    color: colors.white,
     marginTop: 10,
   },
   artist: {
     fontSize: 14,
-    color: colors.black,
+    color: colors.white,
     marginTop: 5,
   },
   titleAndArtist: {
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     gap: totalGapSize,
   },
   questionBox: {
-    backgroundColor: colors.offWhite75,
+    backgroundColor: colors.darkGray,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",

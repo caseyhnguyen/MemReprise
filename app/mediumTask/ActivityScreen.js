@@ -46,7 +46,7 @@ const ActivityScreen = ({ route, navigation }) => {
   const activities = [
     {
       id: 1,
-      title: "Working",
+      title: "Main quad",
       songsCount: 169,
       icon: images.working.pic, // Ensure 'working' is correctly referenced in your images object
       songs: [
@@ -60,7 +60,7 @@ const ActivityScreen = ({ route, navigation }) => {
     },
     {
       id: 2,
-      title: "Exercising",
+      title: "Lathrop",
       songsCount: 158,
       icon: images.exercising.pic, // Ensure 'eating' is correctly referenced in your images object
       songs: [
@@ -78,9 +78,9 @@ const ActivityScreen = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={{ paddingBottom: 50 }}>
-          <View style={styles.headerContainer}>
+          {/* <View style={styles.headerContainer}>
             <Header3 text="What are you doing right now?" />
-          </View>
+          </View> */}
 
           {/* <View style={{ marginLeft: 16, marginBottom: 10 }}>
             <Label text="Top responses" />
@@ -95,7 +95,7 @@ const ActivityScreen = ({ route, navigation }) => {
                 <View style={styles.activityHeader}>
                   <Text style={styles.activityNumber}>{index + 1}</Text>
 
-                  <Image source={activity.icon} style={styles.activityIcon} />
+                  {/* <Image source={activity.icon} style={styles.activityIcon} /> */}
                   <Text style={styles.activityTitle}>{activity.title}</Text>
                   <Text style={styles.songsCount}>
                     {activity.songsCount} Songs

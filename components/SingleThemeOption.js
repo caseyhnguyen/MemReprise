@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../assets/Themes/colors";
-import { useTheme } from "../utils/ThemeContext";
+// import { useTheme } from "../utils/ThemeContext";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -31,7 +31,7 @@ const SingleThemeOption = ({ icon, iconText, songData, userName }) => {
       <TouchableOpacity onPress={onSelection}>
         <View style={styles.iconInfo}>
           <Image source={icon} style={styles.image} />
-          <Text>{iconText}</Text>
+          <Text style={{color: colors.white}}>{iconText}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -40,7 +40,8 @@ const SingleThemeOption = ({ icon, iconText, songData, userName }) => {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: colors.offWhite50,
+    backgroundColor: colors.darkGray,
+    color: colors.white,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -57,6 +58,8 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.1,
     height: windowWidth * 0.1,
     marginRight: 5,
+    color: colors.white,
+
   },
   iconInfo: {
     flexDirection: "column",

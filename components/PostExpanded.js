@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import images from "../assets/Images/images";
 import { postStyles as styling } from "../assets/Themes/postStyle";
 import { PostContext } from "../utils/PostContext";
+import PillPressable from "./PillPressable";
 
 const PostExpanded = ({
   dimensions,
@@ -46,9 +47,11 @@ const PostExpanded = ({
 
   return (
     <View style={{ flex: 1 }}>
-      <Pressable style={styles.postButton} onPress={onPress}>
+      {/* <Pressable style={styles.postButton} onPress={onPress}>
         <Text style={styles.postButtonText}>back</Text>
-      </Pressable>
+      </Pressable> */}
+      <PillPressable onPress={onPress} text="Back">
+      </PillPressable>
       {songData && songData.title && (
         <Pressable onPress={onPress} style={styles.expandedOuterContainer}>
           <View style={styles.metaData}>

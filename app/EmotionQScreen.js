@@ -14,6 +14,7 @@ import {
 import { styles as defaultStyles } from "../assets/Themes/default_style";
 import PostProgressBar from "../components/PostProgressBar";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
+import Header3 from "../components/Header3.js";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -62,7 +63,8 @@ const EmotionQScreen = ({ route, navigation }) => {
         )}
 
         <View style={styles.questionBox}>
-          <Text style={styles.boldText}>How are you feeling?</Text>
+          <Header3 text="How are you feeling?" />
+          {/* <Text style={styles.boldText}>How are you feeling?</Text> */}
         </View>
 
         {/* First selection Row */}
@@ -123,11 +125,7 @@ const styles = StyleSheet.create({
     width: rowWidth + 10,
     height: windowWidth * 0.3,
     gap: 5,
-    paddingLeft: 10,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    paddingLeft: 10
   },
   albumCover: {
     width: windowWidth * 0.25,
@@ -170,11 +168,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    gap: totalGapSize,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    gap: totalGapSize
   },
   questionBox: {
     backgroundColor: colors.offWhite75,
@@ -182,11 +176,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: rowWidth + 10,
-    height: windowWidth * 0.15,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    height: windowWidth * 0.15
   },
   postInProgress: {},
   boldText: {

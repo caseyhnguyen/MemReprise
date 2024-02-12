@@ -75,7 +75,7 @@ const Song = ({
     <View style={styles.outerContainer}>
       <TouchableOpacity style={styles.container} onPress={onSongPress}>
         <View style={styles.songInfo}>
-          <Text style={styles.index}>{index + 1}</Text>
+          {/* <Text style={styles.index}>{index + 1}</Text> */}
           <Image source={{ uri: imageUrl }} style={styles.image} />
           <View style={styles.titleAndArtist}>
             <Text style={styles.titleText} numberOfLines={1}>
@@ -90,9 +90,9 @@ const Song = ({
           {/* <Text style={styles.albumName} numberOfLines={1}>
               {albumName}
             </Text> */}
-          <Text style={styles.durationText}>
+          {/* <Text style={styles.durationText}>
             {millisToMinuteSeconds(duration)}
-          </Text>
+          </Text> */}
         </View>
       </TouchableOpacity>
     </View>
@@ -142,6 +142,8 @@ const styles = StyleSheet.create({
     width: 65,
     height: 65,
     marginRight: 15,
+    borderRadius: 200
+
   },
   albumName: {
     color: colors.darkGray,

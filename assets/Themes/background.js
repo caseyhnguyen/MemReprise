@@ -4,7 +4,8 @@ import { LinearGradient } from "expo-linear-gradient";
 const GradientBackground = ({ children }) => {
   return (
     <LinearGradient
-      colors={["#05BCF3", "#FFD966CC"]}
+      colors={["#000", "#353535"]}
+
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={{ flex: 1 }}

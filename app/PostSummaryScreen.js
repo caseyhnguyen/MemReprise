@@ -18,6 +18,7 @@ import RNPickerSelect from "react-native-picker-select";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
 import { supabase } from "../utils/supabaseClient";
 import { PostContext } from "../utils/PostContext";
+import PillPressable from "../components/PillPressable.js";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -162,7 +163,36 @@ const PostSummaryScreen = ({ route, navigation }) => {
               style={pickerSelectStyles}
               placeholder={{ label: "Select visibility...", value: null }}
             />
-            <Pressable
+            <PillPressable
+              onPress={async () => {
+                setPostMade(true); // update postMade to true
+                // console.log("Post made in summary", { postMade });
+                try {
+                  await savePostToSupabase(); // Use await inside the async function
+                  navigation.navigate("FeedTabs", {
+                    screen: "FeedStackScreen",
+                    params: {
+                      screen: "FeedInnerScreen",
+                      params: {
+                        songData,
+                        selectedThemeIcon,
+                        selectedThemeIconText,
+                        selectedEmotionIcon,
+                        selectedEmotionIconText,
+                        selectedActivityIcon,
+                        selectedActivityIconText,
+                        userName,
+                      },
+                    },
+                  });
+                } catch (error) {
+                  console.error(error);
+                }
+              }}
+              text="Gift"
+            >
+            </PillPressable>
+            {/* <Pressable
               style={styles.postButton}
               onPress={async () => {
                 setPostMade(true); // update postMade to true
@@ -191,7 +221,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
               }}
             >
               <Text style={styles.postButtonText}>Post</Text>
-            </Pressable>
+            </Pressable> */}
           </View>
         </View>
         {/* </View> */}
@@ -209,10 +239,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: rowWidth + 10,
     height: windowWidth * 1.3,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     padding: "2.5%",
   },
   songContainer: {
@@ -312,14 +338,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: "5%",
     paddingBottom: "5%",
-    // paddingTop: "5%",
-    // borderTopWidth: 1,
-    // borderTopColor: colors.darkGray,
-    // backgroundColor: colors.offWhite50,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   postButton: {
     backgroundColor: colors.offWhite75,

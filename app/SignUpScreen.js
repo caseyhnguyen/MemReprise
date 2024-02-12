@@ -16,6 +16,9 @@ import { colors } from "../assets/Themes/colors";
 import Header from "../components/Header";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { supabase } from "../utils/supabaseClient";
+import PillPressable from "../components/PillPressable";
+import Header1 from "../components/Header1";
+import Header2 from "../components/Header2";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -58,10 +61,8 @@ const SignUpScreen = ({ navigation }) => {
           {/* <View style={styles.spacer} /> */}
 
           <View>
-            <Text style={styles.loginText}>Create Account</Text>
-            <Text style={styles.descrText}>
-              Please create an account to continue
-            </Text>
+            <Header1 text="Create account"/>
+            <Header2 text="Please create an account to continue" />
           </View>
 
           <View style={styles.containerInput}>
@@ -94,9 +95,8 @@ const SignUpScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <Pressable style={styles.button} onPress={handleSignUp}>
-              <Text style={styles.loginBtnTxt}>Sign Up</Text>
-            </Pressable>
+            <PillPressable onPress={handleSignUp} text="Sign up">
+            </PillPressable>
 
             {/* <View style={styles.buttonSpacer} /> */}
           </View>
@@ -109,7 +109,7 @@ const SignUpScreen = ({ navigation }) => {
               style={styles.linkText}
               onPress={() => navigation.navigate("Login")}
             >
-              Login
+              Log in
             </Text>
           </View>
         </View>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   linkText: {
     textDecorationLine: "underline",
-    color: "#44AA99",
+    color: colors.pink,
     fontSize: 14,
     marginLeft: 5,
   },
@@ -158,18 +158,17 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   input: {
-    height: 40,
-    borderColor: "gray",
-    borderRadius: 15,
-    marginBottom: 20,
-    padding: 10,
-    backgroundColor: colors.offWhite50,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    fontSize: 15,
+    marginTop: 5,
+    marginBottom: 10,
+    padding: 11,
     width: windowWidth - 100,
+    borderWidth: 1,
+    borderColor: colors.offWhite75,
+    borderRadius: 4,
+    color: colors.black,
+    backgroundColor: colors.offWhite75,
+    fontWeight: "bold",
   },
   postPrompt: {
     borderRadius: 15,
@@ -180,10 +179,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%", // Add some horizontal padding
     // width: windowWidth * 0.9,
     height: windowWidth * 0.7,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     elevation: 5,
   },
   titleContainer: {
@@ -198,21 +193,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "50%",
   },
-  button: {
-    borderRadius: 15,
-    padding: 7,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#44AA99",
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 5,
-    alignSelf: "center",
-    marginBottom: "5%",
-  },
   loginBtnTxt: {
     textAlign: "center",
     fontWeight: "500",
@@ -222,6 +202,7 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     fontSize: 14,
+    fontWeight: "bold",
     color: colors.white,
     textAlign: "center",
   },

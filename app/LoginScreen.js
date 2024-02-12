@@ -17,6 +17,10 @@ import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import Header from "../components/Header";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import PillPressable from "../components/PillPressable";
+import Header1 from "../components/Header1";
+import Header2 from "../components/Header2";
+import Label from "../components/Label";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -37,12 +41,13 @@ const LoginScreen = ({ navigation }) => {
           </View>
           <View style={styles.postPrompt}>
             <View style={styles.title}>
-              <Text style={styles.loginText}>Log In</Text>
-              <Text style={styles.descrText}>Please sign in to continue</Text>
+              <Header1 text="Log in" />
+              <Header2 text="Please sign in to continue" />
             </View>
 
             <View style={styles.containerInput}>
-              <Text style={styles.label}>Email</Text>
+              {/* <Text style={styles.label}>Email</Text> */}
+              {/* <Label text="Email" /> */}
               <TextInput
                 style={styles.input}
                 value={email}
@@ -50,7 +55,7 @@ const LoginScreen = ({ navigation }) => {
                 placeholder="Enter your email"
               />
 
-              <Text style={styles.label}>Password</Text>
+              {/* <Label text="Password" /> */}
               <TextInput
                 style={styles.input}
                 value={password}
@@ -61,12 +66,16 @@ const LoginScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.buttonContainer}>
-              <Pressable
+              {/* <Pressable
                 style={styles.button}
                 onPress={() => navigation.navigate("Home")}
               >
-                <Text style={styles.loginBtnTxt}>Login</Text>
-              </Pressable>
+                <Text style={styles.loginBtnTxt}>Loginn</Text>
+              </Pressable> */}
+              <PillPressable 
+                onPress={() => navigation.navigate("Home")}
+                text="Log in"
+              />
               {/* <View style={styles.buttonSpacer} /> */}
             </View>
             {/* <View style={styles.spacer} /> */}
@@ -77,7 +86,7 @@ const LoginScreen = ({ navigation }) => {
                 style={styles.linkText}
                 onPress={() => navigation.navigate("SignUp")}
               >
-                Sign Up
+                Sign up
               </Text>
             </View>
           </View>
@@ -122,18 +131,17 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   input: {
-    height: 40,
-    borderColor: "gray",
-    borderRadius: 15,
-    marginBottom: 20,
-    padding: 10,
-    backgroundColor: colors.offWhite50,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    fontSize: 15,
+    marginTop: 5,
+    marginBottom: 10,
+    padding: 11,
     width: windowWidth - 100,
+    borderWidth: 1,
+    borderColor: colors.offWhite75,
+    borderRadius: 4,
+    color: colors.black,
+    backgroundColor: colors.offWhite75,
+    fontWeight: "bold",
   },
   bottomTextContainer: {
     flexDirection: "row",
@@ -142,7 +150,8 @@ const styles = StyleSheet.create({
   },
   linkText: {
     textDecorationLine: "underline",
-    color: "#44AA99",
+    fontWeight: "bold",
+    color: colors.pink,
     marginLeft: 5,
   },
   postPrompt: {
@@ -152,10 +161,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: windowWidth * 0.9,
     height: windowWidth * 0.75,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     elevation: 5,
   },
   titleContainer: {
@@ -171,20 +176,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     marginBottom: "5%",
-  },
-  button: {
-    borderRadius: 15,
-    padding: 7,
-    flex: 1,
-    alignItems: "center",
-    alignSelf: "center",
-    justifyContent: "center",
-    backgroundColor: "#44AA99",
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 5,
   },
   loginBtnTxt: {
     textAlign: "center",

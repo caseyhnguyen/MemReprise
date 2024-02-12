@@ -19,6 +19,9 @@ import images from "../assets/Images/images";
 import Song from "../components/Song";
 import CurrentSong from "../components/CurrentSong";
 import { StatusBar } from "expo-status-bar";
+import PillPressable from "../components/PillPressable";
+import Header1 from "../components/Header1";
+import Header2 from "../components/Header2";
 
 // Get the window width
 const windowWidth = Dimensions.get("window").width;
@@ -68,21 +71,28 @@ const TracksScreen = ({ route, navigation }) => {
   };
 
   const SpotifyAuthOrRefreshButton = () => (
-    <Pressable
-      style={[styles.button, isLoading && styles.disabledButton]}
+    <PillPressable 
+      // style={[styles.button, isLoading && styles.disabledButton]}
       onPress={handleButtonPress}
       disabled={isLoading}
-    >
-      {!token && (
-        <Image
-          source={images.spotify}
-          style={[styles.spotifyIcon, isLoading && styles.disabledIcon]}
-        />
-      )}
-      <Text style={styles.buttonText}>
-        {token ? "REFRESH" : "GET RECENT SONGS FROM SPOTIFY"}
-      </Text>
-    </Pressable>
+      token={token}
+      isSpotify={true}
+    />
+    // <Pressable
+    //   style={[styles.button, isLoading && styles.disabledButton]}
+    //   onPress={handleButtonPress}
+    //   disabled={isLoading}
+    // >
+    //   {!token && (
+    //     <Image
+    //       source={images.spotify}
+    //       style={[styles.spotifyIcon, isLoading && styles.disabledIcon]}
+    //     />
+    //   )}
+    //   <Text style={styles.buttonText}>
+    //     {token ? "REFRESH" : "GET RECENT SONGS FROM SPOTIFY"}
+    //   </Text>
+    // </Pressable>
   );
 
   // Function to render the current track with progress bar
@@ -105,7 +115,7 @@ const TracksScreen = ({ route, navigation }) => {
 
     return (
       <View style={styles.currentTrackContainer}>
-        <Text style={styles.currentTrackTitle}>Now Playing</Text>
+        <Header2 text="Now playing" />
         <CurrentSong
           onPress={() => navigation.navigate("Theme Question", { userName })}
           index={index}
@@ -162,13 +172,13 @@ const TracksScreen = ({ route, navigation }) => {
   let contentDisplayed = (
     <>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Search for your last song</Text>
+        <Header2 text="Search for a song" />
       </View>
 
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search"
+          placeholder="Search..."
           value={search}
           onChangeText={(text) => debouncedSearchSongs(text)}
         />
@@ -177,9 +187,9 @@ const TracksScreen = ({ route, navigation }) => {
       {token && (
         <>
           {renderCurrentTrack()}
-          <View style={styles.header}>
-            <Text style={styles.subheaderTitle}>My Recent Tracks</Text>
-          </View>
+          {/* <View style={styles.header}>
+            <Header2 text="My recent tracks" />
+          </View> */}
         </>
       )}
 
@@ -217,6 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 50
     // backgroundColor: colors.background,
   },
   logo: {
@@ -268,10 +279,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 5,
     marginBottom: 10,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -296,18 +303,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: windowWidth * 0.95,
     marginBottom: 20,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   searchInput: {
     flex: 1,
+    fontSize: 15,
+    paddingVertical: 11,
     paddingHorizontal: 10,
-    paddingVertical: 10,
-    backgroundColor: colors.offWhite,
+    borderWidth: 1,
+    borderColor: colors.offWhite75,
+    borderRadius: 4,
     color: colors.black,
-    borderRadius: 10,
+    backgroundColor: colors.offWhite75,
+    margin: windowWidth * 0.005,
+    fontWeight: "bold",
   },
 });
 

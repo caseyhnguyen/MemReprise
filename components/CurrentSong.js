@@ -73,14 +73,14 @@ const CurrentSong = ({
           width={windowWidth - 40}
           height={7}
           borderRadius={3.5}
-          color={colors.verdigrisGreen}
+          color={colors.pink}
           unfilledColor={colors.offWhite75}
           borderWidth={0}
           useNativeDriver={true}
           style={styles.progressBar}
         />
-        <Text style={styles.progressTime}>{formatTime(progressMs)}</Text>
-        <Text style={styles.durationTime}>{formatTime(duration)}</Text>
+        {/* <Text style={styles.progressTime}>{formatTime(progressMs)}</Text>
+        <Text style={styles.durationTime}>{formatTime(duration)}</Text> */}
       </View>
     </View>
   );
@@ -95,10 +95,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: windowWidth * 0.95,
     height: windowWidth * 0.35,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   container: {
     flexDirection: "row",
@@ -119,9 +115,11 @@ const styles = StyleSheet.create({
     width: "75%",
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 75,
+    height: 75,
     marginRight: 15,
+    borderRadius: 200
+
   },
   albumName: {
     color: colors.darkGray,

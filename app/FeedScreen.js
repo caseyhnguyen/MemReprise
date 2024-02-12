@@ -21,6 +21,10 @@ import Header from "../components/Header";
 import { supabase } from "../utils/supabaseClient";
 
 import { textStyles } from "../assets/Themes/Text";
+import PillPressable from "../components/PillPressable";
+import Header2 from "../components/Header2";
+import Header1 from "../components/Header1";
+import { StatusBar } from "react-native";
 
 const windowWidth = Dimensions.get("window").width;
 const gap = 12;
@@ -208,12 +212,12 @@ const FeedScreen = ({ navigation }) => {
       formattedTimestamp={item.formattedTimestamp}
       songData={item.songData}
       caption={item.caption}
-      emotionIconSrc={item.emotionIconSrc}
-      activityIconSrc={item.activityIconSrc}
-      themeIconSrc={item.themeIconSrc}
-      themeIconLabel={item.themeIconLabel}
-      emotionIconLabel={item.emotionIconLabel}
-      activityIconLabel={item.activityIconLabel}
+      // emotionIconSrc={item.emotionIconSrc}
+      // activityIconSrc={item.activityIconSrc}
+      // themeIconSrc={item.themeIconSrc}
+      // themeIconLabel={item.themeIconLabel}
+      // emotionIconLabel={item.emotionIconLabel}
+      // activityIconLabel={item.activityIconLabel}
       dimensions={{
         windowWidth: Dimensions.get("window").width,
         gap: 12,
@@ -225,21 +229,32 @@ const FeedScreen = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView style={defaultStyles.container}>
-      {!postMade && (
-        <View style={styles.buttonContainer}>
-          <Pressable
+    <>
+      <StatusBar barStyle = "light-content" backgroundColor={colors.black} translucent={true}/>
+      <SafeAreaView style={defaultStyles.container}>
+      {/* <StatusBar barStyle = "light-content"  translucent = {true}/> */}
+      
+      {!postMade && 
+        // <View style={styles.buttonContainer}>
+        
+        <View>
+        {/* <Header1 text="Gift feed" /> */}
+
+          <PillPressable
+            onPress={() => navigation.navigate("Tracks")}
+            text="Leave a music box"
+            isSpotify={false}
+            disabled={false}
+          />
+
+          {/* <Pressable
             style={styles.button}
             onPress={() => navigation.navigate("Tracks")}
           >
             <Text style={styles.postText}>Post</Text>
-          </Pressable>
+          </Pressable> */}
         </View>
-      )}
-      <Text style={textStyles.subHeader}>
-        {/* {postMade ? "Posts" : "Old Posts"} */}
-        Posts
-      </Text>
+      }
 
       {loading ? (
         <ActivityIndicator size="large" color={colors.white} />
@@ -258,6 +273,7 @@ const FeedScreen = ({ navigation }) => {
         />
       )}
     </SafeAreaView>
+    </>
   );
 };
 
@@ -278,29 +294,16 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.4,
     height: windowWidth * 0.1,
   },
-  button: {
-    borderRadius: 15,
-    height: "100%",
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.offWhite75,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  postText: {
-    textAlign: "center",
-    fontWeight: "500",
-    fontSize: 14,
-    letterSpacing: -0.41,
-    color: "#595959",
-  },
-  buttonSpacer: {
-    width: 24,
-  },
+  // postText: {
+  //   textAlign: "center",
+  //   fontWeight: "500",
+  //   fontSize: 14,
+  //   letterSpacing: -0.41,
+  //   color: "#595959",
+  // },
+  // buttonSpacer: {
+  //   width: 24,
+  // },
   oldPostsText: {
     // marginTop: 16,
     fontSize: 20,

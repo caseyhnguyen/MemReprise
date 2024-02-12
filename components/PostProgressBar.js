@@ -14,7 +14,7 @@ const PostProgressBar = ({ progressFraction, label }) => {
         width={windowWidth - 40}
         height={7}
         borderRadius={3.5}
-        color={colors.verdigrisGreen}
+        color={colors.pink}
         unfilledColor={colors.offWhite75}
         borderWidth={0}
         useNativeDriver={true}

@@ -6,10 +6,11 @@ export const postStyles = (dimensions) =>
     outerContainer: {
       justifyContent: "flex-start",
       flexDirection: "column",
-      backgroundColor: colors.offWhite50,
+      backgroundColor: colors.darkGray,
       borderRadius: 10,
       width: dimensions.windowWidth * 0.9,
-      height: dimensions.rowWidth * 1.25,
+      // height: dimensions.rowWidth * 1.25,
+      paddingVertical: 25
     },
 
     expandedOuterContainer: {
@@ -21,49 +22,54 @@ export const postStyles = (dimensions) =>
       height: "90%",
     },
     captionContainer: {
-      paddingLeft: 30,
+      paddingHorizontal: 30,
       paddingBottom: 50,
     },
     metaData: {
-      margin: 10,
-      paddingTop: 10,
-      paddingLeft: 5,
+      paddingHorizontal: 10,
       flexDirection: "row",
       alignItems: "center",
-      gap: 10,
-      width: "90%",
+      gap: 15,
+      color: colors.white,
     },
-    time: { marginLeft: "auto" },
+
+    info: {
+      gap: 5,
+      color: colors.white,
+    },
 
     profilePic: {
-      width: dimensions.windowWidth * 0.15,
-      height: dimensions.windowWidth * 0.15,
-      borderRadius: (dimensions.windowWidth * 0.15) / 2,
+      width: dimensions.windowWidth * 0.2,
+      height: dimensions.windowWidth * 0.2,
+      borderRadius: 200,
     },
     postContainer: {
-      alignItems: "flex-start",
-      justifyContent: "space-between",
-      flexDirection: "row",
-      width: "90%",
-      gap: "5%",
-      shadowColor: colors.darkGray,
-      shadowOffset: { width: 4, height: 4 },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
+      // alignItems: "flex-start",
+      // flex: 1,
+      // justifyContent: "space-between",
+      // flexDirection: "row",
+      // flexWrap: "wrap",
+      paddingHorizontal: 15,
+      width: "100%"
     },
     albumCover: {
-      width: dimensions.windowWidth * 0.5,
-      height: dimensions.windowWidth * 0.5,
+      // width: dimensions.windowWidth * 0.5,
+      width: dimensions.windowWidth * .78,
+      height: dimensions.windowWidth * 0.78,
+      // width: "100%",
+      // height: "auto",
       marginBottom: 10,
     },
     title: {
       fontSize: 18,
       fontWeight: "bold",
-      color: colors.black,
+      color: colors.white,
+      // paddingRight: 50,
     },
     artist: {
-      fontSize: 12,
-      color: colors.black,
+      fontSize: 16,
+      color: colors.white,
+
     },
 
     caption: {
@@ -71,15 +77,16 @@ export const postStyles = (dimensions) =>
       justifyContent: "center",
       alignItems: "flex-start",
       paddingTop: "5%",
-      paddingRight: "5%",
       paddingBottom: "5%",
+      width: "100%",
+      color: colors.white,
     },
 
     songInfo: {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "flex-start",
-      paddingLeft: "7.5%",
+      // paddingLeft: "7.5%",
       paddingTop: "5%",
       width: "75%",
     },
@@ -100,10 +107,10 @@ export const postStyles = (dimensions) =>
       width: dimensions.windowWidth * 0.175,
       height: dimensions.windowWidth * 0.175,
     },
-    smallText: {
+    time: {
       fontSize: 12,
-      color: colors.darkGray,
-      paddingBottom: "2%",
+      color: colors.white,
+      // marginLeft: "auto", 
     },
     smallSelectionCol: {
       alignItems: "center",

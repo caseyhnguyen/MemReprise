@@ -13,6 +13,8 @@ import images from "../../assets/Images/images"; // Make sure the paths match yo
 import { colors } from "../../assets/Themes/colors"; // Make sure the paths match your project structure
 import { useSpotifyAuth } from "../../utils";
 import { discoverStyles as styles } from "../../assets/Themes/discover";
+import PillPressable from "../../components/PillPressable";
+import Header3 from "../../components/Header3";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -81,14 +83,12 @@ const ThemeScreen = ({ route, navigation }) => {
       <ScrollView style={styles.scrollView}>
         <View style={{ paddingBottom: 50 }}>
           <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>
-              What cafe drink would your song be?
-            </Text>
+            <Header3 text="What cafe drink would your song be?" />
           </View>
 
-          <View style={{ marginLeft: 16, marginBottom: 10 }}>
+          {/* <View style={{ marginLeft: 16, marginBottom: 10 }}>
             <Text style={styles.headerText}>Top Responses</Text>
-          </View>
+          </View> */}
           <View style={styles.activitiesContainer}>
             {activities.map((activity, index) => (
               <Pressable
@@ -114,7 +114,8 @@ const ThemeScreen = ({ route, navigation }) => {
                       </View>
                     </View>
                   ))}
-                  <Text style={styles.seeMore}>see more {">"}</Text>
+                  {/* <Text style={styles.seeMore}>see more {">"}</Text> */}
+                  <PillPressable text="See more" />
                 </View>
               </Pressable>
             ))}

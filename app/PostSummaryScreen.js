@@ -18,6 +18,7 @@ import RNPickerSelect from "react-native-picker-select";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
 import { supabase } from "../utils/supabaseClient";
 import { PostContext } from "../utils/PostContext";
+import PillPressable from "../components/PillPressable.js";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -98,7 +99,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={defaultStyles.container}>
-        <Text style={styles.subHeader}>Your Post Draft</Text>
+        <Text style={styles.subHeader}>Your post draft</Text>
         <View style={styles.outerContainer}>
           {songData && songData.title && (
             <View style={styles.songContainer}>
@@ -152,7 +153,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
           ></TextInput>
 
           <View style={styles.footer}>
-            <RNPickerSelect
+            {/* <RNPickerSelect
               onValueChange={(value) => setSelectedValue(value)}
               items={[
                 { label: "Public", value: "public" },
@@ -161,8 +162,37 @@ const PostSummaryScreen = ({ route, navigation }) => {
               ]}
               style={pickerSelectStyles}
               placeholder={{ label: "Select visibility...", value: null }}
-            />
-            <Pressable
+            /> */}
+            <PillPressable
+              onPress={async () => {
+                setPostMade(true); // update postMade to true
+                // console.log("Post made in summary", { postMade });
+                try {
+                  await savePostToSupabase(); // Use await inside the async function
+                  navigation.navigate("FeedTabs", {
+                    screen: "FeedStackScreen",
+                    params: {
+                      screen: "FeedInnerScreen",
+                      params: {
+                        songData,
+                        selectedThemeIcon,
+                        selectedThemeIconText,
+                        selectedEmotionIcon,
+                        selectedEmotionIconText,
+                        selectedActivityIcon,
+                        selectedActivityIconText,
+                        userName,
+                      },
+                    },
+                  });
+                } catch (error) {
+                  console.error(error);
+                }
+              }}
+              text="Post"
+            >
+            </PillPressable>
+            {/* <Pressable
               style={styles.postButton}
               onPress={async () => {
                 setPostMade(true); // update postMade to true
@@ -191,7 +221,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
               }}
             >
               <Text style={styles.postButtonText}>Post</Text>
-            </Pressable>
+            </Pressable> */}
           </View>
         </View>
         {/* </View> */}
@@ -205,14 +235,12 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "column",
-    backgroundColor: colors.offWhite50,
+    backgroundColor: colors.darkGray,
+    color: colors.white,
+
     borderRadius: 10,
     width: rowWidth + 10,
     height: windowWidth * 1.3,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     padding: "2.5%",
   },
   songContainer: {
@@ -234,17 +262,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "black",
+    color: colors.white,
     marginTop: 10,
   },
   artist: {
     fontSize: 12,
-    color: "black",
+    color: colors.white,
+    // color: "black",
     marginTop: 5,
   },
   playedAt: {
     fontSize: 12,
-    color: colors.darkGray,
+    // color: colors.darkGray,
+    color: colors.white,
+
     marginTop: 5,
   },
   titleAndArtist: {
@@ -274,7 +305,9 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 10,
-    color: colors.darkGray,
+    // color: colors.darkGray,
+    color: colors.white,
+
     paddingBottom: "2%",
   },
   smallSelectionCol: {
@@ -291,38 +324,43 @@ const styles = StyleSheet.create({
   subHeader: {
     fontSize: 20,
     fontWeight: "bold",
-    color: colors.offWhite,
+    // color: colors.offWhite,
+    color: colors.white,
+
     paddingBottom: 5,
   },
   input: {
     width: "90%",
-    height: "5%",
-    // padding: "2.5%",
-    maxHeight: "25%",
-    marginTop: "5%",
+    height: "25%",
+    // // padding: "2.5%",
+    // maxHeight: "25%",
+    // marginTop: "5%",
     marginHorizontal: "5%",
-    marginBottom: "35%",
-    borderTopColor: colors.darkGray,
-    // backgroundColor: colors.offWhite50,
-    borderRadius: 5,
+    marginBottom: "5%",
+    // // borderTopColor: colors.darkGray,
+    // // backgroundColor: colors.offWhite50,
+    // borderRadius: 5,
+
+    fontSize: 15,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: colors.offWhite75,
+    borderRadius: 4,
+    color: colors.black,
+    backgroundColor: colors.offWhite75,
+    margin: windowWidth * 0.005,
+    fontWeight: "bold",
   },
   footer: {
-    flexDirection: "row",
+    // flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: "5%",
     paddingBottom: "5%",
-    // paddingTop: "5%",
-    // borderTopWidth: 1,
-    // borderTopColor: colors.darkGray,
-    // backgroundColor: colors.offWhite50,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    alignSelf: "center"
   },
   postButton: {
-    backgroundColor: colors.offWhite75,
+    // backgroundColor: colors.offWhite75,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
@@ -330,7 +368,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   postButtonText: {
-    color: colors.darkGray,
+    // color: colors.darkGray,
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -338,14 +376,27 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = {
   inputIOS: {
-    fontSize: 16,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    // fontSize: 16,
+    // paddingVertical: 10,
+    // paddingHorizontal: 10,
+    // borderWidth: 1,
+    // borderColor: colors.offWhite75,
+    // borderRadius: 4,
+    // color: "black",
+    // backgroundColor: colors.offWhite75,
+
+    fontSize: 15,
+    paddingVertical: 11,
+    paddingHorizontal: 8,
     borderWidth: 1,
     borderColor: colors.offWhite75,
     borderRadius: 4,
-    color: "black",
+    color: colors.black,
     backgroundColor: colors.offWhite75,
+    // textAlign: "center",
+    margin: windowWidth * 0.005,
+    width: windowWidth * 0.38,
+    fontWeight: "bold",
   },
   inputAndroid: {
     fontSize: 16,

@@ -45,6 +45,7 @@ import { PostContext } from "../utils/PostContext";
 // Complex Task
 import CalendarActivityScreen from "./complexTask/CalendarActivityScreen";
 import TutorialScreen from "./TutorialScreen";
+import { StatusBar } from "expo-status-bar";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -133,6 +134,9 @@ function ActivityStackScreen() {
 
 function ThemeStackScreen() {
   return (
+    <>
+      <StatusBar barStyle="light-content" backgroundColor={colors.black} translucent = {true}/>
+    
     <ThemeStack.Navigator screenOptions={{ headerShown: false }}>
       <ThemeStack.Screen name="ThemeScreen">
         {(props) => <GradientWrapper {...props} Component={ThemeScreen} />}
@@ -142,6 +146,7 @@ function ThemeStackScreen() {
         {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
       </ThemeStack.Screen>
     </ThemeStack.Navigator>
+    </>
   );
 }
 
@@ -160,6 +165,7 @@ function FeelingStackScreen() {
 
 function DiscoverTabsScreen() {
   return (
+    <>
     <DiscoverTabs.Navigator
       screenOptions={{
         headerShown: false,
@@ -168,28 +174,31 @@ function DiscoverTabsScreen() {
           margin: 10,
           position: "absolute",
           left: 5,
+          color: colors.white,
           right: 5,
         },
         tabBarItemStyle: {
-          borderRadius: 30,
+          borderRadius: 15,
+          color: colors.white,
           margin: 5,
-          backgroundColor: "rgba(256, 256, 256, 0.5)",
+          backgroundColor: colors.darkGray,
         },
         tabBarIndicatorStyle: {
           height: null,
           top: 0,
-          borderRadius: 30,
-          backgroundColor: "#FFD966CC",
+          // borderRadius: 15,
+          color: colors.white,
+          backgroundColor: colors.black,
         },
       }}
     >
-      <DiscoverTabs.Screen name="Activity">
+      <DiscoverTabs.Screen name="Music boxes near me" style={{color: colors.white}}>
         {(props) => (
           <GradientWrapper {...props} Component={ActivityStackScreen} />
         )}
       </DiscoverTabs.Screen>
 
-      <DiscoverTabs.Screen name="Theme">
+      {/* <DiscoverTabs.Screen name="Theme">
         {(props) => <GradientWrapper {...props} Component={ThemeStackScreen} />}
       </DiscoverTabs.Screen>
 
@@ -197,8 +206,10 @@ function DiscoverTabsScreen() {
         {(props) => (
           <GradientWrapper {...props} Component={FeelingStackScreen} />
         )}
-      </DiscoverTabs.Screen>
+      </DiscoverTabs.Screen> */}
+      
     </DiscoverTabs.Navigator>
+    </>
   );
 }
 
@@ -219,20 +230,24 @@ function FeedStackScreen() {
 // FeedStack Navigator
 function FeedTabsScreen() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, color: colors.white }}>
       <FeedTabs.Navigator
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: "#05BCF3",
+            backgroundColor: colors.darkGray,
+            color: colors.white,
           },
           tabBarIndicatorStyle: {
-            backgroundColor: "#FFD966CC",
+            // backgroundColor: "#FFD966CC",
+            backgroundColor: colors.blue,
+            color: colors.white,
           },
         }}
       >
         <FeedTabs.Screen
           name="FeedStackScreen"
+          style={{color: colors.white}}
           options={{ tabBarLabel: "Feed" }}
         >
           {(props) => (
@@ -240,7 +255,7 @@ function FeedTabsScreen() {
           )}
         </FeedTabs.Screen>
 
-        <FeedTabs.Screen name="Discover">
+        <FeedTabs.Screen name="Discover" style={{ color: colors.white }}>
           {(props) => (
             <GradientWrapper {...props} Component={DiscoverTabsScreen} />
           )}
@@ -276,14 +291,16 @@ const AppLayout = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.verdigrisGreen,
-        tabBarInactiveTintColor: colors.teal,
-        tabBarLabelStyle: { fontSize: 14, padding: 5 },
-        backgroundColor: colors.offWhite,
+        color: colors.white,
+
+        tabBarActiveTintColor: colors.pink,
+        tabBarInactiveTintColor: colors.orange,
+        tabBarLabelStyle: { fontSize: 14, padding: 5, textTransform: "uppercase" },
+        backgroundColor: colors.darkGray,
         tabBarStyle: {
           display: "flex",
           paddingTop: "7%",
-          height: "8.5%",
+          bottom: "0%"
         },
         tabBarIconStyle: { paddingBottom: 10 },
       }}

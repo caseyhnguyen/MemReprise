@@ -13,6 +13,9 @@ import {
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import Header from "../components/Header";
+import PillPressable from "../components/PillPressable";
+import Header1 from "../components/Header1";
+import Header2 from "../components/Header2";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -24,26 +27,31 @@ const LoginSignUpScreen = ({ navigation }) => {
         <View style={styles.postPrompt}>
           {/* <View style={styles.spacer} /> */}
           <View style={styles.titleContainer}>
-            <Text style={styles.memrepriseTitle}>memreprise</Text>
-            <Text style={styles.postASongText}>
-              Where Music and Memories Meet
-            </Text>
+            <Header1 text="memreprise"/>
+            <Header2 text="Where music and memories meet" />
           </View>
           {/* <View style={styles.spacer} /> */}
           <View style={styles.buttonContainer}>
-            <Pressable
+            <PillPressable
+              onPress={() => navigation.navigate("Login")}
+              text="Log in"
+            />
+            <PillPressable
+              onPress={() => navigation.navigate("SignUp")}
+              text="Sign up"
+            />
+            {/* <Pressable
               style={styles.button}
               onPress={() => navigation.navigate("Login")}
             >
               <Text style={styles.loginText}>Login</Text>
             </Pressable>
-            {/* <View style={styles.buttonSpacer} /> */}
             <Pressable
               style={styles.button}
               onPress={() => navigation.navigate("SignUp")}
             >
               <Text style={styles.signUpText}>Sign Up</Text>
-            </Pressable>
+            </Pressable> */}
           </View>
         </View>
       </SafeAreaView>
@@ -61,11 +69,6 @@ const styles = StyleSheet.create({
   postPrompt: {
     borderRadius: 15,
     alignItems: "center",
-    // justifyContent: "space-around",
-    // shadowColor: colors.darkGray,
-    // shadowOffset: { width: 4, height: 4 },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
     elevation: 5,
     paddingVertical: 20, // Or use a percentage of the screen height if you prefer
     paddingHorizontal: 10,
@@ -94,22 +97,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-  },
-  button: {
-    borderRadius: 50,
-    // padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#44AA99",
-    color: colors.offWhite,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 5,
-    width: 150,
-    height: 50,
-    marginVertical: "2.5%",
   },
   loginText: {
     textAlign: "center",

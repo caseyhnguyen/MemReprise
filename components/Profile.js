@@ -9,16 +9,15 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../assets/Themes/colors";
+import Sample from "../assets/album-1.png";
 
 const windowWidth = Dimensions.get("window").width;
 
-const SingleEmotionOption = ({
-  icon,
-  iconText,
-  songData,
-  selectedThemeIcon,
-  selectedThemeIconText,
+const Profile = ({
   userName,
+  icon,
+  firstName,
+  lastName
 }) => {
   const navigation = useNavigation();
 
@@ -33,12 +32,14 @@ const SingleEmotionOption = ({
     });
   };
 
+  // do some first name processing in case it's a long name
+
   return (
-    <View style={styles.outerContainer}>
+    <View style={styles.profileContainer}>
       <TouchableOpacity onPress={onSelection}>
-        <View style={styles.iconInfo}>
-          <Image source={icon} style={styles.image} />
-          <Text style={{color: colors.white}}>{iconText}</Text>
+        <View style={styles.profileInfo}>
+          <Image source={Sample} style={styles.icon} />
+          <Text style={styles.profileText}>First name</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -46,35 +47,25 @@ const SingleEmotionOption = ({
 };
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    backgroundColor: colors.darkGray,
-    borderRadius: 10,
+  profileContainer: {
     paddingHorizontal: 5,
     paddingVertical: 10,
-    marginBottom: 10, // Spacing between each song item
-    width: windowWidth * 0.4,
-    height: windowWidth * 0.4,
-  },
-  container: {
-    flexDirection: "row",
     alignItems: "center",
-    width: windowWidth * 0.9,
+    height: 200
   },
-  buttonContainer: {
-    width: windowWidth * 0.1,
-    height: windowWidth * 0.1,
-    marginRight: 5,
+  icon: {
+    width: 88,
+    height: 88,
+    borderRadius: 100,
   },
-  iconInfo: {
-    flexDirection: "column",
+  profileText: {
+    color: colors.white,
+  },
+  profileInfo: {
     justifyContent: "center",
     alignItems: "center",
-    gap: 5,
-  },
-  image: {
-    width: windowWidth * 0.3,
-    height: windowWidth * 0.3,
+    gap: 8,
   },
 });
 
-export default SingleEmotionOption;
+export default Profile;

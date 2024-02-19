@@ -13,6 +13,8 @@ import images from "../../assets/Images/images";
 import { colors } from "../../assets/Themes/colors";
 import { useSpotifyAuth } from "../../utils";
 import { discoverStyles as styles } from "../../assets/Themes/discover";
+import PillPressable from "../../components/PillPressable";
+import Header3 from "../../components/Header3";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -80,14 +82,12 @@ const FeelingScreen = ({ route, navigation }) => {
       <ScrollView style={styles.scrollView}>
         <View style={{ paddingBottom: 50 }}>
           <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>
-              How are you feeling right now?
-            </Text>
+            <Header3 text="How are you feeling right now?" />
           </View>
 
-          <View style={{ marginLeft: 16, marginBottom: 10 }}>
+          {/* <View style={{ marginLeft: 16, marginBottom: 10 }}>
             <Text style={styles.headerText}>Top Responses</Text>
-          </View>
+          </View> */}
           <View style={styles.activitiesContainer}>
             {activities.map((activity, index) => (
               <Pressable
@@ -113,7 +113,8 @@ const FeelingScreen = ({ route, navigation }) => {
                       </View>
                     </View>
                   ))}
-                  <Text style={styles.seeMore}>see more {">"}</Text>
+                  {/* <Text style={styles.seeMore}>see more {">"}</Text> */}
+                  <PillPressable text="See more" />
                 </View>
               </Pressable>
             ))}

@@ -16,6 +16,7 @@ import images from "../assets/Images/images";
 import { postStyles as styling } from "../assets/Themes/postStyle";
 import { PostContext } from "../utils/PostContext";
 import { colors } from "../assets/Themes/colors";
+import Header2 from "./Header2";
 
 const windowWidth = Dimensions.get("window").width;
 const gap = 12;
@@ -60,6 +61,32 @@ const Post = ({
     });
   };
 
+  const cutoffTitle = 23;
+  let songTitle = songData.title;
+  if (songTitle.length > cutoffTitle) {
+    songTitle = songTitle.substring(0, cutoffTitle) + "...";
+  }
+
+  const cutoffArtist = 27;
+  let artists = songData.artists?.join(", ") || "Unknown Artist";
+  if (artists.length > cutoffArtist) {
+    artists = artists.substring(0, cutoffArtist) + "...";
+  }
+
+  const cutoffCaption = 180;
+  if (userName == "Unknown User") userName = "Anonymous user";
+  let postCaption = "\"" + caption;
+  if (postCaption.length > cutoffCaption) {
+    postCaption = postCaption.substring(0, cutoffCaption) + "...\"";
+  } else {
+    if (postCaption.charAt(postCaption.length - 1) == "\n") {
+      postCaption = postCaption.substring(0, postCaption.length - 2) + "\"";
+    } else {
+      postCaption += "\"";
+    }
+  }
+  
+
   return (
     <View style={styles.outerContainer}>
       {songData && songData.title && (
@@ -71,40 +98,18 @@ const Post = ({
               }}
               style={styles.profilePic}
             />
-            <View>
-              <Text style={styles.title}>{userName}</Text>
-              <Text style={styles.artist}>Username</Text>
-            </View>
-            <View style={styles.time}>
-              <Text style={styles.smallText}>{formattedTimestamp}</Text>
+            <View style={styles.info}>
+              <Text style={styles.title}>{songTitle}</Text>
+              <Text style={styles.artist}>{artists}</Text>
+              <Text style={styles.time}>{formattedTimestamp}</Text>
             </View>
           </View>
 
           <View style={styles.postContainer}>
-            <View style={styles.songInfo}>
-              <Image
-                source={{
-                  uri: songData.imageUrl || images.defaultAlbumCover.pic,
-                }}
-                style={styles.albumCover}
-              />
-              <Text style={styles.title} numberOfLines={2}>
-                {songData.title}
-              </Text>
-              <Text style={styles.artist} numberOfLines={1}>
-                {songData.artists?.join(", ") || "Unknown Artist"}
-              </Text>
-              <Text style={styles.caption}>{caption}</Text>
-            </View>
-
-            <View style={styles.smallSelectionCol}>
-              <Image source={themeIconSrc} style={styles.smallImage} />
-              <Text style={styles.smallText}>{themeIconLabel}</Text>
-              <Image source={emotionIconSrc} style={styles.smallImage} />
-              <Text style={styles.smallText}>{emotionIconLabel}</Text>
-              <Image source={activityIconSrc} style={styles.smallImage} />
-              <Text style={styles.smallText}>{activityIconLabel}</Text>
-            </View>
+            {/* <View style={styles.songInfo}> */}
+              {caption && <Text style={styles.caption}>{postCaption}</Text>}
+              <Text style={styles.title}>{userName}</Text>
+            {/* </View> */}
           </View>
         </Pressable>
       )}
@@ -121,19 +126,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: windowWidth * 0.95,
     height: windowWidth * 0.32,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   postContainer: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
 });
 

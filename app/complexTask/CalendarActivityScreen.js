@@ -23,6 +23,11 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import RNPickerSelect from "react-native-picker-select";
 import { supabase } from "../../utils/supabaseClient";
 import { formatCurrentTrack } from "../../utils/apiOptions";
+import Header1 from "../../components/Header1";
+import Header2 from "../../components/Header2";
+import Label from "../../components/Label";
+// import { StatusBar } from "expo-status-bar";
+import { StatusBar } from "react-native";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -301,15 +306,20 @@ const CalendarActivityScreen = ({ navigation }) => {
     }
     return null; // Render nothing if there are no results
   };
-
   return (
+    <>
+      {/* <StatusBar style="dark" barStyle="light-content" /> */}
+      {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#00BCD4" translucent = {true}/> */}
+      <StatusBar barStyle="light-content" backgroundColor={colors.black} translucent = {true}/>
+
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <Image source={images.caroline.pic} style={styles.profilePic} />
           <View>
+            {/* <Header1 text="Caroline Tran" /> */}
             <Text style={styles.title}>Caroline Tran</Text>
-            <Text style={styles.username}>@cntran</Text>
+            <Header2 text="@cntran"/>
           </View>
           <View style={styles.dropDown}>
             <RNPickerSelect
@@ -320,7 +330,7 @@ const CalendarActivityScreen = ({ navigation }) => {
                 { label: "Feeling", value: "feeling" },
               ]}
               style={pickerSelectStyles}
-              placeholder={{ label: "Reprise", value: "reprise" }}
+              placeholder={{ label: "Filter", value: "reprise" }}
             />
             {/* Time Number Input and Unit Selection */}
             {selectedValue === "time" && (
@@ -362,12 +372,15 @@ const CalendarActivityScreen = ({ navigation }) => {
     </SafeAreaView> */}
 
         <View style={styles.monthContainer}>
-          <Text style={styles.month}>DECEMBER</Text>
+          <Label text="Song history" />
+          {/* <Text style={styles.month}>DECEMBER</Text> */}
         </View>
 
         <View style={styles.containerCalendar}>{renderFlatList()}</View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
+    </>
+
   );
 };
 
@@ -388,10 +401,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   title: {
     fontSize: 25,
@@ -409,19 +418,6 @@ const styles = StyleSheet.create({
   spacer: {
     height: 200,
   },
-  // monthContainer: {
-  //   position: "absolute",
-  //   top: "29%",
-  //   width: "100%",
-  //   alignItems: "flex-start",
-  //   marginHorizontal: "10%",
-  //   paddingBottom: "5%",
-  //   zIndex: 1,
-  //   shadowColor: colors.darkGray,
-  //   shadowOffset: { width: 4, height: 4 },
-  //   shadowOpacity: 0.25,
-  //   shadowRadius: 4,
-  // },
   monthContainer: {
     marginTop: "45%",
     marginLeft: "15%",
@@ -430,10 +426,6 @@ const styles = StyleSheet.create({
     marginHorizontal: "10%",
     paddingBottom: "2.5%",
     zIndex: 1,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   month: {
     color: colors.white,
@@ -443,22 +435,18 @@ const styles = StyleSheet.create({
   containerCalendar: {
     flex: 1,
     padding: 5,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   image: {
     width: imageSize,
     height: imageSize,
     margin: 5,
-    borderRadius: 15,
+    borderRadius: 150,
   },
   textBox: {
     position: "absolute",
     bottom: 0,
     right: 0,
-    backgroundColor: colors.yellow,
+    backgroundColor: colors.blue,
     padding: 2,
     borderRadius: 5,
   },
@@ -473,11 +461,12 @@ const styles = StyleSheet.create({
   dropDown: {
     // width: windowWidth * 0.3,
     marginHorizontal: "5%",
+    textTransform: "uppercase"
   },
   numberInput: {
-    fontSize: 16,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    fontSize: 15,
+    paddingVertical: 11,
+    // paddingHorizontal: 10,
     borderWidth: 1,
     borderColor: colors.offWhite75,
     borderRadius: 4,
@@ -487,6 +476,8 @@ const styles = StyleSheet.create({
     margin: windowWidth * 0.005,
     width: windowWidth * 0.3,
     fontWeight: "bold",
+    textTransform: "capitalize",
+
   },
   timeFilterContainer: {
     flexDirection: "row",
@@ -497,21 +488,39 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = {
   inputIOS: {
-    fontSize: 16,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: colors.offWhite75,
-    borderRadius: 4,
-    color: colors.black,
-    backgroundColor: colors.offWhite75,
-    textAlign: "center",
-    margin: windowWidth * 0.005,
+    // fontSize: 16,
+    // paddingVertical: 10,
+    // paddingHorizontal: 10,
+    // borderWidth: 1,
+    // borderColor: colors.offWhite75,
+    // borderRadius: 4,
+    // color: colors.black,
+    // backgroundColor: colors.offWhite75,
+    // textAlign: "center",
+    // margin: windowWidth * 0.005,
     width: windowWidth * 0.3,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+      
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 15,
+      marginTop: 8,
+      marginBottom: 8,
+      backgroundColor: colors.pink,
+      // paddingHorizontal: 45,
+      paddingVertical: 11,
+      textTransform: "uppercase",
+      color: colors.white,
+      fontSize: 16,
+      fontWeight: "bold",
+      textAlign: "center",
   },
   placeholder: {
-    color: colors.darkGray,
+      color: colors.white,
+      textTransform: "uppercase",
+
+      // color: colors.darkGray,
     // fontWeight: "bold",
   },
   inputAndroid: {

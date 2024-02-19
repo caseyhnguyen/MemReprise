@@ -11,6 +11,11 @@ import {
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import Header from "../components/Header";
+import PillPressable from "../components/PillPressable";
+import Header1 from "../components/Header1";
+import Profile from "../components/Profile";
+
+import MapScreen from "./MapScreen";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -21,10 +26,18 @@ const HomeScreen = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <View>
         <Header title="memreprise" />
+        <Profile />
       </View>
-      <Text style={styles.greetingText}>
+      {/* <Text style={styles.greetingText}>
         {userName ? `Hello, ${userName}!` : "Welcome to memreprise!"}
-      </Text>
+      </Text> */}
+      <Header1 text="Welcome to memreprise!" style={styles.greetingText} />
+
+      {/* Embed MapScreen directly */}
+      <View style={{ flex: 1, width: "100%", marginTop: 20 }}>
+        <MapScreen />
+      </View>
+
       <View style={styles.postPrompt}>
         <Image
           source={images.lock.pic}
@@ -34,26 +47,38 @@ const HomeScreen = ({ route, navigation }) => {
         <View style={styles.spacer} />
         <View style={styles.titleContainer}>
           <Text style={styles.postASongText}>
-            Post a song to unlock new posts
+            Give a song to someone to unlock your feed!
           </Text>
         </View>
         <View style={styles.spacer} />
         <View style={styles.buttonContainer}>
-          <Pressable
+          <PillPressable
+            onPress={() =>
+              navigation.navigate("Tracks", { userName: userName })
+            }
+            text="Give a song"
+          />
+          <PillPressable
+            onPress={() => navigation.navigate("FeedScreen")}
+            text="Maybe later"
+            muted={true}
+          />
+          {/* <Pressable
             style={styles.button}
             onPress={() => navigation.navigate("FeedScreen")}
           >
             <Text style={styles.maybeLaterText}>Maybe later</Text>
-          </Pressable>
-          <View style={styles.buttonSpacer} />
-          <Pressable
+          </Pressable> */}
+          {/* <View style={styles.buttonSpacer} /> */}
+
+          {/* <Pressable
             style={styles.button}
             onPress={() =>
               navigation.navigate("Tracks", { userName: userName })
             }
           >
             <Text style={styles.postText}>Post</Text>
-          </Pressable>
+          </Pressable> */}
         </View>
       </View>
     </SafeAreaView>
@@ -75,11 +100,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: colors.offWhite,
     width: windowWidth * 0.9,
-    height: windowWidth * 0.75,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     elevation: 5,
     backgroundColor: colors.offWhite50,
   },
@@ -90,7 +110,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: "center",
-    width: "50%",
+    width: "100%",
   },
   postASongText: {
     textAlign: "center",
@@ -103,23 +123,10 @@ const styles = StyleSheet.create({
     height: 16,
   },
   buttonContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-  },
-  button: {
-    borderRadius: 15,
-    padding: 7,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.offWhite75,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   maybeLaterText: {
     textAlign: "center",

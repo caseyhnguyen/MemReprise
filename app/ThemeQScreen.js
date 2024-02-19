@@ -14,6 +14,7 @@ import {
 import { styles as defaultStyles } from "../assets/Themes/default_style";
 import PostProgressBar from "../components/PostProgressBar";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
+import Header3 from "../components/Header3.js";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -59,9 +60,10 @@ const ThemeQScreen = ({ route, navigation }) => {
         )}
 
         <View style={styles.questionBox}>
-          <Text style={styles.boldText}>
+          <Header3 text="What cafe drink would your song be?" />
+          {/* <Text style={styles.boldText}>
             What cafe drink would your song be?
-          </Text>
+          </Text> */}
         </View>
 
         {/* First selection Row */}
@@ -109,16 +111,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
-    backgroundColor: colors.offWhite75,
+    backgroundColor: colors.darkGray,
+    color: colors.white,
     borderRadius: 10,
     width: rowWidth + 10,
     height: windowWidth * 0.3,
     gap: 5,
     paddingLeft: 10,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   albumCover: {
     width: windowWidth * 0.25,
@@ -128,12 +127,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    color: colors.black,
+    color: colors.white,
     marginTop: 10,
   },
   artist: {
     fontSize: 14,
-    color: colors.black,
+    color: colors.white,
     marginTop: 5,
   },
   titleAndArtist: {
@@ -150,10 +149,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     gap: totalGapSize * 2,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   selectionGrid: {
     justifyContent: "center",
@@ -168,16 +163,12 @@ const styles = StyleSheet.create({
     gap: totalGapSize,
   },
   questionBox: {
-    backgroundColor: colors.offWhite75,
+    backgroundColor: colors.darkGray,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
     width: rowWidth + 10,
-    height: windowWidth * 0.15,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    height: windowWidth * 0.15
   },
   postInProgress: {},
   boldText: {

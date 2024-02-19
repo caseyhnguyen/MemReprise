@@ -13,6 +13,9 @@ import images from "../../assets/Images/images";
 import { colors } from "../../assets/Themes/colors";
 import { useSpotifyAuth } from "../../utils";
 import { discoverStyles as styles } from "../../assets/Themes/discover";
+import PillPressable from "../../components/PillPressable";
+import Label from "../../components/Label";
+import Header3 from "../../components/Header3";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -43,7 +46,7 @@ const ActivityScreen = ({ route, navigation }) => {
   const activities = [
     {
       id: 1,
-      title: "Working",
+      title: "Main quad",
       songsCount: 169,
       icon: images.working.pic, // Ensure 'working' is correctly referenced in your images object
       songs: [
@@ -57,7 +60,7 @@ const ActivityScreen = ({ route, navigation }) => {
     },
     {
       id: 2,
-      title: "Exercising",
+      title: "Lathrop",
       songsCount: 158,
       icon: images.exercising.pic, // Ensure 'eating' is correctly referenced in your images object
       songs: [
@@ -75,13 +78,13 @@ const ActivityScreen = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={{ paddingBottom: 50 }}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>What are you doing right now?</Text>
-          </View>
+          {/* <View style={styles.headerContainer}>
+            <Header3 text="What are you doing right now?" />
+          </View> */}
 
-          <View style={{ marginLeft: 16, marginBottom: 10 }}>
-            <Text style={styles.headerText}>Top Responses</Text>
-          </View>
+          {/* <View style={{ marginLeft: 16, marginBottom: 10 }}>
+            <Label text="Top responses" />
+          </View> */}
           <View style={styles.activitiesContainer}>
             {activities.map((activity, index) => (
               <Pressable
@@ -92,7 +95,7 @@ const ActivityScreen = ({ route, navigation }) => {
                 <View style={styles.activityHeader}>
                   <Text style={styles.activityNumber}>{index + 1}</Text>
 
-                  <Image source={activity.icon} style={styles.activityIcon} />
+                  {/* <Image source={activity.icon} style={styles.activityIcon} /> */}
                   <Text style={styles.activityTitle}>{activity.title}</Text>
                   <Text style={styles.songsCount}>
                     {activity.songsCount} Songs
@@ -108,7 +111,8 @@ const ActivityScreen = ({ route, navigation }) => {
                       </View>
                     </View>
                   ))}
-                  <Text style={styles.seeMore}>see more {">"}</Text>
+                  <PillPressable text="See more" />
+                  {/* <Text style={styles.seeMore}>see more {">"}</Text> */}
                 </View>
               </Pressable>
             ))}

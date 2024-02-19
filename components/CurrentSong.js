@@ -73,14 +73,14 @@ const CurrentSong = ({
           width={windowWidth - 40}
           height={7}
           borderRadius={3.5}
-          color={colors.verdigrisGreen}
+          color={colors.pink}
           unfilledColor={colors.offWhite75}
           borderWidth={0}
           useNativeDriver={true}
           style={styles.progressBar}
         />
-        <Text style={styles.progressTime}>{formatTime(progressMs)}</Text>
-        <Text style={styles.durationTime}>{formatTime(duration)}</Text>
+        {/* <Text style={styles.progressTime}>{formatTime(progressMs)}</Text>
+        <Text style={styles.durationTime}>{formatTime(duration)}</Text> */}
       </View>
     </View>
   );
@@ -88,17 +88,15 @@ const CurrentSong = ({
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: colors.offWhite75,
+    backgroundColor: colors.darkGray,
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 15,
     marginBottom: 10,
     width: windowWidth * 0.95,
     height: windowWidth * 0.35,
-    shadowColor: colors.darkGray,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    color: colors.white,
+
   },
   container: {
     flexDirection: "row",
@@ -117,20 +115,23 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginRight: 10,
     width: "75%",
+    color: colors.white,
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 75,
+    height: 75,
     marginRight: 15,
+    borderRadius: 200
+
   },
   albumName: {
-    color: colors.darkGray,
+    color: colors.white,
     flex: 3,
     fontSize: 16,
     marginRight: 10,
   },
   artistText: {
-    color: colors.darkGray,
+    color: colors.white,
     fontSize: 16,
     marginTop: 2,
   },
@@ -138,6 +139,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
     marginBottom: 2,
+    color: colors.white,
   },
   progressWrapper: {
     width: "100%",
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
   },
   progressTime: {
     fontSize: 14,
-    color: colors.darkGray,
+    color: colors.white,
     position: "absolute",
     left: 10,
     bottom: -20,

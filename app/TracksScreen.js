@@ -196,6 +196,7 @@ const TracksScreen = ({ route, navigation }) => {
       <SpotifyAuthOrRefreshButton />
 
       <FlatList
+        horizontal={true}
         data={search ? searchedSongs : limitedTracks}
         renderItem={search ? renderSearchSong : renderSong}
         keyExtractor={(item, index) => item.id?.toString() || index.toString()}

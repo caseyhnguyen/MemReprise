@@ -9,8 +9,8 @@ export const colors = {
   offWhite: "#F3F3F3FF",
   offWhite50: "rgba(255, 255, 255, 0.5)", // 50% opacity
   offWhite75: "rgba(255, 255, 255, 0.75)", // 50% opacity
-  pink: "#F53DAF",
-  blue: "#A0F5F2",
+  pink: "#FB81E4",
+  blue: "#60FFFC",
   orange: "#F5A000",
   skyBlue: "#41A9F6FF",
   yellow: "#F5DF44FF",

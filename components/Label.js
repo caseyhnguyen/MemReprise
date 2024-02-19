@@ -22,7 +22,8 @@ const Label = (props) => {
         alignItems: "center",
         justifyContent: "center",
         // alignSelf: "center",
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        letterSpacing: 1.5,
     },
   });
   

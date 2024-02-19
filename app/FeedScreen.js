@@ -25,6 +25,7 @@ import PillPressable from "../components/PillPressable";
 import Header2 from "../components/Header2";
 import Header1 from "../components/Header1";
 import { StatusBar } from "react-native";
+import Label from "../components/Label";
 
 const windowWidth = Dimensions.get("window").width;
 const gap = 12;
@@ -253,8 +254,10 @@ const FeedScreen = ({ navigation }) => {
           >
             <Text style={styles.postText}>Post</Text>
           </Pressable> */}
+          <Label text="Recent gifts" /> 
         </View>
       }
+
 
       {loading ? (
         <ActivityIndicator size="large" color={colors.white} />

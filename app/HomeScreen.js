@@ -13,6 +13,7 @@ import { colors } from "../assets/Themes/colors";
 import Header from "../components/Header";
 import PillPressable from "../components/PillPressable";
 import Header1 from "../components/Header1";
+import Profile from "../components/Profile";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -23,6 +24,7 @@ const HomeScreen = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <View>
         <Header title="memreprise" />
+        <Profile />
       </View>
       {/* <Text style={styles.greetingText}>
         {userName ? `Hello, ${userName}!` : "Welcome to memreprise!"}

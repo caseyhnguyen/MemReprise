@@ -1,128 +1,136 @@
-// MapScreen.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
-  SafeAreaView,
-  View,
-  Text,
-  TextInput,
-  Button,
-  Alert,
-  Image,
-  Pressable,
   StyleSheet,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Keyboard,
+  View,
+  Alert,
+  TouchableOpacity,
+  Text,
+  SafeAreaView,
 } from "react-native";
-import images from "../assets/Images/images";
-import { colors } from "../assets/Themes/colors";
-import Header from "../components/Header";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import * as Location from "expo-location";
 
 const MapScreen = () => {
   const [markers, setMarkers] = useState([]);
-  const [selectedMarkerKey, setSelectedMarkerKey] = useState(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [isMapExpanded, setIsMapExpanded] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+  const mapRef = useRef(null);
 
-  const handleAddMarker = (coordinate) => {
-    const newMarker = {
-      coordinate,
-      title,
-      description,
-      // Ensure this generates a truly unique key
-      key: Date.now().toString(),
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setUserLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      });
+    })();
+  }, []);
+
+  const onUserLocationChange = (e) => {
+    const newLocation = {
+      ...userLocation,
+      latitude: e.nativeEvent.coordinate.latitude,
+      longitude: e.nativeEvent.coordinate.longitude,
     };
-
-    setMarkers((currentMarkers) => [...currentMarkers, newMarker]);
-    setTitle(""); // Reset title input
-    setDescription(""); // Reset description input
+    setUserLocation(newLocation);
   };
 
-  const handleSelectMarker = (key) => {
-    console.log(`Marker selected: ${key}`); // Debugging: Log selected marker
-    setSelectedMarkerKey(key);
-  };
-
-  const handleDeleteSelectedMarker = () => {
-    console.log(`Deleting marker: ${selectedMarkerKey}`); // Debugging: Log deletion attempt
-    if (selectedMarkerKey) {
-      setMarkers((markers) =>
-        markers.filter((marker) => marker.key !== selectedMarkerKey)
-      );
-      setSelectedMarkerKey(null); // Reset selected marker key
-    } else {
-      Alert.alert("No marker selected", "Please select a marker to delete.");
+  const toggleMapSize = () => {
+    setIsMapExpanded(!isMapExpanded);
+    if (isMapExpanded && userLocation && mapRef.current) {
+      mapRef.current.animateToRegion(userLocation, 350);
     }
   };
 
+  if (!userLocation) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.loadingContainer}>
+          <Text>Loading...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        onPress={(e) => handleAddMarker(e.nativeEvent.coordinate)}
-      >
-        {markers.map((marker, index) => (
-          <Marker
-            key={index} // For debugging purposes, consider using index as key
-            coordinate={marker.coordinate}
-            title={marker.title}
-            description={marker.description}
-            onPress={() => handleSelectMarker(marker.key)}
-          />
-        ))}
-      </MapView>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={title}
-          onChangeText={setTitle}
-          placeholder="Title"
-        />
-        <TextInput
-          style={styles.input}
-          value={description}
-          onChangeText={setDescription}
-          placeholder="Description"
-        />
-        <Button
-          title="Add Marker"
-          onPress={() => Alert.alert("Marker added")}
-        />
-        <Button
-          title="Delete Selected Marker"
-          color="red"
-          onPress={handleDeleteSelectedMarker}
-          disabled={!selectedMarkerKey}
-        />
-        {/** Debugging: Display selected marker key */}
-        <Text>Selected Marker Key: {selectedMarkerKey || "None"}</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View
+          style={
+            isMapExpanded ? styles.expandedMapContainer : styles.mapContainer
+          }
+        >
+          <MapView
+            ref={mapRef}
+            style={styles.map}
+            provider={PROVIDER_GOOGLE}
+            initialRegion={userLocation}
+          >
+            <Marker
+              coordinate={{
+                latitude: userLocation.latitude,
+                longitude: userLocation.longitude,
+              }}
+              draggable
+              onDragEnd={onUserLocationChange}
+              title="Your Location"
+            />
+            {markers.map((marker, index) => (
+              <Marker key={index} coordinate={marker} draggable />
+            ))}
+          </MapView>
+          <TouchableOpacity style={styles.toggleButton} onPress={toggleMapSize}>
+            <Text style={styles.buttonText}>
+              {isMapExpanded ? "Minimize" : "Expand"}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
   },
+  mapContainer: {
+    width: "100%",
+    height: "25%",
+  },
+  expandedMapContainer: {
+    ...StyleSheet.absoluteFillObject,
+  },
   map: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
-  inputContainer: {
+  toggleButton: {
+    position: "absolute",
+    right: 10,
+    bottom: 10,
+    backgroundColor: "blue",
     padding: 10,
+    borderRadius: 20,
   },
-  input: {
-    height: 40,
-    marginBottom: 12,
-    borderWidth: 1,
-    padding: 10,
+  buttonText: {
+    color: "white",
   },
 });
 

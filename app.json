@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "cs47-a3-starter-w23",
-    "slug": "cs47-a3-starter-w23",
+    "name": "memreprise",
+    "slug": "memreprise",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -25,10 +27,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png",
-      "bundler": "metro"
-    },
-    "plugins": ["expo-router"],
-    "scheme": "your-app-scheme"
+      "favicon": "./assets/favicon.png"
+    }
   }
 }

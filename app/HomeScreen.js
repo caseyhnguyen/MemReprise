@@ -15,6 +15,8 @@ import PillPressable from "../components/PillPressable";
 import Header1 from "../components/Header1";
 import Profile from "../components/Profile";
 
+import MapScreen from "./MapScreen";
+
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
@@ -30,7 +32,12 @@ const HomeScreen = ({ route, navigation }) => {
         {userName ? `Hello, ${userName}!` : "Welcome to memreprise!"}
       </Text> */}
       <Header1 text="Welcome to memreprise!" style={styles.greetingText} />
-      
+
+      {/* Embed MapScreen directly */}
+      <View style={{ flex: 1, width: "100%", marginTop: 20 }}>
+        <MapScreen />
+      </View>
+
       <View style={styles.postPrompt}>
         <Image
           source={images.lock.pic}
@@ -51,7 +58,7 @@ const HomeScreen = ({ route, navigation }) => {
             }
             text="Give a song"
           />
-          <PillPressable 
+          <PillPressable
             onPress={() => navigation.navigate("FeedScreen")}
             text="Maybe later"
             muted={true}
@@ -63,7 +70,7 @@ const HomeScreen = ({ route, navigation }) => {
             <Text style={styles.maybeLaterText}>Maybe later</Text>
           </Pressable> */}
           {/* <View style={styles.buttonSpacer} /> */}
-          
+
           {/* <Pressable
             style={styles.button}
             onPress={() =>

@@ -22,54 +22,50 @@ const Song = ({
   artists,
   albumName,
   imageUrl,
+  name,
   // duration,
   previewUrl,
   externalUrl,
   played_at,
   // userName,
-}) => {
-  const navigation = useNavigation();
+  }) => {
+    const navigation = useNavigation();
 
-  const onSongPress = async () => {
-    // Define songData for Supabase
-    const songData = {
-      index,
-      title,
-      artists: Array.isArray(artists) ? artists : [artists],
-      albumName,
-      imageUrl,
-      duration,
-      previewUrl,
-      externalUrl,
-      played_at,
-      userName,
-    };
+    const onSongPress = async () => {
+      // Define songData for Supabase
+      const songData = {
+        // index,
+        title,
+        artists: Array.isArray(artists) ? artists : [artists],
+        albumName,
+        imageUrl,
+        // duration,
+        // previewUrl,
+        // externalUrl,
+        // played_at,
+        // userName,
+      };
+      console.log(imageUrl);
+      // console.log("Inserting songData to Supabase:", songData);
+      // console.log("Username in Song Component:", { userName });
 
-    // console.log("Inserting songData to Supabase:", songData);
-    // console.log("Username in Song Component:", { userName });
+      try {
+        // Save to Supabase
+        const { data, error } = await supabase.from("songs").insert([songData]);
 
-    try {
-      // Save to Supabase
-      const { data, error } = await supabase.from("songs").insert([songData]);
-
-      if (error) {
-        console.error("Error saving song to database:", error);
+        if (error) {
+          console.error("Error saving song to database:", error);
+          return;
+        } else {
+          console.log("Song saved successfully:", data);
+        }
+      } catch (err) {
+        console.error("Supabase operation failed:", err);
         return;
-      } else {
-        console.log("Song saved successfully:", data);
       }
-    } catch (err) {
-      console.error("Supabase operation failed:", err);
-      return;
-    }
-
-    // Navigate to "Theme Question" with songData
-    // console.log("Navigating to Theme Question with songData:", songData);
-    // navigation.navigate("Theme Question", {
-    //   songData,
-    //   userName,
-    // });
-  };
+      // imageUrl = require(imageUrl);
+      navigation.navigate("City Playlist", { name: 'YOU', city: name, image: { uri: imageUrl } });
+    };
 
   return (
     <View style={styles.outerContainer}>

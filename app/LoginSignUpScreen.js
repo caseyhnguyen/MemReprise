@@ -275,6 +275,7 @@ const LoginSignUpScreen = ({ navigation }) => {
         imageUrl={item.imageUrl || "Unknown Image"}
         previewUrl={item.previewUrl || ""}
         externalUrl={item.externalUrl || ""}
+        name={item.songTitle || ""}
       />
     );
   };

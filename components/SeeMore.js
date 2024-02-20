@@ -2,6 +2,8 @@ import React from "react";
 import { Text, Image, Pressable, StyleSheet } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
+import Icon from 'react-native-vector-icons/FontAwesome5'
+
 import { trackEvent } from "@aptabase/react-native";
 
 // const PillPressable = ({ text, isSpotify, }) => {
@@ -24,6 +26,8 @@ const SeeMore = ({ text, onPress }) => {
       onPress={handlePress} // Use the wrapped onPress handler
     >
       <Text style={styles.buttonText}>See more</Text>
+            <Icon name='chevron-right' style={styles.arrow} />
+
     </Pressable>
   );
 };
@@ -45,6 +49,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     marginLeft: "auto",
   },
+    arrow: {
+    color: colors.pink,
+    fontSize: 16,
+    marginLeft: 10
+    }
 });
 
 export default SeeMore;

@@ -23,7 +23,7 @@ const Header1 = (props) => {
         // justifyContent: "center",
         // marginTop: -30,
         marginBottom: 10,
-        alignSelf: "center",
+        // alignSelf: "center",
     },
   });
   

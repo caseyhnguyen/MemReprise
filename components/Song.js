@@ -17,16 +17,16 @@ import { supabase } from "../utils/supabaseClient";
 const windowWidth = Dimensions.get("window").width;
 
 const Song = ({
-  index,
+  // index,
   title,
   artists,
   albumName,
   imageUrl,
-  duration,
+  // duration,
   previewUrl,
   externalUrl,
   played_at,
-  userName,
+  // userName,
 }) => {
   const navigation = useNavigation();
 
@@ -64,11 +64,11 @@ const Song = ({
     }
 
     // Navigate to "Theme Question" with songData
-    console.log("Navigating to Theme Question with songData:", songData);
-    navigation.navigate("Theme Question", {
-      songData,
-      userName,
-    });
+    // console.log("Navigating to Theme Question with songData:", songData);
+    // navigation.navigate("Theme Question", {
+    //   songData,
+    //   userName,
+    // });
   };
 
   return (

@@ -20,6 +20,24 @@ const windowWidth = Dimensions.get("window").width;
 
 const HomeScreen = ({ route, navigation }) => {
   const userName = route.params?.userName;
+
+  const renderSong = ({ item, index }) => {
+    return (
+      <Song
+        index={index}
+        title={item.songTitle || "Unknown Title"}
+        artists={item.songArtists || ["Unknown Artist"]}
+        albumName={item.albumName || "Unknown Album"}
+        imageUrl={item.imageUrl || "Unknown Image"}
+        duration={item.duration || 0}
+        previewUrl={item.previewUrl || ""}
+        externalUrl={item.externalUrl || ""}
+        played_at={item.played_at || ""}
+        userName={userName}
+      />
+    );
+  };
+  
   return (
     <SafeAreaView style={styles.container}>
       <View>

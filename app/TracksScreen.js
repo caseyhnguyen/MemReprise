@@ -113,6 +113,7 @@ const TracksScreen = ({ route, navigation }) => {
 
     const progressFraction = progressMs / duration;
 
+    // console.log(currentTrack);
     return (
       <View style={styles.currentTrackContainer}>
         <Header2 text="Now playing" />
@@ -135,6 +136,7 @@ const TracksScreen = ({ route, navigation }) => {
   };
 
   const limitedTracks = tracks.slice(0, 10);
+  // console.log(limitedTracks);
 
   const renderSong = ({ item, index }) => {
     return (

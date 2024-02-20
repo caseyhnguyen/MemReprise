@@ -60,15 +60,15 @@ const MusicBox = ({ route,
     <>
     <View style={styles.row}>
       {/* <View style={styles.col}> */}
-        <BackArrow/>
+        <BackArrow to="Receive Gift" />
       {/* </View> */}
       <View style={styles.col}>
-        <Header1 text="Chris' Musicbox" />
+        <Header1 text="Gray's Musicbox" />
       </View>
     </View>
     <View style={styles.outerContainer}>
       {/* <TouchableOpacity style={styles.container} onPress={onSongPress}> */}
-        <Text style={styles.titleText}>Our first kiss, remember?</Text>
+        <Text style={styles.titleText}>We first met here, remember?</Text>
         <Text style={styles.artistText}>Feb 14, 2023</Text>
 
         <View style={styles.songInfo}>

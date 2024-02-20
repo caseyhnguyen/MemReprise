@@ -64,7 +64,9 @@ const Song = ({
         return;
       }
       // imageUrl = require(imageUrl);
-      navigation.navigate("Music Box", { artists: artists, city: name, imageUrl: imageUrl });
+      
+      navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
+      // navigation.navigate("Music Box", { artists: artists, city: name, imageUrl: imageUrl });
     };
 
   return (

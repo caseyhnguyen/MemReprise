@@ -4,6 +4,8 @@ import PillPressable from "../../components/PillPressable";
 import { colors } from "../../assets/Themes/colors";
 import { useNavigation } from "@react-navigation/native";
 import { trackEvent } from "@aptabase/react-native";
+import Gray from "../../assets/gray.png"
+import MusicImg from "../../assets/musicbox.png"
 
 const RecieveGift = ({ route }) => {
   const navigation = useNavigation();
@@ -19,9 +21,11 @@ const RecieveGift = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={image} />
-      <Text style={styles.name}>{name}</Text>
+      <Image style={styles.image} source={Gray} />
+      <Text style={styles.name}>Gray</Text>
       <Text style={styles.text}>sent you a music box!</Text>
+      <Image style={styles.image2} source={MusicImg} />
+
       <PillPressable
         onPress={() => {
           // Track the send button pressed event before navigation
@@ -29,9 +33,9 @@ const RecieveGift = ({ route }) => {
             destination: "FeedScreen", // additional data we can log
             senderName: name, // The name of the person who received the gift
           });
-          navigation.navigate("FeedScreen");
+          navigation.navigate("Music Box");
         }}
-        text="Send"
+        text="Open"
       />
     </View>
   );
@@ -48,6 +52,12 @@ const styles = StyleSheet.create({
     width: 125,
     height: 125,
     borderRadius: 1000,
+  },
+  image2: {
+    // width: 125,
+    // height: 125,
+    // borderRadius: 1000,
+    marginBottom: 30
   },
   name: {
     fontWeight: "bold",

@@ -7,10 +7,8 @@ import PillPressable from '../../components/PillPressable'
 import ProfilePressable from '../../components/ProfilePressable'
 import { useNavigation } from '@react-navigation/native'
 import {
-  Dimensions,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   View
 } from 'react-native'
@@ -61,12 +59,14 @@ const ShareMusicBox = () => {
             <PillSelectable text='Notify'></PillSelectable>
           </ScrollView>
         </View>
-        <PillPressable
-          onPress={() =>
-            navigation.navigate("FeedScreen")
-          }
-          text="Send"
-        />
+        <View style={styles.buttonView}>
+          <PillPressable
+            onPress={() =>
+              navigation.navigate("FeedScreen")
+            }
+            text="Send"
+          />
+        </View>
       </View>
     </ScrollView >
   )
@@ -75,6 +75,11 @@ const ShareMusicBox = () => {
 const styles = StyleSheet.create({
   bodyView: {
     padding: 10
+  },
+  buttonView: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center'
   },
   input: {
     fontSize: 15,

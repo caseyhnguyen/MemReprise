@@ -47,6 +47,7 @@ import CalendarActivityScreen from "./complexTask/CalendarActivityScreen";
 import TutorialScreen from "./TutorialScreen";
 import { StatusBar } from "expo-status-bar";
 import ShareMusicBox from "./complexTask/ShareMusicBox";
+import RecieveGift from "./complexTask/RecieveGift";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -93,6 +94,9 @@ function HomeStackScreen() {
       </HomeStack.Screen>
       <HomeStack.Screen name="Share a Music Box">
         {(props) => <GradientWrapper {...props} Component={ShareMusicBox} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Theme Question">
         {(props) => <GradientWrapper {...props} Component={ThemeQScreen} />}

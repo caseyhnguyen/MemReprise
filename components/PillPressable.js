@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  Text,
-  Image,
-  Pressable,
-  StyleSheet,
+    Text,
+    Image,
+    Pressable,
+    StyleSheet,
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -15,10 +15,10 @@ const PillPressable = (props) => {
     return (
         <Pressable
             style={[styles.button,
-                props.isSpotify ? styles.buttonSpotifyColor : styles.buttonNormalColor,
-                props.muted && styles.discourageddButton,
-             ]}
-                
+            props.isSpotify ? styles.buttonSpotifyColor : styles.buttonNormalColor,
+            props.muted && styles.discourageddButton,
+            ]}
+
             onPress={props.onPress}
             // disabled={props.isLoading}
             disabled={((props.isSpotify && props.isLoading) ? props.isLoading : false)}
@@ -36,9 +36,9 @@ const PillPressable = (props) => {
             </Text>
         </Pressable>
     );
-  };
-  
-  const styles = StyleSheet.create({
+};
+
+const styles = StyleSheet.create({
     button: {
         flexDirection: "row",
         justifyContent: "center",
@@ -46,7 +46,7 @@ const PillPressable = (props) => {
         borderRadius: 10,
         marginTop: 8,
         marginBottom: 8,
-      },
+    },
     buttonSpotifyColor: {
         backgroundColor: colors.spotify,
         paddingHorizontal: 20,
@@ -74,7 +74,6 @@ const PillPressable = (props) => {
         width: 24,
         height: 24,
     },
-  });
-  
-  export default PillPressable;
-  
+});
+
+export default PillPressable;

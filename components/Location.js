@@ -16,7 +16,7 @@ import { supabase } from "../utils/supabaseClient";
 
 const windowWidth = Dimensions.get("window").width;
 
-const Song = ({
+const Location = ({
   // index,
   title,
   artists,
@@ -64,7 +64,7 @@ const Song = ({
         return;
       }
       // imageUrl = require(imageUrl);
-      navigation.navigate("Music Box", { artists: artists, city: name, imageUrl: imageUrl });
+      navigation.navigate("City Playlist", { name: 'YOU', city: name, image: { uri: imageUrl } });
     };
 
   return (
@@ -136,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Song;
+export default Location;

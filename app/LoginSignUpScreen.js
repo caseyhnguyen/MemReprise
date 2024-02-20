@@ -22,6 +22,7 @@ import PillSelectable from "../components/PillSelectable.js";
 import ProfilePressable2 from "../components/ProfilePressable2";
 import SeeMore from "../components/SeeMore.js";
 import Song from "../components/Song.js";
+import Location from "../components/Location.js";
 import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../utils";
 import ExImage from "../assets/caroline.png";
 
@@ -280,6 +281,19 @@ const LoginSignUpScreen = ({ navigation }) => {
     );
   };
 
+  const renderLocation = ({ item }) => {
+    return (
+      <Location
+        title={item.songTitle || "Unknown Title"}
+        artists={item.songArtists || ["Unknown Artist"]}
+        imageUrl={item.imageUrl || "Unknown Image"}
+        previewUrl={item.previewUrl || ""}
+        externalUrl={item.externalUrl || ""}
+        name={item.songTitle || ""}
+      />
+    );
+  };
+
   const renderProfile = ({ item }) => {
     return <ProfilePressable2 image={item.image} name={item.name} />;
   };
@@ -343,7 +357,7 @@ const LoginSignUpScreen = ({ navigation }) => {
             <FlatList
               horizontal={true}
               data={limitedLocations}
-              renderItem={renderSong}
+              renderItem={renderLocation}
               keyExtractor={(item, index) =>
                 item.id?.toString() || index.toString()
               }

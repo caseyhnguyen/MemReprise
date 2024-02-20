@@ -52,6 +52,7 @@ import RecieveGift from "./complexTask/RecieveGift";
 import PlaylistCity from "./complexTask/PlaylistCity";
 
 import Aptabase from "@aptabase/react-native";
+import MusicBox from "../components/MusicBox";
 
 Aptabase.init("A-US-8502203082");
 
@@ -113,6 +114,9 @@ function HomeStackScreen() {
       </HomeStack.Screen>
       <HomeStack.Screen name="City Playlist">
         {(props) => <GradientWrapper {...props} Component={PlaylistCity} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Music Box">
+        {(props) => <GradientWrapper {...props} Component={MusicBox} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Theme Question">
         {(props) => <GradientWrapper {...props} Component={ThemeQScreen} />}

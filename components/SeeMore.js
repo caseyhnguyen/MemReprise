@@ -25,7 +25,12 @@ const SeeMore = ({ text, onPress }) => {
       style={styles.seeMore}
       onPress={handlePress} // Use the wrapped onPress handler
     >
-      <Text style={styles.buttonText}>See more</Text>
+      <Text style={styles.buttonText}>
+        {!text
+          ? "See more"
+          : "View Mixtape"
+          }
+      </Text>
             <Icon name='chevron-right' style={styles.arrow} />
 
     </Pressable>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -16,30 +16,37 @@ import Header from "../components/Header";
 import PillPressable from "../components/PillPressable";
 import Header1 from "../components/Header1";
 import Header2 from "../components/Header2";
+import { trackEvent } from "@aptabase/react-native";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
 const LoginSignUpScreen = ({ navigation }) => {
+  // Function to handle "Log in" button press
+  const handleLoginPress = () => {
+    trackEvent("User Interaction", { action: "Navigate to Login" });
+    navigation.navigate("Login");
+  };
+
+  // Function to handle "Sign up" button press
+  const handleSignUpPress = () => {
+    trackEvent("User Interaction", { action: "Navigate to SignUp" });
+    navigation.navigate("SignUp");
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
         <View style={styles.postPrompt}>
           {/* <View style={styles.spacer} /> */}
           <View style={styles.titleContainer}>
-            <Header1 text="memreprise"/>
+            <Header1 text="memreprise" />
             <Header2 text="Where music and memories meet" />
           </View>
           {/* <View style={styles.spacer} /> */}
           <View style={styles.buttonContainer}>
-            <PillPressable
-              onPress={() => navigation.navigate("Login")}
-              text="Log in"
-            />
-            <PillPressable
-              onPress={() => navigation.navigate("SignUp")}
-              text="Sign up"
-            />
+            <PillPressable onPress={handleLoginPress} text="Log in" />
+            <PillPressable onPress={handleSignUpPress} text="Sign up" />
             {/* <Pressable
               style={styles.button}
               onPress={() => navigation.navigate("Login")}

@@ -21,6 +21,7 @@ import PillPressable from "../components/PillPressable";
 import Header1 from "../components/Header1";
 import Header2 from "../components/Header2";
 import Label from "../components/Label";
+import { trackEvent } from "@aptabase/react-native";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -28,6 +29,26 @@ const windowWidth = Dimensions.get("window").width;
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("user@example.com"); // Pre-filled email
   const [password, setPassword] = useState("password123"); // Pre-filled password
+
+  const handleChangeEmail = (text) => {
+    setEmail(text);
+    trackEvent("User Interaction", { action: "Email Field Interacted" });
+  };
+
+  const handleChangePassword = (text) => {
+    setPassword(text);
+    trackEvent("User Interaction", { action: "Password Field Interacted" });
+  };
+
+  const handleLoginPress = () => {
+    trackEvent("User Interaction", { action: "Log in Attempted" });
+    navigation.navigate("Home");
+  };
+
+  const handleNavigateSignUp = () => {
+    trackEvent("User Interaction", { action: "Navigate to Sign Up" });
+    navigation.navigate("SignUp");
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -51,7 +72,7 @@ const LoginScreen = ({ navigation }) => {
               <TextInput
                 style={styles.input}
                 value={email}
-                onChangeText={(text) => setEmail(text)}
+                onChangeText={handleChangeEmail}
                 placeholder="Enter your email"
               />
 
@@ -59,7 +80,7 @@ const LoginScreen = ({ navigation }) => {
               <TextInput
                 style={styles.input}
                 value={password}
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={handleChangePassword}
                 secureTextEntry
                 placeholder="Enter your password"
               />
@@ -72,20 +93,14 @@ const LoginScreen = ({ navigation }) => {
               >
                 <Text style={styles.loginBtnTxt}>Loginn</Text>
               </Pressable> */}
-              <PillPressable 
-                onPress={() => navigation.navigate("Home")}
-                text="Log in"
-              />
+              <PillPressable onPress={handleLoginPress} text="Log in" />
               {/* <View style={styles.buttonSpacer} /> */}
             </View>
             {/* <View style={styles.spacer} /> */}
 
             <View style={styles.bottomTextContainer}>
               <Text style={styles.signUpText}>Don't have an account?</Text>
-              <Text
-                style={styles.linkText}
-                onPress={() => navigation.navigate("SignUp")}
-              >
+              <Text style={styles.linkText} onPress={handleNavigateSignUp}>
                 Sign up
               </Text>
             </View>

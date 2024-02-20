@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -16,12 +16,26 @@ import Header1 from "../components/Header1";
 import Profile from "../components/Profile";
 
 import MapScreen from "./MapScreen";
+import { trackEvent } from "@aptabase/react-native";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
 const HomeScreen = ({ route, navigation }) => {
   const userName = route.params?.userName;
+
+  // Function to handle giving a song
+  const handleGiveASong = () => {
+    trackEvent("User Interaction", { action: "Give a Song", userName });
+    navigation.navigate("Tracks", { userName: userName });
+  };
+
+  // Function to handle "Maybe Later" action
+  const handleMaybeLater = () => {
+    trackEvent("User Interaction", { action: "Maybe Later", userName });
+    navigation.navigate("FeedScreen");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -52,14 +66,9 @@ const HomeScreen = ({ route, navigation }) => {
         </View>
         <View style={styles.spacer} />
         <View style={styles.buttonContainer}>
+          <PillPressable onPress={handleGiveASong} text="Give a song" />
           <PillPressable
-            onPress={() =>
-              navigation.navigate("Tracks", { userName: userName })
-            }
-            text="Give a song"
-          />
-          <PillPressable
-            onPress={() => navigation.navigate("FeedScreen")}
+            onPress={handleMaybeLater}
             text="Maybe later"
             muted={true}
           />

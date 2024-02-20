@@ -71,7 +71,7 @@ const TracksScreen = ({ route, navigation }) => {
   };
 
   const SpotifyAuthOrRefreshButton = () => (
-    <PillPressable 
+    <PillPressable
       // style={[styles.button, isLoading && styles.disabledButton]}
       onPress={handleButtonPress}
       disabled={isLoading}
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50
+    marginTop: 50,
     // backgroundColor: colors.background,
   },
   logo: {

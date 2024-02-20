@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -16,6 +16,7 @@ import { discoverStyles as styles } from "../../assets/Themes/discover";
 import PillPressable from "../../components/PillPressable";
 import Label from "../../components/Label";
 import Header3 from "../../components/Header3";
+import { trackEvent } from "@aptabase/react-native";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -31,14 +32,32 @@ const ActivityScreen = ({ route, navigation }) => {
         "https://open.spotify.com/playlist/1GLBdwUL7VgrARLttuAcvU?si=4bf86eeac70a4038";
     }
 
+    // Log the activity press event
+    trackEvent("Activity Selected", { activityTitle });
+
     if (!token) {
       try {
         await getSpotifyAuth(); // Authenticate if user is not authenticated
+        // Log the navigation event after successful authentication
+        trackEvent("Navigation", {
+          destination: "PlaylistDetails",
+          result: "Authenticated",
+        });
         navigation.navigate("PlaylistDetails", { url }); // Navigate after authentication
       } catch (error) {
         console.error("Authentication failed", error);
+        // Log the authentication failure event
+        trackEvent("Error", {
+          message: "Authentication failed",
+          error: error.message,
+        });
       }
     } else {
+      // Log the navigation event if already authenticated
+      trackEvent("Navigation", {
+        destination: "PlaylistDetails",
+        result: "Already Authenticated",
+      });
       navigation.navigate("PlaylistDetails", { url }); // Navigate if already authenticated
     }
   };
@@ -111,7 +130,16 @@ const ActivityScreen = ({ route, navigation }) => {
                       </View>
                     </View>
                   ))}
-                  <PillPressable text="See more" />
+                  <PillPressable
+                    onPress={() => {
+                      trackEvent("Interaction", {
+                        action: "See More Pressed",
+                        activityTitle: activity.title,
+                      });
+                      // Additional actions for "See more" button press
+                    }}
+                    text="See more"
+                  />
                   {/* <Text style={styles.seeMore}>see more {">"}</Text> */}
                 </View>
               </Pressable>

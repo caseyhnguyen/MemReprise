@@ -14,6 +14,7 @@ import {
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { trackEvent } from "@aptabase/react-native";
 
 // Screens
 // Simple Task
@@ -50,6 +51,10 @@ import ShareMusicBox from "./complexTask/ShareMusicBox";
 import RecieveGift from "./complexTask/RecieveGift";
 import PlaylistCity from "./complexTask/PlaylistCity";
 
+import Aptabase from "@aptabase/react-native";
+
+Aptabase.init("A-US-8502203082");
+
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -63,11 +68,18 @@ const FeedStack = createStackNavigator();
 const DiscoverTabs = createMaterialTopTabNavigator();
 
 // Create a wrapper component to apply gradient background
-const GradientWrapper = ({ Component, navigation, route }) => (
-  <GradientBackground>
-    <Component navigation={navigation} route={route} />
-  </GradientBackground>
-);
+const GradientWrapper = ({ Component, navigation, route }) => {
+  useEffect(() => {
+    // Log screen view with Aptabase
+    trackEvent("Screen View", { screen: route.name });
+  }, [route.name]);
+
+  return (
+    <GradientBackground>
+      <Component navigation={navigation} route={route} />
+    </GradientBackground>
+  );
+};
 
 // HomeStack Navigator
 function HomeStackScreen() {
@@ -147,7 +159,11 @@ function ActivityStackScreen() {
 function ThemeStackScreen() {
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor={colors.black} translucent={true} />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={colors.black}
+        translucent={true}
+      />
 
       <ThemeStack.Navigator screenOptions={{ headerShown: false }}>
         <ThemeStack.Screen name="ThemeScreen">
@@ -155,7 +171,9 @@ function ThemeStackScreen() {
         </ThemeStack.Screen>
 
         <ThemeStack.Screen name="PlaylistDetails">
-          {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
+          {(props) => (
+            <GradientWrapper {...props} Component={PlaylistDetails} />
+          )}
         </ThemeStack.Screen>
       </ThemeStack.Navigator>
     </>
@@ -204,7 +222,10 @@ function DiscoverTabsScreen() {
           },
         }}
       >
-        <DiscoverTabs.Screen name="Music boxes near me" style={{ color: colors.white }}>
+        <DiscoverTabs.Screen
+          name="Music boxes near me"
+          style={{ color: colors.white }}
+        >
           {(props) => (
             <GradientWrapper {...props} Component={ActivityStackScreen} />
           )}
@@ -219,7 +240,6 @@ function DiscoverTabsScreen() {
           <GradientWrapper {...props} Component={FeelingStackScreen} />
         )}
       </DiscoverTabs.Screen> */}
-
       </DiscoverTabs.Navigator>
     </>
   );
@@ -306,12 +326,16 @@ const AppLayout = () => {
 
         tabBarActiveTintColor: colors.pink,
         tabBarInactiveTintColor: colors.orange,
-        tabBarLabelStyle: { fontSize: 14, padding: 5, textTransform: "uppercase" },
+        tabBarLabelStyle: {
+          fontSize: 14,
+          padding: 5,
+          textTransform: "uppercase",
+        },
         backgroundColor: colors.darkGray,
         tabBarStyle: {
           display: "flex",
           paddingTop: "7%",
-          bottom: "0%"
+          bottom: "0%",
         },
         tabBarIconStyle: { paddingBottom: 10 },
       }}

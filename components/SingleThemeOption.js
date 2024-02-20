@@ -17,6 +17,14 @@ const SingleThemeOption = ({ icon, iconText, songData, userName }) => {
   const navigation = useNavigation();
 
   const onSelection = () => {
+    // Log the theme selection
+    trackEvent("Theme Selection", {
+      songTitle: songData.title,
+      artistNames: songData.artists ? songData.artists.join(", ") : "Unknown",
+      theme: iconText,
+      userName: userName,
+    });
+
     // Navigate to the next screen with the selected icon and icon text
     navigation.navigate("Emotion Question", {
       songData,
@@ -31,7 +39,7 @@ const SingleThemeOption = ({ icon, iconText, songData, userName }) => {
       <TouchableOpacity onPress={onSelection}>
         <View style={styles.iconInfo}>
           <Image source={icon} style={styles.image} />
-          <Text style={{color: colors.white}}>{iconText}</Text>
+          <Text style={{ color: colors.white }}>{iconText}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -59,7 +67,6 @@ const styles = StyleSheet.create({
     height: windowWidth * 0.1,
     marginRight: 5,
     color: colors.white,
-
   },
   iconInfo: {
     flexDirection: "column",

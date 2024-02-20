@@ -19,6 +19,7 @@ import { supabase } from "../utils/supabaseClient";
 import PillPressable from "../components/PillPressable";
 import Header1 from "../components/Header1";
 import Header2 from "../components/Header2";
+import { trackEvent } from "@aptabase/react-native";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -30,24 +31,52 @@ const SignUpScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState("password123");
 
   const handleSignUp = async () => {
-    if (!fullName) {
-      alert("Please enter your full name.");
+    // Log the attempt to sign up
+    trackEvent("Sign Up Attempt", {
+      fullName: fullName,
+      email: email,
+    });
+
+    if (!fullName || !email || !password || !confirmPassword) {
+      alert("Please fill in all fields.");
+      // Log incomplete form attempt
+      trackEvent("Sign Up Error", {
+        error: "Incomplete form",
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      // Log password mismatch
+      trackEvent("Sign Up Error", {
+        error: "Password mismatch",
+      });
       return;
     }
 
     try {
       const { error } = await supabase
         .from("users")
-        .insert([{ user: fullName }]);
+        .insert([{ user: fullName, email: email, password: password }]); // Ensure you're handling passwords securely
 
       if (error) {
         throw error;
       }
 
+      // Log successful sign up
+      trackEvent("Sign Up Success", {
+        userName: fullName,
+      });
+
       alert("Sign up successful!");
       navigation.navigate("Tutorial", { userName: fullName });
     } catch (error) {
       alert(error.message);
+      // Log sign up failure with error message
+      trackEvent("Sign Up Failure", {
+        error: error.message,
+      });
     }
   };
 
@@ -61,7 +90,7 @@ const SignUpScreen = ({ navigation }) => {
           {/* <View style={styles.spacer} /> */}
 
           <View>
-            <Header1 text="Create account"/>
+            <Header1 text="Create account" />
             <Header2 text="Please create an account to continue" />
           </View>
 
@@ -95,8 +124,10 @@ const SignUpScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <PillPressable onPress={handleSignUp} text="Sign up">
-            </PillPressable>
+            <PillPressable
+              onPress={handleSignUp}
+              text="Sign up"
+            ></PillPressable>
 
             {/* <View style={styles.buttonSpacer} /> */}
           </View>

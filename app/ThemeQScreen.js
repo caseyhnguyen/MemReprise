@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: rowWidth + 10,
-    height: windowWidth * 0.15
+    height: windowWidth * 0.15,
   },
   postInProgress: {},
   boldText: {

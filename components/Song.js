@@ -73,7 +73,9 @@ const Song = ({
         <View style={styles.songInfo}>
           <Image source={{ uri: imageUrl }} style={styles.image} />
           <View style={styles.titleAndArtist}>
-            <Text style={styles.titleText} numberOfLines={1}>{title}</Text>
+            <Text style={styles.titleText} numberOfLines={1}>
+              {title}
+            </Text>
             <Text style={styles.artistText} numberOfLines={1}>
               {Array.isArray(artists) ? artists.join(", ") : artists}
             </Text>

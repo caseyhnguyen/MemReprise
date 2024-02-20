@@ -10,6 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import ProgressBar from "react-native-progress/Bar";
 import { colors } from "../assets/Themes/colors";
+import { trackEvent } from "@aptabase/react-native";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -28,6 +29,13 @@ const CurrentSong = ({
   const navigation = useNavigation();
 
   const onSongPress = () => {
+    // Log the song selection event before navigation
+    trackEvent("Song Selected", {
+      songTitle: title,
+      artistNames: Array.isArray(artists) ? artists.join(", ") : artists,
+      userName: userName,
+    });
+
     navigation.navigate("Theme Question", {
       songData: {
         title,
@@ -96,7 +104,6 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.95,
     height: windowWidth * 0.35,
     color: colors.white,
-
   },
   container: {
     flexDirection: "row",
@@ -121,8 +128,7 @@ const styles = StyleSheet.create({
     width: 75,
     height: 75,
     marginRight: 15,
-    borderRadius: 200
-
+    borderRadius: 200,
   },
   albumName: {
     color: colors.white,

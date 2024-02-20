@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,6 +13,7 @@ import { useRoute } from "@react-navigation/native";
 import { WebView } from "react-native-webview";
 import { colors } from "../../assets/Themes/colors";
 import { StatusBar } from "expo-status-bar";
+import { trackEvent } from "@aptabase/react-native";
 
 import { LogBox } from "react-native";
 LogBox.ignoreAllLogs(); // Ignore all log notifications
@@ -19,6 +21,11 @@ LogBox.ignoreAllLogs(); // Ignore all log notifications
 export default function PlaylistDetails() {
   const route = useRoute();
   const url = route.params.url;
+
+  useEffect(() => {
+    // Log the playlist details view event
+    trackEvent("Screen View", { screen: "PlaylistDetails", playlistUrl: url });
+  }, [url]); // Only re-run the effect if the URL changes
   // console.log("Playlist URL:", url);
 
   return (

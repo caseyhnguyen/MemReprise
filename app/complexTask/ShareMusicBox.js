@@ -1,25 +1,43 @@
-import React from 'react'
-import MapScreen from '../MapScreen'
-import Header1 from '../../components/Header1'
-import PillSelectable from '../../components/PillSelectable'
-import PillSelectableDouble from '../../components/PillSelectableDouble'
-import PillPressable from '../../components/PillPressable'
-import ProfilePressable from '../../components/ProfilePressable'
-import { useNavigation } from '@react-navigation/native'
-import {
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View
-} from 'react-native'
-import { colors } from '../../assets/Themes/colors'
-import ChrisHemsworthImg from '../../assets/chris-hemsworth.jpg'
-import DwayneJohnsonImg from '../../assets/dwayne-johnson.jpg'
-import JennaOrtegaImg from '../../assets/jenna-ortega.jpg'
-import TimCookImg from '../../assets/tim-cook.jpg'
+import React, { useEffect } from "react";
+import MapScreen from "../MapScreen";
+import Header1 from "../../components/Header1";
+import PillSelectable from "../../components/PillSelectable";
+import PillSelectableDouble from "../../components/PillSelectableDouble";
+import PillPressable from "../../components/PillPressable";
+import ProfilePressable from "../../components/ProfilePressable";
+import { useNavigation } from "@react-navigation/native";
+import { ScrollView, StyleSheet, TextInput, View } from "react-native";
+import { colors } from "../../assets/Themes/colors";
+import ChrisHemsworthImg from "../../assets/chris-hemsworth.jpg";
+import DwayneJohnsonImg from "../../assets/dwayne-johnson.jpg";
+import JennaOrtegaImg from "../../assets/jenna-ortega.jpg";
+import TimCookImg from "../../assets/tim-cook.jpg";
+import { trackEvent } from "@aptabase/react-native";
 
 const ShareMusicBox = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+
+  // Function to handle song selection
+  const handleSongSelect = (song) => {
+    trackEvent("Song Selected", { song });
+  };
+
+  // Function to handle recipient selection
+  const handleRecipientSelect = (recipient) => {
+    trackEvent("Recipient Selected", { recipient });
+  };
+
+  // Function to handle delivery option selection
+  const handleDeliveryOptionSelect = (option) => {
+    trackEvent("Delivery Option Selected", { option });
+  };
+
+  // Function to handle send action
+  const handleSend = () => {
+    trackEvent("Send Pressed", {});
+    navigation.navigate("FeedScreen");
+  };
+
   return (
     <ScrollView>
       <View style={styles.mapView}>
@@ -27,59 +45,107 @@ const ShareMusicBox = () => {
       </View>
       <View style={styles.bodyView}>
         <View style={styles.sectionView}>
-          <Header1 text='Choose a Song'></Header1>
+          <Header1 text="Choose a Song"></Header1>
           <ScrollView horizontal>
-            <PillSelectableDouble topText='Taylor Swift' bottomText='Cruel Summer' isSelected></PillSelectableDouble>
-            <PillSelectableDouble topText='Dua Lipa' bottomText='Houdini'></PillSelectableDouble>
-            <PillSelectableDouble topText='Cage the Elephant' bottomText="Ain't No Rest for the Wicked"></PillSelectableDouble>
-            <PillSelectableDouble topText='Jack Harlow' bottomText="Lovin' On Me"></PillSelectableDouble>
+            <PillSelectableDouble
+              topText="Taylor Swift"
+              bottomText="Cruel Summer"
+              isSelected
+            ></PillSelectableDouble>
+            <PillSelectableDouble
+              topText="Dua Lipa"
+              bottomText="Houdini"
+            ></PillSelectableDouble>
+            <PillSelectableDouble
+              topText="Cage the Elephant"
+              bottomText="Ain't No Rest for the Wicked"
+            ></PillSelectableDouble>
+            <PillSelectableDouble
+              topText="Jack Harlow"
+              bottomText="Lovin' On Me"
+            ></PillSelectableDouble>
           </ScrollView>
         </View>
         <View style={styles.sectionView}>
-          <Header1 text='Send To'></Header1>
+          <Header1 text="Send To"></Header1>
           <ScrollView horizontal>
-            <ProfilePressable image={ChrisHemsworthImg} name='Chris' isSelected></ProfilePressable>
-            <ProfilePressable image={DwayneJohnsonImg} name='Dwayne'></ProfilePressable>
-            <ProfilePressable image={JennaOrtegaImg} name='Jenna'></ProfilePressable>
-            <ProfilePressable image={TimCookImg} name='Tim'></ProfilePressable>
+            <ProfilePressable
+              image={ChrisHemsworthImg}
+              name="Chris"
+              isSelected
+            ></ProfilePressable>
+            <ProfilePressable
+              image={DwayneJohnsonImg}
+              name="Dwayne"
+            ></ProfilePressable>
+            <ProfilePressable
+              image={JennaOrtegaImg}
+              name="Jenna"
+            ></ProfilePressable>
+            <ProfilePressable image={TimCookImg} name="Tim"></ProfilePressable>
           </ScrollView>
         </View>
         <View style={styles.sectionView}>
-          <Header1 text='Add a Message'></Header1>
+          <Header1 text="Add a Message"></Header1>
           <TextInput
             placeholder="Add a message"
             style={styles.input}
+            onBlur={(e) =>
+              trackEvent("Message Input", { message: e.nativeEvent.text })
+            }
           />
         </View>
         <View style={styles.sectionView}>
-          <Header1 text='Delivery'></Header1>
+          <Header1 text="Delivery"></Header1>
           <ScrollView horizontal>
-            <PillSelectable text='Send Now' isSelected></PillSelectable>
-            <PillSelectable text='Surprise'></PillSelectable>
-            <PillSelectable text='Notify'></PillSelectable>
+            <PillSelectable
+              text="Send Now"
+              isSelected
+              onPress={() =>
+                trackEvent("Delivery Option Selected", { option: "Send Now" })
+              }
+            />
+            <PillSelectable
+              text="Surprise"
+              isSelected
+              onPress={() =>
+                trackEvent("Delivery Option Selected", { option: "Surprise" })
+              }
+            />
+            <PillSelectable
+              text="Notify"
+              isSelected
+              onPress={() =>
+                trackEvent("Delivery Option Selected", { option: "Notify" })
+              }
+            />
+            {/* <PillSelectable text="Send Now"></PillSelectable>
+            <PillSelectable text="Surprise"></PillSelectable>
+            <PillSelectable text="Notify"></PillSelectable> */}
           </ScrollView>
         </View>
         <View style={styles.buttonView}>
           <PillPressable
-            onPress={() =>
-              navigation.navigate("FeedScreen")
-            }
+            onPress={() => {
+              trackEvent("Send Pressed", {});
+              navigation.navigate("FeedScreen");
+            }}
             text="Send"
           />
         </View>
       </View>
-    </ScrollView >
-  )
-}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   bodyView: {
-    padding: 10
+    padding: 10,
   },
   buttonView: {
-    display: 'flex',
-    width: '100%',
-    alignItems: 'center'
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
   },
   input: {
     fontSize: 15,
@@ -94,14 +160,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   mapView: {
-    width: '100%'
+    width: "100%",
   },
   pg: {
-    color: colors.white
+    color: colors.white,
   },
   sectionView: {
-    marginBottom: 20
-  }
-})
+    marginBottom: 20,
+  },
+});
 
-export default ShareMusicBox
+export default ShareMusicBox;

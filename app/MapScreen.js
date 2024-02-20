@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
+import { trackEvent } from "@aptabase/react-native";
 
 const MapScreen = () => {
   const [userLocation, setUserLocation] = useState(null);
@@ -24,6 +25,10 @@ const MapScreen = () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         Alert.alert("Location permission not granted");
+        trackEvent("Permission", {
+          action: "Location Permission",
+          granted: false,
+        });
         return;
       }
 
@@ -33,6 +38,10 @@ const MapScreen = () => {
         longitude: location.coords.longitude,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
+      });
+      trackEvent("Permission", {
+        action: "Location Permission",
+        granted: true,
       });
     })();
   }, []);

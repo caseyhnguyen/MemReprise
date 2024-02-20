@@ -13,12 +13,7 @@ import Sample from "../assets/album-1.png";
 
 const windowWidth = Dimensions.get("window").width;
 
-const Profile = ({
-  userName,
-  icon,
-  firstName,
-  lastName
-}) => {
+const Profile = ({ userName, icon, firstName, lastName }) => {
   const navigation = useNavigation();
 
   const onSelection = () => {
@@ -51,7 +46,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 10,
     alignItems: "center",
-    height: 200
+    height: 200,
   },
   icon: {
     width: 88,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SingleEmotionOption from "../components/SingleEmotionOption";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    gap: totalGapSize
+    gap: totalGapSize,
   },
   questionBox: {
     backgroundColor: colors.darkGray,
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: rowWidth + 10,
-    height: windowWidth * 0.15
+    height: windowWidth * 0.15,
   },
   postInProgress: {},
   boldText: {

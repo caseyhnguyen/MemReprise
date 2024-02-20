@@ -71,7 +71,7 @@ const TracksScreen = ({ route, navigation }) => {
   };
 
   const SpotifyAuthOrRefreshButton = () => (
-    <PillPressable 
+    <PillPressable
       // style={[styles.button, isLoading && styles.disabledButton]}
       onPress={handleButtonPress}
       disabled={isLoading}
@@ -113,7 +113,6 @@ const TracksScreen = ({ route, navigation }) => {
 
     const progressFraction = progressMs / duration;
 
-    // console.log(currentTrack);
     return (
       <View style={styles.currentTrackContainer}>
         <Header2 text="Now playing" />
@@ -136,7 +135,6 @@ const TracksScreen = ({ route, navigation }) => {
   };
 
   const limitedTracks = tracks.slice(0, 10);
-  // console.log(limitedTracks);
 
   const renderSong = ({ item, index }) => {
     return (
@@ -231,7 +229,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50
+    marginTop: 50,
     // backgroundColor: colors.background,
   },
   logo: {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SingleActivityOption from "../components/SingleActivityOption";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -15,6 +15,7 @@ import { styles as defaultStyles } from "../assets/Themes/default_style";
 import PostProgressBar from "../components/PostProgressBar";
 import formatPlayedAt from "../utils/formatPlayedAt.js";
 import Header3 from "../components/Header3.js";
+import { trackEvent } from "@aptabase/react-native";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -36,6 +37,19 @@ const ActivityQScreen = ({ route, navigation }) => {
     songData && songData.artists
       ? songData.artists.join(", ")
       : "Unknown Artist";
+
+  // Function to handle activity option selection
+  // Function to handle activity option selection
+  const handleActivitySelection = (activityText) => {
+    trackEvent("Activity Option Selected", {
+      activity: activityText,
+      songTitle: songData?.title || "Unknown Song",
+      artistNames,
+      selectedThemeIconText,
+      selectedEmotionIconText,
+      userName,
+    });
+  };
   // console.log(songData);
   // console.log("Username in ActivityQScreen:", { userName });
 
@@ -145,7 +159,7 @@ const styles = StyleSheet.create({
     width: rowWidth + 10,
     height: windowWidth * 0.3,
     gap: 5,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   albumCover: {
     width: windowWidth * 0.25,
@@ -188,7 +202,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    gap: totalGapSize
+    gap: totalGapSize,
   },
   questionBox: {
     backgroundColor: colors.darkGray,
@@ -196,7 +210,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: rowWidth + 10,
-    height: windowWidth * 0.15
+    height: windowWidth * 0.15,
   },
   postInProgress: {},
   boldText: {

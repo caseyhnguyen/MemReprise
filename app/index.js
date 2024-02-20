@@ -6,6 +6,10 @@ import { DarkModeContext } from "../assets/Themes/DarkModeContext";
 import { PostProvider } from "../utils/PostContext";
 import { ThemeProvider } from "../utils/ThemeContext";
 
+import Aptabase from "@aptabase/react-native";
+
+Aptabase.init("A-US-8502203082");
+
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 

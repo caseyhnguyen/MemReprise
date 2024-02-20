@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -9,6 +8,7 @@ import {
 import { WebView } from 'react-native-webview'
 import { useNavigation } from '@react-navigation/native'
 import { colors } from '../../assets/Themes/colors'
+import BackArrow from '../../components/BackArrow'
 
 const PlaylistCity = ({ route }) => {
   const navigation = useNavigation()
@@ -18,6 +18,9 @@ const PlaylistCity = ({ route }) => {
 
   return (
     <>
+      <View>
+        <BackArrow to='FeedScreen' />
+      </View>
       <View style={styles.topContainer}>
         <View style={styles.innerContainer}>
           <Image style={styles.image} source={image} />

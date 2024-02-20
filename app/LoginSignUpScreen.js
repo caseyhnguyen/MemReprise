@@ -291,7 +291,13 @@ const LoginSignUpScreen = ({ navigation }) => {
             <Header1 text="Recent Musicboxes"></Header1>
           </View>
           <View style={styles.colR}>
-            <SeeMore />
+            <SeeMore
+              onPress={() => {
+                trackEvent("View More Pressed", {
+                  context: "Recent Musicboxes",
+                });
+              }}
+            />
           </View>
           <View>
             <FlatList

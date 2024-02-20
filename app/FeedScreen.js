@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import images from "../assets/Images/images";
 import ChrisHemsworthPic from '../assets/chris-hemsworth.jpg'
+import SeattlePic from '../assets/seattle.png'
 
 import Post from "../components/Post";
 import { colors } from "../assets/Themes/colors";

@@ -351,7 +351,7 @@ const AppLayout = () => {
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
             <Image
-              source={images.home.pic}
+              source={images.home_btn.pic}
               style={{ width: size, height: size, tintColor: color }}
             />
           ),
@@ -364,7 +364,7 @@ const AppLayout = () => {
           tabBarLabel: "Feed",
           tabBarIcon: ({ color, size }) => (
             <Image
-              source={images.reprise.pic}
+              source={images.discover_btn.pic}
               style={{ width: size, height: size, tintColor: color }}
             />
           ),

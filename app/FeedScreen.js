@@ -12,6 +12,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import images from "../assets/Images/images";
+import ChrisHemsworthPic from '../assets/chris-hemsworth.jpg'
+import SeattlePic from '../assets/seattle.png'
 
 import Post from "../components/Post";
 import { colors } from "../assets/Themes/colors";
@@ -231,51 +233,51 @@ const FeedScreen = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar barStyle = "light-content" backgroundColor={colors.black} translucent={true}/>
+      <StatusBar barStyle="light-content" backgroundColor={colors.black} translucent={true} />
       <SafeAreaView style={defaultStyles.container}>
-      {/* <StatusBar barStyle = "light-content"  translucent = {true}/> */}
-      
-      {!postMade && 
-        // <View style={styles.buttonContainer}>
-        
-        <View>
-        {/* <Header1 text="Gift feed" /> */}
+        {/* <StatusBar barStyle = "light-content"  translucent = {true}/> */}
 
-          <PillPressable
-            onPress={() => navigation.navigate("Tracks")}
-            text="Leave a music box"
-            isSpotify={false}
-            disabled={false}
-          />
+        {!postMade &&
+          // <View style={styles.buttonContainer}>
 
-          {/* <Pressable
+          <View>
+            {/* <Header1 text="Gift feed" /> */}
+
+            <PillPressable
+              onPress={() => navigation.navigate("City Playlist", { name: 'Gray', city: 'Seattle', image: SeattlePic })}
+              text="Leave a music box"
+              isSpotify={false}
+              disabled={false}
+            />
+
+            {/* <Pressable
             style={styles.button}
             onPress={() => navigation.navigate("Tracks")}
           >
             <Text style={styles.postText}>Post</Text>
           </Pressable> */}
-          <Label text="Recent gifts" /> 
-        </View>
-      }
+            <Label text="Recent gifts" />
+          </View>
+        }
 
 
-      {loading ? (
-        <ActivityIndicator size="large" color={colors.white} />
-      ) : (
-        <FlatList
-          data={posts}
-          renderItem={renderPost}
-          ItemSeparatorComponent={() => (
-            <View style={{ height: windowWidth * 0.05 }} />
-          )}
-          keyExtractor={(item, index) =>
-            item.id?.toString() || index.toString()
-          }
-          onEndReached={fetchMorePosts}
-          onEndReachedThreshold={0.5}
-        />
-      )}
-    </SafeAreaView>
+        {loading ? (
+          <ActivityIndicator size="large" color={colors.white} />
+        ) : (
+          <FlatList
+            data={posts}
+            renderItem={renderPost}
+            ItemSeparatorComponent={() => (
+              <View style={{ height: windowWidth * 0.05 }} />
+            )}
+            keyExtractor={(item, index) =>
+              item.id?.toString() || index.toString()
+            }
+            onEndReached={fetchMorePosts}
+            onEndReachedThreshold={0.5}
+          />
+        )}
+      </SafeAreaView>
     </>
   );
 };

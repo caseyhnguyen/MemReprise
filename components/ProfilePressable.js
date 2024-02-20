@@ -1,0 +1,46 @@
+import React from "react"
+import {
+  Text,
+  Image,
+  Pressable,
+  StyleSheet
+} from "react-native"
+import { colors } from '../assets/Themes/colors'
+
+const ProfilePressable = (props) => {
+  return (
+    <Pressable
+      style={styles.container}
+      key={props.key}
+    >
+      <Image source={props.image} style={[styles.image, props.isSelected ? styles.isSelected : styles.notSelected]} />
+      <Text style={styles.name}>{props.name}</Text>
+    </Pressable>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 8,
+    marginBottom: 8,
+    marginRight: 5
+  },
+  image: {
+    width: 60,
+    height: 60,
+    borderRadius: 1000
+  },
+  isSelected: {
+    borderWidth: 2,
+    borderColor: colors.white
+  },
+  name: {
+    color: colors.white,
+    marginTop: 10
+  }
+});
+
+export default ProfilePressable;

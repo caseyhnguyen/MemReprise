@@ -22,8 +22,8 @@ const Header1 = (props) => {
         // alignItems: "center",
         // justifyContent: "center",
         // marginTop: -30,
-        marginBottom: 10,
-        // alignSelf: "center",
+        marginBottom: 5,
+        alignSelf: "center",
     },
   });
   

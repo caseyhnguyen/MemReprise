@@ -6,7 +6,7 @@ import {
 } from "react-native"
 import { colors } from "../assets/Themes/colors"
 
-const PillSelectable = (props) => {
+const PillSelectableDouble = (props) => {
   return (
     <Pressable
       style={[styles.button, styles.pressableContainer,
@@ -15,8 +15,11 @@ const PillSelectable = (props) => {
       onPress={props.onPress}
       key={props.key}
     >
-      <Text numberOfLines={1} style={styles.text}>
-        {props.text}
+      <Text numberOfLines={1} style={styles.topText}>
+        {props.topText}
+      </Text>
+      <Text numberOfLines={1} style={styles.bottomText}>
+        {props.bottomText}
       </Text>
     </Pressable>
   )
@@ -51,18 +54,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 45,
     paddingVertical: 11
   },
-  text: {
+  topText: {
     color: colors.white,
     fontSize: 16,
     textAlign: "left",
-    fontSize: 14,
-    paddingVertical: 5
+    fontSize: 14
+  },
+  bottomText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "left",
+    fontSize: 14
   },
   pressableContainer: {
     display: "flex",
+    flexDirection: "column",
     width: 100,
     marginRight: 5
   }
 })
 
-export default PillSelectable
+export default PillSelectableDouble

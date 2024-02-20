@@ -4,8 +4,9 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native'
+import { WebView } from 'react-native-webview'
 import { useNavigation } from '@react-navigation/native'
 import { colors } from '../../assets/Themes/colors'
 
@@ -14,6 +15,7 @@ const PlaylistCity = ({ route }) => {
   const name = route.params?.name
   const city = route.params?.city
   const image = route.params?.image
+
   return (
     <>
       <View style={styles.topContainer}>
@@ -26,9 +28,7 @@ const PlaylistCity = ({ route }) => {
           <Text style={styles.boldText}>{name}</Text>
         </View>
       </View>
-      <ScrollView>
-
-      </ScrollView>
+      <WebView source={{ uri: 'https://open.spotify.com/playlist/2fmyOjn5kNiqMUjKRl08M3?si=b6bef14539ac468f' }} style={styles.spotifyContainer} />
     </>
   )
 }
@@ -47,6 +47,9 @@ const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
     alignItems: 'center'
+  },
+  spotifyContainer: {
+    marginHorizontal: 10
   },
   topContainer: {
     display: 'flex',

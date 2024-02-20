@@ -18,7 +18,8 @@ import BackArrow from "./BackArrow";
 
 const windowWidth = Dimensions.get("window").width;
 
-const MusicBox = ({ route,
+const MusicBox = ({
+  route,
   title,
   artists,
   albumName,
@@ -58,16 +59,16 @@ const MusicBox = ({ route,
 
   return (
     <>
-    <View style={styles.row}>
-      {/* <View style={styles.col}> */}
+      <View style={styles.row}>
+        {/* <View style={styles.col}> */}
         <BackArrow to="Receive Gift" />
-      {/* </View> */}
-      <View style={styles.col}>
-        <Header1 text="Gray's Musicbox" />
+        {/* </View> */}
+        <View style={styles.col}>
+          <Header1 text="Gray's Musicbox" />
+        </View>
       </View>
-    </View>
-    <View style={styles.outerContainer}>
-      {/* <TouchableOpacity style={styles.container} onPress={onSongPress}> */}
+      <View style={styles.outerContainer}>
+        {/* <TouchableOpacity style={styles.container} onPress={onSongPress}> */}
         <Text style={styles.titleText}>We first met here, remember?</Text>
         <Text style={styles.artistText}>Feb 14, 2023</Text>
 
@@ -86,25 +87,25 @@ const MusicBox = ({ route,
             {albumName}
           </Text> */}
         </View>
-      {/* </TouchableOpacity> */}
-      <View style={styles.progressWrapper}>
-        <ProgressBar
-          // progress={progressFraction}
-          progress={1/3}
-          width={windowWidth - 40}
-          height={7}
-          borderRadius={3.5}
-          color={colors.blue}
-          unfilledColor={colors.offWhite75}
-          borderWidth={0}
-          useNativeDriver={true}
-          style={styles.progressBar}
-        />
-        {/* <Text style={styles.progressTime}>{formatTime(progressMs)}</Text>
+        {/* </TouchableOpacity> */}
+        <View style={styles.progressWrapper}>
+          <ProgressBar
+            // progress={progressFraction}
+            progress={1 / 3}
+            width={windowWidth - 40}
+            height={7}
+            borderRadius={3.5}
+            color={colors.blue}
+            unfilledColor={colors.offWhite75}
+            borderWidth={0}
+            useNativeDriver={true}
+            style={styles.progressBar}
+          />
+          {/* <Text style={styles.progressTime}>{formatTime(progressMs)}</Text>
         <Text style={styles.durationTime}>{formatTime(duration)}</Text> */}
+        </View>
+        <SeeMore text="View" />
       </View>
-      <SeeMore text="View" />
-    </View>
     </>
   );
 };
@@ -201,8 +202,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   col: {
-    marginTop: 8
-  }
+    marginTop: 8,
+  },
 });
 
 export default MusicBox;

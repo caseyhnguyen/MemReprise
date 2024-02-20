@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Pressable, StyleSheet } from "react-native";
 import { colors } from "../assets/Themes/colors";
+import { trackEvent } from "@aptabase/react-native";
 
 const PillSelectableDouble = (props) => {
   const handlePress = () => {

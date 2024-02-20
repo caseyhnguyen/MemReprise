@@ -103,7 +103,7 @@ const TracksScreen = ({ route, navigation }) => {
     return (
       <View style={styles.currentTrackContainer}>
         <Header2 text="Now playing" />
-        {/* <MusicBox
+        <MusicBox
           onPress={() => navigation.navigate("Share a Music Box")}
           index={index}
           title={songTitle}
@@ -116,7 +116,7 @@ const TracksScreen = ({ route, navigation }) => {
           progressFraction={progressFraction}
           progressMs={progressMs}
           userName={userName}
-        /> */}
+        />
         <CurrentSong
           onPress={() => navigation.navigate("Share a Music Box")}
           index={index}
@@ -188,15 +188,15 @@ const TracksScreen = ({ route, navigation }) => {
       {token && (
         <>
           {renderCurrentTrack()}
-          {/* <View style={styles.header}>
+          <View style={styles.header}>
             <Header2 text="My recent tracks" />
-          </View> */}
+          </View>
         </>
       )}
 
       <SpotifyAuthOrRefreshButton />
 
-      {/* <FlatList
+      <FlatList
         horizontal={true}
         data={search ? searchedSongs : limitedTracks}
         renderItem={search ? renderSearchSong : renderSong}
@@ -204,7 +204,7 @@ const TracksScreen = ({ route, navigation }) => {
         ListFooterComponent={
           loading && <ActivityIndicator size="large" color={colors.white} />
         }
-      /> */}
+      />
     </>
   );
 

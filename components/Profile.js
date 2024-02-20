@@ -10,6 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../assets/Themes/colors";
 import Sample from "../assets/album-1.png";
+import { trackEvent } from "@aptabase/react-native";
 
 const windowWidth = Dimensions.get("window").width;
 

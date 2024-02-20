@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
+import Icon from 'react-native-vector-icons/FontAwesome5'
+
 
 // const PillPressable = ({ text, isSpotify, }) => {
 const SeeMore = (props) => {
@@ -19,6 +21,8 @@ const SeeMore = (props) => {
             key={props.key}
         >
             <Text style={styles.buttonText}>See more</Text>
+            <Icon name='chevron-right' style={styles.arrow} />
+
         </Pressable>
     );
   };
@@ -40,6 +44,11 @@ const SeeMore = (props) => {
         alignSelf: 'flex-end',
         marginLeft: 'auto'
     },
+    arrow: {
+    color: colors.pink,
+    fontSize: 16,
+    marginLeft: 10
+    }
   });
   
   export default SeeMore;

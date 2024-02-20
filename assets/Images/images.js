@@ -124,6 +124,10 @@ const images = {
     pic: require("../caroline.png"),
     label: "caroline",
   },
+  seattle: {
+    pic: require("../seattle.png"),
+    label: "seattle",
+  },
 };
 
 export default images;

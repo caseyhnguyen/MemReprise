@@ -264,7 +264,7 @@ const FeedScreen = ({ navigation }) => {
                 navigation.navigate("City Playlist", {
                   name: "Gray",
                   city: "Seattle",
-                  image: SeattlePic,
+                  image: images.seattle.pic,
                 })
               }
               text="Leave a music box"

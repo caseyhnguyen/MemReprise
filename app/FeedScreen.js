@@ -260,13 +260,13 @@ const FeedScreen = ({ navigation }) => {
             {/* <Header1 text="Gift feed" /> */}
 
             <PillPressable
-              onPress={() => {
-                trackEvent("Navigation", {
-                  action: "Navigate to Tracks",
-                  sourceScreen: "FeedScreen",
-                });
-                navigation.navigate("Tracks");
-              }}
+              onPress={() =>
+                navigation.navigate("City Playlist", {
+                  name: "Gray",
+                  city: "Seattle",
+                  image: SeattlePic,
+                })
+              }
               text="Leave a music box"
               isSpotify={false}
               disabled={false}

@@ -3,6 +3,8 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../assets/Themes/colors";
 import { trackEvent } from "@aptabase/react-native";
+import { WebView } from "react-native-webview";
+import BackArrow from "../../components/BackArrow";
 
 const PlaylistCity = ({ route }) => {
   const navigation = useNavigation();
@@ -21,6 +23,9 @@ const PlaylistCity = ({ route }) => {
 
   return (
     <>
+      <View>
+        <BackArrow to="FeedScreen" />
+      </View>
       <View style={styles.topContainer}>
         <View style={styles.innerContainer}>
           <Image style={styles.image} source={image} />
@@ -31,7 +36,12 @@ const PlaylistCity = ({ route }) => {
           <Text style={styles.boldText}>{name}</Text>
         </View>
       </View>
-      <ScrollView></ScrollView>
+      <WebView
+        source={{
+          uri: "https://open.spotify.com/playlist/2fmyOjn5kNiqMUjKRl08M3?si=b6bef14539ac468f",
+        }}
+        style={styles.spotifyContainer}
+      />
     </>
   );
 };
@@ -50,6 +60,9 @@ const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
     alignItems: "center",
+  },
+  spotifyContainer: {
+    marginHorizontal: 10,
   },
   topContainer: {
     display: "flex",

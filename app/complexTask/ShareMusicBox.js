@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import MapScreen from "../MapScreen";
 import Header1 from "../../components/Header1";
 import PillSelectable from "../../components/PillSelectable";
@@ -20,6 +20,7 @@ const ShareMusicBox = () => {
   // Function to handle song selection
   const handleSongSelect = (song) => {
     trackEvent("Song Selected", { song });
+    console.log(song);
   };
 
   // Function to handle recipient selection
@@ -38,6 +39,48 @@ const ShareMusicBox = () => {
     navigation.navigate("FeedScreen");
   };
 
+  const deliveryOptions = ['Send Now', 'Surprise', 'Notify'];
+  const recipientOptions = [
+    {
+      name: 'Chris',
+      image: ChrisHemsworthImg
+    },
+    {
+      name: 'Dwayne',
+      image: DwayneJohnsonImg
+    },
+    {
+      name: 'Jenna',
+      image: JennaOrtegaImg
+    },
+    {
+      name: 'Tim',
+      image: TimCookImg
+    }
+  ];
+  const songOptions = [
+    {
+      artist: "Taylor Swift",
+      song: "Cruel Summer"
+    },
+    {
+      artist: "Dua Lipa",
+      song: "Houdini"
+    },
+    {
+      artist: "Cage the Elephant",
+      song: "Ain't No Rest for the Wicked"
+    },
+    {
+      artist: "Jack Harlow",
+      song: "Lovin' On Me"
+    },
+  ]
+
+  const [delivery, setDelivery] = useState(0);
+  const [recipient, setRecipient] = useState(0);
+  const [song, setSong] = useState(0);
+
   return (
     <ScrollView>
       <View style={styles.mapView}>
@@ -47,42 +90,62 @@ const ShareMusicBox = () => {
         <View style={styles.sectionView}>
           <Header1 text="Choose a Song"></Header1>
           <ScrollView horizontal>
-            <PillSelectableDouble
-              topText="Taylor Swift"
-              bottomText="Cruel Summer"
-              isSelected
-            ></PillSelectableDouble>
-            <PillSelectableDouble
-              topText="Dua Lipa"
-              bottomText="Houdini"
-            ></PillSelectableDouble>
-            <PillSelectableDouble
-              topText="Cage the Elephant"
-              bottomText="Ain't No Rest for the Wicked"
-            ></PillSelectableDouble>
-            <PillSelectableDouble
-              topText="Jack Harlow"
-              bottomText="Lovin' On Me"
-            ></PillSelectableDouble>
+            {
+              songOptions.map((option, index) => (
+                <>
+                  {(index === song) ?
+                    <PillSelectableDouble
+                      topText={option.artist}
+                      bottomText={option.song}
+                      isSelected
+                      onPress={() => {
+                        trackEvent("Song Option Selected", { option: option })
+                        setSong(index)
+                      }}
+                    ></PillSelectableDouble> :
+                    <PillSelectableDouble
+                      topText={option.artist}
+                      bottomText={option.song}
+                      onPress={() => {
+                        trackEvent("Song Option Selected", { option: option })
+                        setSong(index)
+                      }}
+                    ></PillSelectableDouble>
+                  }
+                </>
+              ))
+            }
           </ScrollView>
         </View>
         <View style={styles.sectionView}>
           <Header1 text="Send To"></Header1>
           <ScrollView horizontal>
-            <ProfilePressable
-              image={ChrisHemsworthImg}
-              name="Chris"
-              isSelected
-            ></ProfilePressable>
-            <ProfilePressable
-              image={DwayneJohnsonImg}
-              name="Dwayne"
-            ></ProfilePressable>
-            <ProfilePressable
-              image={JennaOrtegaImg}
-              name="Jenna"
-            ></ProfilePressable>
-            <ProfilePressable image={TimCookImg} name="Tim"></ProfilePressable>
+            {
+              recipientOptions.map((option, index) => (
+                <>
+                  {
+                    (index === recipient) ?
+                      <ProfilePressable
+                        image={option.image}
+                        name={option.name}
+                        isSelected
+                        onPress={() => {
+                          trackEvent("Recipient Option Selected", { option: option })
+                          setRecipient(index)
+                        }}
+                      ></ProfilePressable> :
+                      <ProfilePressable
+                        image={option.image}
+                        name={option.name}
+                        onPress={() => {
+                          trackEvent("Recipient Option Selected", { option: option })
+                          setRecipient(index)
+                        }}
+                      ></ProfilePressable>
+                  }
+                </>
+              ))
+            }
           </ScrollView>
         </View>
         <View style={styles.sectionView}>
@@ -98,27 +161,29 @@ const ShareMusicBox = () => {
         <View style={styles.sectionView}>
           <Header1 text="Delivery"></Header1>
           <ScrollView horizontal>
-            <PillSelectable
-              text="Send Now"
-              isSelected
-              onPress={() =>
-                trackEvent("Delivery Option Selected", { option: "Send Now" })
-              }
-            />
-            <PillSelectable
-              text="Surprise"
-              isSelected
-              onPress={() =>
-                trackEvent("Delivery Option Selected", { option: "Surprise" })
-              }
-            />
-            <PillSelectable
-              text="Notify"
-              isSelected
-              onPress={() =>
-                trackEvent("Delivery Option Selected", { option: "Notify" })
-              }
-            />
+            {
+              deliveryOptions.map((option, index) => (
+                <>
+                  {(index === delivery) ?
+                    <PillSelectable
+                      text={option}
+                      isSelected
+                      onPress={() => {
+                        trackEvent("Delivery Option Selected", { option: option })
+                        setDelivery(index)
+                      }}
+                    /> :
+                    <PillSelectable
+                      text={option}
+                      onPress={() => {
+                        trackEvent("Delivery Option Selected", { option: option })
+                        setDelivery(index)
+                      }}
+                    />
+                  }
+                </>
+              ))
+            }
             {/* <PillSelectable text="Send Now"></PillSelectable>
             <PillSelectable text="Surprise"></PillSelectable>
             <PillSelectable text="Notify"></PillSelectable> */}

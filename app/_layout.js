@@ -15,6 +15,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { trackEvent } from "@aptabase/react-native";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 // Screens
 // Simple Task
@@ -326,22 +327,19 @@ const AppLayout = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        color: colors.white,
-
-        tabBarActiveTintColor: colors.pink,
-        tabBarInactiveTintColor: colors.orange,
+        tabBarActiveTintColor: colors.black,
+        tabBarInactiveTintColor: colors.gray,
+        tabBarActiveBackgroundColor: colors.pink,
         tabBarLabelStyle: {
           fontSize: 14,
-          padding: 5,
-          textTransform: "uppercase",
+          paddingBottom: 5,
         },
-        backgroundColor: colors.darkGray,
         tabBarStyle: {
           display: "flex",
-          paddingTop: "7%",
           bottom: "0%",
+          backgroundColor: colors.black,
+          height: 60
         },
-        tabBarIconStyle: { paddingBottom: 10 },
       }}
     >
       <Tab.Screen
@@ -350,23 +348,27 @@ const AppLayout = () => {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
-            <Image
-              source={images.home_btn.pic}
-              style={{ width: size, height: size, tintColor: color }}
-            />
+            <Icon name="home" style={{ fontSize: size, color: color }} />
           ),
         }}
       />
       <Tab.Screen
-        name="FeedScreen"
-        component={FeedTabsScreen}
+        name="complexTask/ShareMusicBox"
+        component={ShareMusicBox}
         options={{
-          tabBarLabel: "Feed",
+          tabBarLabel: "Mix",
           tabBarIcon: ({ color, size }) => (
-            <Image
-              source={images.discover_btn.pic}
-              style={{ width: size, height: size, tintColor: color }}
-            />
+            <Icon name="music" style={{ fontSize: size, color: color }} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="complexTask/PlaylistCity"
+        component={PlaylistCity}
+        options={{
+          tabBarLabel: "Discover",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="globe-americas" style={{ fontSize: size, color: color }} />
           ),
         }}
       />
@@ -376,10 +378,7 @@ const AppLayout = () => {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
-            <Image
-              source={images.profile.pic}
-              style={{ width: size, height: size, tintColor: color }}
-            />
+            <Icon name="user-alt" style={{ fontSize: size, color: color }} />
           ),
         }}
       />

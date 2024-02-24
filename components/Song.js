@@ -28,46 +28,46 @@ const Song = ({
   externalUrl,
   played_at,
   // userName,
-  }) => {
-    const navigation = useNavigation();
+}) => {
+  const navigation = useNavigation();
 
-    const onSongPress = async () => {
-      // Define songData for Supabase
-      const songData = {
-        // index,
-        title,
-        artists: Array.isArray(artists) ? artists : [artists],
-        albumName,
-        imageUrl,
-        // duration,
-        // previewUrl,
-        // externalUrl,
-        // played_at,
-        // userName,
-      };
-      console.log(imageUrl);
-      // console.log("Inserting songData to Supabase:", songData);
-      // console.log("Username in Song Component:", { userName });
-
-      try {
-        // Save to Supabase
-        const { data, error } = await supabase.from("songs").insert([songData]);
-
-        if (error) {
-          console.error("Error saving song to database:", error);
-          return;
-        } else {
-          console.log("Song saved successfully:", data);
-        }
-      } catch (err) {
-        console.error("Supabase operation failed:", err);
-        return;
-      }
-      // imageUrl = require(imageUrl);
-      
-      navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
-      // navigation.navigate("Music Box", { artists: artists, city: name, imageUrl: imageUrl });
+  const onSongPress = async () => {
+    // Define songData for Supabase
+    const songData = {
+      // index,
+      title,
+      artists: Array.isArray(artists) ? artists : [artists],
+      albumName,
+      imageUrl,
+      // duration,
+      // previewUrl,
+      // externalUrl,
+      // played_at,
+      // userName,
     };
+    console.log(imageUrl);
+    // console.log("Inserting songData to Supabase:", songData);
+    // console.log("Username in Song Component:", { userName });
+
+    try {
+      // Save to Supabase
+      const { data, error } = await supabase.from("songs").insert([songData]);
+
+      if (error) {
+        console.error("Error saving song to database:", error);
+        return;
+      } else {
+        console.log("Song saved successfully:", data);
+      }
+    } catch (err) {
+      console.error("Supabase operation failed:", err);
+      return;
+    }
+    // imageUrl = require(imageUrl);
+
+    navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
+    // navigation.navigate("Music Box", { artists: artists, city: name, imageUrl: imageUrl });
+  };
 
   return (
     <View style={styles.outerContainer}>
@@ -90,14 +90,13 @@ const Song = ({
 
 const styles = StyleSheet.create({
   outerContainer: {
-    paddingHorizontal: 5,
-    paddingVertical: 10,
     // marginBottom: 10,
+    marginHorizontal: 10
   },
   container: {
     flexDirection: "col",
     alignItems: "center",
-    width: 140,
+    width: 120,
     textAlign: "center",
     // width: windowWidth * 0.9,
     // paddingVertical: 10,
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     color: colors.white,
-    gap: 10,
+    gap: 10
   },
   titleAndArtist: {
     // flexDirection: "column",

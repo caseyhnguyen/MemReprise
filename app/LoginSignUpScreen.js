@@ -10,6 +10,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView
 } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
@@ -300,70 +301,63 @@ const LoginSignUpScreen = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.row}>
-          <View style={styles.col}>
-            <Header1 text="Recent Musicboxes"></Header1>
+      <SafeAreaView>
+        <ScrollView style={styles.container}>
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Header1 text="My Gifts"></Header1>
+              <SeeMore
+                onPress={() => {
+                  trackEvent("View More Pressed", {
+                    context: "Recent Musicboxes",
+                  });
+                }}
+              />
+            </View>
+            <View style={styles.sectionBody}>
+              <FlatList
+                horizontal={true}
+                data={limitedTracks}
+                renderItem={renderSong}
+                keyExtractor={(item, index) =>
+                  item.id?.toString() || index.toString()
+                }
+              />
+            </View>
           </View>
-          <View style={styles.colR}>
-            <SeeMore
-              onPress={() => {
-                trackEvent("View More Pressed", {
-                  context: "Recent Musicboxes",
-                });
-              }}
-            />
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Header1 text="Friends' Mixtapes"></Header1>
+              <SeeMore />
+            </View>
+            <View style={styles.sectionBody}>
+              <FlatList
+                horizontal={true}
+                data={limitedProfiles}
+                renderItem={renderProfile}
+                keyExtractor={(item, index) =>
+                  item.id?.toString() || index.toString()
+                }
+              />
+            </View>
           </View>
-          <View>
-            <FlatList
-              horizontal={true}
-              data={limitedTracks}
-              renderItem={renderSong}
-              keyExtractor={(item, index) =>
-                item.id?.toString() || index.toString()
-              }
-            />
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Header1 text="My Locations"></Header1>
+              <SeeMore />
+            </View>
+            <View style={styles.sectionBody}>
+              <FlatList
+                horizontal={true}
+                data={limitedLocations}
+                renderItem={renderLocation}
+                keyExtractor={(item, index) =>
+                  item.id?.toString() || index.toString()
+                }
+              />
+            </View>
           </View>
-        </View>
-
-        <View style={styles.row}>
-          <View style={styles.col}>
-            <Header1 text="Mixtapes by friends"></Header1>
-          </View>
-          <View style={styles.colR}>
-            <SeeMore />
-          </View>
-          <View style={styles.friends}>
-            <FlatList
-              horizontal={true}
-              data={limitedProfiles}
-              renderItem={renderProfile}
-              keyExtractor={(item, index) =>
-                item.id?.toString() || index.toString()
-              }
-            />
-          </View>
-        </View>
-
-        <View style={styles.rowLast}>
-          <View style={styles.col}>
-            <Header1 text="My pinned locations"></Header1>
-          </View>
-          <View style={styles.colR}>
-            <SeeMore />
-          </View>
-
-          <View>
-            <FlatList
-              horizontal={true}
-              data={limitedLocations}
-              renderItem={renderLocation}
-              keyExtractor={(item, index) =>
-                item.id?.toString() || index.toString()
-              }
-            />
-          </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -371,17 +365,22 @@ const LoginSignUpScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    // flexDirection: 'row',
-    // flexWrap: 'wrap',
-    // alignItems: 'flex-start',
-    // justifyContent: "center",
-    width: windowWidth,
-    // backgroundColor: colors.white,
-    marginBottom: 10,
+    width: windowWidth
   },
-  friends: {
-    marginTop: -90,
+  section: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  sectionHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginTop: 20,
+  },
+  sectionBody: {
+    paddingVertical: 10,
   },
   row: {
     width: "100%",
@@ -399,7 +398,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "flex-start",
-    marginTop: -30,
+    marginTop: 0,
   },
   col: {
     width: "70%",

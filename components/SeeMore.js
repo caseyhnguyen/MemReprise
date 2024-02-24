@@ -22,43 +22,37 @@ const SeeMore = ({ text, onPress }) => {
 
   return (
     <Pressable
-      style={styles.seeMore}
+      style={styles.container}
       onPress={handlePress} // Use the wrapped onPress handler
     >
       <Text style={styles.buttonText}>
         {!text
-          ? "See more"
+          ? "See More"
           : "View Mixtape"
-          }
+        }
       </Text>
-            <Icon name='chevron-right' style={styles.arrow} />
-
+      <Icon name='chevron-right' style={styles.arrow} />
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  seeMore: {
-    // backgroundColor: colors.pink,
+  container: {
+    display: 'flex',
     flexDirection: "row",
-    justifyContent: "right",
-    alignItems: "right",
-    marginTop: 8,
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonText: {
-    // textTransform: "uppercase",
     color: colors.pink,
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "right",
-    alignSelf: "flex-end",
-    marginLeft: "auto",
+    fontSize: 14,
+    fontWeight: "bold"
   },
-    arrow: {
+  arrow: {
     color: colors.pink,
-    fontSize: 16,
-    marginLeft: 10
-    }
+    fontSize: 14,
+    marginLeft: 5
+  }
 });
 
 export default SeeMore;

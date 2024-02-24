@@ -209,12 +209,12 @@ function DiscoverTabsScreen() {
             margin: 10,
             position: "absolute",
             left: 5,
-            color: colors.white,
+            color: colors.black,
             right: 5,
           },
           tabBarItemStyle: {
             borderRadius: 15,
-            color: colors.white,
+            color: colors.black,
             margin: 5,
             backgroundColor: colors.darkGray,
           },
@@ -222,14 +222,14 @@ function DiscoverTabsScreen() {
             height: null,
             top: 0,
             // borderRadius: 15,
-            color: colors.white,
+            color: colors.black,
             backgroundColor: colors.black,
           },
         }}
       >
         <DiscoverTabs.Screen
           name="Music boxes near me"
-          style={{ color: colors.white }}
+          style={{ color: colors.black }}
         >
           {(props) => (
             <GradientWrapper {...props} Component={ActivityStackScreen} />
@@ -266,24 +266,24 @@ function FeedStackScreen() {
 // FeedStack Navigator
 function FeedTabsScreen() {
   return (
-    <SafeAreaView style={{ flex: 1, color: colors.white }}>
+    <SafeAreaView style={{ flex: 1, color: colors.black }}>
       <FeedTabs.Navigator
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
             backgroundColor: colors.darkGray,
-            color: colors.white,
+            color: colors.black,
           },
           tabBarIndicatorStyle: {
             // backgroundColor: "#FFD966CC",
             backgroundColor: colors.blue,
-            color: colors.white,
+            color: colors.black,
           },
         }}
       >
         <FeedTabs.Screen
           name="FeedStackScreen"
-          style={{ color: colors.white }}
+          style={{ color: colors.black }}
           options={{ tabBarLabel: "Feed" }}
         >
           {(props) => (
@@ -291,7 +291,7 @@ function FeedTabsScreen() {
           )}
         </FeedTabs.Screen>
 
-        <FeedTabs.Screen name="Discover" style={{ color: colors.white }}>
+        <FeedTabs.Screen name="Discover" style={{ color: colors.black }}>
           {(props) => (
             <GradientWrapper {...props} Component={DiscoverTabsScreen} />
           )}

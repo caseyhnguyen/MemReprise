@@ -338,7 +338,7 @@ const AppLayout = () => {
           display: "flex",
           bottom: "0%",
           backgroundColor: colors.black,
-          height: 60
+          height: 60,
         },
       }}
     >
@@ -368,7 +368,10 @@ const AppLayout = () => {
         options={{
           tabBarLabel: "Discover",
           tabBarIcon: ({ color, size }) => (
-            <Icon name="globe-americas" style={{ fontSize: size, color: color }} />
+            <Icon
+              name="globe-americas"
+              style={{ fontSize: size, color: color }}
+            />
           ),
         }}
       />

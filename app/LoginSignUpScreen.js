@@ -1,36 +1,27 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
-  Text,
   FlatList,
-  Image,
-  Pressable,
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView
 } from "react-native";
-import images from "../assets/Images/images";
-import { colors } from "../assets/Themes/colors";
-import Header from "../components/Header";
-import PillPressable from "../components/PillPressable";
 import Header1 from "../components/Header1";
-import Header2 from "../components/Header2";
 import { trackEvent } from "@aptabase/react-native";
-import PillSelectable from "../components/PillSelectable.js";
 import ProfilePressable2 from "../components/ProfilePressable2";
 import SeeMore from "../components/SeeMore.js";
 import Song from "../components/Song.js";
 import Location from "../components/Location.js";
-import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../utils";
-import ExImage from "../assets/caroline.png";
+import { tracks, locations, profiles } from './_data.js';
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
 const LoginSignUpScreen = ({ navigation }) => {
+  /*
   const [limitedTracks, setTracks] = useState([
     {
       albumName: "Heaven To A Tortured Mind",
@@ -268,6 +259,7 @@ const LoginSignUpScreen = ({ navigation }) => {
     { image: require("../assets/tristan.png"), name: "Tristan" },
     { image: require("../assets/caroline.png"), name: "Caroline" },
   ]);
+  */
 
   const renderSong = ({ item }) => {
     return (
@@ -299,6 +291,16 @@ const LoginSignUpScreen = ({ navigation }) => {
     return <ProfilePressable2 image={item.image} name={item.name} />;
   };
 
+  const [currTracks, setCurrTracks] = useState([]);
+  const [currLocations, setCurrLocations] = useState([]);
+  const [currProfiles, setCurrProfiles] = useState([]);
+
+  useEffect(() => {
+    setCurrTracks(tracks);
+    setCurrLocations(locations);
+    setCurrProfiles(profiles);
+  }, [])
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView>
@@ -317,7 +319,7 @@ const LoginSignUpScreen = ({ navigation }) => {
             <View style={styles.sectionBody}>
               <FlatList
                 horizontal={true}
-                data={limitedTracks}
+                data={currTracks}
                 renderItem={renderSong}
                 keyExtractor={(item, index) =>
                   item.id?.toString() || index.toString()
@@ -333,7 +335,7 @@ const LoginSignUpScreen = ({ navigation }) => {
             <View style={styles.sectionBody}>
               <FlatList
                 horizontal={true}
-                data={limitedProfiles}
+                data={currProfiles}
                 renderItem={renderProfile}
                 keyExtractor={(item, index) =>
                   item.id?.toString() || index.toString()
@@ -349,7 +351,7 @@ const LoginSignUpScreen = ({ navigation }) => {
             <View style={styles.sectionBody}>
               <FlatList
                 horizontal={true}
-                data={limitedLocations}
+                data={currLocations}
                 renderItem={renderLocation}
                 keyExtractor={(item, index) =>
                   item.id?.toString() || index.toString()

@@ -4,94 +4,103 @@ import {
   View,
   Text,
   TextInput,
-  Image,
   Pressable,
   StyleSheet,
   Dimensions,
-  KeyboardAvoidingView,
-  Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
-import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
-import Header from "../components/Header";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import PillPressable from "../components/PillPressable";
 import Header1 from "../components/Header1";
 import Header2 from "../components/Header2";
-import Label from "../components/Label";
+import { trackEvent } from "@aptabase/react-native";
+import { supabase } from "../utils/supabaseClient";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("user@example.com"); // Pre-filled email
-  const [password, setPassword] = useState("password123"); // Pre-filled password
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLoginPress = async () => {
+    console.log("Login attempt with email:", email, "password:", password);
+    try {
+      // Use signInWithPassword for email/password authentication
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      // Assuming 'data' contains the user session information
+      console.log("Login successful, session data:", data);
+      navigation.navigate("Home");
+    } catch (error) {
+      console.log("Login Error:", error.message);
+      Alert.alert("Login Error", error.message);
+    }
+  };
+
+  const handleNavigateSignUp = () => {
+    navigation.navigate("SignUp");
+  };
+
+  const handleChangeEmail = (text) => {
+    setEmail(text);
+    console.log("Email Updated:", text);
+    trackEvent("User Interaction", { action: "Email Field Interacted" });
+  };
+
+  const handleChangePassword = (text) => {
+    setPassword(text);
+    console.log("Password Updated:", text);
+    trackEvent("User Interaction", { action: "Password Field Interacted" });
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={styles.container}
-        >
-          <View>
-            <Header title="memreprise" />
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.titleContainer}>
+            <Header1 text="Log in" />
+            <Header2 text="Please sign in to continue" />
           </View>
+
           <View style={styles.postPrompt}>
-            <View style={styles.title}>
-              <Header1 text="Log in" />
-              <Header2 text="Please sign in to continue" />
-            </View>
-
             <View style={styles.containerInput}>
-              {/* <Text style={styles.label}>Email</Text> */}
-              {/* <Label text="Email" /> */}
               <TextInput
-                style={styles.input}
-                value={email}
-                onChangeText={(text) => setEmail(text)}
                 placeholder="Enter your email"
-              />
-
-              {/* <Label text="Password" /> */}
-              <TextInput
+                value={email}
+                onChangeText={handleChangeEmail}
                 style={styles.input}
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                secureTextEntry
+              />
+              <TextInput
                 placeholder="Enter your password"
+                secureTextEntry
+                value={password}
+                onChangeText={handleChangePassword}
+                style={styles.input}
               />
             </View>
 
             <View style={styles.buttonContainer}>
-              {/* <Pressable
-                style={styles.button}
-                onPress={() => navigation.navigate("Home")}
-              >
-                <Text style={styles.loginBtnTxt}>Loginn</Text>
-              </Pressable> */}
-              <PillPressable 
-                onPress={() => navigation.navigate("Home")}
-                text="Log in"
-              />
-              {/* <View style={styles.buttonSpacer} /> */}
+              <PillPressable onPress={handleLoginPress} text="Log in" />
             </View>
-            {/* <View style={styles.spacer} /> */}
 
             <View style={styles.bottomTextContainer}>
               <Text style={styles.signUpText}>Don't have an account?</Text>
-              <Text
-                style={styles.linkText}
-                onPress={() => navigation.navigate("SignUp")}
-              >
-                Sign up
-              </Text>
+              <Pressable onPress={handleNavigateSignUp}>
+                <Text style={styles.linkText}>Sign up</Text>
+              </Pressable>
             </View>
           </View>
-          {/* <Text style={styles.oldPostsText}>Old posts</Text> */}
-        </KeyboardAvoidingView>
+        </ScrollView>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -100,42 +109,30 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
-    // padding: 10,
-    // width: windowWidth,
-    // height: windowWidth * 0.98,
+    paddingBottom: 20, // Add padding to the bottom of the scroll view
   },
-  title: {
+  titleContainer: {
     alignItems: "center",
+    marginBottom: 20,
   },
-  loginText: {
-    fontWeight: "500",
-    color: colors.white,
-    fontSize: 30,
+  postPrompt: {
     alignItems: "center",
-    justifyContent: "center",
-    marginTop: -30,
-    alignSelf: "center",
-  },
-  descrText: {
-    color: colors.white,
-    marginTop: "2.5%",
-    alignSelf: "center",
+    paddingHorizontal: 20,
   },
   containerInput: {
-    padding: 20,
-  },
-  label: {
-    marginBottom: 5,
-    color: colors.white,
+    width: "100%",
   },
   input: {
     fontSize: 15,
-    marginTop: 5,
-    marginBottom: 10,
+    marginTop: 10,
+    marginBottom: 20,
     padding: 11,
-    width: windowWidth - 100,
+    width: windowWidth - 40,
     borderWidth: 1,
     borderColor: colors.offWhite75,
     borderRadius: 4,
@@ -143,54 +140,27 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offWhite75,
     fontWeight: "bold",
   },
+  buttonContainer: {
+    marginTop: 20,
+    marginBottom: 10,
+  },
   bottomTextContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-  },
-  linkText: {
-    textDecorationLine: "underline",
-    fontWeight: "bold",
-    color: colors.pink,
-    marginLeft: 5,
-  },
-  postPrompt: {
-    borderRadius: 15,
-    padding: 50,
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: windowWidth * 0.9,
-    height: windowWidth * 0.75,
-    elevation: 5,
-  },
-  titleContainer: {
-    alignItems: "center",
-    width: "50%",
-  },
-  spacer: {
-    height: 16,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    marginBottom: "5%",
-  },
-  loginBtnTxt: {
-    textAlign: "center",
-    fontWeight: "500",
-    // fontSize: 14,
-    letterSpacing: -0.41,
-    color: colors.white,
-  },
-
-  buttonSpacer: {
-    width: 24,
+    marginBottom: 20,
   },
   signUpText: {
     fontSize: 14,
+    fontWeight: "bold",
     color: colors.white,
+    textAlign: "center",
+    marginRight: 5,
+  },
+  linkText: {
+    textDecorationLine: "underline",
+    color: colors.pink,
+    fontSize: 14,
   },
 });
 

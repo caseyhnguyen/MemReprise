@@ -10,15 +10,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../assets/Themes/colors";
 import Sample from "../assets/album-1.png";
+import { trackEvent } from "@aptabase/react-native";
 
 const windowWidth = Dimensions.get("window").width;
 
-const Profile = ({
-  userName,
-  icon,
-  firstName,
-  lastName
-}) => {
+const Profile = ({ userName, icon, firstName, lastName }) => {
   const navigation = useNavigation();
 
   const onSelection = () => {
@@ -51,7 +47,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 10,
     alignItems: "center",
-    height: 200
+    height: 200,
   },
   icon: {
     width: 88,

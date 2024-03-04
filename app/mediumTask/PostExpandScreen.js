@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -13,6 +13,8 @@ import {
 import { textStyles } from "../../assets/Themes/Text";
 import { styles as defaultStyles } from "../../assets/Themes/default_style";
 import PostExpanded from "../../components/PostExpanded";
+import { trackEvent } from "@aptabase/react-native";
+import { useRoute } from "@react-navigation/native";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -40,6 +42,20 @@ const PostExpandScreen = ({ route, navigation }) => {
 
   // Combine the artist names if available
   const artistNames = songData.artists?.join(", ") || "Unknown Artist";
+
+  useEffect(() => {
+    // Log the event when the screen is loaded
+    trackEvent("Screen View", {
+      screen: "PostExpandScreen",
+      userName,
+      artistNames,
+      caption,
+      themeIconLabel,
+      emotionIconLabel,
+      activityIconLabel,
+      formattedTimestamp,
+    });
+  }, []);
 
   return (
     <SafeAreaView style={defaultStyles.container}>

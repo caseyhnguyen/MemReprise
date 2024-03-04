@@ -16,7 +16,7 @@ import { supabase } from "../utils/supabaseClient";
 
 const windowWidth = Dimensions.get("window").width;
 
-const Song = ({
+const Location = ({
   // index,
   title,
   artists,
@@ -64,9 +64,7 @@ const Song = ({
       return;
     }
     // imageUrl = require(imageUrl);
-
-    navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
-    // navigation.navigate("Music Box", { artists: artists, city: name, imageUrl: imageUrl });
+    navigation.navigate("City Playlist", { name: 'YOU', city: name, image: { uri: imageUrl } });
   };
 
   return (
@@ -90,8 +88,8 @@ const Song = ({
 
 const styles = StyleSheet.create({
   outerContainer: {
+    marginHorizontal: 10,
     // marginBottom: 10,
-    marginHorizontal: 10
   },
   container: {
     flexDirection: "col",
@@ -107,7 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     color: colors.white,
-    gap: 10
+    gap: 10,
   },
   titleAndArtist: {
     // flexDirection: "column",
@@ -137,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Song;
+export default Location;

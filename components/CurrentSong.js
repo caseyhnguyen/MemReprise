@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.95,
     height: windowWidth * 0.35,
     color: colors.white,
-
   },
   container: {
     flexDirection: "row",
@@ -121,8 +120,7 @@ const styles = StyleSheet.create({
     width: 75,
     height: 75,
     marginRight: 15,
-    borderRadius: 200
-
+    borderRadius: 200,
   },
   albumName: {
     color: colors.white,

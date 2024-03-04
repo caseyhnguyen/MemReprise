@@ -1,4 +1,4 @@
-// PreviewScreen.js
+import React, { useEffect } from "react";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -15,10 +15,20 @@ import { useLocalSearchParams, Stack } from "expo-router";
 import { WebView } from "react-native-webview";
 import { colors } from "../assets/Themes/colors";
 import { StatusBar } from "expo-status-bar";
+import { useRoute } from "@react-navigation/native";
+import { trackEvent } from "@aptabase/react-native";
 
 export default function PreviewScreen() {
   const route = useRoute();
   const { url } = route.params;
+
+  useEffect(() => {
+    // Log the screen view with the URL
+    trackEvent("Screen View", {
+      screen: "Song Preview",
+      previewUrl: url,
+    });
+  }, [url]);
 
   return (
     <>

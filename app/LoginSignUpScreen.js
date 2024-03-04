@@ -27,7 +27,7 @@ const LoginSignUpScreen = ({ navigation }) => {
         <View style={styles.postPrompt}>
           {/* <View style={styles.spacer} /> */}
           <View style={styles.titleContainer}>
-            <Header1 text="memreprise"/>
+            <Header1 text="memreprise" />
             <Header2 text="Where music and memories meet" />
           </View>
           {/* <View style={styles.spacer} /> */}

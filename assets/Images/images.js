@@ -124,6 +124,22 @@ const images = {
     pic: require("../caroline.png"),
     label: "caroline",
   },
+  seattle: {
+    pic: require("../seattle.png"),
+    label: "seattle",
+  },
+  home_btn: {
+    pic: require("../home_btn.png"),
+    label: "home_btn",
+  },
+  discover_btn: {
+    pic: require("../discover_btn.png"),
+    label: "discover_btn",
+  },
+  mixtape_btn: {
+    pic: require("../mixtape_btn.png"),
+    label: "mixtape_btn",
+  },
 };
 
 export default images;

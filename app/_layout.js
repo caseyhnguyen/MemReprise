@@ -14,6 +14,8 @@ import {
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { trackEvent } from "@aptabase/react-native";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 // Screens
 // Simple Task
@@ -46,6 +48,14 @@ import { PostContext } from "../utils/PostContext";
 import CalendarActivityScreen from "./complexTask/CalendarActivityScreen";
 import TutorialScreen from "./TutorialScreen";
 import { StatusBar } from "expo-status-bar";
+import ShareMusicBox from "./complexTask/ShareMusicBox";
+import RecieveGift from "./complexTask/RecieveGift";
+import PlaylistCity from "./complexTask/PlaylistCity";
+
+import Aptabase from "@aptabase/react-native";
+import MusicBox from "../components/MusicBox";
+
+Aptabase.init("A-US-8502203082");
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -60,11 +70,18 @@ const FeedStack = createStackNavigator();
 const DiscoverTabs = createMaterialTopTabNavigator();
 
 // Create a wrapper component to apply gradient background
-const GradientWrapper = ({ Component, navigation, route }) => (
-  <GradientBackground>
-    <Component navigation={navigation} route={route} />
-  </GradientBackground>
-);
+const GradientWrapper = ({ Component, navigation, route }) => {
+  useEffect(() => {
+    // Log screen view with Aptabase
+    trackEvent("Screen View", { screen: route.name });
+  }, [route.name]);
+
+  return (
+    <GradientBackground>
+      <Component navigation={navigation} route={route} />
+    </GradientBackground>
+  );
+};
 
 // HomeStack Navigator
 function HomeStackScreen() {
@@ -89,6 +106,18 @@ function HomeStackScreen() {
       </HomeStack.Screen>
       <HomeStack.Screen name="Tracks">
         {(props) => <GradientWrapper {...props} Component={TracksScreen} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Share a Music Box">
+        {(props) => <GradientWrapper {...props} Component={ShareMusicBox} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="City Playlist">
+        {(props) => <GradientWrapper {...props} Component={PlaylistCity} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Music Box">
+        {(props) => <GradientWrapper {...props} Component={MusicBox} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Theme Question">
         {(props) => <GradientWrapper {...props} Component={ThemeQScreen} />}
@@ -135,17 +164,23 @@ function ActivityStackScreen() {
 function ThemeStackScreen() {
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor={colors.black} translucent = {true}/>
-    
-    <ThemeStack.Navigator screenOptions={{ headerShown: false }}>
-      <ThemeStack.Screen name="ThemeScreen">
-        {(props) => <GradientWrapper {...props} Component={ThemeScreen} />}
-      </ThemeStack.Screen>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={colors.black}
+        translucent={true}
+      />
 
-      <ThemeStack.Screen name="PlaylistDetails">
-        {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
-      </ThemeStack.Screen>
-    </ThemeStack.Navigator>
+      <ThemeStack.Navigator screenOptions={{ headerShown: false }}>
+        <ThemeStack.Screen name="ThemeScreen">
+          {(props) => <GradientWrapper {...props} Component={ThemeScreen} />}
+        </ThemeStack.Screen>
+
+        <ThemeStack.Screen name="PlaylistDetails">
+          {(props) => (
+            <GradientWrapper {...props} Component={PlaylistDetails} />
+          )}
+        </ThemeStack.Screen>
+      </ThemeStack.Navigator>
     </>
   );
 }
@@ -166,39 +201,42 @@ function FeelingStackScreen() {
 function DiscoverTabsScreen() {
   return (
     <>
-    <DiscoverTabs.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: "transparent",
-          margin: 10,
-          position: "absolute",
-          left: 5,
-          color: colors.white,
-          right: 5,
-        },
-        tabBarItemStyle: {
-          borderRadius: 15,
-          color: colors.white,
-          margin: 5,
-          backgroundColor: colors.darkGray,
-        },
-        tabBarIndicatorStyle: {
-          height: null,
-          top: 0,
-          // borderRadius: 15,
-          color: colors.white,
-          backgroundColor: colors.black,
-        },
-      }}
-    >
-      <DiscoverTabs.Screen name="Music boxes near me" style={{color: colors.white}}>
-        {(props) => (
-          <GradientWrapper {...props} Component={ActivityStackScreen} />
-        )}
-      </DiscoverTabs.Screen>
+      <DiscoverTabs.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: "transparent",
+            margin: 10,
+            position: "absolute",
+            left: 5,
+            color: colors.black,
+            right: 5,
+          },
+          tabBarItemStyle: {
+            borderRadius: 15,
+            color: colors.black,
+            margin: 5,
+            backgroundColor: colors.darkGray,
+          },
+          tabBarIndicatorStyle: {
+            height: null,
+            top: 0,
+            // borderRadius: 15,
+            color: colors.black,
+            backgroundColor: colors.black,
+          },
+        }}
+      >
+        <DiscoverTabs.Screen
+          name="Music boxes near me"
+          style={{ color: colors.black }}
+        >
+          {(props) => (
+            <GradientWrapper {...props} Component={ActivityStackScreen} />
+          )}
+        </DiscoverTabs.Screen>
 
-      {/* <DiscoverTabs.Screen name="Theme">
+        {/* <DiscoverTabs.Screen name="Theme">
         {(props) => <GradientWrapper {...props} Component={ThemeStackScreen} />}
       </DiscoverTabs.Screen>
 
@@ -207,8 +245,7 @@ function DiscoverTabsScreen() {
           <GradientWrapper {...props} Component={FeelingStackScreen} />
         )}
       </DiscoverTabs.Screen> */}
-      
-    </DiscoverTabs.Navigator>
+      </DiscoverTabs.Navigator>
     </>
   );
 }
@@ -219,7 +256,6 @@ function FeedStackScreen() {
       <FeedStack.Screen name="FeedInnerScreen">
         {(props) => <GradientWrapper {...props} Component={FeedScreen} />}
       </FeedStack.Screen>
-
       <FeedStack.Screen name="PostExpandScreen">
         {(props) => <GradientWrapper {...props} Component={PostExpandScreen} />}
       </FeedStack.Screen>
@@ -230,24 +266,24 @@ function FeedStackScreen() {
 // FeedStack Navigator
 function FeedTabsScreen() {
   return (
-    <SafeAreaView style={{ flex: 1, color: colors.white }}>
+    <SafeAreaView style={{ flex: 1, color: colors.black }}>
       <FeedTabs.Navigator
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
             backgroundColor: colors.darkGray,
-            color: colors.white,
+            color: colors.black,
           },
           tabBarIndicatorStyle: {
             // backgroundColor: "#FFD966CC",
             backgroundColor: colors.blue,
-            color: colors.white,
+            color: colors.black,
           },
         }}
       >
         <FeedTabs.Screen
           name="FeedStackScreen"
-          style={{color: colors.white}}
+          style={{ color: colors.black }}
           options={{ tabBarLabel: "Feed" }}
         >
           {(props) => (
@@ -255,7 +291,7 @@ function FeedTabsScreen() {
           )}
         </FeedTabs.Screen>
 
-        <FeedTabs.Screen name="Discover" style={{ color: colors.white }}>
+        <FeedTabs.Screen name="Discover" style={{ color: colors.black }}>
           {(props) => (
             <GradientWrapper {...props} Component={DiscoverTabsScreen} />
           )}
@@ -291,18 +327,19 @@ const AppLayout = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        color: colors.white,
-
-        tabBarActiveTintColor: colors.pink,
-        tabBarInactiveTintColor: colors.orange,
-        tabBarLabelStyle: { fontSize: 14, padding: 5, textTransform: "uppercase" },
-        backgroundColor: colors.darkGray,
+        tabBarActiveTintColor: colors.black,
+        tabBarInactiveTintColor: colors.gray,
+        tabBarActiveBackgroundColor: colors.pink,
+        tabBarLabelStyle: {
+          fontSize: 14,
+          paddingBottom: 5,
+        },
         tabBarStyle: {
           display: "flex",
-          paddingTop: "7%",
-          bottom: "0%"
+          bottom: "0%",
+          backgroundColor: colors.black,
+          height: 60,
         },
-        tabBarIconStyle: { paddingBottom: 10 },
       }}
     >
       <Tab.Screen
@@ -311,22 +348,29 @@ const AppLayout = () => {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
-            <Image
-              source={images.home.pic}
-              style={{ width: size, height: size, tintColor: color }}
-            />
+            <Icon name="home" style={{ fontSize: size, color: color }} />
           ),
         }}
       />
       <Tab.Screen
-        name="FeedScreen"
-        component={FeedTabsScreen}
+        name="complexTask/ShareMusicBox"
+        component={ShareMusicBox}
         options={{
-          tabBarLabel: "Feed",
+          tabBarLabel: "Mix",
           tabBarIcon: ({ color, size }) => (
-            <Image
-              source={images.reprise.pic}
-              style={{ width: size, height: size, tintColor: color }}
+            <Icon name="music" style={{ fontSize: size, color: color }} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="complexTask/PlaylistCity"
+        component={PlaylistCity}
+        options={{
+          tabBarLabel: "Discover",
+          tabBarIcon: ({ color, size }) => (
+            <Icon
+              name="globe-americas"
+              style={{ fontSize: size, color: color }}
             />
           ),
         }}
@@ -337,10 +381,7 @@ const AppLayout = () => {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
-            <Image
-              source={images.profile.pic}
-              style={{ width: size, height: size, tintColor: color }}
-            />
+            <Icon name="user-alt" style={{ fontSize: size, color: color }} />
           ),
         }}
       />

@@ -19,6 +19,7 @@ import formatPlayedAt from "../utils/formatPlayedAt.js";
 import { supabase } from "../utils/supabaseClient";
 import { PostContext } from "../utils/PostContext";
 import PillPressable from "../components/PillPressable.js";
+import { trackEvent } from "@aptabase/react-native";
 
 const windowWidth = Dimensions.get("window").width;
 // dimensions for selectionGrid styling
@@ -43,6 +44,11 @@ const PostSummaryScreen = ({ route, navigation }) => {
   } = route.params;
 
   const userName = route.params?.userName;
+
+  useEffect(() => {
+    // Log the screen view event
+    trackEvent("Screen View", { screen: "PostSummary", userName });
+  }, [userName]);
 
   // console.log("Username in PostSummaryScreen:", { userName });
 
@@ -93,6 +99,11 @@ const PostSummaryScreen = ({ route, navigation }) => {
       }
     } catch (err) {
       console.error("Error saving post:", err);
+      // Log the post error event
+      trackEvent("Error", {
+        action: "Post Failed",
+        errorMessage: error.message,
+      });
     }
   };
 
@@ -166,6 +177,11 @@ const PostSummaryScreen = ({ route, navigation }) => {
             <PillPressable
               onPress={async () => {
                 setPostMade(true); // update postMade to true
+                // Log the post event
+                trackEvent("Post Interaction", {
+                  action: "Post Submitted",
+                  userName,
+                });
                 // console.log("Post made in summary", { postMade });
                 try {
                   await savePostToSupabase(); // Use await inside the async function
@@ -190,8 +206,7 @@ const PostSummaryScreen = ({ route, navigation }) => {
                 }
               }}
               text="Post"
-            >
-            </PillPressable>
+            ></PillPressable>
             {/* <Pressable
               style={styles.postButton}
               onPress={async () => {
@@ -357,7 +372,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: "5%",
     paddingBottom: "5%",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   postButton: {
     // backgroundColor: colors.offWhite75,

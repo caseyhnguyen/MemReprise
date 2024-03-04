@@ -28,6 +28,7 @@ import Header2 from "../../components/Header2";
 import Label from "../../components/Label";
 // import { StatusBar } from "expo-status-bar";
 import { StatusBar } from "react-native";
+import { trackEvent } from "@aptabase/react-native";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -53,6 +54,12 @@ const CalendarActivityScreen = ({ navigation }) => {
   const onMainSelectionChange = (value) => {
     setSelectedValue(value);
     setSelectedFilter(null);
+
+    // Log the filter change event
+    trackEvent("filter_change", {
+      filterType: "main",
+      selectedValue: value,
+    });
 
     switch (value) {
       case "time":
@@ -310,60 +317,65 @@ const CalendarActivityScreen = ({ navigation }) => {
     <>
       {/* <StatusBar style="dark" barStyle="light-content" /> */}
       {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#00BCD4" translucent = {true}/> */}
-      <StatusBar barStyle="light-content" backgroundColor={colors.black} translucent = {true}/>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={colors.black}
+        translucent={true}
+      />
 
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <Image source={images.caroline.pic} style={styles.profilePic} />
-          <View>
-            {/* <Header1 text="Caroline Tran" /> */}
-            <Text style={styles.title}>Caroline Tran</Text>
-            <Header2 text="@cntran"/>
-          </View>
-          <View style={styles.dropDown}>
-            <RNPickerSelect
-              onValueChange={onMainSelectionChange}
-              items={[
-                { label: "Time", value: "time" },
-                { label: "Activity", value: "activity" },
-                { label: "Feeling", value: "feeling" },
-              ]}
-              style={pickerSelectStyles}
-              placeholder={{ label: "Filter", value: "reprise" }}
-            />
-            {/* Time Number Input and Unit Selection */}
-            {selectedValue === "time" && (
-              <>
-                <TextInput
-                  style={styles.numberInput}
-                  keyboardType="numeric"
-                  onChangeText={setTimeNumber}
-                  value={timeNumber}
-                  placeholder="Enter number"
-                />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.header}>
+            <Image source={images.caroline.pic} style={styles.profilePic} />
+            <View>
+              {/* <Header1 text="Caroline Tran" /> */}
+              <Text style={styles.title}>Caroline Tran</Text>
+              <Header2 text="@cntran" />
+            </View>
+            <View style={styles.dropDown}>
+              <RNPickerSelect
+                onValueChange={onMainSelectionChange}
+                items={[
+                  { label: "Time", value: "time" },
+                  { label: "Activity", value: "activity" },
+                  { label: "Feeling", value: "feeling" },
+                ]}
+                style={pickerSelectStyles}
+                placeholder={{ label: "Filter", value: "reprise" }}
+              />
+              {/* Time Number Input and Unit Selection */}
+              {selectedValue === "time" && (
+                <>
+                  <TextInput
+                    style={styles.numberInput}
+                    keyboardType="numeric"
+                    onChangeText={setTimeNumber}
+                    value={timeNumber}
+                    placeholder="Enter number"
+                  />
+                  <RNPickerSelect
+                    onValueChange={(value) => setSelectedFilter(value)}
+                    items={filterOptions}
+                    style={pickerSelectStyles}
+                    placeholder={{ label: "Select unit", value: dataSource }}
+                  />
+                </>
+              )}
+
+              {/* Secondary Dropdown for Activity or Feeling */}
+              {(selectedValue === "activity" ||
+                selectedValue === "feeling") && (
                 <RNPickerSelect
                   onValueChange={(value) => setSelectedFilter(value)}
                   items={filterOptions}
                   style={pickerSelectStyles}
-                  placeholder={{ label: "Select unit", value: dataSource }}
+                  placeholder={{ label: "Select", value: "reprise" }}
                 />
-              </>
-            )}
-
-            {/* Secondary Dropdown for Activity or Feeling */}
-            {(selectedValue === "activity" || selectedValue === "feeling") && (
-              <RNPickerSelect
-                onValueChange={(value) => setSelectedFilter(value)}
-                items={filterOptions}
-                style={pickerSelectStyles}
-                placeholder={{ label: "Select", value: "reprise" }}
-              />
-            )}
+              )}
+            </View>
           </View>
-        </View>
 
-        {/* <View style={styles.monthContainer}>
+          {/* <View style={styles.monthContainer}>
         <Text style={styles.month}>DECEMBER</Text>
       </View>
 
@@ -371,16 +383,15 @@ const CalendarActivityScreen = ({ navigation }) => {
       <View style={styles.containerCalendar}>{renderFlatList()}</View>
     </SafeAreaView> */}
 
-        <View style={styles.monthContainer}>
-          <Label text="Song history" />
-          {/* <Text style={styles.month}>DECEMBER</Text> */}
-        </View>
+          <View style={styles.monthContainer}>
+            <Label text="Song history" />
+            {/* <Text style={styles.month}>DECEMBER</Text> */}
+          </View>
 
-        <View style={styles.containerCalendar}>{renderFlatList()}</View>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+          <View style={styles.containerCalendar}>{renderFlatList()}</View>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
     </>
-
   );
 };
 
@@ -461,7 +472,7 @@ const styles = StyleSheet.create({
   dropDown: {
     // width: windowWidth * 0.3,
     marginHorizontal: "5%",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   numberInput: {
     fontSize: 15,
@@ -477,7 +488,6 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.3,
     fontWeight: "bold",
     textTransform: "capitalize",
-
   },
   timeFilterContainer: {
     flexDirection: "row",
@@ -500,27 +510,27 @@ const pickerSelectStyles = {
     // margin: windowWidth * 0.005,
     width: windowWidth * 0.3,
     // fontWeight: "bold",
-      
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 15,
-      marginTop: 8,
-      marginBottom: 8,
-      backgroundColor: colors.pink,
-      // paddingHorizontal: 45,
-      paddingVertical: 11,
-      textTransform: "uppercase",
-      color: colors.white,
-      fontSize: 16,
-      fontWeight: "bold",
-      textAlign: "center",
+
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+    marginTop: 8,
+    marginBottom: 8,
+    backgroundColor: colors.pink,
+    // paddingHorizontal: 45,
+    paddingVertical: 11,
+    textTransform: "uppercase",
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
   },
   placeholder: {
-      color: colors.white,
-      textTransform: "uppercase",
+    color: colors.white,
+    textTransform: "uppercase",
 
-      // color: colors.darkGray,
+    // color: colors.darkGray,
     // fontWeight: "bold",
   },
   inputAndroid: {

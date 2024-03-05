@@ -23,7 +23,7 @@ import LoginSignUpScreen from "./LoginSignUpScreen";
 import LoginScreen from "./LoginScreen";
 import SignUpScreen from "./SignUpScreen";
 import HomeScreen from "./HomeScreen";
-import TracksScreen from "./TracksScreen";
+import Tracks from "./Tracks";
 import ProfileScreen from "./ProfileScreen";
 import ThemeQScreen from "./ThemeQScreen";
 import PostSummaryScreen from "./PostSummaryScreen";
@@ -50,6 +50,7 @@ import TutorialScreen from "./TutorialScreen";
 import { StatusBar } from "expo-status-bar";
 import ShareMusicBox from "./complexTask/ShareMusicBox";
 import RecieveGift from "./complexTask/RecieveGift";
+import SentGift from "./complexTask/SentGift";
 import PlaylistCity from "./complexTask/PlaylistCity";
 
 import Aptabase from "@aptabase/react-native";
@@ -87,11 +88,11 @@ const GradientWrapper = ({ Component, navigation, route }) => {
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: true }}>
-      <HomeStack.Screen name="LoginSignUp" options={{ headerShown: false }}>
+      {/* <HomeStack.Screen name="LoginSignUp" options={{ headerShown: false }}>
         {(props) => (
           <GradientWrapper {...props} Component={LoginSignUpScreen} />
         )}
-      </HomeStack.Screen>
+      </HomeStack.Screen> */}
       <HomeStack.Screen name="Login" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={LoginScreen} />}
       </HomeStack.Screen>
@@ -105,13 +106,16 @@ function HomeStackScreen() {
         {(props) => <GradientWrapper {...props} Component={HomeScreen} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Tracks">
-        {(props) => <GradientWrapper {...props} Component={TracksScreen} />}
+        {(props) => <GradientWrapper {...props} Component={Tracks} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Share a Music Box">
         {(props) => <GradientWrapper {...props} Component={ShareMusicBox} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Recieve Gift">
         {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Sent Gift">
+        {(props) => <GradientWrapper {...props} Component={SentGift} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="City Playlist">
         {(props) => <GradientWrapper {...props} Component={PlaylistCity} />}

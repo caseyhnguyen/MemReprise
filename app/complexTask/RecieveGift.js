@@ -4,8 +4,9 @@ import PillPressable from "../../components/PillPressable";
 import { colors } from "../../assets/Themes/colors";
 import { useNavigation } from "@react-navigation/native";
 import { trackEvent } from "@aptabase/react-native";
-import Gray from "../../assets/gray.png"
-import MusicImg from "../../assets/musicbox.png"
+import Gray from "../../assets/gray.png";
+import MusicImg from "../../assets/musicbox.png";
+import LottieView from 'lottie-react-native';
 
 const RecieveGift = ({ route }) => {
   const navigation = useNavigation();
@@ -25,7 +26,6 @@ const RecieveGift = ({ route }) => {
       <Text style={styles.name}>Gray</Text>
       <Text style={styles.text}>sent you a music box!</Text>
       <Image style={styles.image2} source={MusicImg} />
-
       <PillPressable
         onPress={() => {
           // Track the send button pressed event before navigation
@@ -34,20 +34,24 @@ const RecieveGift = ({ route }) => {
             senderName: name, // The name of the person who received the gift
           });
           navigation.navigate("Music Box");
+          // navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
         }}
         text="Open"
       />
+      <View style={styles.anim}>
+        <LottieView style={{flex: 1}} source={require('../../assets/Celebrate1.json')} autoPlay loop />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 100,
+    paddingTop: 150,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: colors.darkBlue,
+    backgroundColor: colors.black,
     width: "100%",
     height: "100%",
   },
@@ -69,10 +73,17 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   text: {
-    marginTop: 10,
-    marginBottom: 50,
+    marginTop: 5,
+    marginBottom: 30,
     color: colors.white,
   },
+  anim: {
+    height: 500,
+    // width: 100,
+    aspectRatio: 1,
+    marginTop: -100,
+    zIndex: -10
+  }
 });
 
 export default RecieveGift;

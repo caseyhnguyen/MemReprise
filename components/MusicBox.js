@@ -52,8 +52,6 @@ const MusicBox = ({
     }
   };
 
-  console.log(fetchTrack);
-
   const navigation = useNavigation();
   // const name = route.params?.name;
   // const city = route.params?.city;
@@ -122,7 +120,7 @@ const MusicBox = ({
       <View style={styles.spotifyContainer}>
         <WebView
         source={{
-          uri: "https://open.spotify.com/embed/track/7wCmS9TTVUcIhRalDYFgPy?utm_source=generator",
+          uri: "https://open.spotify.com/embed/track/3vkCueOmm7xQDoJ17W1Pm3?utm_source=generator",
         }}
         style={styles.spotifyEmbed}
       />
@@ -133,7 +131,7 @@ const MusicBox = ({
       text="Gift back"
       isSpotify={false}
       disabled={false}
-    />
+      />
       <SeeMore text="View" />
 
     </View>
@@ -161,7 +159,8 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     marginBottom: 10,
     width: "100%",
-    height: "15.8%",
+    // height: "14.5%",
+    height: "15.2%",
     textAlign: "center",
     color: colors.white,
     // backgroundColor: colors.darkGray,
@@ -222,20 +221,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
-  progressTime: {
-    fontSize: 14,
-    color: colors.white,
-    position: "absolute",
-    left: 10,
-    bottom: -20,
-  },
-  durationTime: {
-    fontSize: 14,
-    color: colors.darkGray,
-    position: "absolute",
-    right: 10,
-    bottom: -20,
-  },
   row: {
     width: "100%",
     // backgroundColor: colors.white,
@@ -278,13 +263,8 @@ const styles = StyleSheet.create({
     // backgroundColor: colors.pink
     flex: 1,
     flexDirection: 'column',
+    marginTop: 35,
   },
-  bgImage: {
-    // flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    blurRadius: 100
-  }
 });
 
 export default MusicBox;

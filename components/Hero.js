@@ -3,10 +3,15 @@ import {
   Text,
   StyleSheet,
   View,
+  Image,
 } from "react-native";
 import { colors } from "../assets/Themes/colors";
+import { tracks } from '../app/_data.js';
+
 
 const Hero = (props) => {
+    let hero = tracks[Math.floor(Math.random() * tracks.length)];
+    console.log(hero);
     return (
         <View style={styles.heroContainer}>
             <View style={styles.row}>
@@ -25,7 +30,7 @@ const Hero = (props) => {
                     </Text>
                 </View>
                 <View style={styles.col}>
-
+                    <Image src={hero.imageUrl} style={styles.heroImg} />
                 </View>
             </View>
         </View>
@@ -64,13 +69,19 @@ const Hero = (props) => {
     },
     header3: {
         fontWeight: "bold",
-        fontSize: 25,
+        fontSize: 20,
         alignItems: "center",
         justifyContent: "center",
         // alignSelf: "center",
         textTransform: "uppercase",
         letterSpacing: 1.2,
     },
+    heroImg: {
+        width: 150,
+        height: 150,
+        marginLeft: 20,
+        marginTop: 15
+    }
   });
   
   export default Hero;

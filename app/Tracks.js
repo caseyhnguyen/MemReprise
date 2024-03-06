@@ -212,7 +212,9 @@ const TracksScreen = ({ route, navigation }) => {
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar
+      // style="dark" 
+      barStyle="light-content"/>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView style={styles.container}>{contentDisplayed}</SafeAreaView>
       </TouchableWithoutFeedback>

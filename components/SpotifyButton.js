@@ -37,7 +37,7 @@ const SpotifyButton = ({ text, isSpotify, token, isLoading, muted }) => {
         />
       )}
       <Text style={styles.buttonText}>
-        {isSpotify ? "Select a Song from Spotify" : text}
+        {isSpotify ? "Select a song from Spotify" : text}
       </Text>
     </Pressable>
   );

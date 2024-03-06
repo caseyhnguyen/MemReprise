@@ -11,6 +11,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../../utils";
 import Track from "../../components/Track";
 import Song from "../../components/Song";
+import { profiles } from '../_data.js'
+
 
 import {
   ActivityIndicator,
@@ -114,12 +116,13 @@ const ShareMusicBox = ({ route, navigation }) => {
   // };
 
   const deliveryOptions = ["Send Now", "Surprise", "Notify"];
-  const recipientOptions = [
-    { name: "Chris", image: ChrisHemsworthImg },
-    { name: "Dwayne", image: DwayneJohnsonImg },
-    { name: "Jenna", image: JennaOrtegaImg },
-    { name: "Tim", image: TimCookImg },
-  ];
+  // const recipientOptions = [
+  //   { name: "Chris", image: ChrisHemsworthImg },
+  //   { name: "Dwayne", image: DwayneJohnsonImg },
+  //   { name: "Jenna", image: JennaOrtegaImg },
+  //   { name: "Tim", image: TimCookImg },
+  // ];
+  const recipientOptions = profiles;
   // const songOptions = [
   //   {
   //     artist: "Taylor Swift",
@@ -146,7 +149,7 @@ const ShareMusicBox = ({ route, navigation }) => {
       </View>
       <View style={styles.bodyView}>
         <View style={styles.sectionView}>
-          <Header1 text="Choose a Song" />
+          <Header1 text="Choose a song" />
           <SpotifyAuthOrRefreshButton />
           {!loading && selectedSong && (
             <Track
@@ -196,9 +199,9 @@ const ShareMusicBox = ({ route, navigation }) => {
           </ScrollView>
         </View>
         <View style={styles.sectionView}>
-          <Header1 text="Add a Message" />
+          <Header1 text="Add a message" />
           <TextInput
-            placeholder="Add a message"
+            placeholder="Remember that time we..."
             style={styles.input}
             value={message} // Use the message state as the value
             onChangeText={setMessage} // Update the message state on text change
@@ -278,7 +281,7 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   sectionView: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
 });
 

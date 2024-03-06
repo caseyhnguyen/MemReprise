@@ -27,6 +27,7 @@ import Location from "../components/Location.js";
 import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../utils";
 import ExImage from "../assets/caroline.png";
 import { tracks, locations, profiles } from './_data.js'
+import Hero from "../components/Hero.js";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -76,9 +77,10 @@ const HomeScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView>
         <ScrollView style={styles.container}>
+          <Hero />
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Header1 text="My Gifts"></Header1>
+              <Header1 text="Your Mixtapes"></Header1>
               <SeeMore
                 onPress={() => {
                   trackEvent("View More Pressed", {
@@ -100,7 +102,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Header1 text="Friends' Mixtapes"></Header1>
+              <Header1 text="Mixtapes by Friends"></Header1>
               <SeeMore />
             </View>
             <View style={styles.sectionBody}>
@@ -114,7 +116,7 @@ const HomeScreen = ({ navigation }) => {
               />
             </View>
           </View>
-          <View style={styles.section}>
+          {/* <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Header1 text="My Locations"></Header1>
               <SeeMore />
@@ -129,7 +131,7 @@ const HomeScreen = ({ navigation }) => {
                 }
               />
             </View>
-          </View>
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -139,6 +141,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     width: windowWidth,
+    height: "100%"
   },
   section: {
     display: "flex",

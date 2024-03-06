@@ -107,7 +107,24 @@ export const getMyRecentTracks = async (token) => {
 export const getMyCurrentTrack = async (token) => {
   try {
     let res = await fetcher(CURRENT_TRACK_API, token);
+    console.log("hi. this is from api options");
+    // console.log(res.data);
+    // Process and format the response data
+    return formatCurrentTrack(res.data);
+  } catch (e) {
+    console.error(e);
+    alert(ERROR_ALERT);
+    return null;
+  }
+};
 
+/* Fetches the currently playing track from the Spotify API.
+ * Make sure that CURRENT_TRACK_API is set correctly in env.js */
+export const getTrack = async (url, token) => {
+  try {
+    let res = await fetcher(url, token);
+    console.log("hi from get Track");
+    console.log(res.data);
     // Process and format the response data
     return formatCurrentTrack(res.data);
   } catch (e) {

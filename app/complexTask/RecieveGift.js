@@ -43,10 +43,13 @@ const RecieveGift = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    paddingTop: 100,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    backgroundColor: colors.darkBlue,
+    width: "100%",
+    height: "100%",
   },
   image: {
     width: 125,

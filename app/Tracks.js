@@ -137,6 +137,7 @@ const TracksScreen = ({ route, navigation }) => {
   };
 
   const limitedTracks = tracks.slice(0, 10);
+  // console.log(limitedTracks);
 
   const renderSong = ({ item, index }) => {
     return (

@@ -61,6 +61,7 @@ Aptabase.init("A-US-8502203082");
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const MixStack = createStackNavigator();
 
 // Medium Task
 const ActivityStack = createStackNavigator();
@@ -84,6 +85,10 @@ const GradientWrapper = ({ Component, navigation, route }) => {
   );
 };
 
+const GradientPlaylistCity = (props) => (
+  <GradientWrapper {...props} Component={PlaylistCity} />
+);
+
 // HomeStack Navigator
 function HomeStackScreen() {
   return (
@@ -105,18 +110,18 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Home" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={HomeScreen} />}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Tracks">
+      {/* <HomeStack.Screen name="Tracks">
         {(props) => <GradientWrapper {...props} Component={Tracks} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Share a Music Box">
         {(props) => <GradientWrapper {...props} Component={ShareMusicBox} />}
-      </HomeStack.Screen>
+      </HomeStack.Screen> */}
       <HomeStack.Screen name="Recieve Gift">
         {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Sent Gift">
+      {/* <HomeStack.Screen name="Sent Gift">
         {(props) => <GradientWrapper {...props} Component={SentGift} />}
-      </HomeStack.Screen>
+      </HomeStack.Screen> */}
       <HomeStack.Screen name="City Playlist">
         {(props) => <GradientWrapper {...props} Component={PlaylistCity} />}
       </HomeStack.Screen>
@@ -142,6 +147,25 @@ function HomeStackScreen() {
         {(props) => <GradientWrapper {...props} Component={FeedTabsScreen} />}
       </HomeStack.Screen>
     </HomeStack.Navigator>
+  );
+}
+
+function MixStackScreen() {
+  return (
+    <MixStack.Navigator screenOptions={{ headerShown: true }}>
+      <MixStack.Screen
+        name="Share a Music Box"
+        options={{ headerShown: false }}
+      >
+        {(props) => <GradientWrapper {...props} Component={ShareMusicBox} />}
+      </MixStack.Screen>
+      <MixStack.Screen name="Tracks">
+        {(props) => <GradientWrapper {...props} Component={Tracks} />}
+      </MixStack.Screen>
+      <MixStack.Screen name="Sent Gift" options={{ headerShown: false }}>
+        {(props) => <GradientWrapper {...props} Component={SentGift} />}
+      </MixStack.Screen>
+    </MixStack.Navigator>
   );
 }
 
@@ -342,7 +366,7 @@ const AppLayout = () => {
           display: "flex",
           bottom: "0%",
           backgroundColor: colors.black,
-          height: 60,
+          height: "10.5%",
         },
       }}
     >
@@ -356,7 +380,7 @@ const AppLayout = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="complexTask/ShareMusicBox"
         component={ShareMusicBox}
         options={{
@@ -365,10 +389,20 @@ const AppLayout = () => {
             <Icon name="music" style={{ fontSize: size, color: color }} />
           ),
         }}
+      /> */}
+      <Tab.Screen
+        name="complexTask/ShareMusicBox"
+        component={MixStackScreen}
+        options={{
+          tabBarLabel: "Mix",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="gift" style={{ fontSize: size, color: color }} />
+          ),
+        }}
       />
       <Tab.Screen
         name="complexTask/PlaylistCity"
-        component={PlaylistCity}
+        component={GradientPlaylistCity} // Use the wrapped component here
         options={{
           tabBarLabel: "Discover",
           tabBarIcon: ({ color, size }) => (

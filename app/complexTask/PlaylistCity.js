@@ -38,7 +38,7 @@ const PlaylistCity = ({ route }) => {
       </View>
       <WebView
         source={{
-          uri: "https://open.spotify.com/playlist/2fmyOjn5kNiqMUjKRl08M3?si=b6bef14539ac468f",
+          uri: "https://open.spotify.com/playlist/1XjcbwYnkGT87SoAXdp607?si=7aaa5300cbfb4462",
         }}
         style={styles.spotifyContainer}
       />

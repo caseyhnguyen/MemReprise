@@ -14,6 +14,7 @@ import {
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import { trackEvent } from "@aptabase/react-native";
+import { colors } from "../assets/Themes/colors";
 
 const MapScreen = () => {
   const [userLocation, setUserLocation] = useState(null);
@@ -146,15 +147,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 20,
     bottom: 20,
-    backgroundColor: "blue",
+    backgroundColor: colors.pink,
     padding: 10,
     borderRadius: 20,
   },
   buttonText: {
-    color: "white",
+    color: colors.black,
+    fontWeight: "bold",
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: colors.pink,
   },
   centeredView: {
     flex: 1,

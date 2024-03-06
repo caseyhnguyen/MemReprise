@@ -15,7 +15,7 @@ import JennaOrtegaImg from "../../assets/jenna-ortega.jpg";
 import TimCookImg from "../../assets/tim-cook.jpg";
 import { trackEvent } from "@aptabase/react-native";
 
-const ShareMusicBox = () => {
+const ShareMusicBox2 = () => {
   const navigation = useNavigation();
 
   // Function to handle song selection, now expects an index instead of song object
@@ -205,4 +205,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShareMusicBox;
+export default ShareMusicBox2;

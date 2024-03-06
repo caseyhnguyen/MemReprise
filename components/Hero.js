@@ -11,7 +11,6 @@ import { tracks } from '../app/_data.js';
 
 const Hero = (props) => {
     let hero = tracks[Math.floor(Math.random() * tracks.length)];
-    console.log(hero);
     return (
         <View style={styles.heroContainer}>
             <View style={styles.row}>

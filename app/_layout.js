@@ -153,7 +153,7 @@ function HomeStackScreen() {
 
 function MixStackScreen() {
   return (
-    <MixStack.Navigator screenOptions={{ headerShown: true }}>
+    <MixStack.Navigator screenOptions={{ headerShown: false }}>
       <MixStack.Screen
         name="Share a Music Box"
         options={{ headerShown: false }}

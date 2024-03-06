@@ -342,7 +342,7 @@ const AppLayout = () => {
           display: "flex",
           bottom: "0%",
           backgroundColor: colors.black,
-          height: 60,
+          height: "10.5%",
         },
       }}
     >

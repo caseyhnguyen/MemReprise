@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   Dimensions,
+  ImageBackground,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -53,29 +54,36 @@ const Track = ({
     });
   };
 
+  const cutoffTitle = 25;
+  let songTitle = title;
+  if (songTitle.length > cutoffTitle) {
+    songTitle = songTitle.substring(0, cutoffTitle) + "...";
+  }
+
+  // const cutoffArtist = 27;
+  // let songArtists = artists?.join(", ") || "Unknown Artist";
+  // if (songArtists.length > cutoffArtist) {
+  //   songArtists = songArtists.substring(0, cutoffArtist) + "...";
+  // }
+
   return (
     <View style={styles.outerContainer}>
       <TouchableOpacity style={styles.container} onPress={onSongPress}>
+
         <View style={styles.songInfo}>
-          <Text style={styles.index}>{index + 1 ? `${index + 1}.` : ""}</Text>
-          <Image source={{ uri: imageUrl }} style={styles.image} />
+          {/* <Text style={styles.index}>{index + 1 ? `${index + 1}.` : ""}</Text> */}
+          <ImageBackground source={{ uri: imageUrl }} style={styles.image} resizeMode="cover"  />
+
           <View style={styles.titleAndArtist}>
             <Text style={styles.titleText} numberOfLines={1}>
-              {title}
+              {songTitle}
             </Text>
             <Text style={styles.artistText} numberOfLines={1}>
               {Array.isArray(artists) ? artists.join(", ") : artists}
             </Text>
-            {/* Display the formatted date and time */}
-            <Text style={styles.playedAtText}>{formatPlayedAt(played_at)}</Text>
           </View>
-          {/* <Text style={styles.albumName} numberOfLines={1}>
-              {albumName}
-            </Text> */}
-          <Text style={styles.durationText}>
-            {millisToMinuteSeconds(duration)}
-          </Text>
         </View>
+
       </TouchableOpacity>
     </View>
   );
@@ -83,87 +91,54 @@ const Track = ({
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: colors.offWhite50,
-    // opacity: 0.75,
+    backgroundColor: colors.darkGray,
+    color: colors.white,
     borderRadius: 5,
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-    // marginHorizontal: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
     marginBottom: 10,
-    width: windowWidth * 0.95,
-    height: windowWidth * 0.2,
-    // shadowColor: colors.darkGray,
-    // shadowOffset: { width: 4, height: 4 },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
+    width: windowWidth * .95,
+    // height: windowWidth * 0.2,
+    height: "auto",
   },
   container: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "left",
     width: windowWidth * 0.9,
-  },
-  buttonContainer: {
-    width: windowWidth * 0.1,
-    height: windowWidth * 0.1,
-    marginRight: 5,
-  },
-  index: {
-    color: colors.darkGray,
-    fontSize: 14,
-    width: "8%",
-    textAlign: "center",
+    height: "auto",
   },
   songInfo: {
     flexDirection: "row",
     justifyContent: "left",
-    width: "95%",
+    // width: "95%",
     alignItems: "center",
+    flex: 1,
   },
   titleAndArtist: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
-    marginRight: 20,
-    width: "60%",
+    // marginRight: 20,
+    // width: "60%",
   },
   image: {
-    width: 65,
-    height: 65,
-    marginRight: 15,
-  },
-  // playButton: {
-  //   marginRight: 3,
-  //   color: colors.spotify,
-  //   alignItems: "center",
-  // },
-  albumName: {
-    color: colors.darkGray,
-    flex: 3,
-    fontSize: 14,
-    marginRight: 10,
-    width: windowWidth * 0.15,
-  },
-  durationText: {
-    color: colors.darkGray,
-    fontSize: 14,
-    paddingLeft: 5,
-  },
-  playedAtText: {
-    color: colors.darkGray,
-    fontSize: 14,
-    // paddingLeft: 5,
-    // marginRight: 10,
+    height: 75,
+    width: 75,
+    // flex: 1,
+    justifyContent: 'center',
+    marginRight: 15
   },
   artistText: {
-    color: colors.black,
     fontSize: 14,
     marginTop: 2,
+    color: colors.white,
   },
   titleText: {
-    color: colors.black,
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: 18,
     marginBottom: 2,
+    color: colors.white,
+    height: "auto"
   },
 });
 

@@ -87,7 +87,8 @@ const GradientWrapper = ({ Component, navigation, route }) => {
 // HomeStack Navigator
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: true }}>
+    <HomeStack.Navigator screenOptions={{ headerShown: false, headerBackTitleVisible: false }}>
+      
       {/* <HomeStack.Screen name="LoginSignUp" options={{ headerShown: false }}>
         {(props) => (
           <GradientWrapper {...props} Component={LoginSignUpScreen} />

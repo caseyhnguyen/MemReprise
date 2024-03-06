@@ -34,6 +34,7 @@ const RecieveGift = ({ route }) => {
             senderName: name, // The name of the person who received the gift
           });
           navigation.navigate("Music Box");
+          // navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
         }}
         text="Open"
       />
@@ -46,7 +47,7 @@ const RecieveGift = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
+    paddingTop: 150,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

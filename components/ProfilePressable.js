@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 8,
     marginBottom: 8,
-    marginRight: 5,
+    marginRight: 12,
   },
   image: {
     width: 60,
@@ -46,12 +46,12 @@ const styles = StyleSheet.create({
     borderRadius: 1000,
   },
   isSelected: {
-    borderWidth: 2,
-    borderColor: colors.white,
+    borderWidth: 3,
+    borderColor: colors.blue,
   },
   name: {
     color: colors.white,
-    marginTop: 10,
+    marginTop: 8,
   },
 });
 

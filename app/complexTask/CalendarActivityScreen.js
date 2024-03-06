@@ -70,62 +70,10 @@ const CalendarActivityScreen = ({ navigation }) => {
           { label: "Years", value: "years" },
         ]);
         break;
-      case "activity":
-        setFilterOptions([
-          { label: "Exercising", value: "exercising" },
-          { label: "Eating", value: "eating" },
-          { label: "Working", value: "working" },
-          { label: "Commuting", value: "commuting" },
-        ]);
-        break;
-      case "feeling":
-        setFilterOptions([
-          { label: "Super Happy", value: "super happy" },
-          { label: "Happy", value: "happy" },
-          { label: "Super Sad", value: "super sad" },
-          { label: "Sad", value: "sad" },
-        ]);
-        break;
       default:
         setFilterOptions([]);
         setTimeNumber("");
     }
-  };
-
-  // Mapping function for emotion icons
-  const getEmotionIconSource = (iconId) => {
-    const emotionIconMap = {
-      4: images.happyEmoji.pic,
-      5: images.superHappyEmoji.pic,
-      6: images.sadEmoji.pic,
-      7: images.superSadEmoji.pic,
-    };
-
-    return emotionIconMap[iconId] || null;
-  };
-
-  // Mapping function for activity icons
-  const getActivityIconSource = (iconId) => {
-    const activityIconMap = {
-      12: images.working.pic,
-      13: images.commuting.pic,
-      14: images.eating.pic,
-      15: images.exercising.pic,
-    };
-
-    return activityIconMap[iconId] || null;
-  };
-
-  // Mapping function for theme icons
-  const getThemeIconSource = (iconId) => {
-    const themeIconMap = {
-      8: images.matchaLatte.pic,
-      9: images.espresso.pic,
-      10: images.hotChocolate.pic,
-      11: images.lemonade.pic,
-    };
-
-    return themeIconMap[iconId] || null;
   };
 
   const parsePosts = (fetchedPosts) => {
@@ -213,14 +161,6 @@ const CalendarActivityScreen = ({ navigation }) => {
           query = query.gte("created_at", new Date(timeAgo).toISOString());
         }
 
-        // Activity and Feeling filtering logic
-        if (selectedValue === "activity" || selectedValue === "feeling") {
-          const filterColumn =
-            selectedValue === "activity"
-              ? "activity_icon_text"
-              : "emotion_icon_text";
-          query = query.ilike(filterColumn, `%${selectedFilter}%`);
-        }
       }
 
       const { data, error } = await query;
@@ -315,8 +255,6 @@ const CalendarActivityScreen = ({ navigation }) => {
   };
   return (
     <>
-      {/* <StatusBar style="dark" barStyle="light-content" /> */}
-      {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#00BCD4" translucent = {true}/> */}
       <StatusBar
         barStyle="light-content"
         backgroundColor={colors.black}
@@ -328,17 +266,17 @@ const CalendarActivityScreen = ({ navigation }) => {
           <View style={styles.header}>
             <Image source={images.caroline.pic} style={styles.profilePic} />
             <View>
-              {/* <Header1 text="Caroline Tran" /> */}
-              <Text style={styles.title}>Caroline Tran</Text>
+              <Header1 text="Caroline Tran" />
               <Header2 text="@cntran" />
             </View>
+
             <View style={styles.dropDown}>
               <RNPickerSelect
                 onValueChange={onMainSelectionChange}
                 items={[
                   { label: "Time", value: "time" },
-                  { label: "Activity", value: "activity" },
-                  { label: "Feeling", value: "feeling" },
+                  // { label: "Activity", value: "activity" },
+                  // { label: "Feeling", value: "feeling" },
                 ]}
                 style={pickerSelectStyles}
                 placeholder={{ label: "Filter", value: "reprise" }}
@@ -362,16 +300,6 @@ const CalendarActivityScreen = ({ navigation }) => {
                 </>
               )}
 
-              {/* Secondary Dropdown for Activity or Feeling */}
-              {(selectedValue === "activity" ||
-                selectedValue === "feeling") && (
-                <RNPickerSelect
-                  onValueChange={(value) => setSelectedFilter(value)}
-                  items={filterOptions}
-                  style={pickerSelectStyles}
-                  placeholder={{ label: "Select", value: "reprise" }}
-                />
-              )}
             </View>
           </View>
 
@@ -464,10 +392,13 @@ const styles = StyleSheet.create({
   monthText: {
     color: colors.black,
     fontWeight: "bold",
+    fontSize: 13,
   },
   dateText: {
     color: colors.black,
     textAlign: "center",
+    fontSize: 13,
+
   },
   dropDown: {
     // width: windowWidth * 0.3,

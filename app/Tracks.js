@@ -213,6 +213,8 @@ const TracksScreen = ({ route, navigation }) => {
   return (
     <>
       <StatusBar
+      backgroundColor={colors.black}
+      translucent={true}
       // style="dark" 
       barStyle="light-content"/>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

@@ -92,8 +92,9 @@ const GradientPlaylistCity = (props) => (
 // HomeStack Navigator
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false, headerBackTitleVisible: false }}>
-      
+    <HomeStack.Navigator
+      screenOptions={{ headerShown: false, headerBackTitleVisible: false }}
+    >
       {/* <HomeStack.Screen name="LoginSignUp" options={{ headerShown: false }}>
         {(props) => (
           <GradientWrapper {...props} Component={LoginSignUpScreen} />
@@ -397,7 +398,7 @@ const AppLayout = () => {
         options={{
           tabBarLabel: "Mix",
           tabBarIcon: ({ color, size }) => (
-            <Icon name="gift" style={{ fontSize: size, color: color }} />
+            <Icon name="music" style={{ fontSize: size, color: color }} />
           ),
         }}
       />

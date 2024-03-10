@@ -15,6 +15,7 @@ import { profiles } from "../_data.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SearchBarWithAutocomplete from "../../components/SearchBarWithAutocomplete";
 import axios from "axios";
+import { supabase } from "../../utils/supabaseClient";
 
 import {
   ActivityIndicator,
@@ -73,11 +74,12 @@ const ShareMusicBox = ({ route, navigation }) => {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`
       );
-      const { lat, lng } = response.data.result.geometry.location;
+      const locationResult = response.data.result;
+      const { lat, lng } = locationResult.geometry.location;
       const newSearchedLocation = {
+        name: locationResult.name,
         latitude: lat,
         longitude: lng,
-        // Remove deltas if they're not needed for marker
       };
 
       setSearchedLocation(newSearchedLocation);
@@ -123,11 +125,40 @@ const ShareMusicBox = ({ route, navigation }) => {
     />
   );
 
-  const handleSendPress = () => {
+  const handleSendPress = async () => {
     trackEvent("Send Pressed", {
       recipient: recipientName,
       // Include other tracking details as necessary
     });
+
+    // Ensure all required data is available
+    if (!selectedSong || !recipientName || !message || !searchedLocation) {
+      // Handle the error state here, such as showing an alert or a message to the user
+      console.error("Missing information for the mixtape");
+      return;
+    }
+
+    // Create the mixtape data object
+    const mixtapeData = {
+      created_at: new Date().toISOString(),
+      location_name: searchedLocation?.name || "Unknown location", // Fallback to "Unknown location" if name is not available
+      latitude: searchedLocation.latitude,
+      longitude: searchedLocation.longitude,
+      message: message,
+      song_id: selectedSong.id,
+      songTitle: selectedSong.title,
+      artists: selectedSong.artists.join(", "),
+      albumName: selectedSong.albumName,
+      imageUrl: selectedSong.imageUrl,
+      duration: selectedSong.duration,
+      previewUrl: selectedSong.previewUrl,
+      externalUrl: selectedSong.externalUrl,
+      recipient_name: recipientName,
+      recipient_img: recipientImage,
+    };
+
+    // Call the function to save the data to Supabase
+    await saveMixtapeToSupabase(mixtapeData);
 
     // Navigate to SentGift, passing along the required data
     navigation.navigate("Sent Gift", {
@@ -143,6 +174,35 @@ const ShareMusicBox = ({ route, navigation }) => {
       played_at: selectedSong?.played_at,
       // Include any other data necessary for SentGift.js
     });
+  };
+
+  const saveMixtapeToSupabase = async (mixtapeData) => {
+    try {
+      const { data, error } = await supabase
+        .from("mixtapes")
+        .insert([mixtapeData]);
+
+      if (error) {
+        console.error("Error saving mixtape to database:", error);
+        // Log the mixtape error event
+        trackEvent("Error", {
+          action: "Mixtape Failed",
+          errorMessage: error.message,
+        });
+        // Optionally show an alert or error message to the user
+      } else {
+        console.log("Mixtape saved successfully:", data);
+        // Handle the success state, such as navigating to a new screen or showing a success message
+      }
+    } catch (err) {
+      console.error("Error saving mixtape:", err);
+      // Log the mixtape error event
+      trackEvent("Error", {
+        action: "Mixtape Failed",
+        errorMessage: err.message,
+      });
+      // Optionally show an alert or error message to the user
+    }
   };
 
   // const songOptions = tracks && Array.isArray(tracks)

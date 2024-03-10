@@ -11,8 +11,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../../utils";
 import Track from "../../components/Track";
 import Song from "../../components/Song";
-import { profiles } from '../_data.js'
-
+import { profiles } from "../_data.js";
+import { SafeAreaView } from "react-native-safe-area-context";
+import SearchBarWithAutocomplete from "../../components/SearchBarWithAutocomplete";
+import axios from "axios";
 
 import {
   ActivityIndicator,
@@ -41,6 +43,49 @@ const ShareMusicBox = ({ route, navigation }) => {
   const [recipientName, setRecipientName] = useState("");
   const [recipientImage, setRecipientImage] = useState(null);
   const [message, setMessage] = useState("");
+
+  const [userLocation, setUserLocation] = useState(null);
+  const [searchedLocation, setSearchedLocation] = useState(null);
+
+  const GOOGLE_API_KEY = "AIzaSyCZbXYrdtC_JQqNtA-K3y0bMZ4pKKLglk0";
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Location permission not granted");
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      setUserLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    })();
+  }, []);
+
+  const handlePlaceSelect = async (place) => {
+    const placeId = place.place_id;
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`
+      );
+      const { lat, lng } = response.data.result.geometry.location;
+      const newSearchedLocation = {
+        latitude: lat,
+        longitude: lng,
+        // Remove deltas if they're not needed for marker
+      };
+
+      setSearchedLocation(newSearchedLocation);
+    } catch (error) {
+      console.error("Error fetching place details:", error);
+      Alert.alert("Failed to fetch location details");
+    }
+  };
 
   useEffect(() => {
     // Extracting the selected song from navigation parameters
@@ -143,28 +188,33 @@ const ShareMusicBox = ({ route, navigation }) => {
   // ];
 
   return (
-    <ScrollView>
-      <View style={styles.mapView}>
-        <MapScreen />
-      </View>
-      <View style={styles.bodyView}>
-        <View style={styles.sectionView}>
-          <Header1 text="Choose a song" />
-          <SpotifyAuthOrRefreshButton />
-          {!loading && selectedSong && (
-            <Track
-              title={selectedSong.title}
-              artists={selectedSong.artists}
-              albumName={selectedSong.albumName}
-              imageUrl={selectedSong.imageUrl}
-              duration={selectedSong.duration}
-              previewUrl={selectedSong.previewUrl}
-              externalUrl={selectedSong.externalUrl}
-              played_at={selectedSong.played_at}
-              // userName is omitted unless you need it for specific functionality
-            />
-          )}
-          {/* {loading ? (
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView>
+        <Header1 text="Choose a location" />
+        <View style={styles.mapView}>
+          <MapScreen selectedLocation={searchedLocation} />
+        </View>
+        <View style={styles.searchBar}>
+          <SearchBarWithAutocomplete onPlaceSelected={handlePlaceSelect} />
+        </View>
+        <View style={styles.bodyView}>
+          <View style={styles.sectionView}>
+            <Header1 text="Choose a song" />
+            <SpotifyAuthOrRefreshButton />
+            {!loading && selectedSong && (
+              <Track
+                title={selectedSong.title}
+                artists={selectedSong.artists}
+                albumName={selectedSong.albumName}
+                imageUrl={selectedSong.imageUrl}
+                duration={selectedSong.duration}
+                previewUrl={selectedSong.previewUrl}
+                externalUrl={selectedSong.externalUrl}
+                played_at={selectedSong.played_at}
+                // userName is omitted unless you need it for specific functionality
+              />
+            )}
+            {/* {loading ? (
             <ActivityIndicator size="large" color={colors.primary} />
           ) : selectedSong ? (
             <View>
@@ -178,78 +228,79 @@ const ShareMusicBox = ({ route, navigation }) => {
               />
             </View>
           ) : null} */}
-        </View>
-        <View style={styles.sectionView}>
-          <Header1 text="Send to"></Header1>
-          <ScrollView horizontal>
-            {recipientOptions.map((option, index) => (
-              <ProfilePressable
-                key={option.name}
-                image={option.image}
-                name={option.name}
-                isSelected={recipient === index}
-                onPress={() => {
-                  trackEvent("Recipient Option Selected", {
-                    option: option.name, // Option.name could be the recipient's name
-                  });
-                  selectRecipient(index); // Call selectRecipient with the index
-                }}
-              />
-            ))}
-          </ScrollView>
-        </View>
-        <View style={styles.sectionView}>
-          <Header1 text="Add a message" />
-          <TextInput
-            placeholder="Remember that time we..."
-            style={styles.input}
-            value={message} // Use the message state as the value
-            onChangeText={setMessage} // Update the message state on text change
-            onBlur={(e) =>
-              trackEvent("Message Input", { message: e.nativeEvent.text })
-            }
-          />
-        </View>
+          </View>
+          <View style={styles.sectionView}>
+            <Header1 text="Send to"></Header1>
+            <ScrollView horizontal>
+              {recipientOptions.map((option, index) => (
+                <ProfilePressable
+                  key={option.name}
+                  image={option.image}
+                  name={option.name}
+                  isSelected={recipient === index}
+                  onPress={() => {
+                    trackEvent("Recipient Option Selected", {
+                      option: option.name, // Option.name could be the recipient's name
+                    });
+                    selectRecipient(index); // Call selectRecipient with the index
+                  }}
+                />
+              ))}
+            </ScrollView>
+          </View>
+          <View style={styles.sectionView}>
+            <Header1 text="Add a message" />
+            <TextInput
+              placeholder="Remember that time we..."
+              style={styles.input}
+              value={message} // Use the message state as the value
+              onChangeText={setMessage} // Update the message state on text change
+              onBlur={(e) =>
+                trackEvent("Message Input", { message: e.nativeEvent.text })
+              }
+            />
+          </View>
 
-        <View style={styles.sectionView}>
-          <Header1 text="Delivery"></Header1>
-          <ScrollView horizontal>
-            {deliveryOptions.map((option, index) => (
-              <>
-                {index === delivery ? (
-                  <PillSelectable
-                    text={option}
-                    isSelected
-                    onPress={() => {
-                      trackEvent("Delivery Option Selected", {
-                        option: option,
-                      });
-                      setDelivery(index);
-                    }}
-                  />
-                ) : (
-                  <PillSelectable
-                    text={option}
-                    onPress={() => {
-                      trackEvent("Delivery Option Selected", {
-                        option: option,
-                      });
-                      setDelivery(index);
-                    }}
-                  />
-                )}
-              </>
-            ))}
-            {/* <PillSelectable text="Send Now"></PillSelectable>
+          <View style={styles.sectionView}>
+            <Header1 text="Delivery"></Header1>
+            <ScrollView horizontal>
+              {deliveryOptions.map((option, index) => (
+                <>
+                  {index === delivery ? (
+                    <PillSelectable
+                      text={option}
+                      isSelected
+                      onPress={() => {
+                        trackEvent("Delivery Option Selected", {
+                          option: option,
+                        });
+                        setDelivery(index);
+                      }}
+                    />
+                  ) : (
+                    <PillSelectable
+                      text={option}
+                      onPress={() => {
+                        trackEvent("Delivery Option Selected", {
+                          option: option,
+                        });
+                        setDelivery(index);
+                      }}
+                    />
+                  )}
+                </>
+              ))}
+              {/* <PillSelectable text="Send Now"></PillSelectable>
             <PillSelectable text="Surprise"></PillSelectable>
             <PillSelectable text="Notify"></PillSelectable> */}
-          </ScrollView>
+            </ScrollView>
+          </View>
+          <View style={styles.buttonView}>
+            <PillPressable text="Send" onPress={handleSendPress} />
+          </View>
         </View>
-        <View style={styles.buttonView}>
-          <PillPressable text="Send" onPress={handleSendPress} />
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

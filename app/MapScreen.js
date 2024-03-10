@@ -7,18 +7,24 @@ import {
   Text,
   Modal,
   Dimensions,
-  Platform,
   StatusBar,
   ActivityIndicator,
+  SafeAreaView,
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import axios from "axios";
 import * as Location from "expo-location";
-import { trackEvent } from "@aptabase/react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { colors } from "../assets/Themes/colors";
+import { trackEvent } from "@aptabase/react-native";
+import SearchBarWithAutocomplete from "../components/SearchBarWithAutocomplete";
 
-const MapScreen = () => {
+const GOOGLE_API_KEY = "AfIzaSyCZbXYrdtC_JQqNtA-K3y0bMZ4pKKLglk0";
+
+const MapScreen = ({ selectedLocation }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [markerLocation, setMarkerLocation] = useState(null);
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -26,10 +32,6 @@ const MapScreen = () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         Alert.alert("Location permission not granted");
-        trackEvent("Permission", {
-          action: "Location Permission",
-          granted: false,
-        });
         return;
       }
 
@@ -40,85 +42,144 @@ const MapScreen = () => {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
-      trackEvent("Permission", {
-        action: "Location Permission",
-        granted: true,
-      });
     })();
   }, []);
 
-  const onMarkerDragEnd = (e) => {
-    if (!userLocation) return;
+  useEffect(() => {
+    if (selectedLocation && mapRef.current) {
+      setMarkerLocation(selectedLocation);
+      mapRef.current.animateToRegion(
+        {
+          ...selectedLocation,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
+        1000
+      );
+    }
+  }, [selectedLocation]);
 
-    const newLocation = e.nativeEvent.coordinate;
-    setUserLocation({
-      ...userLocation,
-      latitude: newLocation.latitude,
-      longitude: newLocation.longitude,
-    });
-  };
+  // const handlePlaceSelect = async (place) => {
+  //   const placeId = place.place_id;
+  //   try {
+  //     const response = await axios.get(
+  //       `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`
+  //     );
+  //     const lat = response.data.result.geometry.location.lat;
+  //     const lng = response.data.result.geometry.location.lng;
+  //     const newLocation = {
+  //       latitude: lat,
+  //       longitude: lng,
+  //       latitudeDelta: 0.005,
+  //       longitudeDelta: 0.005,
+  //     };
+
+  //     setUserLocation(newLocation);
+  //     setSearchQuery(place.description);
+
+  //     mapRef.current.animateToRegion(newLocation, 1000); // Smoothly transition the map view
+  //   } catch (error) {
+  //     console.error("Error fetching place details:", error);
+  //     Alert.alert("Failed to fetch location details");
+  //   }
+  // };
 
   if (!userLocation) {
     return (
-      <View style={styles.centeredView}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
+      <SafeAreaView style={styles.centeredView}>
+        <ActivityIndicator size="large" color={colors.white} />
+      </SafeAreaView>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        provider={PROVIDER_GOOGLE}
-        region={userLocation}
-        showsUserLocation={true}
-      >
-        <Marker
-          coordinate={userLocation}
-          draggable
-          onDragEnd={onMarkerDragEnd}
-        />
-      </MapView>
-      <TouchableOpacity
-        style={styles.toggleButton}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.buttonText}>Expand</Text>
-      </TouchableOpacity>
-
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.fullScreenModal}>
+    <SafeAreaProvider>
+      <StatusBar barStyle="light-content" backgroundColor="dark" />
+      <SafeAreaView style={styles.flexible}>
+        <View style={styles.container}>
           <MapView
             ref={mapRef}
-            style={styles.expandedMap}
+            style={styles.map}
             provider={PROVIDER_GOOGLE}
             region={userLocation}
             showsUserLocation={true}
           >
-            <Marker
-              coordinate={userLocation}
-              draggable
-              onDragEnd={onMarkerDragEnd}
-            />
+            {selectedLocation && (
+              <Marker coordinate={selectedLocation} pinColor={colors.pink} />
+            )}
+            {!selectedLocation && userLocation && (
+              <Marker
+                coordinate={userLocation}
+                pinColor={colors.pink}
+                draggable
+                onDragEnd={(e) => {
+                  const newLocation = e.nativeEvent.coordinate;
+                  setUserLocation((prevLocation) => ({
+                    ...prevLocation,
+                    latitude: newLocation.latitude,
+                    longitude: newLocation.longitude,
+                  }));
+                }}
+              />
+            )}
           </MapView>
           <TouchableOpacity
-            style={[styles.toggleButton, styles.buttonClose]}
-            onPress={() => setModalVisible(!modalVisible)}
+            style={styles.toggleButton}
+            onPress={() => setModalVisible(true)}
           >
-            <Text style={styles.buttonText}>Minimize</Text>
+            <Text style={styles.buttonText}>Expand</Text>
           </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <StatusBar backgroundColor="white" barStyle="dark-content" />
+            <View style={styles.fullScreenModal}>
+              <MapView
+                ref={mapRef}
+                style={styles.expandedMap} // Use the expandedMap style here
+                provider={PROVIDER_GOOGLE}
+                region={userLocation}
+                showsUserLocation={true}
+              >
+                {selectedLocation && (
+                  <Marker
+                    coordinate={selectedLocation}
+                    pinColor={colors.pink}
+                  />
+                )}
+                {!selectedLocation && userLocation && (
+                  <Marker
+                    coordinate={userLocation}
+                    pinColor={colors.pink}
+                    draggable
+                    onDragEnd={(e) => {
+                      const newLocation = e.nativeEvent.coordinate;
+                      setUserLocation((prevLocation) => ({
+                        ...prevLocation,
+                        latitude: newLocation.latitude,
+                        longitude: newLocation.longitude,
+                      }));
+                    }}
+                  />
+                )}
+              </MapView>
+              <TouchableOpacity
+                style={[styles.toggleButton, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.buttonText}>Minimize</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
         </View>
-      </Modal>
-    </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
@@ -131,18 +192,18 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height / 5, // Minimized map height
+    height: Dimensions.get("window").height / 4, // Minimized map height
   },
   expandedMap: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height, // Expanded map height for full screen
+    height: Dimensions.get("window").height,
   },
   fullScreenModal: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
+    // justifyContent: "center",
+    // alignItems: "center",
   },
+
   toggleButton: {
     position: "absolute",
     right: 20,
@@ -150,6 +211,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.pink,
     padding: 10,
     borderRadius: 20,
+    zIndex: 10, // Ensure it's above other components
   },
   buttonText: {
     color: colors.black,

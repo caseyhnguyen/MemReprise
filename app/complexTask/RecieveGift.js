@@ -49,7 +49,7 @@ const RecieveGift = ({ route }) => {
           text="Open"
         />
         <View style={styles.anim}>
-          <LottieView style={{ flex: 1 }} source={require('../../assets/Celebrate1.json')} autoPlay loop />
+          <LottieView style={{ flex: 1 }} source={require('../../assets/Celebrate2.json')} autoPlay loop />
         </View>
       </View>
     </ScrollView>

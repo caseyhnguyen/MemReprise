@@ -9,6 +9,7 @@ import MusicImg from "../../assets/musicbox.png";
 import SeeMore from "../../components/SeeMore";
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import Label from "../../components/Label";
+import LottieView from 'lottie-react-native';
 
 const SentGift = ({ route }) => {
   const navigation = useNavigation();
@@ -27,6 +28,10 @@ const SentGift = ({ route }) => {
   }, [recipientName]);
   let youSent = "You sent a tape to " + recipientName + "!";
   return (
+    <>
+    <View style={styles.anim}>
+        <LottieView style={{ flex: 1 }} source={require('../../assets/Celebrate2.json')} autoPlay loop />
+      </View>
     <View style={styles.container}>
       {/* <Text style={styles.name}>Gray</Text> */}
       {/* Display recipient's image or a default placeholder if not available */}
@@ -62,12 +67,13 @@ const SentGift = ({ route }) => {
 
 
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 120,
+    marginTop: -150,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -96,11 +102,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 50,
     color: colors.white,
+    width: "80%",
   },
   message: {
     marginTop: 10,
     // marginBottom: 50,
     color: colors.white,
+    width: "75%",
+    textAlign: "center",
   },
   containerSM: {
     display: 'flex',
@@ -118,6 +127,15 @@ const styles = StyleSheet.create({
     color: colors.pink,
     fontSize: 14,
     marginLeft: 5
+  },
+  anim: {
+    height: 500,
+    aspectRatio: 1,
+    zIndex: -10,
+    marginTop: -250,
+    left: "-18%",
+    // justifyContent: "center",
+    // alignItems: "center",
   }
 });
 

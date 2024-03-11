@@ -75,9 +75,7 @@ const ShareMusicBox = ({ route, navigation }) => {
   const handlePlaceSelect = async (place) => {
     const placeId = place.place_id;
     try {
-      const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`
-      );
+      const response = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`);
       const locationResult = response.data.result;
       const { lat, lng } = locationResult.geometry.location;
       const newSearchedLocation = {
@@ -87,10 +85,16 @@ const ShareMusicBox = ({ route, navigation }) => {
       };
 
       setSearchedLocation(newSearchedLocation);
+      handleSelectionDismiss(); // Call to dismiss the dropdown
     } catch (error) {
       console.error("Error fetching place details:", error);
       Alert.alert("Failed to fetch location details");
     }
+  };
+
+  const handleSelectionDismiss = () => {
+    console.log("Search selection dropdown dismissed.");
+    // If there's any state or actions needed to hide the dropdown, manage them here.
   };
 
   useEffect(() => {
@@ -235,7 +239,11 @@ const ShareMusicBox = ({ route, navigation }) => {
         >
           <Header1 text="Choose a location" />
           <View style={styles.searchBar}>
-            <SearchBarWithAutocomplete onPlaceSelected={handlePlaceSelect} />
+          <SearchBarWithAutocomplete
+          onPlaceSelected={handlePlaceSelect}
+          selectedLocation={searchedLocation?.name}
+          onSelectionDismiss={handleSelectionDismiss}
+          />
           </View>
           <View style={styles.mapView}>
             <MapScreen selectedLocation={searchedLocation} />

@@ -292,7 +292,7 @@ const CalendarActivityScreen = ({ navigation }) => {
             <Image source={images.caroline.pic} style={styles.profilePic} />
             <View>
               <Text style={styles.title}>Caroline Tran</Text>
-              <Header2 text="@cntran    " />
+              <Text style={styles.userHandle}>@cntran</Text>
             </View>
             <View style={styles.dropDown}>
               <RNPickerSelect
@@ -433,6 +433,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+  },
+  userHandle: {
+    color: colors.white,
+    fontWeight: "500",
+    fontSize: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    // alignSelf: "center",
   },
 });
 

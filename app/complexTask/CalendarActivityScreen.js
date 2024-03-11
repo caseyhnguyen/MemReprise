@@ -242,7 +242,8 @@ const CalendarActivityScreen = ({ navigation }) => {
         month = createdAt
           .toLocaleString("en-US", { month: "short" })
           .toUpperCase();
-        date = createdAt.getDate().toString();
+        date = createdAt.getDate() + 1;
+        date = date.toString();
       }
     }
 

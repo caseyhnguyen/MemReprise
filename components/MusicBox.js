@@ -80,58 +80,101 @@ const MusicBox = ({
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.navContainer}>
+    <View>
+      
+
+      <ImageBackground
+        source={{uri: "https://i.scdn.co/image/ab67616d0000b273bb8648acba5bbab771ef0a45"}}
+        resizeMode="cover"
+        style={styles.bgImg}
+        blurRadius={8}
+      >
+        <View style={styles.navContainer}>
         <BackArrow to="RecieveGift" />
         <Header1 text="Gray's Mixtape" />
       </View>
+    <View style={styles.container}>
+
+        
       <View style={styles.infoContainer}>
+      <View style={styles.senderInfo}>
+          <Image style={styles.profileImage} source={Gray} />
+          <View>
+            <Text style={styles.senderName}>Gray Wong</Text>
+          </View>
+        </View>
         <Text style={styles.text}>
           Remember that one incident? You know THAT incident. UGH I can’t get this out of my HEAD thinking about what happened last summer on campus!
         </Text>
         <View style={styles.senderInfo}>
-          <Image style={styles.profileImage} source={Gray} />
           <View>
-            <Text style={styles.senderName}>Gray Wong</Text>
-            <Text style={styles.text}>2/14/24</Text>
-            <Text style={styles.text}>Wallenberg Hall</Text>
+            <Text style={styles.textSm}>2/14/24</Text>
+            <Text style={styles.textSm}>Wallenberg Hall</Text>
           </View>
         </View>
-      </View>
-      <View style={styles.spotifyContainer}>
+        <View style={styles.spotifyContainer}>
         <WebView
           source={{
             uri: "https://open.spotify.com/embed/track/3vkCueOmm7xQDoJ17W1Pm3?utm_source=generator",
           }}
           style={styles.spotifyEmbed}
         />
-      </View>
-      <PillPressable
+        </View>
+        <PillPressable
         onPress={() => navigation.navigate("Share a Music Box")}
         text="Gift back"
         isSpotify={false}
         disabled={false}
       />
       <SeeMore text="View" />
-    </ScrollView>
+      </View>
+      {/* <View style={styles.spotifyContainer}>
+        <WebView
+          source={{
+            uri: "https://open.spotify.com/embed/track/3vkCueOmm7xQDoJ17W1Pm3?utm_source=generator",
+          }}
+          style={styles.spotifyEmbed}
+        />
+      </View> */}
+      
+      </View>
+
+      </ImageBackground>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    marginTop: 30
+  bgImg: {
+    padding: 8,
+    height: "103%",
+    // width: 380,
   },
+  container: {
+    padding: 20,
+    width: "100%",
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    height: "85%",
+
+  },
+
   navContainer: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 30,
+    marginLeft: 10,
+    justifyContent: "flex-start",
+    // flexDirection: "column",
+    
   },
   infoContainer: {
     padding: 20,
-    borderWidth: 2,
+    paddingBottom: 35,
     borderRadius: 10,
-    borderColor: colors.offWhite75,
+    backgroundColor: colors.darkGray,
+    gap: 10,
   },
   senderInfo: {
     display: 'flex',
@@ -141,30 +184,42 @@ const styles = StyleSheet.create({
   },
   senderName: {
     color: colors.offWhite75,
-    fontWeight: '600'
+    fontWeight: 'bold',
+    fontSize: 16,
+
   },
   text: {
-    color: colors.offWhite75
+    color: colors.offWhite75,
+    fontSize: 17,
+    marginLeft: 8,
+    paddingHorizontal: 15,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.blue,
+    // marginBottom: 30,
+  },
+  textSm: {
+    color: colors.offWhite75,
+    fontSize: 15,
   },
   profileImage: {
     borderRadius: 50,
-    borderWidth: 2,
-    borderColor: colors.offWhite75,
-    width: 50,
-    height: 50,
+    // borderWidth: 2,
+    // borderColor: colors.offWhite75,
+    width: 35,
+    height: 35,
     marginRight: 10
   },
   spotifyContainer: {
-    flexDirection: "col",
-    width: "100%",
-    height: 100,
-    textAlign: "center",
-    marginTop: 10,
-    paddingBottom: 20
+    width: "auto",
+    height: 128,
+    marginTop: 20,
+    paddingBottom: 48,
+    marginBottom: -20,
   },
   spotifyEmbed: {
     width: "auto",
-    backgroundColor: colors.black,
+    // paddingBottom: -20,
+    // height: 10,
     borderRadius: 12
   }
 });

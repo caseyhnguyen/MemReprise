@@ -49,13 +49,8 @@ const PostExpanded = ({
     navigation.goBack();
   };
 
-  let recipient = profiles[Math.floor(Math.random() * profiles.length)];
-  // console.log("songData from postexpanded");
-  // console.log(songData);
   let songId = songData.externalUrl.substring(31);
   let embedUrl = "https://open.spotify.com/embed/track/" + songId;
-  // console.log(songData.externalUrl);
-  console.log(embedUrl);
 
   let locationShort = sendTo.location_name;
   if (sendTo.location_name.length > 25) {
@@ -96,7 +91,7 @@ const PostExpanded = ({
               </Text>
           </View>
 
-          </View>
+        </View>
 
           
           {sendTo.message && (
@@ -132,15 +127,6 @@ const styles = StyleSheet.create({
     width: "auto",
     borderRadius: 14,
   },
-  // outerContainer: {
-  //   justifyContent: "flex-start",
-  //   flexDirection: "column",
-  //   backgroundColor: colors.darkGray,
-  //   borderRadius: 10,
-  //   width: "90%",
-  //   // height: dimensions.rowWidth * 1.25,
-  //   paddingVertical: 25
-  // },
   expandedOuterContainer: {
     justifyContent: "flex-start",
     flexDirection: "column",

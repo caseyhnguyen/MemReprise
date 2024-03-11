@@ -99,8 +99,6 @@ const ShareMusicBox = ({ route, navigation }) => {
     }
   }, [route.params?.selectedSong]);
 
-  console.log(selectedSong);
-
   const selectRecipient = (index) => {
     setRecipient(index);
     setRecipientName(recipientOptions[index].name);
@@ -136,10 +134,6 @@ const ShareMusicBox = ({ route, navigation }) => {
 
     // Ensure all required data is available
     if (!selectedSong || !recipientName || !message || !searchedLocation) {
-      console.log(selectedSong);
-      console.log(recipientName);
-      console.log(message);
-      console.log(searchedLocation);
       // Handle the error state here, such as showing an alert or a message to the user
       console.error("Missing information for the mixtape");
       return;
@@ -311,6 +305,7 @@ const styles = StyleSheet.create({
     display: "flex",
     width: "100%",
     alignItems: "center",
+    marginBottom: 50,
   },
   input: {
     fontSize: 15,
@@ -326,7 +321,7 @@ const styles = StyleSheet.create({
   },
   mapView: {
     width: "100%",
-    marginTop: 10,
+    marginBottom: 10,
   },
   pg: {
     color: colors.white,
@@ -335,7 +330,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   searchBar: {
-    marginTop: -50,
+    // marginTop: -50
+  },
+  safeArea: {
+    height: "110%",
+    padding: 10,
   },
 });
 

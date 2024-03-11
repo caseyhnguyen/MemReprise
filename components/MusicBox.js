@@ -77,7 +77,7 @@ const MusicBox = ({
 
   let songId = externalUrl.substring(31);
   let embedUrl = "https://open.spotify.com/embed/track/" + songId;
-  let headerText = sender_name + "'s Mixtape";
+  let headerText = sender_name + "'s Tape";
 
   for(let i=0; i < profiles.length; i++) {
     if(profiles[i].name === sender_name) {
@@ -132,10 +132,10 @@ const MusicBox = ({
         style={styles.bgImg}
         blurRadius={8}
       >
-        <View style={styles.navContainer}>
+        {/* <View style={styles.navContainer}>
         <BackArrow to="RecieveGift" />
         <Header1 text={headerText} />
-      </View>
+      </View> */}
     <View style={styles.container}>
 
         
@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     justifyContent: 'center', 
     height: "78%",
+    marginTop: 30
 
   },
 

@@ -445,7 +445,7 @@ const AppLayout = () => {
         name="ProfileScreen"
         component={ProfileStackScreen}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "My Tapes",
           tabBarIcon: ({ color, size }) => (
             <Icon name="user-alt" style={{ fontSize: size, color: color }} />
           ),

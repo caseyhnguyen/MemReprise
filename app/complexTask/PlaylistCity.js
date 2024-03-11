@@ -27,10 +27,10 @@ const PlaylistCity = ({ route }) => {
   return (
     <>
       <View style={styles.topContainer}>
-        <BackArrow to="FeedScreen" />
+        {/* <BackArrow to="FeedScreen" />
         <View  style={styles.headArrow}>
         <Header1 text={mixtapeText}/>
-        </View>
+        </View> */}
       </View>
       <WebView
         // source={{
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     marginHorizontal: 10,
-    marginTop: 45,
+    // marginTop: 45,
     marginBottom: 10
   },
   text: {

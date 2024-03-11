@@ -67,7 +67,7 @@ const RecieveGift = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 150,
+    paddingTop: 80,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     height: 500,
     // width: 100,
     aspectRatio: 1,
-    marginTop: -100,
+    marginTop: -200,
     zIndex: -10
   },
   bgImg: {

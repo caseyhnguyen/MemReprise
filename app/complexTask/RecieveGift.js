@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, View, ScrollView } from "react-native";
+import { Image, StyleSheet, Text, View, ScrollView, ImageBackground } from "react-native";
 import PillPressable from "../../components/PillPressable";
 import { colors } from "../../assets/Themes/colors";
 import { useNavigation } from "@react-navigation/native";
@@ -7,6 +7,8 @@ import { trackEvent } from "@aptabase/react-native";
 import Gray from "../../assets/gray.png";
 import MusicImg from "../../assets/musicbox.png";
 import LottieView from 'lottie-react-native';
+import Bg from "../../assets/tape.png";
+
 
 const RecieveGift = ({ route }) => {
   const navigation = useNavigation();
@@ -31,6 +33,12 @@ const RecieveGift = ({ route }) => {
 
   return (
     <ScrollView>
+      <ImageBackground
+        source={Bg}
+        resizeMode="cover"
+        style={styles.bgImg}
+        // blurRadius={8}
+      >
       <View style={styles.container}>
         <Image style={styles.image} source={sender_img} />
         <Text style={styles.name}>{sender_name}</Text>
@@ -52,6 +60,7 @@ const RecieveGift = ({ route }) => {
           <LottieView style={{ flex: 1 }} source={require('../../assets/Celebrate2.json')} autoPlay loop />
         </View>
       </View>
+      </ImageBackground>
     </ScrollView>
   );
 };
@@ -62,7 +71,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: colors.black,
+    // backgroundColor: colors.black,
     width: "100%",
     height: "100%",
   },
@@ -94,6 +103,13 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     marginTop: -100,
     zIndex: -10
+  },
+  bgImg: {
+    // padding: 20,
+    height: "125%", 
+    // width: 380, 
+    justifyContent: 'center', 
+    alignItems: 'center',
   }
 });
 

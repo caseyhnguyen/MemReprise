@@ -39,11 +39,39 @@ const HomeScreen = ({ navigation }) => {
   const [currLocations, setCurrLocations] = useState([]);
   const [currProfiles, setCurrProfiles] = useState([]);
 
+  let numSent;
+
   useEffect(() => {
     setCurrTracks(tracks);
     setCurrLocations(locations);
     setCurrProfiles(profiles);
   }, []);
+
+
+  const getCount = useCallback(async () => {
+    let numHero;
+    try {
+      let query = supabase
+        .from("mixtapes")
+        .select("*")
+        .order("created_at", { ascending: false }); // Ensure default ordering is from most recent to oldest
+      
+      query = query.order("created_at", { ascending: false });
+      // console.log(query);
+      
+      const { data, error } = await query;
+      if (error) throw error;
+
+      let processedPosts = parsePosts(data || []).filter((post) => post.source);
+      numHero = processedPosts.length;
+
+    } catch (error) {
+      console.error("Error filtering posts:", error);
+    } finally {
+    }
+    return numHero;
+  }, []);
+  
 
 
   const parsePosts = (fetchedPosts) => {
@@ -178,6 +206,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    numSent = getCount();
     filterPosts();
   }, [filterPosts]);
 
@@ -185,7 +214,7 @@ const HomeScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView>
         <ScrollView style={styles.container}>
-          <Hero />
+          <Hero sent={numSent} />
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Header1 text="Your Mixtapes"></Header1>

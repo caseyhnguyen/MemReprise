@@ -132,7 +132,7 @@ const MusicBox = ({
         style={styles.bgImg}
         blurRadius={8}
       >
-        {/* <View style={styles.navContainer}>
+        <View style={styles.navContainer}>
         <BackArrow to="RecieveGift" />
         <Header1 text={headerText} />
       </View>
@@ -175,7 +175,7 @@ const MusicBox = ({
 
        />
       </View>
-      </View> */}
+      </View>
 
       </ImageBackground>
     </View>

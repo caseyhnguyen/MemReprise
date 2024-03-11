@@ -74,49 +74,48 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <SafeAreaView>
-        <ScrollView style={styles.container}>
-          <Hero />
-          <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Header1 text="Your Mixtapes"></Header1>
-              <SeeMore
-                onPress={() => {
-                  trackEvent("View More Pressed", {
-                    context: "Recent Musicboxes",
-                  });
-                }}
-              />
-            </View>
-            <View style={styles.sectionBody}>
-              <FlatList
-                horizontal={true}
-                data={currTracks}
-                renderItem={renderSong}
-                keyExtractor={(item, index) =>
-                  item.id?.toString() || index.toString()
-                }
-              />
-            </View>
+    <SafeAreaView>
+      <ScrollView style={styles.container}>
+        <Hero />
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Header1 text="Your Mixtapes"></Header1>
+            <SeeMore
+              onPress={() => {
+                trackEvent("View More Pressed", {
+                  context: "Recent Musicboxes",
+                });
+              }}
+            />
           </View>
-          <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Header1 text="Mixtapes by Friends"></Header1>
-              <SeeMore />
-            </View>
-            <View style={styles.sectionBody}>
-              <FlatList
-                horizontal={true}
-                data={currProfiles}
-                renderItem={renderProfile}
-                keyExtractor={(item, index) =>
-                  item.id?.toString() || index.toString()
-                }
-              />
-            </View>
+          <View style={styles.sectionBody}>
+            <FlatList
+              horizontal={true}
+              data={currTracks}
+              renderItem={renderSong}
+              keyExtractor={(item, index) =>
+                item.id?.toString() || index.toString()
+              }
+            />
           </View>
-          {/* <View style={styles.section}>
+        </View>
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Header1 text="Mixtapes by Friends"></Header1>
+            <SeeMore />
+          </View>
+          <View style={styles.sectionBody}>
+            <FlatList
+              horizontal={true}
+              data={currProfiles}
+              renderItem={renderProfile}
+              keyExtractor={(item, index) =>
+                item.id?.toString() || index.toString()
+              }
+            />
+          </View>
+        </View>
+        {/* <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Header1 text="My Locations"></Header1>
               <SeeMore />
@@ -132,9 +131,8 @@ const HomeScreen = ({ navigation }) => {
               />
             </View>
           </View> */}
-        </ScrollView>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

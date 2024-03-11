@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  Text,
-  StyleSheet,
-  View,
-  Image,
+    Text,
+    StyleSheet,
+    View,
+    Image,
 } from "react-native";
 import { colors } from "../assets/Themes/colors";
 import { tracks } from '../app/_data.js';
@@ -33,16 +33,15 @@ const Hero = (props) => {
                 </View>
             </View>
         </View>
-        
+
     );
-  };
-  
-  const styles = StyleSheet.create({
+};
+
+const styles = StyleSheet.create({
     heroContainer: {
         // height: "45%",
         width: "100%",
         marginBottom: 15,
-        marginTop: 40
     },
     row: {
         flex: 1,
@@ -51,7 +50,7 @@ const Hero = (props) => {
         alignItems: 'flex-start', // if you want to fill rows left to right
         backgroundColor: colors.darkBlue,
         padding: 20
-        
+
     },
     item: {
         width: '50%' // is 50% of container width
@@ -81,7 +80,6 @@ const Hero = (props) => {
         marginLeft: 20,
         marginTop: 15
     }
-  });
-  
-  export default Hero;
-  
+});
+
+export default Hero;

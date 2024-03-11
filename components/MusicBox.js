@@ -22,6 +22,7 @@ import { getTrack } from "../utils/apiOptions";
 import Gray from "../assets/gray.png"
 import Icon from "react-native-vector-icons/FontAwesome5";
 import PillPressable from "./PillPressable";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 const windowWidth = Dimensions.get("window").width;
@@ -79,192 +80,93 @@ const MusicBox = ({
   };
 
   return (
-    <View style={styles.wholeBg}>
-      {/* <ImageBackground source={AlbumImg} resizeMode="cover" style={styles.bgImage}></ImageBackground> */}
-      <View style={styles.row}>
-        {/* <View style={styles.col}> */}
-        <BackArrow to="Receive Gift" />
-        {/* </View> */}
-        <View style={styles.col}>
-          <Header1 text="Gray's Mixtape" />
-        </View>
+    <ScrollView style={styles.container}>
+      <View style={styles.navContainer}>
+        <BackArrow to="RecieveGift" />
+        <Header1 text="Gray's Mixtape" />
       </View>
-      <View style={styles.outerContainer}>
-        {/* <TouchableOpacity style={styles.container} onPress={onSongPress}> */}
-        <Text style={styles.titleText}>
+      <View style={styles.infoContainer}>
+        <Text style={styles.text}>
           Remember that one incident? You know THAT incident. UGH I can’t get this out of my HEAD thinking about what happened last summer on campus!
         </Text>
-        <View style={styles.row}>
-          <View style={styles.postDetails}>
-            <View style={styles.postLeftCol}>
-              <Image style={styles.image} source={Gray} />
-            </View>
-            <View style={styles.postLeftCol}>
-              <Text style={styles.artistText}>Gray Wong</Text>
-              <Text style={styles.artistText}>2/14/24</Text>
-            </View>
+        <View style={styles.senderInfo}>
+          <Image style={styles.profileImage} source={Gray} />
+          <View>
+            <Text style={styles.senderName}>Gray Wong</Text>
+            <Text style={styles.text}>2/14/24</Text>
+            <Text style={styles.text}>Wallenberg Hall</Text>
           </View>
-
-          <View style={styles.postDetails}>
-            <View style={styles.postLeftCol}>
-              <Icon name="map-marker-alt" style={styles.icon} />
-            </View>
-            <View style={styles.postLeftCol}>
-              <Text style={styles.artistText}>Wallenberg Hall, 450 Jane Stanford Way</Text>
-            </View>
-          </View>
-
         </View>
       </View>
-
       <View style={styles.spotifyContainer}>
         <WebView
-        source={{
-          uri: "https://open.spotify.com/embed/track/3vkCueOmm7xQDoJ17W1Pm3?utm_source=generator",
-        }}
-        style={styles.spotifyEmbed}
-      />
-        
+          source={{
+            uri: "https://open.spotify.com/embed/track/3vkCueOmm7xQDoJ17W1Pm3?utm_source=generator",
+          }}
+          style={styles.spotifyEmbed}
+        />
       </View>
       <PillPressable
-      onPress={() => navigation.navigate("Share a Music Box")}
-      text="Gift back"
-      isSpotify={false}
-      disabled={false}
+        onPress={() => navigation.navigate("Share a Music Box")}
+        text="Gift back"
+        isSpotify={false}
+        disabled={false}
       />
       <SeeMore text="View" />
-
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    backgroundColor: colors.darkGray,
+  container: {
+    padding: 10,
+    marginTop: 30
+  },
+  navContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  infoContainer: {
+    padding: 20,
+    borderWidth: 2,
     borderRadius: 10,
-    paddingHorizontal: 18,
-    paddingVertical: 20,
-    width: windowWidth,
-    // height: windowWidth * 0.35,
-    height: "auto",
-    gap: 20,
-    textAlign: "center",
-    color: colors.white,
-    marginVertical: 20,
-
+    borderColor: colors.offWhite75,
+  },
+  senderInfo: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10
+  },
+  senderName: {
+    color: colors.offWhite75,
+    fontWeight: '600'
+  },
+  text: {
+    color: colors.offWhite75
+  },
+  profileImage: {
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: colors.offWhite75,
+    width: 50,
+    height: 50,
+    marginRight: 10
   },
   spotifyContainer: {
     flexDirection: "col",
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-    marginBottom: 10,
     width: "100%",
-    // height: "14.5%",
-    height: "15.2%",
+    height: 100,
     textAlign: "center",
-    color: colors.white,
-    // backgroundColor: colors.darkGray,
+    marginTop: 10,
+    paddingBottom: 20
   },
   spotifyEmbed: {
-    // marginHorizontal: 10,
     width: "auto",
     backgroundColor: colors.black,
     borderRadius: 12
-
-  },
-  songInfo: {
-    flexDirection: "col",
-    marginTop: 50,
-    gap: 10,
-    justifyContent: "flex-start",
-    // width: "95%",
-    textAlign: "center",
-    alignItems: "center",
-  },
-  titleAndArtist: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    marginRight: 10,
-    // width: "75%",
-    textAlign: "center",
-    color: colors.white,
-  },
-  image: {
-    width: 200,
-    height: 200,
-  },
-  albumName: {
-    color: colors.white,
-    flex: 3,
-    fontSize: 16,
-    // marginRight: 10,
-  },
-  artistText: {
-    color: colors.white,
-    fontSize: 15,
-    // textAlign: "center",
-    textAlign: "left",
-    marginTop: 2,
-  },
-  titleText: {
-    // fontWeight: "bold",
-    fontSize: 17,
-    marginBottom: 2,
-    color: colors.white,
-    textAlign: "left",
-  },
-  progressWrapper: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-    marginTop: 10,
-  },
-  row: {
-    width: "100%",
-    // backgroundColor: colors.white,
-    // flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-    // marginTop: 10,
-  },
-  col: {
-    marginTop: 8,
-  },
-  postDetails: {
-    textAlign: "left",
-    marginBottom: 2,
-    width: "49%",
-    flexDirection: "row",
-
-  },
-  postLeftCol: {
-    textAlign: "left",
-    marginBottom: 2,
-    marginRight: 8,
-    
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 100,
-  },
-  icon: {
-    color: colors.gray,
-    fontSize: 30,
-    marginRight: 8,
-    marginTop: 3
-  },
-  wholeBg: {
-    width: "100%",
-    height: "100%",
-    // backgroundColor: colors.pink
-    flex: 1,
-    flexDirection: 'column',
-    marginTop: 35,
-  },
+  }
 });
 
 export default MusicBox;

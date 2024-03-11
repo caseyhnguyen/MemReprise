@@ -250,14 +250,16 @@ const ShareMusicBox = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-        <Header1 text="Choose a location" />
-        <View style={styles.mapView}>
-          <MapScreen selectedLocation={searchedLocation} />
-        </View>
-        <View style={styles.searchBar}>
-          <SearchBarWithAutocomplete onPlaceSelected={handlePlaceSelect} />
-        </View>
         <View style={styles.bodyView}>
+          <View style={styles.sectionView}>
+            <Header1 text="Choose a location" />
+            <View style={styles.mapView}>
+              <MapScreen selectedLocation={searchedLocation} />
+            </View>
+          </View>
+          <View style={styles.searchBar}>
+            <SearchBarWithAutocomplete onPlaceSelected={handlePlaceSelect} />
+          </View>
           <View style={styles.sectionView}>
             <Header1 text="Choose a song" />
             <SpotifyAuthOrRefreshButton />
@@ -271,7 +273,7 @@ const ShareMusicBox = ({ route, navigation }) => {
                 previewUrl={selectedSong.previewUrl}
                 externalUrl={selectedSong.externalUrl}
                 played_at={selectedSong.played_at}
-                // userName is omitted unless you need it for specific functionality
+              // userName is omitted unless you need it for specific functionality
               />
             )}
             {/* {loading ? (
@@ -387,13 +389,17 @@ const styles = StyleSheet.create({
   },
   mapView: {
     width: "100%",
+    marginTop: 10,
   },
   pg: {
     color: colors.white,
   },
   sectionView: {
-    marginBottom: 10,
+    marginVertical: 10,
   },
+  searchBar: {
+    marginTop: -50
+  }
 });
 
 export default ShareMusicBox;

@@ -230,6 +230,7 @@ const ShareMusicBox = ({ route, navigation }) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.container}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
         >
           <Header1 text="Choose a location" />
           <View style={styles.searchBar}>
@@ -330,11 +331,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   searchBar: {
-    // marginTop: -50
+    // marginTop: -50,
   },
   safeArea: {
     height: "110%",
     padding: 10,
+    // marginTop: -50,
   },
 });
 

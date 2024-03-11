@@ -96,7 +96,7 @@ const Song = ({
 const styles = StyleSheet.create({
   outerContainer: {
     // marginBottom: 10,
-    marginHorizontal: 10
+    marginHorizontal: 12
   },
   container: {
     flexDirection: "col",
@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   image: {
-    width: 120,
-    height: 120,
+    width: 125,
+    height: 125,
   },
   playedAtText: {
     color: colors.darkGray,

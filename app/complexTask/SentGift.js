@@ -8,14 +8,17 @@ import Gray from "../../assets/gray.png";
 import MusicImg from "../../assets/musicbox.png";
 import SeeMore from "../../components/SeeMore";
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import Label from "../../components/Label";
+import LottieView from 'lottie-react-native';
 
 const SentGift = ({ route }) => {
   const navigation = useNavigation();
   //   const name = route.params?.name;
   //   const image = route.params?.image;
 
+  console.log(route);
   // Extracting data passed from ShareMusicBox.js
-  const { recipientName, recipientImage, message } = route.params;
+  const { recipientName, recipientImage, message, songTitle, artists } = route.params;
 
   // Track the gift received event
   useEffect(() => {
@@ -23,14 +26,20 @@ const SentGift = ({ route }) => {
       recipientName,
     });
   }, [recipientName]);
-
+  let youSent = "You sent a tape to " + recipientName + "!";
   return (
+    <>
+    <View style={styles.anim}>
+        <LottieView style={{ flex: 1 }} source={require('../../assets/Celebrate2.json')} autoPlay loop />
+      </View>
     <View style={styles.container}>
-      <Text style={styles.text}>You sent a mixtape to {recipientName}</Text>
       {/* <Text style={styles.name}>Gray</Text> */}
       {/* Display recipient's image or a default placeholder if not available */}
       <Image style={styles.image} source={recipientImage} />
-      <Text style={styles.message}>Your message: "{message}"</Text>
+      <Label style={styles.text} text={youSent}></Label>
+
+      <Text style={styles.message}>{songTitle}, by {artists}</Text>
+      <Text style={styles.message}>"{message}"</Text>
 
       <Image style={styles.image2} source={MusicImg} />
 
@@ -39,7 +48,7 @@ const SentGift = ({ route }) => {
         onPress={() =>
           navigation.navigate("Share a Music Box")
         }
-        text="Send another Mixtape"
+        text="Send another Tape"
       />
 
 
@@ -58,12 +67,13 @@ const SentGift = ({ route }) => {
 
 
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    marginTop: -150,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -72,12 +82,15 @@ const styles = StyleSheet.create({
     width: 125,
     height: 125,
     borderRadius: 1000,
+    marginBottom: 20,
   },
   image2: {
     // width: 125,
+    // aspectRatio: 1,
     // height: 125,
     // borderRadius: 1000,
     marginBottom: 30,
+    marginTop: 30,
   },
   name: {
     fontWeight: "bold",
@@ -89,11 +102,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 50,
     color: colors.white,
+    width: "80%",
   },
   message: {
     marginTop: 10,
-    marginBottom: 50,
+    // marginBottom: 50,
     color: colors.white,
+    width: "75%",
+    textAlign: "center",
   },
   containerSM: {
     display: 'flex',
@@ -111,6 +127,15 @@ const styles = StyleSheet.create({
     color: colors.pink,
     fontSize: 14,
     marginLeft: 5
+  },
+  anim: {
+    height: 500,
+    aspectRatio: 1,
+    zIndex: -10,
+    marginTop: -250,
+    left: "-18%",
+    // justifyContent: "center",
+    // alignItems: "center",
   }
 });
 

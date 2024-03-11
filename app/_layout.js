@@ -155,9 +155,6 @@ function HomeStackScreen() {
 function MixStackScreen() {
   return (
     <MixStack.Navigator screenOptions={{ headerShown: false }}>
-      <MixStack.Screen name="Recieve Gift">
-        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
-      </MixStack.Screen>
       <MixStack.Screen
         name="Share a Music Box"
         options={{ headerShown: false }}
@@ -169,6 +166,9 @@ function MixStackScreen() {
       </MixStack.Screen>
       <MixStack.Screen name="Sent Gift" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={SentGift} />}
+      </MixStack.Screen>
+      <MixStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
       </MixStack.Screen>
     </MixStack.Navigator>
   );

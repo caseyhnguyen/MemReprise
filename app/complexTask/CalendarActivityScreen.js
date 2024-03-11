@@ -76,7 +76,6 @@ const CalendarActivityScreen = ({ navigation }) => {
     }
   };
 
-
   const parsePosts = (fetchedPosts) => {
     // console.log(fetchedPosts);
     return fetchedPosts.map((post) => {
@@ -118,7 +117,7 @@ const CalendarActivityScreen = ({ navigation }) => {
           console.error("Error parsing song_data:", error);
         }
       }
-      
+
       // console.log(post.imageUrl);
       // console.log("songDataParsed:");
       // console.log(songDataParsed);
@@ -157,14 +156,18 @@ const CalendarActivityScreen = ({ navigation }) => {
         .from("mixtapes")
         .select("*")
         .order("created_at", { ascending: false }); // Ensure default ordering is from most recent to oldest
-      
+
       // console.log(query);
       // Apply filters only if both filters are selected
       if (selectedValue) {
         query = query.order("created_at", { ascending: false });
 
         // Time filtering logic
-        if (selectedValue === "month" || selectedValue === "quarter" || selectedValue === "year") {
+        if (
+          selectedValue === "month" ||
+          selectedValue === "quarter" ||
+          selectedValue === "year"
+        ) {
           const unitToMs = {
             days: 86400000,
             weeks: 604800000,
@@ -224,8 +227,8 @@ const CalendarActivityScreen = ({ navigation }) => {
 
     const imageSource =
       typeof item.source === "string" ? { uri: item.source } : item.source;
-      // console.log(item.source);
-      // console.log(imageSource);
+    // console.log(item.source);
+    // console.log(imageSource);
     // Extract and format the month and date
     let month = "";
     let date = "";
@@ -289,7 +292,7 @@ const CalendarActivityScreen = ({ navigation }) => {
             <Image source={images.caroline.pic} style={styles.profilePic} />
             <View>
               <Text style={styles.title}>Caroline Tran</Text>
-              <Header2 text="@cntran" />
+              <Header2 text="@cntran    " />
             </View>
             <View style={styles.dropDown}>
               <RNPickerSelect
@@ -315,7 +318,6 @@ const CalendarActivityScreen = ({ navigation }) => {
                   />
                 </>
               )}
-
             </View>
           </View>
 
@@ -396,17 +398,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
     padding: 3,
     borderRadius: 5,
-
   },
   monthText: {
     color: colors.black,
     fontWeight: "bold",
-    fontSize: 13
+    fontSize: 13,
   },
   dateText: {
     color: colors.black,
     textAlign: "center",
-    fontSize: 13
+    fontSize: 13,
   },
   dropDown: {
     // width: windowWidth * 0.3,

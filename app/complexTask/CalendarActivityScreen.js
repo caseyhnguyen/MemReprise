@@ -63,6 +63,7 @@ const CalendarActivityScreen = ({ navigation }) => {
     switch (value) {
       case "time":
         setFilterOptions([
+          { label: "None", value: "reprise" },
           { label: "Days", value: "days" },
           { label: "Weeks", value: "weeks" },
           { label: "Months", value: "months" },
@@ -159,28 +160,34 @@ const CalendarActivityScreen = ({ navigation }) => {
       // console.log(query);
       // Apply filters only if both filters are selected
       if (selectedValue) {
+        console.log(selectedValue);
         query = query.order("created_at", { ascending: false });
 
         // Time filtering logic
         if (
+          selectedValue === "none" ||
           selectedValue === "month" ||
           selectedValue === "quarter" ||
           selectedValue === "year"
         ) {
           const unitToMs = {
+            none: 0,
             days: 86400000,
             weeks: 604800000,
             month: 2629800000,
             quarter: 6048000000,
             year: 31557600000,
           };
+          console.log(Date.now());
           const timeAgo = Date.now() - unitToMs[selectedValue];
+          console.log(timeAgo);
           query = query.gte("created_at", new Date(timeAgo).toISOString());
           // console.log(query);
         }
       }
 
       const { data, error } = await query;
+      console.log(data.location_name);
 
       if (error) throw error;
 
@@ -321,7 +328,7 @@ const CalendarActivityScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.monthContainer}>
-            <Label text="Mixtapes sent" />
+            <Label text="Tapes sent" style={styles.monthLabel} />
             {/* <Text style={styles.month}>DECEMBER</Text> */}
           </View>
 
@@ -367,13 +374,21 @@ const styles = StyleSheet.create({
     height: 200,
   },
   monthContainer: {
-    marginTop: "40%",
-    marginLeft: "15%",
-    width: "100%",
+    marginTop: "38%",
+    // paddingLeft: "20%",
+    // paddingLeft: 22,
+    // marginLeft: 10,
+    // width: "100%",
+    justifyContent: 'center', 
+    alignItems: 'center', 
     alignItems: "flex-start",
     marginHorizontal: "10%",
     // paddingBottom: "2%",
     zIndex: 1,
+  },
+  monthLabel: {
+    textAlign: "center",
+    width: "100%",
   },
   month: {
     color: colors.white,
@@ -456,13 +471,13 @@ const pickerSelectStyles = {
     backgroundColor: colors.pink,
     paddingVertical: 11,
     textTransform: "uppercase",
-    color: colors.white,
+    color: colors.black,
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
   },
   placeholder: {
-    color: colors.white,
+    color: colors.black,
     textTransform: "uppercase",
   },
   inputAndroid: {

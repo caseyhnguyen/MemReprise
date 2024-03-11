@@ -8,14 +8,16 @@ import Gray from "../../assets/gray.png";
 import MusicImg from "../../assets/musicbox.png";
 import SeeMore from "../../components/SeeMore";
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import Label from "../../components/Label";
 
 const SentGift = ({ route }) => {
   const navigation = useNavigation();
   //   const name = route.params?.name;
   //   const image = route.params?.image;
 
+  console.log(route);
   // Extracting data passed from ShareMusicBox.js
-  const { recipientName, recipientImage, message } = route.params;
+  const { recipientName, recipientImage, message, songTitle, artists } = route.params;
 
   // Track the gift received event
   useEffect(() => {
@@ -23,14 +25,16 @@ const SentGift = ({ route }) => {
       recipientName,
     });
   }, [recipientName]);
-
+  let youSent = "You sent a tape to " + recipientName + "!";
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>You sent a mixtape to {recipientName}</Text>
       {/* <Text style={styles.name}>Gray</Text> */}
       {/* Display recipient's image or a default placeholder if not available */}
       <Image style={styles.image} source={recipientImage} />
-      <Text style={styles.message}>Your message: "{message}"</Text>
+      <Label style={styles.text} text={youSent}></Label>
+
+      <Text style={styles.message}>{songTitle}, by {artists}</Text>
+      <Text style={styles.message}>"{message}"</Text>
 
       <Image style={styles.image2} source={MusicImg} />
 
@@ -39,7 +43,7 @@ const SentGift = ({ route }) => {
         onPress={() =>
           navigation.navigate("Share a Music Box")
         }
-        text="Send another Mixtape"
+        text="Send another Tape"
       />
 
 
@@ -63,7 +67,7 @@ const SentGift = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    marginTop: 120,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -72,12 +76,15 @@ const styles = StyleSheet.create({
     width: 125,
     height: 125,
     borderRadius: 1000,
+    marginBottom: 20,
   },
   image2: {
     // width: 125,
+    // aspectRatio: 1,
     // height: 125,
     // borderRadius: 1000,
     marginBottom: 30,
+    marginTop: 30,
   },
   name: {
     fontWeight: "bold",
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
   },
   message: {
     marginTop: 10,
-    marginBottom: 50,
+    // marginBottom: 50,
     color: colors.white,
   },
   containerSM: {

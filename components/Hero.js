@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     // height: "45%",
     width: "100%",
     marginBottom: 15,
+    // paddingVertical: 10,
   },
   row: {
     // flexDirection: "column",
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start", // if you want to fill rows left to right
     backgroundColor: colors.darkBlue,
     padding: 20,
+    paddingVertical: 30,
   },
   item: {
     width: "50%", // is 50% of container width
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginLeft: 20,
-    marginTop: 15,
+    // marginTop: 10,
   },
 });
 

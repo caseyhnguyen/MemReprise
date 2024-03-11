@@ -217,14 +217,14 @@ const HomeScreen = ({ navigation }) => {
           <Hero sent={numSent} />
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Header1 text="Your Mixtapes"></Header1>
-              <SeeMore
+              <Header1 text="Your Tapes"></Header1>
+              {/* <SeeMore
                 onPress={() => {
                   trackEvent("View More Pressed", {
                     context: "Recent Musicboxes",
                   });
                 }}
-              />
+              /> */}
             </View>
             <View style={styles.sectionBody}>
               <FlatList
@@ -241,7 +241,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Header1 text="Mixtapes by Friends"></Header1>
-              <SeeMore />
+              {/* <SeeMore /> */}
             </View>
             <View style={styles.sectionBody}>
               <FlatList

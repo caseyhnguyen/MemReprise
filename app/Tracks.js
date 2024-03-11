@@ -210,7 +210,10 @@ const TracksScreen = ({ route, navigation }) => {
         </>
       )}
 
+      <View style={styles.refresh}>
       <SpotifyAuthOrRefreshButton />
+
+      </View>
 
       <FlatList
         horizontal={false}
@@ -250,8 +253,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    // marginTop: 50,
+    marginTop: 20,
     // backgroundColor: colors.background,
+  },
+  refresh: {
+    marginTop: -8,
+    marginBottom: 25,
   },
   logo: {
     width: 24,

@@ -413,7 +413,7 @@ const AppLayout = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="complexTask/PlaylistCity"
         component={GradientPlaylistCity} // Use the wrapped component here
         options={{
@@ -425,7 +425,7 @@ const AppLayout = () => {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="ProfileScreen"
         component={ProfileStackScreen}

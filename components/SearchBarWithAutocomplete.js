@@ -14,11 +14,10 @@ import { trackEvent } from "@aptabase/react-native";
 
 const GOOGLE_PLACES_API_KEY = "AIzaSyCZbXYrdtC_JQqNtA-K3y0bMZ4pKKLglk0"; // Replace this with your Google Places API key
 
-const SearchBarWithAutocomplete = ({ onPlaceSelected }) => {
+const SearchBarWithAutocomplete = ({ onPlaceSelected, onSelectionDismiss }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [predictions, setPredictions] = useState([]);
 
-  // Debounce search query to reduce the number of API calls
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (searchQuery) {
@@ -31,40 +30,32 @@ const SearchBarWithAutocomplete = ({ onPlaceSelected }) => {
 
   const fetchPredictions = async () => {
     try {
-      const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchQuery}&key=${GOOGLE_PLACES_API_KEY}&language=en`
-      );
+      const response = await axios.get(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchQuery}&key=${GOOGLE_PLACES_API_KEY}&language=en`);
       setPredictions(response.data.predictions);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handlePlaceSelect = (item) => {
+    setSearchQuery(item.description); // Update search query with selected item's description
+    onPlaceSelected(item);
+    onSelectionDismiss && onSelectionDismiss(); // Dismiss the dropdown
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.sectionView}>
-        {/* <Header1 text="Add a message" /> */}
-        <TextInput
-          placeholder="Search for a location"
-          style={styles.input}
-          value={searchQuery} // Use the message state as the value
-          onChangeText={setSearchQuery} // Update the message state on text change
-          onBlur={(e) =>
-            trackEvent("Location Search", { message: e.nativeEvent.text })
-          }
-        />
-      </View>
-      {/* <TextInput
-        style={styles.input}
+      <TextInput
         placeholder="Search for a location"
+        style={styles.input}
         value={searchQuery}
         onChangeText={setSearchQuery}
-      /> */}
+      />
       <FlatList
         data={predictions}
         keyExtractor={(item) => item.place_id}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => onPlaceSelected(item)}>
+          <TouchableOpacity onPress={() => handlePlaceSelect(item)}>
             <Text style={styles.predictionItem}>{item.description}</Text>
           </TouchableOpacity>
         )}

@@ -28,44 +28,49 @@ const Song = ({
   externalUrl,
   played_at,
   // userName,
+  sender_name,
+  sender_img,
+  location_name,
+  message,
+  formattedTimestamp,
 }) => {
   const navigation = useNavigation();
 
   const onSongPress = async () => {
-    // Define songData for Supabase
-    const songData = {
-      // index,
+    const songData = { // Define songData for Supabase
       title,
       artists: Array.isArray(artists) ? artists : [artists],
       albumName,
       imageUrl,
-      // duration,
-      // previewUrl,
-      // externalUrl,
-      // played_at,
-      // userName,
+      externalUrl,
+      sender_name,
+      sender_img,
+      location_name,
+      message,
+    formattedTimestamp,
+
     };
-    console.log(imageUrl);
     // console.log("Inserting songData to Supabase:", songData);
     // console.log("Username in Song Component:", { userName });
 
-    try {
-      // Save to Supabase
-      const { data, error } = await supabase.from("songs").insert([songData]);
+    // try {
+    //   // Save to Supabase
+    //   const { data, error } = await supabase.from("songs").insert([songData]);
 
-      if (error) {
-        console.error("Error saving song to database:", error);
-        return;
-      } else {
-        console.log("Song saved successfully:", data);
-      }
-    } catch (err) {
-      console.error("Supabase operation failed:", err);
-      return;
-    }
+    //   if (error) {
+    //     console.error("Error saving song to database:", error);
+    //     return;
+    //   } else {
+    //     console.log("Song saved successfully:", data);
+    //   }
+    // } catch (err) {
+    //   console.error("Supabase operation failed:", err);
+    //   return;
+    // }
     // imageUrl = require(imageUrl);
 
-    navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
+    // navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
+    navigation.navigate("Recieve Gift", { artists: artists, title: title, imageUrl: imageUrl, externalUrl: externalUrl, sender_name: sender_name, sender_img: sender_img, location_name: location_name, message: message, formattedTimestamp: formattedTimestamp });
     // navigation.navigate("Music Box", { artists: artists, city: name, imageUrl: imageUrl });
   };
 

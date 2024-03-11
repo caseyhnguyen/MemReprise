@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -23,22 +23,23 @@ import Gray from "../assets/gray.png"
 import Icon from "react-native-vector-icons/FontAwesome5";
 import PillPressable from "./PillPressable";
 import { ScrollView } from "react-native-gesture-handler";
+import { profiles } from '../app/_data.js'
 
 
 const windowWidth = Dimensions.get("window").width;
 
 const MusicBox = ({
   route,
-  title,
-  artists,
-  albumName,
-  imageUrl,
-  duration,
-  previewUrl,
-  externalUrl,
-  progressFraction,
-  progressMs,
-  userName,
+  // artists,
+  // albumName,
+  // imageUrl,
+  // duration,
+  // previewUrl,
+  // externalUrl,
+  // sender_name,
+  // sender_img,
+  // location_name,
+  // message,
 }) => {
   const { token, getSpotifyAuth } = useSpotifyAuth();
   // const { tracks, currentTrack, loading, fetchMore, clearCacheAndRefetch } = useSpotifyTracks(token);
@@ -53,69 +54,112 @@ const MusicBox = ({
     }
   };
 
+  console.log(route);
+    const [currProfiles, setCurrProfiles] = useState([]);
+    let mixtape = "";
+    useEffect(() => {
+      setCurrProfiles(profiles);
+    }, []);
+    
+
+
   const navigation = useNavigation();
-  // const name = route.params?.name;
-  // const city = route.params?.city;
-  // const image = route.params?.image;
+  // console.log(route);
+  const artists = route.params?.artists;
+  const externalUrl = route.params?.externalUrl;
+  const imageUrl = route.params?.imageUrl;
+  const location_name = route.params?.location_name;
+  const message = route.params?.message;
+  const sender_img = route.params?.sender_img;
+  const sender_name = route.params?.sender_name;
+  const title = route.params?.title;
+  const formattedTimestamp = route.params?.formattedTimestamp
+
+  let songId = externalUrl.substring(31);
+  let embedUrl = "https://open.spotify.com/embed/track/" + songId;
+  let headerText = sender_name + "'s Mixtape";
+
+  for(let i=0; i < profiles.length; i++) {
+    if(profiles[i].name === sender_name) {
+      mixtape = profiles[i].mixtape;
+    }
+  }
   const onSongPress = () => {
     // Log the song selection event before navigation
     trackEvent("Song Selected", {
       songTitle: title,
       artistNames: Array.isArray(artists) ? artists.join(", ") : artists,
-      userName: userName,
     });
 
-    navigation.navigate("Theme Question", {
-      songData: {
-        title,
-        artists: Array.isArray(artists) ? artists : [artists],
-        albumName,
-        imageUrl,
-        duration,
-        previewUrl,
-        externalUrl,
-      },
-      userName,
-    });
+
+
+    // navigation.navigate("Theme Question", {
+    //   songData: {
+    //     title,
+    //     artists: Array.isArray(artists) ? artists : [artists],
+    //     albumName,
+    //     imageUrl,
+    //     duration,
+    //     previewUrl,
+    //     externalUrl,
+    //   },
+    //   userName,
+    // });
   };
+
+
+  // route,
+  // artists,
+  // albumName,
+  // imageUrl,
+  // duration,
+  // previewUrl,
+  // externalUrl,
+  // sender_name,
+  // sender_img,
+  // location_name,
+  // message,
+
+
 
   return (
     <View>
       
 
       <ImageBackground
-        source={{uri: "https://i.scdn.co/image/ab67616d0000b273bb8648acba5bbab771ef0a45"}}
+        source={{uri: imageUrl}}
         resizeMode="cover"
         style={styles.bgImg}
         blurRadius={8}
       >
-        <View style={styles.navContainer}>
+        {/* <View style={styles.navContainer}>
         <BackArrow to="RecieveGift" />
-        <Header1 text="Gray's Mixtape" />
+        <Header1 text={headerText} />
       </View>
     <View style={styles.container}>
 
         
       <View style={styles.infoContainer}>
       <View style={styles.senderInfo}>
-          <Image style={styles.profileImage} source={Gray} />
+          <Image style={styles.profileImage} source={sender_img} />
           <View>
-            <Text style={styles.senderName}>Gray Wong</Text>
+            <Text style={styles.senderName}>{sender_name}</Text>
           </View>
         </View>
-        <Text style={styles.text}>
-          Remember that one incident? You know THAT incident. UGH I can’t get this out of my HEAD thinking about what happened last summer on campus!
-        </Text>
+        <View style={styles.messageCont}>
+          <Text style={styles.text}>{message}</Text>
+
+        </View>
         <View style={styles.senderInfo}>
           <View>
-            <Text style={styles.textSm}>2/14/24</Text>
-            <Text style={styles.textSm}>Wallenberg Hall</Text>
+            <Text style={styles.textSm}>{formattedTimestamp}</Text>
+            <Text style={styles.textSm}>{location_name}</Text>
           </View>
         </View>
         <View style={styles.spotifyContainer}>
         <WebView
           source={{
-            uri: "https://open.spotify.com/embed/track/3vkCueOmm7xQDoJ17W1Pm3?utm_source=generator",
+            uri: embedUrl,
           }}
           style={styles.spotifyEmbed}
         />
@@ -126,18 +170,12 @@ const MusicBox = ({
         isSpotify={false}
         disabled={false}
       />
-      <SeeMore text="View" />
+      <SeeMore text="View"
+      onPress={() => navigation.navigate("City Playlist", {name: sender_name, image: { uri: sender_img }, mixtape: mixtape})}
+
+       />
       </View>
-      {/* <View style={styles.spotifyContainer}>
-        <WebView
-          source={{
-            uri: "https://open.spotify.com/embed/track/3vkCueOmm7xQDoJ17W1Pm3?utm_source=generator",
-          }}
-          style={styles.spotifyEmbed}
-        />
       </View> */}
-      
-      </View>
 
       </ImageBackground>
     </View>
@@ -153,9 +191,10 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     width: "100%",
+    // backgroundColor: colors.black,
     alignItems: 'center', 
     justifyContent: 'center', 
-    height: "85%",
+    height: "78%",
 
   },
 
@@ -175,6 +214,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: colors.darkGray,
     gap: 10,
+    width: "100%",
+    // backgroundColor: colors.black,
+  },
+  messageCont: {
+    marginLeft: 8,
+    paddingHorizontal: 15,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.blue,
+    marginTop: 10,
   },
   senderInfo: {
     display: 'flex',
@@ -191,10 +239,7 @@ const styles = StyleSheet.create({
   text: {
     color: colors.offWhite75,
     fontSize: 17,
-    marginLeft: 8,
-    paddingHorizontal: 15,
-    borderLeftWidth: 3,
-    borderLeftColor: colors.blue,
+    
     // marginBottom: 30,
   },
   textSm: {

@@ -104,7 +104,7 @@ const TracksScreen = ({ route, navigation }) => {
     return (
       <View style={styles.currentTrackContainer}>
         <Header2 text="Now playing" />
-        <MusicBox
+        {/* <MusicBox
           onPress={() => navigation.navigate("Share a Music Box")}
           index={index}
           title={songTitle}
@@ -117,7 +117,21 @@ const TracksScreen = ({ route, navigation }) => {
           progressFraction={progressFraction}
           progressMs={progressMs}
           userName={userName}
-        />
+        /> */}
+        {/* <Track
+          onPress={() => navigation.navigate("Share a Music Box")}
+          index={index}
+          title={songTitle}
+          artists={songArtists}
+          albumName={albumName}
+          imageUrl={imageUrl}
+          duration={duration}
+          previewUrl={previewUrl}
+          externalUrl={externalUrl}
+          progressFraction={progressFraction}
+          progressMs={progressMs}
+          userName={userName}
+        /> */}
         <CurrentSong
           onPress={() => navigation.navigate("Share a Music Box")}
           index={index}

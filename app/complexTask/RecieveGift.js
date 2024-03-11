@@ -10,21 +10,30 @@ import LottieView from 'lottie-react-native';
 
 const RecieveGift = ({ route }) => {
   const navigation = useNavigation();
-  const name = route.params?.name;
-  const image = route.params?.image;
+  const artists = route.params?.artists;
+  const externalUrl = route.params?.externalUrl;
+  const imageUrl = route.params?.imageUrl;
+  const location_name = route.params?.location_name;
+  const message = route.params?.message;
+  const sender_img = route.params?.sender_img;
+  const sender_name = route.params?.sender_name;
+  const title = route.params?.title;
+  const formattedTimestamp = route.params?.formattedTimestamp
+
+  // console.log(title);
 
   // Track the gift received event
   useEffect(() => {
     trackEvent("gift_received", {
-      name, // Name of the person who sent the gift
+      sender_name, // Name of the person who sent the gift
     });
-  }, [name]);
+  }, [sender_name]);
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Image style={styles.image} source={Gray} />
-        <Text style={styles.name}>Gray</Text>
+        <Image style={styles.image} source={sender_img} />
+        <Text style={styles.name}>{sender_name}</Text>
         <Text style={styles.text}>sent you a music box!</Text>
         <Image style={styles.image2} source={MusicImg} />
         <PillPressable
@@ -32,9 +41,9 @@ const RecieveGift = ({ route }) => {
             // Track the send button pressed event before navigation
             trackEvent("send_button_pressed", {
               destination: "FeedScreen", // additional data we can log
-              senderName: name, // The name of the person who received the gift
             });
-            navigation.navigate("Music Box");
+            console.log(formattedTimestamp);
+            navigation.navigate("Music Box", { artists: artists, title: title, imageUrl: imageUrl, externalUrl: externalUrl, sender_name: sender_name, sender_img: sender_img, location_name: location_name, message: message, formattedTimestamp: formattedTimestamp });
             // navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
           }}
           text="Open"

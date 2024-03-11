@@ -28,8 +28,8 @@ const CurrentSong = ({
   const navigation = useNavigation();
 
   const onSongPress = () => {
-    navigation.navigate("Theme Question", {
-      songData: {
+    navigation.navigate("Share a Music Box", {
+      selectedSong: {
         title,
         artists: Array.isArray(artists) ? artists : [artists],
         albumName,

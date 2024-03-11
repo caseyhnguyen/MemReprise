@@ -16,7 +16,6 @@ import {
 // import images from "../../assets/Images/images";
 import images from "../../assets/Images/images";
 import albums from "../../assets/Images/albums";
-
 import { colors } from "../../assets/Themes/colors";
 import Header from "../../components/Header";
 import { Colors } from "react-native/Libraries/NewAppScreen";

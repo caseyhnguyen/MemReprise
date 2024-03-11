@@ -49,6 +49,7 @@ const ShareMusicBox = ({ route, navigation }) => {
   const [searchedLocation, setSearchedLocation] = useState(null);
 
   const GOOGLE_API_KEY = "AIzaSyCZbXYrdtC_JQqNtA-K3y0bMZ4pKKLglk0";
+  // console.log(route);
 
   useEffect(() => {
     (async () => {

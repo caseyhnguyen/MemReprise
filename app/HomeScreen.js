@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import {
   SafeAreaView,
   View,
@@ -28,6 +28,8 @@ import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../utils";
 import ExImage from "../assets/caroline.png";
 import { tracks, locations, profiles } from './_data.js'
 import Hero from "../components/Hero.js";
+import { supabase } from "../utils/supabaseClient";
+
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -43,15 +45,117 @@ const HomeScreen = ({ navigation }) => {
     setCurrProfiles(profiles);
   }, []);
 
+
+  const parsePosts = (fetchedPosts) => {
+    // console.log(fetchedPosts);
+    return fetchedPosts.map((post) => {
+      let formattedTimestamp = "Unknown Time";
+
+      if (post.created_at) {
+        const createdAt = new Date(post.created_at);
+        const timeOptions = {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        };
+        const dateOptions = {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        };
+
+        const formattedTime = new Intl.DateTimeFormat(
+          "en-US",
+          timeOptions
+        ).format(createdAt);
+        const formattedDate = new Intl.DateTimeFormat(
+          "en-US",
+          dateOptions
+        ).format(createdAt);
+
+        formattedTimestamp = `${formattedTime} • ${formattedDate}`;
+      }
+
+      // Parsing song_data to extract necessary details
+      let songDataParsed = {};
+      // console.log("post.song_data:");
+      // console.log(post.song_data);
+      if (post.song_data) {
+        try {
+          songDataParsed = JSON.parse(post.song_data);
+        } catch (error) {
+          console.error("Error parsing song_data:", error);
+        }
+      }
+      
+      // console.log(post.imageUrl);
+      // console.log("songDataParsed:");
+      // console.log(songDataParsed);
+      return {
+        ...post,
+        userName: post.userName || "Unknown User",
+        // songData: songDataParsed,
+        songData: {
+          title: post.songTitle,
+          artists: post.artists,
+          albumName: post.albumName,
+          imageUrl: post.imageUrl,
+          previewUrl: post.previewUrl,
+          externalUrl: post.externalUrl,
+        },
+        // source: songDataParsed.imageUrl || "",
+        source: post.imageUrl || "",
+        caption: post.caption || "",
+        themeIconLabel: post.theme_icon_text || "",
+        emotionIconLabel: post.emotion_icon_text || "",
+        activityIconLabel: post.activity_icon_text || "",
+        formattedTimestamp,
+      };
+    });
+  };
+
+  const filterPosts = useCallback(async () => {
+    try {
+      let query = supabase
+        .from("mixtapes_received")
+        .select("*")
+        .order("created_at", { ascending: false }); // Ensure default ordering is from most recent to oldest
+      
+      query = query.order("created_at", { ascending: false });
+      // console.log(query);
+      
+      const { data, error } = await query;
+      if (error) throw error;
+
+      let processedPosts = parsePosts(data || []).filter((post) => post.source);
+      // console.log(processedPosts);
+      setCurrTracks(processedPosts);
+
+    } catch (error) {
+      console.error("Error filtering posts:", error);
+    } finally {
+    }
+  }, []);
+
+
+
+
+
   const renderSong = ({ item }) => {
+    console.log(item.formattedTimestamp);
     return (
       <Song
         title={item.songTitle || "Unknown Title"}
-        artists={item.songArtists || ["Unknown Artist"]}
+        artists={item.artists || ["Unknown Artist"]}
         imageUrl={item.imageUrl || "Unknown Image"}
         previewUrl={item.previewUrl || ""}
         externalUrl={item.externalUrl || ""}
         name={item.songTitle || ""}
+        sender_name={item.sender_name || ""}
+        sender_img={item.sender_img || ""}
+        location_name={item.location_name || ""}
+        message={item.message || ""}
+        formattedTimestamp={item.formattedTimestamp || ""}
       />
     );
   };
@@ -70,9 +174,12 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const renderProfile = ({ item }) => {
-    console.log(item);
     return <ProfilePressable2 image={item.image} name={item.name} mixtape={item.mixtape} />;
   };
+
+  useEffect(() => {
+    filterPosts();
+  }, [filterPosts]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -144,7 +251,8 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     width: windowWidth,
-    height: "100%"
+    height: "100%",
+    marginTop: 25
   },
   section: {
     display: "flex",

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, ScrollView } from "react-native";
 import PillPressable from "../../components/PillPressable";
 import { colors } from "../../assets/Themes/colors";
 import { useNavigation } from "@react-navigation/native";
@@ -21,27 +21,29 @@ const RecieveGift = ({ route }) => {
   }, [name]);
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={Gray} />
-      <Text style={styles.name}>Gray</Text>
-      <Text style={styles.text}>sent you a music box!</Text>
-      <Image style={styles.image2} source={MusicImg} />
-      <PillPressable
-        onPress={() => {
-          // Track the send button pressed event before navigation
-          trackEvent("send_button_pressed", {
-            destination: "FeedScreen", // additional data we can log
-            senderName: name, // The name of the person who received the gift
-          });
-          navigation.navigate("Music Box");
-          // navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
-        }}
-        text="Open"
-      />
-      <View style={styles.anim}>
-        <LottieView style={{flex: 1}} source={require('../../assets/Celebrate1.json')} autoPlay loop />
+    <ScrollView>
+      <View style={styles.container}>
+        <Image style={styles.image} source={Gray} />
+        <Text style={styles.name}>Gray</Text>
+        <Text style={styles.text}>sent you a music box!</Text>
+        <Image style={styles.image2} source={MusicImg} />
+        <PillPressable
+          onPress={() => {
+            // Track the send button pressed event before navigation
+            trackEvent("send_button_pressed", {
+              destination: "FeedScreen", // additional data we can log
+              senderName: name, // The name of the person who received the gift
+            });
+            navigation.navigate("Music Box");
+            // navigation.navigate("Recieve Gift", { artists: artists, city: name, imageUrl: imageUrl });
+          }}
+          text="Open"
+        />
+        <View style={styles.anim}>
+          <LottieView style={{ flex: 1 }} source={require('../../assets/Celebrate1.json')} autoPlay loop />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

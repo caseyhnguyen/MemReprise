@@ -118,14 +118,14 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Share a Music Box">
         {(props) => <GradientWrapper {...props} Component={ShareMusicBox} />}
       </HomeStack.Screen> */}
-      <HomeStack.Screen name="Recieve Gift">
-        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
-      </HomeStack.Screen>
       {/* <HomeStack.Screen name="Sent Gift">
         {(props) => <GradientWrapper {...props} Component={SentGift} />}
       </HomeStack.Screen> */}
       <HomeStack.Screen name="City Playlist">
         {(props) => <GradientWrapper {...props} Component={PlaylistCity} />}
+      </HomeStack.Screen>
+      <HomeStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Music Box">
         {(props) => <GradientWrapper {...props} Component={MusicBox} />}
@@ -155,6 +155,9 @@ function HomeStackScreen() {
 function MixStackScreen() {
   return (
     <MixStack.Navigator screenOptions={{ headerShown: false }}>
+      <MixStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
+      </MixStack.Screen>
       <MixStack.Screen
         name="Share a Music Box"
         options={{ headerShown: false }}
@@ -176,6 +179,9 @@ function ActivityStackScreen() {
     <ActivityStack.Navigator screenOptions={{ headerShown: false }}>
       <ActivityStack.Screen name="ActivityScreen">
         {(props) => <GradientWrapper {...props} Component={ActivityScreen} />}
+      </ActivityStack.Screen>
+      <ActivityStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
       </ActivityStack.Screen>
 
       {/* <ActivityStack.Screen name="ActivityPlaylist">
@@ -204,7 +210,9 @@ function ThemeStackScreen() {
         <ThemeStack.Screen name="ThemeScreen">
           {(props) => <GradientWrapper {...props} Component={ThemeScreen} />}
         </ThemeStack.Screen>
-
+        <ThemeStack.Screen name="Recieve Gift">
+          {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
+        </ThemeStack.Screen>
         <ThemeStack.Screen name="PlaylistDetails">
           {(props) => (
             <GradientWrapper {...props} Component={PlaylistDetails} />
@@ -220,6 +228,9 @@ function FeelingStackScreen() {
     <FeelingStack.Navigator screenOptions={{ headerShown: false }}>
       <FeelingStack.Screen name="FeelingScreen">
         {(props) => <GradientWrapper {...props} Component={FeelingScreen} />}
+      </FeelingStack.Screen>
+      <FeelingStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
       </FeelingStack.Screen>
       <FeelingStack.Screen name="PlaylistDetails">
         {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}

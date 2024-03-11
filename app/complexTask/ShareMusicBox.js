@@ -252,7 +252,7 @@ const ShareMusicBox = ({ route, navigation }) => {
                 previewUrl={selectedSong.previewUrl}
                 externalUrl={selectedSong.externalUrl}
                 played_at={selectedSong.played_at}
-                // userName is omitted unless you need it for specific functionality
+              // userName is omitted unless you need it for specific functionality
               />
             )}
             {/* {loading ? (
@@ -336,13 +336,17 @@ const styles = StyleSheet.create({
   },
   mapView: {
     width: "100%",
+    marginTop: 10,
   },
   pg: {
     color: colors.white,
   },
   sectionView: {
-    marginBottom: 10,
+    marginVertical: 10,
   },
+  searchBar: {
+    marginTop: -50
+  }
 });
 
 export default ShareMusicBox;

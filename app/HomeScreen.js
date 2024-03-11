@@ -135,8 +135,8 @@ const HomeScreen = ({ navigation }) => {
               />
             </View>
           </View> */}
-        </ScrollView>
-      </SafeAreaView>
+      </ScrollView>
+    </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };

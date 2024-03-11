@@ -93,8 +93,23 @@ const GradientPlaylistCity = (props) => (
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
-      screenOptions={{ headerShown: false, headerBackTitleVisible: false }}
-    >
+    screenOptions={({ navigation }) => ({
+      headerShown: true,
+      headerBackTitleVisible: false,
+      headerTitle: '',
+      headerStyle: {
+        backgroundColor: colors.black,
+        shadowOpacity: 0, // Removes shadow for iOS
+          elevation: 0, // Removes shadow/border for Android
+      },
+      // headerTintColor: '#fff', // Changes the color of the back button and title, if any
+      headerLeft: () => (
+        <Pressable onPress={() => navigation.goBack()} style={{ marginLeft: 10 }}>
+          <Icon name="arrow-left" size={32} color={colors.white} /> 
+        </Pressable>
+      ),
+    })}
+  >
       {/* <HomeStack.Screen name="LoginSignUp" options={{ headerShown: false }}>
         {(props) => (
           <GradientWrapper {...props} Component={LoginSignUpScreen} />
@@ -106,9 +121,9 @@ function HomeStackScreen() {
       <HomeStack.Screen name="SignUp" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={SignUpScreen} />}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Tutorial" options={{ headerShown: false }}>
+      {/* <HomeStack.Screen name="Tutorial" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={TutorialScreen} />}
-      </HomeStack.Screen>
+      </HomeStack.Screen> */}
       <HomeStack.Screen name="Home" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={HomeScreen} />}
       </HomeStack.Screen>
@@ -130,7 +145,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Music Box">
         {(props) => <GradientWrapper {...props} Component={MusicBox} />}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Theme Question">
+      {/* <HomeStack.Screen name="Theme Question">
         {(props) => <GradientWrapper {...props} Component={ThemeQScreen} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Emotion Question">
@@ -138,7 +153,7 @@ function HomeStackScreen() {
       </HomeStack.Screen>
       <HomeStack.Screen name="Activity Question">
         {(props) => <GradientWrapper {...props} Component={ActivityQScreen} />}
-      </HomeStack.Screen>
+      </HomeStack.Screen> */}
       <HomeStack.Screen name="Post Summary">
         {(props) => (
           <GradientWrapper {...props} Component={PostSummaryScreen} />

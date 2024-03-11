@@ -232,11 +232,11 @@ const ShareMusicBox = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={styles.container}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
-        >
+      <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+      >
           <Header1 text="Choose a location" />
           <View style={styles.searchBar}>
           <SearchBarWithAutocomplete
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     display: "flex",
     width: "100%",
     alignItems: "center",
-    marginBottom: 50,
+    // marginBottom: 20,
   },
   input: {
     fontSize: 15,
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     // marginTop: -50,
   },
   safeArea: {
-    height: "110%",
+    // height: "110%",
     padding: 10,
     // marginTop: -50,
   },

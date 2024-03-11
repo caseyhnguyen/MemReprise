@@ -231,7 +231,7 @@ const ShareMusicBox = ({ route, navigation }) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.container}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
         >
           <Header1 text="Choose a location" />
           <View style={styles.searchBar}>
@@ -290,10 +290,10 @@ const ShareMusicBox = ({ route, navigation }) => {
               />
             </View>
           </View>
-        </KeyboardAvoidingView>
-        <View style={styles.buttonView}>
+          <View style={styles.buttonView}>
           <PillPressable text="Send" onPress={handleSendPress} />
         </View>
+        </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>
   );

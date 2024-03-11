@@ -78,6 +78,7 @@ const CalendarActivityScreen = ({ navigation }) => {
 
 
   const parsePosts = (fetchedPosts) => {
+    // console.log(fetchedPosts);
     return fetchedPosts.map((post) => {
       let formattedTimestamp = "Unknown Time";
 
@@ -108,6 +109,8 @@ const CalendarActivityScreen = ({ navigation }) => {
 
       // Parsing song_data to extract necessary details
       let songDataParsed = {};
+      // console.log("post.song_data:");
+      // console.log(post.song_data);
       if (post.song_data) {
         try {
           songDataParsed = JSON.parse(post.song_data);
@@ -115,12 +118,24 @@ const CalendarActivityScreen = ({ navigation }) => {
           console.error("Error parsing song_data:", error);
         }
       }
-
+      
+      // console.log(post.imageUrl);
+      // console.log("songDataParsed:");
+      // console.log(songDataParsed);
       return {
         ...post,
         userName: post.userName || "Unknown User",
-        songData: songDataParsed,
-        source: songDataParsed.imageUrl || "",
+        // songData: songDataParsed,
+        songData: {
+          title: post.songTitle,
+          artists: post.artists,
+          albumName: post.albumName,
+          imageUrl: post.imageUrl,
+          previewUrl: post.previewUrl,
+          externalUrl: post.externalUrl,
+        },
+        // source: songDataParsed.imageUrl || "",
+        source: post.imageUrl || "",
         caption: post.caption || "",
         themeIconLabel: post.theme_icon_text || "",
         emotionIconLabel: post.emotion_icon_text || "",
@@ -139,10 +154,11 @@ const CalendarActivityScreen = ({ navigation }) => {
       setLoading(true);
 
       let query = supabase
-        .from("posts")
+        .from("mixtapes")
         .select("*")
         .order("created_at", { ascending: false }); // Ensure default ordering is from most recent to oldest
-
+      
+      // console.log(query);
       // Apply filters only if both filters are selected
       if (selectedValue) {
         query = query.order("created_at", { ascending: false });
@@ -158,6 +174,7 @@ const CalendarActivityScreen = ({ navigation }) => {
           };
           const timeAgo = Date.now() - unitToMs[selectedValue];
           query = query.gte("created_at", new Date(timeAgo).toISOString());
+          // console.log(query);
         }
       }
 
@@ -180,18 +197,35 @@ const CalendarActivityScreen = ({ navigation }) => {
   }, [filterPosts]);
 
   const renderItem = ({ item }) => {
+    // console.log("item contents");
+    // console.log(item);
     const onPress = () => {
       navigation.navigate("PostExpandScreen", {
         userName: item.userName,
         formattedTimestamp: item.formattedTimestamp,
-        songData: item.songData,
+        songData: {
+          title: item.songTitle,
+          artists: item.artists,
+          albumName: item.albumName,
+          imageUrl: item.imageUrl,
+          previewUrl: item.previewUrl,
+          externalUrl: item.externalUrl,
+        },
+        sendTo: {
+          message: item.message,
+          formattedTimestamp: item.formattedTimestamp,
+          location_name: item.location_name,
+          recipient_img: item.recipient_img,
+          recipient_name: item.recipient_name,
+        },
         caption: item.caption,
       });
     };
 
     const imageSource =
       typeof item.source === "string" ? { uri: item.source } : item.source;
-
+      // console.log(item.source);
+      // console.log(imageSource);
     // Extract and format the month and date
     let month = "";
     let date = "";
@@ -242,8 +276,6 @@ const CalendarActivityScreen = ({ navigation }) => {
   };
   return (
     <>
-      {/* <StatusBar style="dark" barStyle="light-content" /> */}
-      {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#00BCD4" translucent = {true}/> */}
       <StatusBar
         barStyle="light-content"
         backgroundColor={colors.black}
@@ -255,7 +287,6 @@ const CalendarActivityScreen = ({ navigation }) => {
           <View style={styles.header}>
             <Image source={images.caroline.pic} style={styles.profilePic} />
             <View>
-              {/* <Header1 text="Caroline Tran" /> */}
               <Text style={styles.title}>Caroline Tran</Text>
               <Header2 text="@cntran" />
             </View>
@@ -263,7 +294,6 @@ const CalendarActivityScreen = ({ navigation }) => {
               <RNPickerSelect
                 onValueChange={onMainSelectionChange}
                 items={[
-                  // { label: "Time", value: "time" },
                   { label: "Last month", value: "month" },
                   { label: "Last quarter", value: "quarter" },
                   { label: "Last year", value: "year" },
@@ -287,14 +317,6 @@ const CalendarActivityScreen = ({ navigation }) => {
 
             </View>
           </View>
-
-          {/* <View style={styles.monthContainer}>
-        <Text style={styles.month}>DECEMBER</Text>
-      </View>
-
-      <View style={styles.spacer} />
-      <View style={styles.containerCalendar}>{renderFlatList()}</View>
-    </SafeAreaView> */}
 
           <View style={styles.monthContainer}>
             <Label text="Mixtapes sent" />

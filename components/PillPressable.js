@@ -13,6 +13,7 @@ const PillPressable = (props) => {
       isSpotify: props.isSpotify,
       tokenPresent: !!props.token,
       isLoading: props.isLoading,
+      isMuted: props.isMuted,
     });
 
     // Call the original onPress function if it exists
@@ -26,17 +27,17 @@ const PillPressable = (props) => {
       style={[
         styles.button,
         props.isSpotify ? styles.buttonSpotifyColor : styles.buttonNormalColor,
-        props.muted && styles.discouragedButton,
+        props.isMuted && styles.discouragedButton,
       ]}
       onPress={handlePress}
       disabled={props.isSpotify && props.isLoading}
     >
-      {props.isSpotify && !props.token && (
+      {/* {props.isSpotify && !props.token && (
         <Image
           source={images.spotify}
           style={[styles.spotifyIcon, props.isLoading && styles.disabledIcon]}
         />
-      )}
+      )} */}
       <Text style={styles.buttonText}>
         {!props.isSpotify
           ? props.text
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   buttonSpotifyColor: {
-    backgroundColor: colors.spotify,
+    backgroundColor: colors.pink,
     paddingHorizontal: 20,
     paddingVertical: 11,
   },

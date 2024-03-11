@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height / 4, // Minimized map height
+    height: Dimensions.get("window").height / 5.5, // Minimized map height
   },
   expandedMap: {
     width: Dimensions.get("window").width,

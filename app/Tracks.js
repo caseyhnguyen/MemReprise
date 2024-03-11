@@ -85,7 +85,7 @@ const TracksScreen = ({ route, navigation }) => {
 
   // Function to render the current track with progress bar
   const renderCurrentTrack = () => {
-    console.log(currentTrack);
+    // console.log(currentTrack);
     if (!currentTrack) return null;
     const {
       index,

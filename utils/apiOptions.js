@@ -107,7 +107,7 @@ export const getMyRecentTracks = async (token) => {
 export const getMyCurrentTrack = async (token) => {
   try {
     let res = await fetcher(CURRENT_TRACK_API, token);
-    console.log("hi. this is from api options");
+    // console.log("hi. this is from api options");
     // console.log(res.data);
     // Process and format the response data
     return formatCurrentTrack(res.data);

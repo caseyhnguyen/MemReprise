@@ -133,6 +133,10 @@ const ShareMusicBox = ({ route, navigation }) => {
 
     // Ensure all required data is available
     if (!selectedSong || !recipientName || !message || !searchedLocation) {
+      console.log(selectedSong);
+      console.log(recipientName);
+      console.log(message);
+      console.log(searchedLocation);
       // Handle the error state here, such as showing an alert or a message to the user
       console.error("Missing information for the mixtape");
       return;
@@ -221,42 +225,19 @@ const ShareMusicBox = ({ route, navigation }) => {
   // };
 
   const deliveryOptions = ["Send Now", "Surprise", "Notify"];
-  // const recipientOptions = [
-  //   { name: "Chris", image: ChrisHemsworthImg },
-  //   { name: "Dwayne", image: DwayneJohnsonImg },
-  //   { name: "Jenna", image: JennaOrtegaImg },
-  //   { name: "Tim", image: TimCookImg },
-  // ];
   const recipientOptions = profiles;
-  // const songOptions = [
-  //   {
-  //     artist: "Taylor Swift",
-  //     song: "Cruel Summer",
-  //   },
-  //   {
-  //     artist: "Dua Lipa",
-  //     song: "Houdini",
-  //   },
-  //   {
-  //     artist: "Cage the Elephant",
-  //     song: "Ain't No Rest for the Wicked",
-  //   },
-  //   {
-  //     artist: "Jack Harlow",
-  //     song: "Lovin' On Me",
-  //   },
-  // ];
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
         <Header1 text="Choose a location" />
-        <View style={styles.mapView}>
-          <MapScreen selectedLocation={searchedLocation} />
-        </View>
         <View style={styles.searchBar}>
           <SearchBarWithAutocomplete onPlaceSelected={handlePlaceSelect} />
         </View>
+        <View style={styles.mapView}>
+          <MapScreen selectedLocation={searchedLocation} />
+        </View>
+        
         <View style={styles.bodyView}>
           <View style={styles.sectionView}>
             <Header1 text="Choose a song" />
@@ -321,40 +302,8 @@ const ShareMusicBox = ({ route, navigation }) => {
             />
           </View>
 
-          <View style={styles.sectionView}>
-            <Header1 text="Delivery"></Header1>
-            <ScrollView horizontal>
-              {deliveryOptions.map((option, index) => (
-                <>
-                  {index === delivery ? (
-                    <PillSelectable
-                      text={option}
-                      isSelected
-                      onPress={() => {
-                        trackEvent("Delivery Option Selected", {
-                          option: option,
-                        });
-                        setDelivery(index);
-                      }}
-                    />
-                  ) : (
-                    <PillSelectable
-                      text={option}
-                      onPress={() => {
-                        trackEvent("Delivery Option Selected", {
-                          option: option,
-                        });
-                        setDelivery(index);
-                      }}
-                    />
-                  )}
-                </>
-              ))}
-              {/* <PillSelectable text="Send Now"></PillSelectable>
-            <PillSelectable text="Surprise"></PillSelectable>
-            <PillSelectable text="Notify"></PillSelectable> */}
-            </ScrollView>
-          </View>
+          
+
           <View style={styles.buttonView}>
             <PillPressable text="Send" onPress={handleSendPress} />
           </View>

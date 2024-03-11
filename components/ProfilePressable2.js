@@ -2,8 +2,11 @@ import React from "react";
 import { Text, Image, Pressable, StyleSheet } from "react-native";
 import { colors } from "../assets/Themes/colors";
 import { trackEvent } from "@aptabase/react-native";
+import { useNavigation } from "@react-navigation/native";
 
-const ProfilePressable2 = ({ image, name, isSelected, onPress }) => {
+const ProfilePressable2 = ({ image, name, mixtape, isSelected, onPress }) => {
+  const navigation = useNavigation();
+
   const handlePress = () => {
     // Log the profile interaction event
     trackEvent("Profile Interaction", {
@@ -15,6 +18,8 @@ const ProfilePressable2 = ({ image, name, isSelected, onPress }) => {
     if (onPress) {
       onPress();
     }
+    navigation.navigate("City Playlist", { name: name, city: name, image: { uri: image }, mixtape: mixtape });
+
   };
 
   return (

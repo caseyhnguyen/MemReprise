@@ -228,10 +228,9 @@ export const locations = [
 ];
 
 export const profiles = [
-  { image: require("../assets/casey.png"), name: "Casey" },
-  { image: require("../assets/gray.png"), name: "Gray" },
-  { image: require("../assets/brent.png"), name: "Brent" },
-  { image: require("../assets/emily.png"), name: "Emily" },
-  { image: require("../assets/tristan.png"), name: "Tristan" },
-  { image: require("../assets/caroline.png"), name: "Caroline" },
+  { image: require("../assets/casey.png"), name: "Casey", mixtape: "https://open.spotify.com/playlist/3XnVbYoUPgDmRvJzeYodXi" },
+  { image: require("../assets/gray.png"), name: "Gray", mixtape: "https://open.spotify.com/playlist/2qWsSJUyhQEv1VeLDc5w9v"  },
+  { image: require("../assets/brent.png"), name: "Brent", mixtape: "https://open.spotify.com/playlist/3ATvEUCU3DTjdFbEJrS8fv"  },
+  { image: require("../assets/emily.png"), name: "Emily", mixtape: "https://open.spotify.com/playlist/6SxawyR6CRRT9ADnV4iuVz?si=814e18433e1341b2"  },
+  { image: require("../assets/tristan.png"), name: "Tristan", mixtape: "https://open.spotify.com/playlist/4l2SgZL1IJR1Du09k6Vdcg"  },
 ];

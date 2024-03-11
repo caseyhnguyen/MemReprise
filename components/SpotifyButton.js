@@ -30,14 +30,14 @@ const SpotifyButton = ({ text, isSpotify, token, isLoading, muted }) => {
       onPress={handlePress}
       disabled={isSpotify && isLoading} // Use destructured prop
     >
-      {isSpotify && !token && (
+      {/* {isSpotify && !token && (
         <Image
           source={images.spotify}
           style={[styles.spotifyIcon, isLoading && styles.disabledIcon]} // Use destructured prop
         />
-      )}
+      )} */}
       <Text style={styles.buttonText}>
-        {isSpotify ? "Select a song from Spotify" : text}
+        {isSpotify ? "Choose a song from Spotify" : text}
       </Text>
     </Pressable>
   );
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   buttonSpotifyColor: {
-    backgroundColor: colors.spotify,
+    backgroundColor: colors.pink,
     paddingHorizontal: 20,
     paddingVertical: 11,
   },

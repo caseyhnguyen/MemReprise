@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import PillPressable from "../../components/PillPressable";
 import { colors } from "../../assets/Themes/colors";
 import { useNavigation } from "@react-navigation/native";
 import { trackEvent } from "@aptabase/react-native";
 import Gray from "../../assets/gray.png";
 import MusicImg from "../../assets/musicbox.png";
+import SeeMore from "../../components/SeeMore";
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 const SentGift = ({ route }) => {
   const navigation = useNavigation();
@@ -24,7 +26,7 @@ const SentGift = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>You sent a music box to {recipientName}</Text>
+      <Text style={styles.text}>You sent a mixtape to {recipientName}</Text>
       {/* <Text style={styles.name}>Gray</Text> */}
       {/* Display recipient's image or a default placeholder if not available */}
       <Image style={styles.image} source={recipientImage} />
@@ -32,17 +34,29 @@ const SentGift = ({ route }) => {
 
       <Image style={styles.image2} source={MusicImg} />
 
+      
       <PillPressable
-        onPress={() => {
-          // Track the send button pressed event before navigation
-          trackEvent("send_button_pressed", {
-            destination: "FeedScreen", // additional data we can log
-            senderName: recipientName, // The name of the person who received the gift
-          });
-          navigation.navigate("Home");
-        }}
-        text="Return to Home"
+        onPress={() =>
+          navigation.navigate("Share a Music Box")
+        }
+        text="Send another Mixtape"
       />
+
+
+      <Pressable
+      style={styles.containerSM}
+      onPress={() => {
+        navigation.navigate("Home");
+
+      }}
+      >
+        <Text style={styles.buttonTextSM}>
+          Return to Home
+        </Text>
+        <Icon name='chevron-right' style={styles.arrowSM} />
+      </Pressable>
+
+
     </View>
   );
 };
@@ -81,6 +95,23 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     color: colors.white,
   },
+  containerSM: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonTextSM: {
+    color: colors.pink,
+    fontSize: 14,
+    fontWeight: "bold"
+  },
+  arrowSM: {
+    color: colors.pink,
+    fontSize: 14,
+    marginLeft: 5
+  }
 });
 
 export default SentGift;

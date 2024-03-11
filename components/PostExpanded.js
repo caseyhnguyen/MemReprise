@@ -36,15 +36,13 @@ const PostExpanded = ({
   activityIconLabel,
   userName,
   formattedTimestamp,
+  sendTo
 }) => {
   const [captionText, setCaptionText] = useState("");
   const [number, onChangeNumber] = React.useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
   const { setPostMade } = useContext(PostContext);
-
-  // const styles = styling(dimensions);
-
   const navigation = useNavigation();
 
   const onPress = () => {
@@ -52,17 +50,25 @@ const PostExpanded = ({
   };
 
   let recipient = profiles[Math.floor(Math.random() * profiles.length)];
-
+  // console.log("songData from postexpanded");
+  // console.log(songData);
   let songId = songData.externalUrl.substring(31);
   let embedUrl = "https://open.spotify.com/embed/track/" + songId;
-  console.log(songData.externalUrl);
+  // console.log(songData.externalUrl);
+  console.log(embedUrl);
+
+  let locationShort = sendTo.location_name;
+  if (sendTo.location_name.length > 25) {
+    locationShort = sendTo.location_name.substring(0, 25);
+    locationShort += "...";
+  }
   return (
     <View style={styles.container}>
       {/* <Pressable style={styles.postButton} onPress={onPress}>
         <Text style={styles.postButtonText}>back</Text>
       </Pressable> */}
       {songData && songData.title && (
-        <Pressable onPress={onPress} style={styles.expandedOuterContainer}>
+        <Pressable style={styles.expandedOuterContainer}>
           <View style={styles.spotifyContainer}>
             <WebView
               source={{
@@ -76,28 +82,26 @@ const PostExpanded = ({
           <View style={styles.metaData}>
 
             <Image
-              source={recipient.image}
+              source={sendTo.recipient_img}
               style={styles.profilePic}
             />
             <View name="userTag">
-              <Text style={styles.title}>{recipient.name}</Text>
+              <Text style={styles.title}>{sendTo.recipient_name}</Text>
               {/* <Text style={styles.artist}>Username</Text> */}
               <Text name="time" style={styles.smallText}>
-                {formattedTimestamp}
+                {sendTo.formattedTimestamp}
+              </Text>
+              <Text name="time" style={styles.smallText}>
+                {locationShort}
               </Text>
           </View>
 
-            {/* <View style={styles.time}>
-              <Text name="time" style={styles.smallText}>
-                {formattedTimestamp}
-              </Text>
-            </View> */}
           </View>
 
           
-          {caption && (
+          {sendTo.message && (
             <View style={styles.captionContainer}>
-              <Text style={styles.caption}>{caption}</Text>
+              <Text style={styles.caption}>{sendTo.message}</Text>
             </View>
           )}
           
@@ -121,6 +125,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: colors.white,
     height: 110,
+    marginBottom: 20,
+
   },
   spotifyEmbed: {
     width: "auto",

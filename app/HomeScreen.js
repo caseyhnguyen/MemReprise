@@ -70,7 +70,8 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const renderProfile = ({ item }) => {
-    return <ProfilePressable2 image={item.image} name={item.name} />;
+    console.log(item);
+    return <ProfilePressable2 image={item.image} name={item.name} mixtape={item.mixtape} />;
   };
 
   return (
@@ -94,6 +95,7 @@ const HomeScreen = ({ navigation }) => {
                 horizontal={true}
                 data={currTracks}
                 renderItem={renderSong}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={(item, index) =>
                   item.id?.toString() || index.toString()
                 }
@@ -109,6 +111,7 @@ const HomeScreen = ({ navigation }) => {
               <FlatList
                 horizontal={true}
                 data={currProfiles}
+                showsHorizontalScrollIndicator={false}
                 renderItem={renderProfile}
                 keyExtractor={(item, index) =>
                   item.id?.toString() || index.toString()

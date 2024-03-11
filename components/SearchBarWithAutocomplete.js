@@ -75,7 +75,7 @@ const SearchBarWithAutocomplete = ({ onPlaceSelected }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    // marginTop: 50,
   },
   input: {
     fontSize: 15,

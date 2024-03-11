@@ -395,6 +395,9 @@ const AppLayout = () => {
           bottom: "0%",
           backgroundColor: colors.black,
           height: "10.5%",
+          borderTopWidth: 0, // Removes the border on the top
+          elevation: 0, // Removes shadow on Android
+          shadowOpacity: 0, // Removes shadow on iOS
         },
       }}
     >

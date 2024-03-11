@@ -232,11 +232,11 @@ const ShareMusicBox = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={styles.container}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
-        >
+      <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+      >
           <Header1 text="Choose a location" />
           <View style={styles.searchBar}>
           <SearchBarWithAutocomplete

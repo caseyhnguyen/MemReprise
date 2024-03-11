@@ -5,7 +5,7 @@ export const colors = {
   gray: "#B6B6B6",
   white: "#FFFFFF",
   // darkGray: "#4F4F4FFF",
-  // darkGray: "#424348",
+  midGray: "#424348",
   darkGray: "#212124",
   offWhite: "#F3F3F3FF",
   offWhite50: "rgba(255, 255, 255, 0.5)", // 50% opacity

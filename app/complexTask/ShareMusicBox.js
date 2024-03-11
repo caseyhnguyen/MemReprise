@@ -19,10 +19,13 @@ import { supabase } from "../../utils/supabaseClient";
 
 import {
   ActivityIndicator,
+  Alert,
   ScrollView,
   StyleSheet,
   TextInput,
   View,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { colors } from "../../assets/Themes/colors";
 import ChrisHemsworthImg from "../../assets/chris-hemsworth.jpg";
@@ -230,83 +233,70 @@ const ShareMusicBox = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-        <Header1 text="Choose a location" />
-        <View style={styles.searchBar}>
-          <SearchBarWithAutocomplete onPlaceSelected={handlePlaceSelect} />
-        </View>
-        <View style={styles.mapView}>
-          <MapScreen selectedLocation={searchedLocation} />
-        </View>
-        
-        <View style={styles.bodyView}>
-          <View style={styles.sectionView}>
-            <Header1 text="Choose a song" />
-            <SpotifyAuthOrRefreshButton />
-            {!loading && selectedSong && (
-              <Track
-                title={selectedSong.title}
-                artists={selectedSong.artists}
-                albumName={selectedSong.albumName}
-                imageUrl={selectedSong.imageUrl}
-                duration={selectedSong.duration}
-                previewUrl={selectedSong.previewUrl}
-                externalUrl={selectedSong.externalUrl}
-                played_at={selectedSong.played_at}
-              // userName is omitted unless you need it for specific functionality
-              />
-            )}
-            {/* {loading ? (
-            <ActivityIndicator size="large" color={colors.primary} />
-          ) : selectedSong ? (
-            <View>
-              <Text style={styles.selectedSongTitle}>{selectedSong.song}</Text>
-              <Text style={styles.selectedSongArtist}>
-                {selectedSong.artist}
-              </Text>
-              <PillPressable
-                text="Change Song"
-                onPress={() => navigation.navigate("Tracks")}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.container}
+        >
+          <Header1 text="Choose a location" />
+          <View style={styles.searchBar}>
+            <SearchBarWithAutocomplete onPlaceSelected={handlePlaceSelect} />
+          </View>
+          <View style={styles.mapView}>
+            <MapScreen selectedLocation={searchedLocation} />
+          </View>
+
+          <View style={styles.bodyView}>
+            <View style={styles.sectionView}>
+              <Header1 text="Choose a song" />
+              <SpotifyAuthOrRefreshButton />
+              {!loading && selectedSong && (
+                <Track
+                  title={selectedSong.title}
+                  artists={selectedSong.artists}
+                  albumName={selectedSong.albumName}
+                  imageUrl={selectedSong.imageUrl}
+                  duration={selectedSong.duration}
+                  previewUrl={selectedSong.previewUrl}
+                  externalUrl={selectedSong.externalUrl}
+                  played_at={selectedSong.played_at}
+                />
+              )}
+            </View>
+            <View style={styles.sectionView}>
+              <Header1 text="Send to" />
+              <ScrollView horizontal>
+                {recipientOptions.map((option, index) => (
+                  <ProfilePressable
+                    key={option.name}
+                    image={option.image}
+                    name={option.name}
+                    isSelected={recipient === index}
+                    onPress={() => {
+                      trackEvent("Recipient Option Selected", {
+                        option: option.name,
+                      });
+                      selectRecipient(index);
+                    }}
+                  />
+                ))}
+              </ScrollView>
+            </View>
+            <View style={styles.sectionView}>
+              <Header1 text="Add a message" />
+              <TextInput
+                placeholder="Remember that time we..."
+                style={styles.input}
+                value={message}
+                onChangeText={setMessage}
+                onBlur={(e) =>
+                  trackEvent("Message Input", { message: e.nativeEvent.text })
+                }
               />
             </View>
-          ) : null} */}
           </View>
-          <View style={styles.sectionView}>
-            <Header1 text="Send to"></Header1>
-            <ScrollView horizontal>
-              {recipientOptions.map((option, index) => (
-                <ProfilePressable
-                  key={option.name}
-                  image={option.image}
-                  name={option.name}
-                  isSelected={recipient === index}
-                  onPress={() => {
-                    trackEvent("Recipient Option Selected", {
-                      option: option.name, // Option.name could be the recipient's name
-                    });
-                    selectRecipient(index); // Call selectRecipient with the index
-                  }}
-                />
-              ))}
-            </ScrollView>
-          </View>
-          <View style={styles.sectionView}>
-            <Header1 text="Add a message" />
-            <TextInput
-              placeholder="Remember that time we..."
-              style={styles.input}
-              value={message} // Use the message state as the value
-              onChangeText={setMessage} // Update the message state on text change
-              onBlur={(e) =>
-                trackEvent("Message Input", { message: e.nativeEvent.text })
-              }
-            />
-          </View>
-
-          
-
-          <View style={styles.buttonView}>
-            <PillPressable text="Send" onPress={handleSendPress} />
-          </View>
+        </KeyboardAvoidingView>
+        <View style={styles.buttonView}>
+          <PillPressable text="Send" onPress={handleSendPress} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -345,8 +335,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   searchBar: {
-    marginTop: -50
-  }
+    marginTop: -50,
+  },
 });
 
 export default ShareMusicBox;

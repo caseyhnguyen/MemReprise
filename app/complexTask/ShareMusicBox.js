@@ -51,7 +51,7 @@ const ShareMusicBox = ({ route, navigation }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [searchedLocation, setSearchedLocation] = useState(null);
 
-  const GOOGLE_API_KEY = "AIzaSyCZbXYrdtC_JQqNtA-K3y0bMZ4pKKLglk0";
+  const GOOGLE_API_KEY = "AIzaSyCLpB4bUuYtTgh9ZrbHo9H0cac5PJz1VKo";
   // console.log(route);
 
   useEffect(() => {
@@ -75,7 +75,9 @@ const ShareMusicBox = ({ route, navigation }) => {
   const handlePlaceSelect = async (place) => {
     const placeId = place.place_id;
     try {
-      const response = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`);
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`
+      );
       const locationResult = response.data.result;
       const { lat, lng } = locationResult.geometry.location;
       const newSearchedLocation = {
@@ -232,18 +234,18 @@ const ShareMusicBox = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-      <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
-      >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.container}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+        >
           <Header1 text="Choose a location" />
           <View style={styles.searchBar}>
-          <SearchBarWithAutocomplete
-          onPlaceSelected={handlePlaceSelect}
-          selectedLocation={searchedLocation?.name}
-          onSelectionDismiss={handleSelectionDismiss}
-          />
+            <SearchBarWithAutocomplete
+              onPlaceSelected={handlePlaceSelect}
+              selectedLocation={searchedLocation?.name}
+              onSelectionDismiss={handleSelectionDismiss}
+            />
           </View>
           <View style={styles.mapView}>
             <MapScreen selectedLocation={searchedLocation} />
@@ -299,8 +301,8 @@ const ShareMusicBox = ({ route, navigation }) => {
             </View>
           </View>
           <View style={styles.buttonView}>
-          <PillPressable text="Send" onPress={handleSendPress} />
-        </View>
+            <PillPressable text="Send" onPress={handleSendPress} />
+          </View>
         </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>

@@ -32,7 +32,7 @@ export default function PreviewScreen() {
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="dark" barStyle="light-content"/>
       <Stack.Screen
         options={{
           headerStyle: { backgroundColor: colors.background },

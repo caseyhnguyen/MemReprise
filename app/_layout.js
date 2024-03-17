@@ -23,7 +23,7 @@ import LoginSignUpScreen from "./LoginSignUpScreen";
 import LoginScreen from "./LoginScreen";
 import SignUpScreen from "./SignUpScreen";
 import HomeScreen from "./HomeScreen";
-import TracksScreen from "./TracksScreen";
+import Tracks from "./Tracks";
 import ProfileScreen from "./ProfileScreen";
 import ThemeQScreen from "./ThemeQScreen";
 import PostSummaryScreen from "./PostSummaryScreen";
@@ -50,6 +50,7 @@ import TutorialScreen from "./TutorialScreen";
 import { StatusBar } from "expo-status-bar";
 import ShareMusicBox from "./complexTask/ShareMusicBox";
 import RecieveGift from "./complexTask/RecieveGift";
+import SentGift from "./complexTask/SentGift";
 import PlaylistCity from "./complexTask/PlaylistCity";
 
 import Aptabase from "@aptabase/react-native";
@@ -60,6 +61,7 @@ Aptabase.init("A-US-8502203082");
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const MixStack = createStackNavigator();
 
 // Medium Task
 const ActivityStack = createStackNavigator();
@@ -83,43 +85,67 @@ const GradientWrapper = ({ Component, navigation, route }) => {
   );
 };
 
+const GradientPlaylistCity = (props) => (
+  <GradientWrapper {...props} Component={PlaylistCity} />
+);
+
 // HomeStack Navigator
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: true }}>
-      <HomeStack.Screen name="LoginSignUp" options={{ headerShown: false }}>
+    <HomeStack.Navigator
+    screenOptions={({ navigation }) => ({
+      headerShown: true,
+      headerBackTitleVisible: false,
+      headerTitle: '',
+      headerStyle: {
+        backgroundColor: colors.black,
+        shadowOpacity: 0, // Removes shadow for iOS
+          elevation: 0, // Removes shadow/border for Android
+      },
+      // headerTintColor: '#fff', // Changes the color of the back button and title, if any
+      headerLeft: () => (
+        <Pressable onPress={() => navigation.goBack()} style={{ marginLeft: 10 }}>
+          <Icon name="arrow-left" size={32} color={colors.white} /> 
+        </Pressable>
+      ),
+    })}
+  >
+      {/* <HomeStack.Screen name="LoginSignUp" options={{ headerShown: false }}>
         {(props) => (
           <GradientWrapper {...props} Component={LoginSignUpScreen} />
         )}
-      </HomeStack.Screen>
+      </HomeStack.Screen> */}
       <HomeStack.Screen name="Login" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={LoginScreen} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="SignUp" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={SignUpScreen} />}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Tutorial" options={{ headerShown: false }}>
+      {/* <HomeStack.Screen name="Tutorial" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={TutorialScreen} />}
-      </HomeStack.Screen>
+      </HomeStack.Screen> */}
       <HomeStack.Screen name="Home" options={{ headerShown: false }}>
         {(props) => <GradientWrapper {...props} Component={HomeScreen} />}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Tracks">
-        {(props) => <GradientWrapper {...props} Component={TracksScreen} />}
+      {/* <HomeStack.Screen name="Tracks">
+        {(props) => <GradientWrapper {...props} Component={Tracks} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Share a Music Box">
         {(props) => <GradientWrapper {...props} Component={ShareMusicBox} />}
+      </HomeStack.Screen> */}
+      {/* <HomeStack.Screen name="Sent Gift">
+        {(props) => <GradientWrapper {...props} Component={SentGift} />}
+      </HomeStack.Screen> */}
+      <HomeStack.Screen name="City Playlist">
+        {(props) => <GradientWrapper {...props} Component={PlaylistCity} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Recieve Gift">
         {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
       </HomeStack.Screen>
-      <HomeStack.Screen name="City Playlist">
-        {(props) => <GradientWrapper {...props} Component={PlaylistCity} />}
-      </HomeStack.Screen>
       <HomeStack.Screen name="Music Box">
         {(props) => <GradientWrapper {...props} Component={MusicBox} />}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Theme Question">
+      {/* <HomeStack.Screen name="Theme Question">
         {(props) => <GradientWrapper {...props} Component={ThemeQScreen} />}
       </HomeStack.Screen>
       <HomeStack.Screen name="Emotion Question">
@@ -127,7 +153,7 @@ function HomeStackScreen() {
       </HomeStack.Screen>
       <HomeStack.Screen name="Activity Question">
         {(props) => <GradientWrapper {...props} Component={ActivityQScreen} />}
-      </HomeStack.Screen>
+      </HomeStack.Screen> */}
       <HomeStack.Screen name="Post Summary">
         {(props) => (
           <GradientWrapper {...props} Component={PostSummaryScreen} />
@@ -141,11 +167,36 @@ function HomeStackScreen() {
   );
 }
 
+function MixStackScreen() {
+  return (
+    <MixStack.Navigator screenOptions={{ headerShown: false }}>
+      <MixStack.Screen
+        name="Share a Music Box"
+        options={{ headerShown: false }}
+      >
+        {(props) => <GradientWrapper {...props} Component={ShareMusicBox} />}
+      </MixStack.Screen>
+      <MixStack.Screen name="Tracks">
+        {(props) => <GradientWrapper {...props} Component={Tracks} />}
+      </MixStack.Screen>
+      <MixStack.Screen name="Sent Gift" options={{ headerShown: false }}>
+        {(props) => <GradientWrapper {...props} Component={SentGift} />}
+      </MixStack.Screen>
+      <MixStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
+      </MixStack.Screen>
+    </MixStack.Navigator>
+  );
+}
+
 function ActivityStackScreen() {
   return (
     <ActivityStack.Navigator screenOptions={{ headerShown: false }}>
       <ActivityStack.Screen name="ActivityScreen">
         {(props) => <GradientWrapper {...props} Component={ActivityScreen} />}
+      </ActivityStack.Screen>
+      <ActivityStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
       </ActivityStack.Screen>
 
       {/* <ActivityStack.Screen name="ActivityPlaylist">
@@ -174,7 +225,9 @@ function ThemeStackScreen() {
         <ThemeStack.Screen name="ThemeScreen">
           {(props) => <GradientWrapper {...props} Component={ThemeScreen} />}
         </ThemeStack.Screen>
-
+        <ThemeStack.Screen name="Recieve Gift">
+          {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
+        </ThemeStack.Screen>
         <ThemeStack.Screen name="PlaylistDetails">
           {(props) => (
             <GradientWrapper {...props} Component={PlaylistDetails} />
@@ -190,6 +243,9 @@ function FeelingStackScreen() {
     <FeelingStack.Navigator screenOptions={{ headerShown: false }}>
       <FeelingStack.Screen name="FeelingScreen">
         {(props) => <GradientWrapper {...props} Component={FeelingScreen} />}
+      </FeelingStack.Screen>
+      <FeelingStack.Screen name="Recieve Gift">
+        {(props) => <GradientWrapper {...props} Component={RecieveGift} />}
       </FeelingStack.Screen>
       <FeelingStack.Screen name="PlaylistDetails">
         {(props) => <GradientWrapper {...props} Component={PlaylistDetails} />}
@@ -338,7 +394,10 @@ const AppLayout = () => {
           display: "flex",
           bottom: "0%",
           backgroundColor: colors.black,
-          height: 60,
+          height: "10.5%",
+          borderTopWidth: 0, // Removes the border on the top
+          elevation: 0, // Removes shadow on Android
+          shadowOpacity: 0, // Removes shadow on iOS
         },
       }}
     >
@@ -352,7 +411,7 @@ const AppLayout = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="complexTask/ShareMusicBox"
         component={ShareMusicBox}
         options={{
@@ -361,10 +420,20 @@ const AppLayout = () => {
             <Icon name="music" style={{ fontSize: size, color: color }} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
+        name="complexTask/ShareMusicBox"
+        component={MixStackScreen}
+        options={{
+          tabBarLabel: "Mix",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="music" style={{ fontSize: size, color: color }} />
+          ),
+        }}
+      />
+      {/* <Tab.Screen
         name="complexTask/PlaylistCity"
-        component={PlaylistCity}
+        component={GradientPlaylistCity} // Use the wrapped component here
         options={{
           tabBarLabel: "Discover",
           tabBarIcon: ({ color, size }) => (
@@ -374,12 +443,12 @@ const AppLayout = () => {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="ProfileScreen"
         component={ProfileStackScreen}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "My Tapes",
           tabBarIcon: ({ color, size }) => (
             <Icon name="user-alt" style={{ fontSize: size, color: color }} />
           ),

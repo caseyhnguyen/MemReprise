@@ -3,47 +3,41 @@ import { Text, Image, Pressable, StyleSheet } from "react-native";
 import images from "../assets/Images/images";
 import { colors } from "../assets/Themes/colors";
 import { trackEvent } from "@aptabase/react-native";
+import { useNavigation } from "@react-navigation/native";
 
-// const PillPressable = ({ text, isSpotify, }) => {
-const PillPressable = (props) => {
+// Assume navigation prop is passed to PillPressable
+const SpotifyButton = ({ text, isSpotify, token, isLoading, muted }) => {
+  const navigation = useNavigation(); // Use the hook to access navigation
+
   const handlePress = () => {
-    // Log the button press event
     trackEvent("Button Pressed", {
-      text: props.text,
-      isSpotify: props.isSpotify,
-      tokenPresent: !!props.token,
-      isLoading: props.isLoading,
-      isMuted: props.isMuted,
+      text: text,
+      isSpotify: isSpotify,
+      tokenPresent: !!token,
+      isLoading: isLoading,
     });
 
-    // Call the original onPress function if it exists
-    if (props.onPress) {
-      props.onPress();
-    }
+    navigation.navigate("Tracks"); // Now navigation should be defined
   };
 
   return (
     <Pressable
       style={[
         styles.button,
-        props.isSpotify ? styles.buttonSpotifyColor : styles.buttonNormalColor,
-        props.isMuted && styles.discouragedButton,
+        isSpotify ? styles.buttonSpotifyColor : styles.buttonNormalColor,
+        muted && styles.discouragedButton, // Corrected use of destructured prop
       ]}
       onPress={handlePress}
-      disabled={props.isSpotify && props.isLoading}
+      disabled={isSpotify && isLoading} // Use destructured prop
     >
-      {/* {props.isSpotify && !props.token && (
+      {/* {isSpotify && !token && (
         <Image
           source={images.spotify}
-          style={[styles.spotifyIcon, props.isLoading && styles.disabledIcon]}
+          style={[styles.spotifyIcon, isLoading && styles.disabledIcon]} // Use destructured prop
         />
       )} */}
       <Text style={styles.buttonText}>
-        {!props.isSpotify
-          ? props.text
-          : props.token
-          ? "Refresh song history"
-          : "Get recent songs from Spotify"}
+        {isSpotify ? "Choose a song from Spotify" : text}
       </Text>
     </Pressable>
   );
@@ -68,13 +62,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 45,
     paddingVertical: 11,
   },
-  discourageddButton: {
+  discouragedButton: {
     backgroundColor: colors.darkGray,
     paddingHorizontal: 45,
     paddingVertical: 11,
   },
   buttonText: {
-    // textTransform: "uppercase",
     color: colors.black,
     fontSize: 16,
     fontWeight: "bold",
@@ -87,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PillPressable;
+export default SpotifyButton;

@@ -30,7 +30,10 @@ export default function PlaylistDetails() {
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar
+      barStyle="light-content"
+      // style="dark"
+      />
       <Stack.Screen
         options={{
           headerStyle: { backgroundColor: colors.background },

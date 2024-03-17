@@ -18,7 +18,7 @@ const Header1 = (props) => {
 const styles = StyleSheet.create({
   header1: {
     // fontWeight: "500",
-    fontSize: 24,
+    fontSize: 22,
     // alignItems: "center",
     // justifyContent: "center",
     // marginTop: -30,

@@ -19,8 +19,6 @@ import { colors } from "../assets/Themes/colors";
 import { trackEvent } from "@aptabase/react-native";
 import SearchBarWithAutocomplete from "../components/SearchBarWithAutocomplete";
 
-const GOOGLE_API_KEY = "AIzaSyCLpB4bUuYtTgh9ZrbHo9H0cac5PJz1VKo";
-
 const MapScreen = ({ selectedLocation }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);

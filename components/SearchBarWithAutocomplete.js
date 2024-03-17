@@ -12,7 +12,9 @@ import { colors } from "../assets/Themes/colors";
 import axios from "axios";
 import { trackEvent } from "@aptabase/react-native";
 
-const GOOGLE_PLACES_API_KEY = "AIzaSyCZbXYrdtC_JQqNtA-K3y0bMZ4pKKLglk0"; // Replace this with your Google Places API key
+import getEnv from "../utils/env";
+const ENV = getEnv();
+const GOOGLE_PLACES_API_KEY = ENV.GOOGLE_API_KEY;
 
 const SearchBarWithAutocomplete = ({ onPlaceSelected, onSelectionDismiss }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,7 +32,9 @@ const SearchBarWithAutocomplete = ({ onPlaceSelected, onSelectionDismiss }) => {
 
   const fetchPredictions = async () => {
     try {
-      const response = await axios.get(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchQuery}&key=${GOOGLE_PLACES_API_KEY}&language=en`);
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchQuery}&key=${GOOGLE_PLACES_API_KEY}&language=en`
+      );
       setPredictions(response.data.predictions);
     } catch (error) {
       console.error(error);

@@ -16,7 +16,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SearchBarWithAutocomplete from "../../components/SearchBarWithAutocomplete";
 import axios from "axios";
 import { supabase } from "../../utils/supabaseClient";
-
 import {
   ActivityIndicator,
   Alert,
@@ -34,6 +33,10 @@ import JennaOrtegaImg from "../../assets/jenna-ortega.jpg";
 import TimCookImg from "../../assets/tim-cook.jpg";
 import { trackEvent } from "@aptabase/react-native";
 
+import getEnv from "../../utils/env";
+const ENV = getEnv();
+const GOOGLE_API_KEY = ENV.GOOGLE_API_KEY;
+
 const ShareMusicBox = ({ route, navigation }) => {
   const [selectedSong, setSelectedSong] = useState(null);
   const [selectedSongIndex, setSelectedSongIndex] = useState(null);
@@ -50,9 +53,6 @@ const ShareMusicBox = ({ route, navigation }) => {
 
   const [userLocation, setUserLocation] = useState(null);
   const [searchedLocation, setSearchedLocation] = useState(null);
-
-  const GOOGLE_API_KEY = "AIzaSyCLpB4bUuYtTgh9ZrbHo9H0cac5PJz1VKo";
-  // console.log(route);
 
   useEffect(() => {
     (async () => {
@@ -73,6 +73,11 @@ const ShareMusicBox = ({ route, navigation }) => {
   }, []);
 
   const handlePlaceSelect = async (place) => {
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`
+    );
+    console.log(response.data); // Check the structure and data of the response
+
     const placeId = place.place_id;
     try {
       const response = await axios.get(

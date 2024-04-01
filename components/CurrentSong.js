@@ -28,8 +28,8 @@ const CurrentSong = ({
   const navigation = useNavigation();
 
   const onSongPress = () => {
-    navigation.navigate("Theme Question", {
-      songData: {
+    navigation.navigate("Share a Music Box", {
+      selectedSong: {
         title,
         artists: Array.isArray(artists) ? artists : [artists],
         albumName,
@@ -70,11 +70,11 @@ const CurrentSong = ({
       <View style={styles.progressWrapper}>
         <ProgressBar
           progress={progressFraction}
-          width={windowWidth - 40}
+          width={windowWidth - 60}
           height={7}
           borderRadius={3.5}
-          color={colors.pink}
-          unfilledColor={colors.offWhite75}
+          color={colors.blue}
+          unfilledColor={colors.midGray}
           borderWidth={0}
           useNativeDriver={true}
           style={styles.progressBar}
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 18,
   },
   progressTime: {
     fontSize: 14,

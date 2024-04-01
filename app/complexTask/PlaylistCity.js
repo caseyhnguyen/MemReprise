@@ -5,12 +5,14 @@ import { colors } from "../../assets/Themes/colors";
 import { trackEvent } from "@aptabase/react-native";
 import { WebView } from "react-native-webview";
 import BackArrow from "../../components/BackArrow";
+import Header1 from "../../components/Header1";
 
 const PlaylistCity = ({ route }) => {
   const navigation = useNavigation();
   const name = route.params?.name;
   const city = route.params?.city;
   const image = route.params?.image;
+  const mixtape = route.params?.mixtape;
 
   // Use useEffect to track when the component is rendered
   useEffect(() => {
@@ -20,25 +22,22 @@ const PlaylistCity = ({ route }) => {
       city,
     });
   }, [name, city]);
-
+  console.log(name);
+  let mixtapeText = name + "'s Mixtape";
   return (
     <>
-      <View>
-        <BackArrow to="FeedScreen" />
-      </View>
       <View style={styles.topContainer}>
-        <View style={styles.innerContainer}>
-          <Image style={styles.image} source={image} />
-        </View>
-        <View style={styles.innerContainer}>
-          <Text style={styles.boldText}>{city}'s</Text>
-          <Text style={styles.text}>mixtape for</Text>
-          <Text style={styles.boldText}>{name}</Text>
-        </View>
+        {/* <BackArrow to="FeedScreen" />
+        <View  style={styles.headArrow}>
+        <Header1 text={mixtapeText}/>
+        </View> */}
       </View>
       <WebView
+        // source={{
+        //   uri: "https://open.spotify.com/playlist/1XjcbwYnkGT87SoAXdp607?si=7aaa5300cbfb4462",
+        // }}
         source={{
-          uri: "https://open.spotify.com/playlist/2fmyOjn5kNiqMUjKRl08M3?si=b6bef14539ac468f",
+          uri: mixtape,
         }}
         style={styles.spotifyContainer}
       />
@@ -47,28 +46,28 @@ const PlaylistCity = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  headArrow: {
+    marginTop: 8,
+  },
   boldText: {
     fontWeight: "bold",
     fontSize: 24,
     color: colors.white,
     marginVertical: 5,
   },
-  image: {
-    width: 100,
-    height: 100,
-  },
   innerContainer: {
     flex: 1,
     alignItems: "center",
   },
   spotifyContainer: {
-    marginHorizontal: 10,
+    marginHorizontal: 20,
   },
   topContainer: {
     display: "flex",
     flexDirection: "row",
-    marginHorizontal: 40,
-    marginVertical: 20,
+    marginHorizontal: 10,
+    // marginTop: 45,
+    marginBottom: 10
   },
   text: {
     color: colors.white,

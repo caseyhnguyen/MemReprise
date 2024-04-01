@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   Image,
   StyleSheet,
   Dimensions,
+  ImageBackground,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -15,195 +16,258 @@ import SeeMore from "./SeeMore";
 import Header1 from "./Header1";
 import AlbumImg from "../assets/mamma-mia.jpg";
 import BackArrow from "./BackArrow";
+import { WebView } from "react-native-webview";
+import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../utils";
+import { getTrack } from "../utils/apiOptions";
+import Gray from "../assets/gray.png"
+import Icon from "react-native-vector-icons/FontAwesome5";
+import PillPressable from "./PillPressable";
+import { ScrollView } from "react-native-gesture-handler";
+import { profiles } from '../app/_data.js'
+
 
 const windowWidth = Dimensions.get("window").width;
 
 const MusicBox = ({
   route,
-  title,
-  artists,
-  albumName,
-  imageUrl,
-  duration,
-  previewUrl,
-  externalUrl,
-  progressFraction,
-  progressMs,
-  userName,
+  // artists,
+  // albumName,
+  // imageUrl,
+  // duration,
+  // previewUrl,
+  // externalUrl,
+  // sender_name,
+  // sender_img,
+  // location_name,
+  // message,
 }) => {
+  const { token, getSpotifyAuth } = useSpotifyAuth();
+  // const { tracks, currentTrack, loading, fetchMore, clearCacheAndRefetch } = useSpotifyTracks(token);
+
+  const fetchTrack = async () => {
+    console.log("lets's try");
+    try {
+      const fetchedCurrentTrack = await getTrack("https://api.spotify.com/track/51c94ac31swyDQj9B3Lzs3", token);
+      // setCurrentTrack(fetchedCurrentTrack);
+    } catch (error) {
+      console.error("Failed to fetch current track:", error);
+    }
+  };
+
+  console.log(route);
+    const [currProfiles, setCurrProfiles] = useState([]);
+    let mixtape = "";
+    useEffect(() => {
+      setCurrProfiles(profiles);
+    }, []);
+    
+
+
   const navigation = useNavigation();
-  const name = route.params?.name;
-  const city = route.params?.city;
-  const image = route.params?.image;
+  // console.log(route);
+  const artists = route.params?.artists;
+  const externalUrl = route.params?.externalUrl;
+  const imageUrl = route.params?.imageUrl;
+  const location_name = route.params?.location_name;
+  const message = route.params?.message;
+  const sender_img = route.params?.sender_img;
+  const sender_name = route.params?.sender_name;
+  const title = route.params?.title;
+  const formattedTimestamp = route.params?.formattedTimestamp
+
+  let songId = externalUrl.substring(31);
+  let embedUrl = "https://open.spotify.com/embed/track/" + songId;
+  let headerText = sender_name + "'s Tape";
+
+  for(let i=0; i < profiles.length; i++) {
+    if(profiles[i].name === sender_name) {
+      mixtape = profiles[i].mixtape;
+    }
+  }
   const onSongPress = () => {
     // Log the song selection event before navigation
     trackEvent("Song Selected", {
       songTitle: title,
       artistNames: Array.isArray(artists) ? artists.join(", ") : artists,
-      userName: userName,
     });
 
-    navigation.navigate("Theme Question", {
-      songData: {
-        title,
-        artists: Array.isArray(artists) ? artists : [artists],
-        albumName,
-        imageUrl,
-        duration,
-        previewUrl,
-        externalUrl,
-      },
-      userName,
-    });
+
+
+    // navigation.navigate("Theme Question", {
+    //   songData: {
+    //     title,
+    //     artists: Array.isArray(artists) ? artists : [artists],
+    //     albumName,
+    //     imageUrl,
+    //     duration,
+    //     previewUrl,
+    //     externalUrl,
+    //   },
+    //   userName,
+    // });
   };
 
-  return (
-    <>
-      <View style={styles.row}>
-        {/* <View style={styles.col}> */}
-        <BackArrow to="Receive Gift" />
-        {/* </View> */}
-        <View style={styles.col}>
-          <Header1 text="Gray's Musicbox" />
-        </View>
-      </View>
-      <View style={styles.outerContainer}>
-        {/* <TouchableOpacity style={styles.container} onPress={onSongPress}> */}
-        <Text style={styles.titleText}>We first met here, remember?</Text>
-        <Text style={styles.artistText}>Feb 14, 2023</Text>
 
-        <View style={styles.songInfo}>
-          <Image source={AlbumImg} style={styles.image} />
-          <View style={styles.titleAndArtist}>
-            <Text style={styles.titleText} numberOfLines={1}>
-              Mamma Mia
-            </Text>
-            <Text style={styles.artistText} numberOfLines={1}>
-              {/* {Array.isArray(artists) ? artists.join(", ") : artists} */}
-              ABBA
-            </Text>
+  // route,
+  // artists,
+  // albumName,
+  // imageUrl,
+  // duration,
+  // previewUrl,
+  // externalUrl,
+  // sender_name,
+  // sender_img,
+  // location_name,
+  // message,
+
+
+
+  return (
+    <View>
+      
+
+      <ImageBackground
+        source={{uri: imageUrl}}
+        resizeMode="cover"
+        style={styles.bgImg}
+        blurRadius={8}
+      >
+        {/* <View style={styles.navContainer}>
+        <BackArrow to="RecieveGift" />
+        <Header1 text={headerText} />
+      </View> */}
+    <View style={styles.container}>
+
+        
+      <View style={styles.infoContainer}>
+      <View style={styles.senderInfo}>
+          <Image style={styles.profileImage} source={sender_img} />
+          <View>
+            <Text style={styles.senderName}>{sender_name}</Text>
           </View>
-          {/* <Text style={styles.albumName} numberOfLines={1}>
-            {albumName}
-          </Text> */}
         </View>
-        {/* </TouchableOpacity> */}
-        <View style={styles.progressWrapper}>
-          <ProgressBar
-            // progress={progressFraction}
-            progress={1 / 3}
-            width={windowWidth - 40}
-            height={7}
-            borderRadius={3.5}
-            color={colors.blue}
-            unfilledColor={colors.offWhite75}
-            borderWidth={0}
-            useNativeDriver={true}
-            style={styles.progressBar}
-          />
-          {/* <Text style={styles.progressTime}>{formatTime(progressMs)}</Text>
-        <Text style={styles.durationTime}>{formatTime(duration)}</Text> */}
+        <View style={styles.messageCont}>
+          <Text style={styles.text}>{message}</Text>
+
         </View>
-        <SeeMore text="View" />
+        <View style={styles.senderInfo}>
+          <View>
+            <Text style={styles.textSm}>{formattedTimestamp}</Text>
+            <Text style={styles.textSm}>{location_name}</Text>
+          </View>
+        </View>
+        <View style={styles.spotifyContainer}>
+        <WebView
+          source={{
+            uri: embedUrl,
+          }}
+          style={styles.spotifyEmbed}
+        />
+        </View>
+        <PillPressable
+        onPress={() => navigation.navigate("Share a Music Box")}
+        text="Gift back"
+        isSpotify={false}
+        disabled={false}
+      />
+      <SeeMore text="View"
+      onPress={() => navigation.navigate("City Playlist", {name: sender_name, image: { uri: sender_img }, mixtape: mixtape})}
+
+       />
       </View>
-    </>
+      </View>
+
+      </ImageBackground>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    // backgroundColor: colors.darkGray,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-    marginBottom: 10,
-    width: windowWidth * 0.95,
-    height: windowWidth * 0.35,
-    gap: 10,
-    textAlign: "center",
-    color: colors.white,
-    marginTop: 20,
+  bgImg: {
+    padding: 8,
+    height: "103%",
+    // width: 380,
   },
   container: {
-    flexDirection: "col",
-    alignItems: "center",
-    textAlign: "center",
+    padding: 20,
     width: "100%",
+    // backgroundColor: colors.black,
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    height: "78%",
+    marginTop: 30
+
   },
-  songInfo: {
-    flexDirection: "col",
-    marginTop: 50,
-    gap: 10,
+
+  navContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 30,
+    marginLeft: 10,
     justifyContent: "flex-start",
-    // width: "95%",
-    textAlign: "center",
-    alignItems: "center",
+    // flexDirection: "column",
+    
   },
-  titleAndArtist: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    marginRight: 10,
-    // width: "75%",
-    textAlign: "center",
-    color: colors.white,
+  infoContainer: {
+    padding: 20,
+    paddingBottom: 35,
+    borderRadius: 10,
+    backgroundColor: colors.darkGray,
+    gap: 10,
+    width: "100%",
+    // backgroundColor: colors.black,
   },
-  image: {
-    width: 200,
-    height: 200,
+  messageCont: {
+    marginLeft: 8,
+    paddingHorizontal: 15,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.blue,
+    marginTop: 10,
   },
-  albumName: {
-    color: colors.white,
-    flex: 3,
+  senderInfo: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10
+  },
+  senderName: {
+    color: colors.offWhite75,
+    fontWeight: 'bold',
     fontSize: 16,
-    // marginRight: 10,
+
   },
-  artistText: {
-    color: colors.white,
-    fontSize: 18,
-    textAlign: "center",
-    marginTop: 2,
+  text: {
+    color: colors.offWhite75,
+    fontSize: 17,
+    
+    // marginBottom: 30,
   },
-  titleText: {
-    fontWeight: "bold",
-    fontSize: 20,
-    marginBottom: 2,
-    color: colors.white,
-    textAlign: "center",
+  textSm: {
+    color: colors.offWhite75,
+    fontSize: 15,
   },
-  progressWrapper: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-    marginTop: 10,
+  profileImage: {
+    borderRadius: 50,
+    // borderWidth: 2,
+    // borderColor: colors.offWhite75,
+    width: 35,
+    height: 35,
+    marginRight: 10
   },
-  progressTime: {
-    fontSize: 14,
-    color: colors.white,
-    position: "absolute",
-    left: 10,
-    bottom: -20,
+  spotifyContainer: {
+    width: "auto",
+    height: 128,
+    marginTop: 20,
+    paddingBottom: 48,
+    marginBottom: -20,
   },
-  durationTime: {
-    fontSize: 14,
-    color: colors.darkGray,
-    position: "absolute",
-    right: 10,
-    bottom: -20,
-  },
-  row: {
-    width: "100%",
-    // backgroundColor: colors.white,
-    // flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-    marginTop: 10,
-  },
-  col: {
-    marginTop: 8,
-  },
+  spotifyEmbed: {
+    width: "auto",
+    // paddingBottom: -20,
+    // height: 10,
+    borderRadius: 12
+  }
 });
 
 export default MusicBox;

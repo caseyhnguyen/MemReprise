@@ -16,7 +16,6 @@ import {
 // import images from "../../assets/Images/images";
 import images from "../../assets/Images/images";
 import albums from "../../assets/Images/albums";
-
 import { colors } from "../../assets/Themes/colors";
 import Header from "../../components/Header";
 import { Colors } from "react-native/Libraries/NewAppScreen";
@@ -32,7 +31,7 @@ import { trackEvent } from "@aptabase/react-native";
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
-const imageSize = (windowWidth - 50) / 4;
+const imageSize = (windowWidth - 50) / 3.5;
 
 const CalendarActivityScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
@@ -64,26 +63,11 @@ const CalendarActivityScreen = ({ navigation }) => {
     switch (value) {
       case "time":
         setFilterOptions([
+          { label: "None", value: "reprise" },
           { label: "Days", value: "days" },
           { label: "Weeks", value: "weeks" },
           { label: "Months", value: "months" },
           { label: "Years", value: "years" },
-        ]);
-        break;
-      case "activity":
-        setFilterOptions([
-          { label: "Exercising", value: "exercising" },
-          { label: "Eating", value: "eating" },
-          { label: "Working", value: "working" },
-          { label: "Commuting", value: "commuting" },
-        ]);
-        break;
-      case "feeling":
-        setFilterOptions([
-          { label: "Super Happy", value: "super happy" },
-          { label: "Happy", value: "happy" },
-          { label: "Super Sad", value: "super sad" },
-          { label: "Sad", value: "sad" },
         ]);
         break;
       default:
@@ -92,43 +76,8 @@ const CalendarActivityScreen = ({ navigation }) => {
     }
   };
 
-  // Mapping function for emotion icons
-  const getEmotionIconSource = (iconId) => {
-    const emotionIconMap = {
-      4: images.happyEmoji.pic,
-      5: images.superHappyEmoji.pic,
-      6: images.sadEmoji.pic,
-      7: images.superSadEmoji.pic,
-    };
-
-    return emotionIconMap[iconId] || null;
-  };
-
-  // Mapping function for activity icons
-  const getActivityIconSource = (iconId) => {
-    const activityIconMap = {
-      12: images.working.pic,
-      13: images.commuting.pic,
-      14: images.eating.pic,
-      15: images.exercising.pic,
-    };
-
-    return activityIconMap[iconId] || null;
-  };
-
-  // Mapping function for theme icons
-  const getThemeIconSource = (iconId) => {
-    const themeIconMap = {
-      8: images.matchaLatte.pic,
-      9: images.espresso.pic,
-      10: images.hotChocolate.pic,
-      11: images.lemonade.pic,
-    };
-
-    return themeIconMap[iconId] || null;
-  };
-
   const parsePosts = (fetchedPosts) => {
+    // console.log(fetchedPosts);
     return fetchedPosts.map((post) => {
       let formattedTimestamp = "Unknown Time";
 
@@ -159,6 +108,8 @@ const CalendarActivityScreen = ({ navigation }) => {
 
       // Parsing song_data to extract necessary details
       let songDataParsed = {};
+      // console.log("post.song_data:");
+      // console.log(post.song_data);
       if (post.song_data) {
         try {
           songDataParsed = JSON.parse(post.song_data);
@@ -167,14 +118,23 @@ const CalendarActivityScreen = ({ navigation }) => {
         }
       }
 
+      // console.log(post.imageUrl);
+      // console.log("songDataParsed:");
+      // console.log(songDataParsed);
       return {
         ...post,
         userName: post.userName || "Unknown User",
-        emotionIconSrc: getEmotionIconSource(post.emotion_icon_id),
-        activityIconSrc: getActivityIconSource(post.activity_icon_id),
-        themeIconSrc: getThemeIconSource(post.theme_icon_id),
-        songData: songDataParsed,
-        source: songDataParsed.imageUrl || "",
+        // songData: songDataParsed,
+        songData: {
+          title: post.songTitle,
+          artists: post.artists,
+          albumName: post.albumName,
+          imageUrl: post.imageUrl,
+          previewUrl: post.previewUrl,
+          externalUrl: post.externalUrl,
+        },
+        // source: songDataParsed.imageUrl || "",
+        source: post.imageUrl || "",
         caption: post.caption || "",
         themeIconLabel: post.theme_icon_text || "",
         emotionIconLabel: post.emotion_icon_text || "",
@@ -193,37 +153,41 @@ const CalendarActivityScreen = ({ navigation }) => {
       setLoading(true);
 
       let query = supabase
-        .from("posts")
+        .from("mixtapes")
         .select("*")
         .order("created_at", { ascending: false }); // Ensure default ordering is from most recent to oldest
 
+      // console.log(query);
       // Apply filters only if both filters are selected
-      if (selectedValue && selectedFilter) {
+      if (selectedValue) {
+        console.log(selectedValue);
         query = query.order("created_at", { ascending: false });
 
         // Time filtering logic
-        if (selectedValue === "time" && timeNumber) {
+        if (
+          selectedValue === "none" ||
+          selectedValue === "month" ||
+          selectedValue === "quarter" ||
+          selectedValue === "year"
+        ) {
           const unitToMs = {
+            none: 0,
             days: 86400000,
             weeks: 604800000,
-            months: 2629800000,
-            years: 31557600000,
+            month: 2629800000,
+            quarter: 6048000000,
+            year: 31557600000,
           };
-          const timeAgo = Date.now() - timeNumber * unitToMs[selectedFilter];
+          console.log(Date.now());
+          const timeAgo = Date.now() - unitToMs[selectedValue];
+          console.log(timeAgo);
           query = query.gte("created_at", new Date(timeAgo).toISOString());
-        }
-
-        // Activity and Feeling filtering logic
-        if (selectedValue === "activity" || selectedValue === "feeling") {
-          const filterColumn =
-            selectedValue === "activity"
-              ? "activity_icon_text"
-              : "emotion_icon_text";
-          query = query.ilike(filterColumn, `%${selectedFilter}%`);
+          // console.log(query);
         }
       }
 
       const { data, error } = await query;
+      console.log(data.location_name);
 
       if (error) throw error;
 
@@ -235,34 +199,42 @@ const CalendarActivityScreen = ({ navigation }) => {
     } finally {
       setLoading(false);
     }
-  }, [selectedValue, selectedFilter, timeNumber]);
+  }, [selectedValue, timeNumber]);
 
   useEffect(() => {
     filterPosts();
   }, [filterPosts]);
 
   const renderItem = ({ item }) => {
+    // console.log("item contents");
+    // console.log(item);
     const onPress = () => {
       navigation.navigate("PostExpandScreen", {
         userName: item.userName,
         formattedTimestamp: item.formattedTimestamp,
-        songData: item.songData,
+        songData: {
+          title: item.songTitle,
+          artists: item.artists,
+          albumName: item.albumName,
+          imageUrl: item.imageUrl,
+          previewUrl: item.previewUrl,
+          externalUrl: item.externalUrl,
+        },
+        sendTo: {
+          message: item.message,
+          formattedTimestamp: item.formattedTimestamp,
+          location_name: item.location_name,
+          recipient_img: item.recipient_img,
+          recipient_name: item.recipient_name,
+        },
         caption: item.caption,
-        themeIconSrc: item.themeIconSrc,
-        emotionIconSrc: item.emotionIconSrc,
-        activityIconSrc: item.activityIconSrc,
-        themeIconLabel: item.themeIconLabel,
-        emotionIconLabel: item.emotionIconLabel,
-        activityIconLabel: item.activityIconLabel,
       });
     };
 
-    // console.log("Item in renderItem:", item);
     const imageSource =
       typeof item.source === "string" ? { uri: item.source } : item.source;
-
-    // console.log("imageSource in renderItem:", { imageSource });
-
+    // console.log(item.source);
+    // console.log(imageSource);
     // Extract and format the month and date
     let month = "";
     let date = "";
@@ -279,7 +251,8 @@ const CalendarActivityScreen = ({ navigation }) => {
         month = createdAt
           .toLocaleString("en-US", { month: "short" })
           .toUpperCase();
-        date = createdAt.getDate().toString();
+        date = createdAt.getDate() + 1;
+        date = date.toString();
       }
     }
 
@@ -297,15 +270,13 @@ const CalendarActivityScreen = ({ navigation }) => {
   // Use the filtered posts as the data source for the FlatList
   const dataSource = posts;
 
-  // console.log("DataSource for FlatList:", dataSource);
-
   // Conditional rendering based on the number of results
   const renderFlatList = () => {
     if (dataSource && dataSource.length > 0) {
       return (
         <FlatList
           data={dataSource}
-          numColumns={4}
+          numColumns={3}
           renderItem={renderItem}
           keyExtractor={(item, index) => `${item.id}-${index}`}
         />
@@ -315,8 +286,6 @@ const CalendarActivityScreen = ({ navigation }) => {
   };
   return (
     <>
-      {/* <StatusBar style="dark" barStyle="light-content" /> */}
-      {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#00BCD4" translucent = {true}/> */}
       <StatusBar
         barStyle="light-content"
         backgroundColor={colors.black}
@@ -328,21 +297,21 @@ const CalendarActivityScreen = ({ navigation }) => {
           <View style={styles.header}>
             <Image source={images.caroline.pic} style={styles.profilePic} />
             <View>
-              {/* <Header1 text="Caroline Tran" /> */}
               <Text style={styles.title}>Caroline Tran</Text>
-              <Header2 text="@cntran" />
+              <Text style={styles.userHandle}>@cntran</Text>
             </View>
             <View style={styles.dropDown}>
               <RNPickerSelect
                 onValueChange={onMainSelectionChange}
                 items={[
-                  { label: "Time", value: "time" },
-                  { label: "Activity", value: "activity" },
-                  { label: "Feeling", value: "feeling" },
+                  { label: "Last month", value: "month" },
+                  { label: "Last quarter", value: "quarter" },
+                  { label: "Last year", value: "year" },
                 ]}
                 style={pickerSelectStyles}
-                placeholder={{ label: "Filter", value: "reprise" }}
+                placeholder={{ label: "Filter by", value: "reprise" }}
               />
+
               {/* Time Number Input and Unit Selection */}
               {selectedValue === "time" && (
                 <>
@@ -353,38 +322,13 @@ const CalendarActivityScreen = ({ navigation }) => {
                     value={timeNumber}
                     placeholder="Enter number"
                   />
-                  <RNPickerSelect
-                    onValueChange={(value) => setSelectedFilter(value)}
-                    items={filterOptions}
-                    style={pickerSelectStyles}
-                    placeholder={{ label: "Select unit", value: dataSource }}
-                  />
                 </>
-              )}
-
-              {/* Secondary Dropdown for Activity or Feeling */}
-              {(selectedValue === "activity" ||
-                selectedValue === "feeling") && (
-                <RNPickerSelect
-                  onValueChange={(value) => setSelectedFilter(value)}
-                  items={filterOptions}
-                  style={pickerSelectStyles}
-                  placeholder={{ label: "Select", value: "reprise" }}
-                />
               )}
             </View>
           </View>
 
-          {/* <View style={styles.monthContainer}>
-        <Text style={styles.month}>DECEMBER</Text>
-      </View>
-
-      <View style={styles.spacer} />
-      <View style={styles.containerCalendar}>{renderFlatList()}</View>
-    </SafeAreaView> */}
-
           <View style={styles.monthContainer}>
-            <Label text="Song history" />
+            <Label text="Tapes sent" style={styles.monthLabel} />
             {/* <Text style={styles.month}>DECEMBER</Text> */}
           </View>
 
@@ -430,13 +374,21 @@ const styles = StyleSheet.create({
     height: 200,
   },
   monthContainer: {
-    marginTop: "45%",
-    marginLeft: "15%",
-    width: "100%",
+    marginTop: "38%",
+    // paddingLeft: "20%",
+    // paddingLeft: 22,
+    // marginLeft: 10,
+    // width: "100%",
+    justifyContent: 'center', 
+    alignItems: 'center', 
     alignItems: "flex-start",
     marginHorizontal: "10%",
-    paddingBottom: "2.5%",
+    // paddingBottom: "2%",
     zIndex: 1,
+  },
+  monthLabel: {
+    textAlign: "center",
+    width: "100%",
   },
   month: {
     color: colors.white,
@@ -450,24 +402,26 @@ const styles = StyleSheet.create({
   image: {
     width: imageSize,
     height: imageSize,
-    margin: 5,
-    borderRadius: 150,
+    margin: 12,
+    // borderRadius: 150,
   },
   textBox: {
     position: "absolute",
     bottom: 0,
     right: 0,
     backgroundColor: colors.blue,
-    padding: 2,
+    padding: 3,
     borderRadius: 5,
   },
   monthText: {
     color: colors.black,
     fontWeight: "bold",
+    fontSize: 13,
   },
   dateText: {
     color: colors.black,
     textAlign: "center",
+    fontSize: 13,
   },
   dropDown: {
     // width: windowWidth * 0.3,
@@ -494,23 +448,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  userHandle: {
+    color: colors.white,
+    fontWeight: "500",
+    fontSize: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    // alignSelf: "center",
+  },
 });
 
 const pickerSelectStyles = {
   inputIOS: {
-    // fontSize: 16,
-    // paddingVertical: 10,
-    // paddingHorizontal: 10,
-    // borderWidth: 1,
-    // borderColor: colors.offWhite75,
-    // borderRadius: 4,
-    // color: colors.black,
-    // backgroundColor: colors.offWhite75,
-    // textAlign: "center",
-    // margin: windowWidth * 0.005,
     width: windowWidth * 0.3,
-    // fontWeight: "bold",
-
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -518,20 +469,16 @@ const pickerSelectStyles = {
     marginTop: 8,
     marginBottom: 8,
     backgroundColor: colors.pink,
-    // paddingHorizontal: 45,
     paddingVertical: 11,
     textTransform: "uppercase",
-    color: colors.white,
+    color: colors.black,
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
   },
   placeholder: {
-    color: colors.white,
+    color: colors.black,
     textTransform: "uppercase",
-
-    // color: colors.darkGray,
-    // fontWeight: "bold",
   },
   inputAndroid: {
     fontSize: 16,

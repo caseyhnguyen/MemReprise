@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import {
   SafeAreaView,
   View,
@@ -26,258 +26,164 @@ import Song from "../components/Song.js";
 import Location from "../components/Location.js";
 import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../utils";
 import ExImage from "../assets/caroline.png";
+import { tracks, locations, profiles } from './_data.js'
+import Hero from "../components/Hero.js";
+import { supabase } from "../utils/supabaseClient";
+
 
 // Get the window dimensions
 const windowWidth = Dimensions.get("window").width;
 
 const HomeScreen = ({ navigation }) => {
-  const [limitedTracks, setTracks] = useState([
-    {
-      albumName: "Heaven To A Tortured Mind",
-      deviceName: null,
-      duration: 106102,
-      externalUrl: "https://open.spotify.com/track/3nRhH5u3TE6HtvBH6mNwzY",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b273bb8648acba5bbab771ef0a45",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/b35c3416325d4d652808e70ed1491498ca65c44a?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 67452,
-      songArtists: ["Yves Tumor"],
-      songTitle: "Romanticist",
-    },
-    {
-      albumName: "Fe3O4: BREAK",
-      deviceName: null,
-      duration: 215293,
-      externalUrl: "https://open.spotify.com/track/4byr9TsXs4qtm8rG2FfwRW",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b27381d97a31253b898bc4149195",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/8faeb7836ac0c8c7739ff63de35a75bbe9c7d0b8?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 3913,
-      songArtists: ["NMIXX"],
-      songTitle: "Run For Roses",
-    },
-    {
-      albumName: "Mercurial World",
-      deviceName: null,
-      duration: 207391,
-      externalUrl: "https://open.spotify.com/track/07ZJYwSX32GOYOk3tybj2T",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b2730ecbdac77e72dc16719a3e89",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/71c5f137e9c3dfce39318975c5c018359f78cb12?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 1569,
-      songArtists: ["Magdalena Bay"],
-      songTitle: "Dreamcatching",
-    },
-    {
-      albumName: "killer",
-      deviceName: null,
-      duration: 176876,
-      externalUrl: "https://open.spotify.com/track/4QUzLCXrpHO4c6dGyZlpO2",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b27314aee4f383a0e9f4ec5d90c8",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/032f32f63aba2b1fe95500266ef47385bbf41aec?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 2488,
-      songArtists: ["FKA twigs"],
-      songTitle: "killer",
-    },
-    {
-      albumName: "<K>",
-      deviceName: null,
-      duration: 188320,
-      externalUrl: "https://open.spotify.com/track/0i8K9oyDQSg5tPZUTHPwhX",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b2732e1aa1db726272029b1268a7",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/8fae903dac2a5fabe1ed968607903e789c8219e1?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 2922,
-      songArtists: ["HeeJin"],
-      songTitle: "Algorithm",
-    },
-    {
-      albumName: "Abba",
-      deviceName: null,
-      duration: 213266,
-      externalUrl: "https://open.spotify.com/track/2TxCwUlqaOH3TIyJqGgR91",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b27392d0747a634fcc351c6ac3c2",
-      isPlaying: true,
-      previewUrl: null,
-      progressMs: 2194,
-      songArtists: ["ABBA"],
-      songTitle: "Mamma Mia",
-    },
-    {
-      albumName: "Unreal Unearth",
-      deviceName: null,
-      duration: 149880,
-      externalUrl: "https://open.spotify.com/track/38U4hYYzUbydvJ4J5YZEy6",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b273a63bdfd4a6e9b3c9f4f2e91d",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/1c87520067304bf49fbce1dd68346aae52c4c036?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 1384,
-      songArtists: ["Hozier"],
-      songTitle: "Butchered Tongue",
-    },
-    {
-      albumName: "Modal Soul",
-      deviceName: null,
-      duration: 175360,
-      externalUrl: "https://open.spotify.com/track/2ej1A2Ze6P2EOW7KfIosZR",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b273912cc8fe2e9a53d328757a41",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/5f938f411df9e22a60ff286f91964fb7e586bdca?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 5109,
-      songArtists: ["Nujabes", "Cise Starr & Akin from CYNE"],
-      songTitle: "Feather (feat. Cise Starr & Akin from CYNE)",
-    },
-    {
-      albumName: "ODD EYE CIRCLE <Version Up>",
-      deviceName: null,
-      duration: 174400,
-      externalUrl: "https://open.spotify.com/track/1qlusFEI25LWMQNXcxfL7a",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b2730ea7adccb30f8de275ef1676",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/30d48ebc680724031448ce9cd6d59254cd893e63?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 2797,
-      songArtists: ["ODD EYE CIRCLE (ARTMS)"],
-      songTitle: "Je Ne Sais Quoi",
-    },
-    {
-      albumName: "Preachers Daughter",
-      deviceName: null,
-      duration: 365000,
-      externalUrl: "https://open.spotify.com/track/0CMlcNJpLFaQxMTLFYpFdg",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b273ccd1887cc78b0bd55f54bbe1",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/48c7f571c49fbdb6adf58974803effd50f3b375f?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 3339,
-      songArtists: ["Ethel Cain"],
-      songTitle: "Western Nights",
-    },
-    {
-      albumName: "Heaven knows",
-      deviceName: null,
-      duration: 131013,
-      externalUrl: "https://open.spotify.com/track/5CCr8msaN3MhgqBoa9yWhH",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b27312e36c27d935e955b44c6581",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/543d8d09a5530a1ab94dd0c6f83fc4ee3e0d7f96?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 1000,
-      songArtists: ["PinkPantheress", "Ice Spice"],
-      songTitle: "Boy's a liar Pt. 2",
-    },
-  ]);
+  const [currTracks, setCurrTracks] = useState([]);
+  const [currLocations, setCurrLocations] = useState([]);
+  const [currProfiles, setCurrProfiles] = useState([]);
 
-  const [limitedLocations, setLocations] = useState([
-    {
-      albumName: "Heaven To A Tortured Mind",
-      deviceName: null,
-      duration: 106102,
-      externalUrl: "https://open.spotify.com/track/3nRhH5u3TE6HtvBH6mNwzY",
-      imageUrl:
-        "https://lh3.googleusercontent.com/p/AF1QipOq60ViLRwScKpbhthgi1e2Ee5U0YzvGEpzeCiR=s1360-w1360-h1020",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/b35c3416325d4d652808e70ed1491498ca65c44a?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 67452,
-      songArtists: ["Lagunita Drive"],
-      songTitle: "White Plaza",
-    },
-    {
-      albumName: "Fe3O4: BREAK",
-      deviceName: null,
-      duration: 215293,
-      externalUrl: "https://open.spotify.com/track/4byr9TsXs4qtm8rG2FfwRW",
-      imageUrl:
-        "https://lh3.googleusercontent.com/p/AF1QipPTKXCTWcHqDXMFicTcIw6ZuyEd-yszOhUxRzeH=s1360-w1360-h1020",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/8faeb7836ac0c8c7739ff63de35a75bbe9c7d0b8?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 3913,
-      songArtists: ["El Camino Real"],
-      songTitle: "Town & Country Village",
-    },
-    {
-      albumName: "Mercurial World",
-      deviceName: null,
-      duration: 207391,
-      externalUrl: "https://open.spotify.com/track/07ZJYwSX32GOYOk3tybj2T",
-      imageUrl:
-        "https://lh3.googleusercontent.com/p/AF1QipMC5qO7M4GbfZVRKYYlNLUVolxdJ40MU12mL4y6=s1360-w1360-h1020",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/71c5f137e9c3dfce39318975c5c018359f78cb12?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 1569,
-      songArtists: ["Hamilton Ave"],
-      songTitle: "Nobu",
-    },
-    {
-      albumName: "killer",
-      deviceName: null,
-      duration: 176876,
-      externalUrl: "https://open.spotify.com/track/4QUzLCXrpHO4c6dGyZlpO2",
-      imageUrl:
-        "https://lh3.googleusercontent.com/p/AF1QipMhcIPPu6Io-APXPe4wewn-qFKHHEVKNRhnwRZB=s1360-w1360-h1020",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/032f32f63aba2b1fe95500266ef47385bbf41aec?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 2488,
-      songArtists: ["Escondido Mall"],
-      songTitle: "Cecil H. Green Library",
-    },
-    {
-      albumName: "<K>",
-      deviceName: null,
-      duration: 188320,
-      externalUrl: "https://open.spotify.com/track/0i8K9oyDQSg5tPZUTHPwhX",
-      imageUrl:
-        "https://lh3.googleusercontent.com/p/AF1QipNc--7nh7jFN08T41CDgqGLUj515Dz_jc_YXeDQ=s1360-w1360-h1020",
-      isPlaying: true,
-      previewUrl:
-        "https://p.scdn.co/mp3-preview/8fae903dac2a5fabe1ed968607903e789c8219e1?cid=280999f8a28245e293e00323bcb896b4",
-      progressMs: 2922,
-      songArtists: ["Jane Stanford Way"],
-      songTitle: "Memorial Church",
-    },
-  ]);
+  let numSent;
 
-  const [limitedProfiles, setProfiles] = useState([
-    { image: require("../assets/casey.png"), name: "Casey" },
-    { image: require("../assets/gray.png"), name: "Gray" },
-    { image: require("../assets/brent.png"), name: "Brent" },
-    { image: require("../assets/emily.png"), name: "Emily" },
-    { image: require("../assets/tristan.png"), name: "Tristan" },
-    { image: require("../assets/caroline.png"), name: "Caroline" },
-  ]);
+  useEffect(() => {
+    setCurrTracks(tracks);
+    setCurrLocations(locations);
+    setCurrProfiles(profiles);
+  }, []);
+
+
+  const getCount = useCallback(async () => {
+    let numHero;
+    try {
+      let query = supabase
+        .from("mixtapes")
+        .select("*")
+        .order("created_at", { ascending: false }); // Ensure default ordering is from most recent to oldest
+      
+      query = query.order("created_at", { ascending: false });
+      // console.log(query);
+      
+      const { data, error } = await query;
+      if (error) throw error;
+
+      let processedPosts = parsePosts(data || []).filter((post) => post.source);
+      numHero = processedPosts.length;
+
+    } catch (error) {
+      console.error("Error filtering posts:", error);
+    } finally {
+    }
+    return numHero;
+  }, []);
+  
+
+
+  const parsePosts = (fetchedPosts) => {
+    // console.log(fetchedPosts);
+    return fetchedPosts.map((post) => {
+      let formattedTimestamp = "Unknown Time";
+
+      if (post.created_at) {
+        const createdAt = new Date(post.created_at);
+        const timeOptions = {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        };
+        const dateOptions = {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        };
+
+        const formattedTime = new Intl.DateTimeFormat(
+          "en-US",
+          timeOptions
+        ).format(createdAt);
+        const formattedDate = new Intl.DateTimeFormat(
+          "en-US",
+          dateOptions
+        ).format(createdAt);
+
+        formattedTimestamp = `${formattedTime} • ${formattedDate}`;
+      }
+
+      // Parsing song_data to extract necessary details
+      let songDataParsed = {};
+      // console.log("post.song_data:");
+      // console.log(post.song_data);
+      if (post.song_data) {
+        try {
+          songDataParsed = JSON.parse(post.song_data);
+        } catch (error) {
+          console.error("Error parsing song_data:", error);
+        }
+      }
+      
+      // console.log(post.imageUrl);
+      // console.log("songDataParsed:");
+      // console.log(songDataParsed);
+      return {
+        ...post,
+        userName: post.userName || "Unknown User",
+        // songData: songDataParsed,
+        songData: {
+          title: post.songTitle,
+          artists: post.artists,
+          albumName: post.albumName,
+          imageUrl: post.imageUrl,
+          previewUrl: post.previewUrl,
+          externalUrl: post.externalUrl,
+        },
+        // source: songDataParsed.imageUrl || "",
+        source: post.imageUrl || "",
+        caption: post.caption || "",
+        themeIconLabel: post.theme_icon_text || "",
+        emotionIconLabel: post.emotion_icon_text || "",
+        activityIconLabel: post.activity_icon_text || "",
+        formattedTimestamp,
+      };
+    });
+  };
+
+  const filterPosts = useCallback(async () => {
+    try {
+      let query = supabase
+        .from("mixtapes_received")
+        .select("*")
+        .order("created_at", { ascending: false }); // Ensure default ordering is from most recent to oldest
+      
+      query = query.order("created_at", { ascending: false });
+      // console.log(query);
+      
+      const { data, error } = await query;
+      if (error) throw error;
+
+      let processedPosts = parsePosts(data || []).filter((post) => post.source);
+      // console.log(processedPosts);
+      setCurrTracks(processedPosts);
+
+    } catch (error) {
+      console.error("Error filtering posts:", error);
+    } finally {
+    }
+  }, []);
+
+
+
+
 
   const renderSong = ({ item }) => {
+    console.log(item.formattedTimestamp);
     return (
       <Song
         title={item.songTitle || "Unknown Title"}
-        artists={item.songArtists || ["Unknown Artist"]}
+        artists={item.artists || ["Unknown Artist"]}
         imageUrl={item.imageUrl || "Unknown Image"}
         previewUrl={item.previewUrl || ""}
         externalUrl={item.externalUrl || ""}
         name={item.songTitle || ""}
+        sender_name={item.sender_name || ""}
+        sender_img={item.sender_img || ""}
+        location_name={item.location_name || ""}
+        message={item.message || ""}
+        formattedTimestamp={item.formattedTimestamp || ""}
       />
     );
   };
@@ -296,29 +202,36 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const renderProfile = ({ item }) => {
-    return <ProfilePressable2 image={item.image} name={item.name} />;
+    return <ProfilePressable2 image={item.image} name={item.name} mixtape={item.mixtape} />;
   };
+
+  useEffect(() => {
+    numSent = getCount();
+    filterPosts();
+  }, [filterPosts]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView>
         <ScrollView style={styles.container}>
+          <Hero sent={numSent} />
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Header1 text="My Gifts"></Header1>
-              <SeeMore
+              <Header1 text="Your Tapes"></Header1>
+              {/* <SeeMore
                 onPress={() => {
                   trackEvent("View More Pressed", {
                     context: "Recent Musicboxes",
                   });
                 }}
-              />
+              /> */}
             </View>
             <View style={styles.sectionBody}>
               <FlatList
                 horizontal={true}
-                data={limitedTracks}
+                data={currTracks}
                 renderItem={renderSong}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={(item, index) =>
                   item.id?.toString() || index.toString()
                 }
@@ -327,13 +240,14 @@ const HomeScreen = ({ navigation }) => {
           </View>
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Header1 text="Friends' Mixtapes"></Header1>
-              <SeeMore />
+              <Header1 text="Mixtapes by Friends"></Header1>
+              {/* <SeeMore /> */}
             </View>
             <View style={styles.sectionBody}>
               <FlatList
                 horizontal={true}
-                data={limitedProfiles}
+                data={currProfiles}
+                showsHorizontalScrollIndicator={false}
                 renderItem={renderProfile}
                 keyExtractor={(item, index) =>
                   item.id?.toString() || index.toString()
@@ -341,7 +255,7 @@ const HomeScreen = ({ navigation }) => {
               />
             </View>
           </View>
-          <View style={styles.section}>
+          {/* <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Header1 text="My Locations"></Header1>
               <SeeMore />
@@ -349,16 +263,16 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.sectionBody}>
               <FlatList
                 horizontal={true}
-                data={limitedLocations}
+                data={currLocations}
                 renderItem={renderLocation}
                 keyExtractor={(item, index) =>
                   item.id?.toString() || index.toString()
                 }
               />
             </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+          </View> */}
+      </ScrollView>
+    </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };
@@ -366,6 +280,8 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     width: windowWidth,
+    height: "100%",
+    marginTop: 25
   },
   section: {
     display: "flex",

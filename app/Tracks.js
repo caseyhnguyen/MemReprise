@@ -17,6 +17,7 @@ import { useSpotifyAuth, useSpotifyTracks, useSearch } from "../utils";
 import { colors } from "../assets/Themes/colors";
 import images from "../assets/Images/images";
 import Song from "../components/Song";
+import Track from "../components/Track";
 import CurrentSong from "../components/CurrentSong";
 import { StatusBar } from "expo-status-bar";
 import PillPressable from "../components/PillPressable";
@@ -84,7 +85,7 @@ const TracksScreen = ({ route, navigation }) => {
 
   // Function to render the current track with progress bar
   const renderCurrentTrack = () => {
-    console.log(currentTrack);
+    // console.log(currentTrack);
     if (!currentTrack) return null;
     const {
       index,
@@ -103,21 +104,7 @@ const TracksScreen = ({ route, navigation }) => {
     return (
       <View style={styles.currentTrackContainer}>
         <Header2 text="Now playing" />
-        <MusicBox
-          onPress={() => navigation.navigate("Share a Music Box")}
-          index={index}
-          title={songTitle}
-          artists={songArtists}
-          albumName={albumName}
-          imageUrl={imageUrl}
-          duration={duration}
-          previewUrl={previewUrl}
-          externalUrl={externalUrl}
-          progressFraction={progressFraction}
-          progressMs={progressMs}
-          userName={userName}
-        />
-        {/* <CurrentSong
+        {/* <MusicBox
           onPress={() => navigation.navigate("Share a Music Box")}
           index={index}
           title={songTitle}
@@ -131,15 +118,44 @@ const TracksScreen = ({ route, navigation }) => {
           progressMs={progressMs}
           userName={userName}
         /> */}
+        {/* <Track
+          onPress={() => navigation.navigate("Share a Music Box")}
+          index={index}
+          title={songTitle}
+          artists={songArtists}
+          albumName={albumName}
+          imageUrl={imageUrl}
+          duration={duration}
+          previewUrl={previewUrl}
+          externalUrl={externalUrl}
+          progressFraction={progressFraction}
+          progressMs={progressMs}
+          userName={userName}
+        /> */}
+        <CurrentSong
+          onPress={() => navigation.navigate("Share a Music Box")}
+          index={index}
+          title={songTitle}
+          artists={songArtists}
+          albumName={albumName}
+          imageUrl={imageUrl}
+          duration={duration}
+          previewUrl={previewUrl}
+          externalUrl={externalUrl}
+          progressFraction={progressFraction}
+          progressMs={progressMs}
+          userName={userName}
+        />
       </View>
     );
   };
 
-  const limitedTracks = tracks.slice(0, 10);
+  const limitedTracks = tracks.slice(0, 15);
+  // console.log(limitedTracks);
 
   const renderSong = ({ item, index }) => {
     return (
-      <Song
+      <Track
         index={index}
         title={item.songTitle || "Unknown Title"}
         artists={item.songArtists || ["Unknown Artist"]}
@@ -156,7 +172,7 @@ const TracksScreen = ({ route, navigation }) => {
 
   const renderSearchSong = ({ item, index }) => {
     return (
-      <Song
+      <Track
         index={index}
         title={item.name || "Unknown Title"}
         artists={item.artists.map((artist) => artist.name)}
@@ -188,29 +204,36 @@ const TracksScreen = ({ route, navigation }) => {
       {token && (
         <>
           {renderCurrentTrack()}
-          {/* <View style={styles.header}>
+          <View style={styles.header}>
             <Header2 text="My recent tracks" />
-          </View> */}
+          </View>
         </>
       )}
 
+      <View style={styles.refresh}>
       <SpotifyAuthOrRefreshButton />
 
-      {/* <FlatList
-        horizontal={true}
+      </View>
+
+      <FlatList
+        horizontal={false}
         data={search ? searchedSongs : limitedTracks}
         renderItem={search ? renderSearchSong : renderSong}
         keyExtractor={(item, index) => item.id?.toString() || index.toString()}
         ListFooterComponent={
           loading && <ActivityIndicator size="large" color={colors.white} />
         }
-      /> */}
+      />
     </>
   );
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar
+      backgroundColor={colors.black}
+      translucent={true}
+      // style="dark" 
+      barStyle="light-content"/>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView style={styles.container}>{contentDisplayed}</SafeAreaView>
       </TouchableWithoutFeedback>
@@ -230,8 +253,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50,
+    marginTop: 20,
     // backgroundColor: colors.background,
+  },
+  refresh: {
+    marginTop: -8,
+    marginBottom: 25,
   },
   logo: {
     width: 24,
